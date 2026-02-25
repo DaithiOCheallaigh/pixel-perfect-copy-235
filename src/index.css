@@ -6,7 +6,60 @@
 
 @layer base {
   :root {
-    /* Lacuna Dark Swiss Theme */
+    /* Lacuna Light Swiss Theme (Default) */
+    --background: 40 15% 96%;
+    --foreground: 0 0% 3.1%;
+
+    --card: 40 12% 93%;
+    --card-foreground: 0 0% 3.1%;
+
+    --popover: 40 15% 96%;
+    --popover-foreground: 0 0% 3.1%;
+
+    --primary: 72 100% 38%;
+    --primary-foreground: 0 0% 3.1%;
+
+    --secondary: 40 8% 90%;
+    --secondary-foreground: 0 0% 3.1%;
+
+    --muted: 40 8% 90%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 72 100% 38%;
+    --accent-foreground: 0 0% 3.1%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 40 15% 96%;
+
+    --border: 40 8% 85%;
+    --input: 40 8% 85%;
+    --ring: 72 100% 38%;
+
+    --radius: 2px;
+
+    /* Custom tokens */
+    --grey-1: 40 12% 93%;
+    --grey-2: 40 8% 90%;
+    --grey-3: 40 6% 85%;
+    --grey-4: 0 0% 60%;
+    --grey-5: 0 0% 40%;
+
+    /* Motion */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+
+    /* Sidebar */
+    --sidebar-background: 40 12% 93%;
+    --sidebar-foreground: 0 0% 3.1%;
+    --sidebar-primary: 72 100% 38%;
+    --sidebar-primary-foreground: 0 0% 3.1%;
+    --sidebar-accent: 40 8% 90%;
+    --sidebar-accent-foreground: 0 0% 3.1%;
+    --sidebar-border: 40 8% 85%;
+    --sidebar-ring: 72 100% 38%;
+  }
+
+  .dark {
     --background: 0 0% 3.1%;
     --foreground: 40 15.4% 94.1%;
 
@@ -35,20 +88,12 @@
     --input: 0 0% 17.3%;
     --ring: 72 100% 50%;
 
-    --radius: 2px;
-
-    /* Custom tokens */
     --grey-1: 0 0% 7.8%;
     --grey-2: 0 0% 11.8%;
     --grey-3: 0 0% 17.3%;
     --grey-4: 0 0% 33.3%;
     --grey-5: 0 0% 53.3%;
 
-    /* Motion */
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
-
-    /* Sidebar (unused but required) */
     --sidebar-background: 0 0% 7.8%;
     --sidebar-foreground: 40 15.4% 94.1%;
     --sidebar-primary: 72 100% 50%;
@@ -93,6 +138,10 @@
 
   ::selection {
     background: hsl(72 100% 50% / 0.3);
+    color: hsl(0 0% 3.1%);
+  }
+
+  .dark ::selection {
     color: hsl(40 15.4% 94.1%);
   }
 }
@@ -116,8 +165,13 @@
 
   .grid-background {
     background-image:
-      linear-gradient(to right, hsl(40 15.4% 94.1% / 0.03) 1px, transparent 1px);
+      linear-gradient(to right, hsl(0 0% 3.1% / 0.04) 1px, transparent 1px);
     background-size: calc(100% / 12);
+  }
+
+  .dark .grid-background {
+    background-image:
+      linear-gradient(to right, hsl(40 15.4% 94.1% / 0.03) 1px, transparent 1px);
   }
 }
 
@@ -134,6 +188,10 @@
 /* Horizontal rule style */
 .swiss-hr {
   height: 1px;
-  background: hsl(40 15.4% 94.1% / 0.1);
+  background: hsl(0 0% 3.1% / 0.1);
   border: none;
+}
+
+.dark .swiss-hr {
+  background: hsl(40 15.4% 94.1% / 0.1);
 }
