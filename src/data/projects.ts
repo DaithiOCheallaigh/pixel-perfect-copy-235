@@ -39,6 +39,9 @@ export interface Project {
   alternativeIntegrations?: { title: string; desc: string; image: string }[];
   explorationDetail?: string;
   solutionDetail?: string;
+  researchIntro?: string;
+  solutionIntro?: string;
+  featureImpact?: { period: string; value: string; label: string; description: string }[];
 }
 
 export const projects: Project[] = [
@@ -63,10 +66,17 @@ export const projects: Project[] = [
       "Business Impact: Lost opportunities for social proof and marketing content. Delayed feedback for service improvement. Reduced visibility on review platforms.",
     ],
     buildingTheFeature: "Building upon an existing tipping product, we broke down the user flow of a review into its essential steps. We decided to add a flow at the end of the tipping process that prompts users to leave a personalised, positive review of their recent experience. To ensure that the review was attributed to the individual guide, we decided that all generated reviews should include the guide's name automatically.",
+    researchIntro: "TripAdmit was fortunate to have a highly engaged user base actively seeking a review feature for their tour experiences. Through comprehensive quantitative research involving interview feedback sessions, we were able to compile a detailed understanding of user needs and preferences. Our research yielded several significant findings, outlined below:",
+    solutionIntro: "A crucial aspect of implementing AI-generated personalised reviews was ensuring accurate guide attribution and tour identification. This required a specific setup process in the TipDirect admin dashboard:\n\nTours needed to be individually configured in the back office system. Each tour had to be explicitly assigned to specific guides by admin users. This manual setup process ensured accurate guide attribution in reviews.\n\nThis structured approach to tour management was essential for maintaining the integrity of the AI review system while ensuring a smooth user experience for customers leaving reviews.",
     howItWorks: [
       { step: "01", title: "Create Tour", text: "In the TipDirect admin panel, an account owner sets up individual tours and their respective review links. Once created, these tours can be assigned to guide users on the business owner's account. This enables personalised reviews on individual tours." },
       { step: "02", title: "Prompt Guests", text: "Guides prompt visitors to tap a NFC card to the back of their phones, this triggers a UI flow for visitors to leave a review. Visitors select keywords that best describe their experience, ChatGPT then compiles a review based on the keyword, the guides name and the experience they were booked on." },
       { step: "03", title: "Track Reviews", text: "Once the visitor has left their review it is documented in the TipDirect admin panel. This enables admin to track the increase in reviews but also enables admins to run incentive schemes for their guides and attribute reviews individually." },
+    ],
+    featureImpact: [
+      { period: "Short term", value: "26%", label: "of all tipping guests left a positive review", description: "The initial success was significant: over a quarter of guests left reviews using the AI review feature, creating an immediate positive impact on review volume." },
+      { period: "Medium term", value: "96%", label: "of guests left a 5 star review", description: "The hypothesis that guests who tip are more likely to leave a positive review was validated, with nearly 100% of these guests providing 5-star ratings." },
+      { period: "Long term", value: "Bookings++", label: "reports of increased bookings", description: "The increased social proof has proven highly successful, with feature users reporting a rise in online bookings." },
     ],
     designSystemLinks: [
       { label: "Design System", url: "https://tipdirect-design.com/" },

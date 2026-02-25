@@ -5,6 +5,71 @@ import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 
+const ImageGallery = ({ images }: { images: { src: string; alt: string; wide?: boolean }[] }) => {
+  const elements: JSX.Element[] = [];
+  let nonWideBuffer: typeof images = [];
+
+  images.forEach((img, i) => {
+    if (img.wide) {
+      if (nonWideBuffer.length > 0) {
+        const cols = nonWideBuffer.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2";
+        elements.push(
+          <div key={`grid-${i}`} className={`grid gap-2 ${cols}`}>
+            {nonWideBuffer.map((nwImg, j) => (
+              <ScrollReveal key={j} delay={j * 0.05}>
+                <div className="overflow-hidden rounded-sm">
+                  <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        );
+        nonWideBuffer = [];
+      }
+      elements.push(
+        <ScrollReveal key={`wide-${i}`}>
+          <div className="overflow-hidden rounded-sm">
+            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+          </div>
+        </ScrollReveal>
+      );
+    } else {
+      nonWideBuffer.push(img);
+      if (nonWideBuffer.length === 3) {
+        elements.push(
+          <div key={`grid-${i}`} className="grid gap-2 md:grid-cols-3">
+            {nonWideBuffer.map((nwImg, j) => (
+              <ScrollReveal key={j} delay={j * 0.05}>
+                <div className="overflow-hidden rounded-sm">
+                  <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        );
+        nonWideBuffer = [];
+      }
+    }
+  });
+
+  if (nonWideBuffer.length > 0) {
+    const cols = nonWideBuffer.length >= 3 ? "md:grid-cols-3" : nonWideBuffer.length === 2 ? "md:grid-cols-2" : "";
+    elements.push(
+      <div key="grid-final" className={`grid gap-2 ${cols}`}>
+        {nonWideBuffer.map((nwImg, j) => (
+          <ScrollReveal key={j} delay={j * 0.05}>
+            <div className="overflow-hidden rounded-sm">
+              <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    );
+  }
+
+  return <div className="space-y-2">{elements}</div>;
+};
+
 const CaseStudy = () => {
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id);
@@ -22,6 +87,14 @@ const CaseStudy = () => {
       </main>
     );
   }
+
+  // Separate images for inline placement vs gallery
+  const inlineImages = project.images?.filter(img => 
+    img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
+  ) || [];
+  const galleryImages = project.images?.filter(img => 
+    img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report"
+  ) || [];
 
   return (
     <main className="pt-24">
@@ -48,33 +121,6 @@ const CaseStudy = () => {
         </div>
       </section>
 
-      {/* Meta bar */}
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-8 border-b border-border pb-8">
-          <div>
-            <span className="font-mono-label text-muted-foreground">Timeline</span>
-            <p className="text-sm font-semibold text-foreground">{project.timeline}</p>
-          </div>
-          {project.client && (
-            <div>
-              <span className="font-mono-label text-muted-foreground">Client</span>
-              <p className="text-sm font-semibold text-foreground">{project.client}</p>
-            </div>
-          )}
-          {project.whatIWorkedOn && (
-            <div className="max-w-md">
-              <span className="font-mono-label text-muted-foreground">What I Worked On</span>
-              <p className="text-sm text-foreground">{project.whatIWorkedOn.join(", ")}</p>
-            </div>
-          )}
-          {project.liveLink && (
-            <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="ml-auto inline-flex items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
-              View Live ↗
-            </a>
-          )}
-        </div>
-      </section>
-
       {/* Intro: Mobile image + description */}
       <section className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
@@ -85,44 +131,43 @@ const CaseStudy = () => {
                   <img src={project.mobileImage} alt={`${project.title} mobile`} className="max-h-[500px] w-auto rounded-sm object-contain" loading="lazy" />
                 </div>
               )}
-              <div>
+              <div className="flex flex-col justify-center">
+                {project.whatIWorkedOn && (
+                  <div className="mb-6">
+                    <span className="font-mono-label mb-2 block text-muted-foreground">What I Worked On</span>
+                    <div className="flex flex-wrap gap-2">
+                      {project.whatIWorkedOn.map((item) => (
+                        <span key={item} className="rounded-sm bg-card px-3 py-1.5 text-xs font-semibold text-foreground">{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="mb-6">
+                  <span className="font-mono-label mb-1 block text-muted-foreground">Timeline</span>
+                  <p className="text-sm font-semibold text-foreground">{project.timeline}</p>
+                </div>
                 <SectionLabel>Overview</SectionLabel>
                 <div className="space-y-4">
                   {project.description.split("\n\n").map((p, i) => (
                     <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
                   ))}
                 </div>
-
                 {project.toolsImage && (
                   <div className="mt-8">
                     <span className="font-mono-label mb-3 block text-muted-foreground">Tools</span>
-                    <img src={project.toolsImage} alt="Tools used" className="max-w-full" loading="lazy" />
+                    <img src={project.toolsImage} alt="Tools used" className="max-w-xs" loading="lazy" />
                   </div>
+                )}
+                {project.liveLink && (
+                  <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex w-fit items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                    View Live ↗
+                  </a>
                 )}
               </div>
             </div>
           </ScrollReveal>
         </div>
       </section>
-
-      {/* Design Goals (TipDirect App) */}
-      {project.designGoals && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <SectionLabel>Design Goals</SectionLabel>
-              <div className="grid gap-4 md:grid-cols-3">
-                {project.designGoals.map((goal, i) => (
-                  <div key={i} className="rounded-sm bg-card p-6">
-                    <h3 className="mb-2 text-sm font-bold text-foreground">{goal.title}</h3>
-                    <p className="text-sm text-muted-foreground">{goal.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
 
       {/* Challenge */}
       {project.challenge && (
@@ -160,7 +205,26 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Trimming Down (App) */}
+      {/* Design Goals */}
+      {project.designGoals && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Design Goals</SectionLabel>
+              <div className="grid gap-4 md:grid-cols-3">
+                {project.designGoals.map((goal, i) => (
+                  <div key={i} className="rounded-sm bg-card p-6">
+                    <h3 className="mb-2 text-sm font-bold text-foreground">{goal.title}</h3>
+                    <p className="text-sm text-muted-foreground">{goal.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Trimming Down */}
       {project.trimmingDown && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-7xl">
@@ -205,6 +269,9 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-7xl">
             <ScrollReveal>
               <SectionLabel>Research Findings</SectionLabel>
+              {project.researchIntro && (
+                <p className="mb-6 max-w-3xl text-base leading-relaxed text-muted-foreground">{project.researchIntro}</p>
+              )}
               <div className="grid gap-4 md:grid-cols-3">
                 {project.researchFindings.map((finding, i) => (
                   <div key={i} className="rounded-sm bg-card p-6">
@@ -231,61 +298,18 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Solution Detail (Spotify) */}
-      {project.solutionDetail && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
+      {/* Inline image: AI Review Steps (after Building the Feature) */}
+      {inlineImages.filter(img => img.alt === "AI Review Steps").map((img, i) => (
+        <section key={`inline-steps-${i}`} className="px-6 py-4 md:px-12 lg:px-24">
           <div className="mx-auto max-w-7xl">
             <ScrollReveal>
-              <div className="max-w-3xl">
-                <SectionLabel>The Solution</SectionLabel>
-                <div className="space-y-4">
-                  {project.solutionDetail.split("\n\n").map((p, i) => (
-                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
-                  ))}
-                </div>
+              <div className="overflow-hidden rounded-sm">
+                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
               </div>
             </ScrollReveal>
           </div>
         </section>
-      )}
-
-      {/* How It Works */}
-      {project.howItWorks && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <SectionLabel>How It Works</SectionLabel>
-              <div className="grid gap-6 md:grid-cols-3">
-                {project.howItWorks.map((step, i) => (
-                  <ScrollReveal key={i} delay={i * 0.1}>
-                    <div className="rounded-sm bg-card p-6">
-                      <span className="font-mono-label text-primary">{step.step}</span>
-                      <h3 className="mt-2 text-lg font-bold text-foreground">{step.title}</h3>
-                      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
-                    </div>
-                  </ScrollReveal>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* Sharing Methods */}
-      {project.sharingMethods && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <SectionLabel>Sharing Methods</SectionLabel>
-              <div className="flex flex-wrap gap-3">
-                {project.sharingMethods.map((method) => (
-                  <span key={method} className="rounded-sm bg-card px-4 py-2 text-sm font-semibold text-foreground">{method}</span>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
+      ))}
 
       {/* Design Process */}
       {project.designProcess && (
@@ -328,7 +352,83 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Core Design Principles (App) */}
+      {/* Solution Intro + How It Works */}
+      {project.solutionIntro && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="max-w-3xl">
+                <SectionLabel>How The Solution Works</SectionLabel>
+                <div className="space-y-4">
+                  {project.solutionIntro.split("\n\n").map((p, i) => (
+                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* How It Works Steps */}
+      {project.howItWorks && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            {!project.solutionIntro && (
+              <ScrollReveal>
+                <SectionLabel>How It Works</SectionLabel>
+              </ScrollReveal>
+            )}
+            <div className="grid gap-6 md:grid-cols-3">
+              {project.howItWorks.map((step, i) => (
+                <ScrollReveal key={i} delay={i * 0.1}>
+                  <div className="rounded-sm bg-card p-6">
+                    <span className="font-mono-label text-primary">{step.step}</span>
+                    <h3 className="mt-2 text-lg font-bold text-foreground">{step.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Sharing Methods */}
+      {project.sharingMethods && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Sharing Methods</SectionLabel>
+              <div className="flex flex-wrap gap-3">
+                {project.sharingMethods.map((method) => (
+                  <span key={method} className="rounded-sm bg-card px-4 py-2 text-sm font-semibold text-foreground">{method}</span>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Solution Detail (Spotify) */}
+      {project.solutionDetail && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="max-w-3xl">
+                <SectionLabel>The Solution</SectionLabel>
+                <div className="space-y-4">
+                  {project.solutionDetail.split("\n\n").map((p, i) => (
+                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Core Design Principles */}
       {project.coreDesignPrinciples && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-7xl">
@@ -347,7 +447,7 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Mobile Adaptations (App) */}
+      {/* Mobile Adaptations */}
       {project.mobileAdaptations && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-7xl">
@@ -425,7 +525,7 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Alternative Integrations (Spotify) */}
+      {/* Alternative Integrations */}
       {project.alternativeIntegrations && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-7xl">
@@ -486,6 +586,42 @@ const CaseStudy = () => {
         </section>
       )}
 
+      {/* Inline image: Mixpanel (after Launch & Analytics) */}
+      {inlineImages.filter(img => img.alt === "Mixpanel analytics report").map((img, i) => (
+        <section key={`inline-mixpanel-${i}`} className="px-6 py-4 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="overflow-hidden rounded-sm">
+                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      ))}
+
+      {/* Feature Impact */}
+      {project.featureImpact && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Feature Impact</SectionLabel>
+            </ScrollReveal>
+            <div className="grid gap-4 md:grid-cols-3">
+              {project.featureImpact.map((impact, i) => (
+                <ScrollReveal key={i} delay={i * 0.1}>
+                  <div className="rounded-sm bg-card p-8 text-center">
+                    <span className="font-mono-label text-muted-foreground">{impact.period}</span>
+                    <div className="mt-3 text-4xl font-black text-primary md:text-5xl">{impact.value}</div>
+                    <p className="mt-2 text-sm font-semibold text-foreground">{impact.label}</p>
+                    <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{impact.description}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Release & Reception */}
       {project.releaseReception && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
@@ -518,8 +654,8 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Stats */}
-      {project.stats && project.stats.length > 0 && (
+      {/* Stats / Key Results */}
+      {project.stats && project.stats.length > 0 && !project.featureImpact && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-7xl">
             <ScrollReveal>
@@ -540,78 +676,13 @@ const CaseStudy = () => {
       )}
 
       {/* Image Gallery */}
-      {project.images && project.images.length > 0 && (
+      {galleryImages.length > 0 && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-7xl">
             <ScrollReveal>
               <SectionLabel>Gallery</SectionLabel>
             </ScrollReveal>
-            <div className="space-y-2">
-              {(() => {
-                const elements: JSX.Element[] = [];
-                let nonWideBuffer: typeof project.images = [];
-                
-                project.images!.forEach((img, i) => {
-                  if (img.wide) {
-                    if (nonWideBuffer.length > 0) {
-                      const cols = nonWideBuffer.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2";
-                      elements.push(
-                        <div key={`grid-${i}`} className={`grid gap-2 ${cols}`}>
-                          {nonWideBuffer.map((nwImg, j) => (
-                            <ScrollReveal key={j} delay={j * 0.05}>
-                              <div className="overflow-hidden rounded-sm">
-                                <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
-                              </div>
-                            </ScrollReveal>
-                          ))}
-                        </div>
-                      );
-                      nonWideBuffer = [];
-                    }
-                    elements.push(
-                      <ScrollReveal key={`wide-${i}`}>
-                        <div className="overflow-hidden rounded-sm">
-                          <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                        </div>
-                      </ScrollReveal>
-                    );
-                  } else {
-                    nonWideBuffer.push(img);
-                    if (nonWideBuffer.length === 3) {
-                      elements.push(
-                        <div key={`grid-${i}`} className="grid gap-2 md:grid-cols-3">
-                          {nonWideBuffer.map((nwImg, j) => (
-                            <ScrollReveal key={j} delay={j * 0.05}>
-                              <div className="overflow-hidden rounded-sm">
-                                <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
-                              </div>
-                            </ScrollReveal>
-                          ))}
-                        </div>
-                      );
-                      nonWideBuffer = [];
-                    }
-                  }
-                });
-                
-                if (nonWideBuffer.length > 0) {
-                  const cols = nonWideBuffer.length >= 3 ? "md:grid-cols-3" : nonWideBuffer.length === 2 ? "md:grid-cols-2" : "";
-                  elements.push(
-                    <div key="grid-final" className={`grid gap-2 ${cols}`}>
-                      {nonWideBuffer.map((nwImg, j) => (
-                        <ScrollReveal key={j} delay={j * 0.05}>
-                          <div className="overflow-hidden rounded-sm">
-                            <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
-                          </div>
-                        </ScrollReveal>
-                      ))}
-                    </div>
-                  );
-                }
-                
-                return elements;
-              })()}
-            </div>
+            <ImageGallery images={galleryImages} />
           </div>
         </section>
       )}
