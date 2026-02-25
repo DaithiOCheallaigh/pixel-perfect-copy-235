@@ -118,7 +118,7 @@
     @apply bg-background text-foreground antialiased;
     font-family: 'Hanken Grotesk', sans-serif;
     line-height: 1.7;
-    cursor: none;
+    
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -132,9 +132,7 @@
     letter-spacing: -0.05em;
   }
 
-  a, button {
-    cursor: none;
-  }
+
 
   ::selection {
     background: hsl(340 65% 65% / 0.3);
