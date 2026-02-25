@@ -14,7 +14,7 @@ import ServicePage from "./pages/ServicePage";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-import CustomCursor from "./components/CustomCursor";
+
 import PageLoader from "./components/PageLoader";
 
 const queryClient = new QueryClient();
@@ -34,7 +34,7 @@ const AppContent = () => {
   return (
     <>
       {!loaded && <PageLoader onComplete={handleLoaderComplete} />}
-      <CustomCursor />
+      
       <Navigation visible={loaded} />
       <ScrollToTop />
       <Routes>
