@@ -18,48 +18,59 @@ const Work = () => (
           </p>
         </ScrollReveal>
 
-        <div className="space-y-1">
+        <div className="grid gap-8 sm:grid-cols-2">
           {projects.map((project, i) => (
-            <ScrollReveal key={project.id} delay={i * 0.05}>
+            <ScrollReveal key={project.id} delay={i * 0.08}>
               {project.comingSoon ? (
-                <div className="group flex items-center gap-6 border-b border-border py-6 opacity-50">
-                  <img
-                    src={project.pillImage}
-                    alt={project.title}
-                    className="h-16 w-16 rounded-sm object-cover md:h-20 md:w-20"
-                    loading="lazy"
-                  />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-foreground md:text-xl">{project.title}</h3>
-                    <p className="text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
+                <div className="group overflow-hidden rounded-xl border border-border bg-card opacity-50">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={project.pillImage}
+                      alt={project.title}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
-                  <span className="font-mono-label text-muted-foreground">Coming Soon</span>
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-foreground md:text-xl">{project.title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
+                    <div className="mt-4 flex items-center justify-between">
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="font-mono-label text-xs text-muted-foreground">{tag}</span>
+                        ))}
+                      </div>
+                      <span className="font-mono-label text-muted-foreground">Coming Soon</span>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <Link
                   to={`/case/${project.id}`}
-                  className="group flex items-center gap-6 border-b border-border py-6 transition-all hover:pl-2"
+                  className="group block overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
                 >
-                  <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-sm md:h-20 md:w-20">
+                  <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={project.pillImage}
                       alt={project.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                   </div>
-                  <div className="flex-1">
+                  <div className="p-6">
                     <h3 className="text-lg font-bold text-foreground transition-colors group-hover:text-primary md:text-xl">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
+                    <div className="mt-4 flex items-center justify-between">
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="font-mono-label text-xs text-muted-foreground">{tag}</span>
+                        ))}
+                      </div>
+                      <span className="text-lg text-muted-foreground transition-colors group-hover:text-primary">→</span>
+                    </div>
                   </div>
-                  <div className="hidden flex-wrap gap-2 md:flex">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="font-mono-label text-muted-foreground">{tag}</span>
-                    ))}
-                  </div>
-                  <span className="text-xl text-muted-foreground transition-colors group-hover:text-primary">→</span>
                 </Link>
               )}
             </ScrollReveal>
