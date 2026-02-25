@@ -23,13 +23,29 @@ export interface Project {
   sharingMethods?: string[];
   mobileImage?: string;
   toolsImage?: string;
+  exploration?: string;
+  buildingTheFeature?: string;
+  launchAnalytics?: { documentation: string[]; analytics: string[] };
+  designSystemLinks?: { label: string; url: string }[];
+  designGoals?: { title: string; desc: string }[];
+  coreDesignPrinciples?: { title: string; desc: string }[];
+  mobileAdaptations?: { title: string; desc: string }[];
+  prototyping?: string;
+  prototypeLink?: string;
+  coreFunctionality?: { title: string; desc: string }[];
+  releaseReception?: string;
+  engagementConsiderations?: { title: string; desc: string }[];
+  trimmingDown?: string;
+  alternativeIntegrations?: { title: string; desc: string; image: string }[];
+  explorationDetail?: string;
+  solutionDetail?: string;
 }
 
 export const projects: Project[] = [
   {
     id: "ai-reviews",
     title: "AI Assisted Reviews",
-    subtitle: "Leveraging AI to transform guest feedback into 5-star reviews",
+    subtitle: "Leveraging AI to increase 5-star reviews by 45% on average",
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "3 months",
     client: "TipDirect",
@@ -38,18 +54,36 @@ export const projects: Project[] = [
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/MobileAI.webp?fit=800%2C764&ssl=1",
     toolsImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tools-1.webp?fit=800%2C115&ssl=1",
     liveLink: "https://tip.direct/platform-admin/",
-    description: "Tour operators consistently struggle to capture timely reviews from guests immediately after their experiences. This challenge persists even when guests have thoroughly enjoyed their tours, creating a significant disconnect between customer satisfaction and documented feedback.",
-    challenge: "Tour operators consistently struggle to capture timely reviews from guests immediately after their experiences. This challenge persists even when guests have thoroughly enjoyed their tours, creating a significant disconnect between customer satisfaction and documented feedback.",
+    description: "TipDirect, the only product offering a dedicated digital tipping solution for travel guides aimed to expand its offering by incorporating AI assisted reviews at the end of the tipping process in order to ensure that satisfied guests left a positive review of their tour experience.\n\nBy leveraging ChatGPT, we've significantly reduced the time and effort required to create personalised review requests, while simultaneously increasing the likelihood of guests leaving timely and meaningful feedback. This innovative approach not only improves the quantity and quality of reviews but also enhances the overall guest experience by providing a seamless and personalised post-tour interaction.",
+    challenge: "Tour operators consistently struggle to capture timely reviews from guests immediately after their experiences. This challenge persists even when guests have thoroughly enjoyed their tours, creating a significant disconnect between customer satisfaction and documented feedback.\n\nIn this case study, we'll explore how me and our team tackled this challenge through comprehensive quantitative UX research. Using a combination of card sorting exercises and in-depth customer interviews, we sought to understand the core barriers preventing tourists from leaving timely reviews.",
+    exploration: "A team wide exploration of the best ways to incorporate AI into our product, a lot of great ideas generated. From this session, the idea of incorporating ChatGPT into review generation came about.",
     researchFindings: [
-      "Timing Issues: Guests often delay writing reviews; details fade; competing priorities post-tour",
-      "Engagement Barriers: Lack of immediate motivation; time required; technical friction",
-      "Business Impact: Lost social proof; delayed feedback; reduced visibility on review platforms",
+      "Timing Issues: Guests often delay writing reviews until long after their experience. Details and emotional impressions fade with time. Competing priorities post-tour distract from review writing.",
+      "Engagement Barriers: Lack of immediate motivation to leave feedback. Timing – leaving reviews takes time. Technical friction in review platforms.",
+      "Business Impact: Lost opportunities for social proof and marketing content. Delayed feedback for service improvement. Reduced visibility on review platforms.",
     ],
+    buildingTheFeature: "Building upon an existing tipping product, we broke down the user flow of a review into its essential steps. We decided to add a flow at the end of the tipping process that prompts users to leave a personalised, positive review of their recent experience. To ensure that the review was attributed to the individual guide, we decided that all generated reviews should include the guide's name automatically.",
     howItWorks: [
-      { step: "01", title: "Create Tour", text: "In the TipDirect admin panel, account owner sets up individual tours and review links, then assigns to guide users." },
-      { step: "02", title: "Prompt Guests", text: "Guides prompt visitors to tap NFC card; visitors select keywords; ChatGPT compiles review based on keywords, guide name and experience." },
-      { step: "03", title: "Track Reviews", text: "Reviews documented in admin panel; enables tracking increases and running incentive schemes." },
+      { step: "01", title: "Create Tour", text: "In the TipDirect admin panel, an account owner sets up individual tours and their respective review links. Once created, these tours can be assigned to guide users on the business owner's account. This enables personalised reviews on individual tours." },
+      { step: "02", title: "Prompt Guests", text: "Guides prompt visitors to tap a NFC card to the back of their phones, this triggers a UI flow for visitors to leave a review. Visitors select keywords that best describe their experience, ChatGPT then compiles a review based on the keyword, the guides name and the experience they were booked on." },
+      { step: "03", title: "Track Reviews", text: "Once the visitor has left their review it is documented in the TipDirect admin panel. This enables admin to track the increase in reviews but also enables admins to run incentive schemes for their guides and attribute reviews individually." },
     ],
+    designSystemLinks: [
+      { label: "Design System", url: "https://tipdirect-design.com/" },
+      { label: "Components", url: "https://www.figma.com/design/kvqj5raBxuBkAxibfK1BFi/TipDirect_StyleGuide?node-id=53-82&t=PXzTHBWZl3BJ88Cx-1" },
+    ],
+    launchAnalytics: {
+      documentation: [
+        "Created detailed knowledge base articles explaining feature functionality",
+        "Provided step-by-step guides for setting up and using AI reviews",
+        "Crafted email and direct outreach initiatives",
+      ],
+      analytics: [
+        "Integrated Mixpanel tracking across key user interactions",
+        "Monitored review completion rates",
+        "Tracked user engagement with AI-generated content",
+      ],
+    },
     stats: [
       { value: "26%", label: "of tipping guests left a positive review (short term)" },
       { value: "96%", label: "of guests left a 5-star review (medium term)" },
@@ -80,10 +114,30 @@ export const projects: Project[] = [
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/09/Pill2.webp?fit=800%2C800&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tipping_HeaderProfile.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tipping-Profile-1.webp?fit=800%2C942&ssl=1",
+    toolsImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tools-1.webp?fit=800%2C115&ssl=1",
     liveLink: "https://tip.direct/",
-    description: "TipDirect aims to transform the tipping experience in the travel industry by providing a seamless, digital solution for visitors to show appreciation to their guides.",
-    challenge: "Visitors are increasingly going cashless. Needed an easy-to-use mobile solution that allows tour guides to collect tips and reviews from groups at end of tours.",
+    description: "TipDirect aims to transform the tipping experience in the travel industry by providing a seamless, digital solution for visitors to show appreciation to their guides. This innovative platform leverages cutting-edge technology to create a user-friendly, efficient, and secure tipping system.\n\nBy digitizing the tipping process, we seeked to enhance the overall travel experience, fostering stronger connections between visitors and guides while streamlining financial transactions in the tourism sector.",
+    challenge: "In today's world, visitors to tourist attractions are increasingly going cashless. We were tasked with developing an easy-to-use, mobile solution that would allow tour guides to collect tips and reviews from groups at the end of their tours.\n\nTo accomplish this, we leveraged multiple methods for sharing a guide's profile on the go: NFC cards, QR codes, and shareable links.\n\nBy implementing quick tip options and integrating popular digital payment methods like Apple Pay and Google Pay, we simplified the tipping process. This reduced the cognitive load on visitors, making it a quicker and easier decision when they're on the move.",
+    exploration: "From customer interviews and shadowing, we quickly determined that tour guides required multiple ways of sharing their profiles with varying group sizes. For this reason, we chose to employ three methods. Crucially, once any of these methods had been used to access a profile, it was imperative that the tipping user didn't have to deduce what was being asked of them.\n\nFacial ID payments drastically reduce the time required to make an impulsive payment decision, while contactless payments appear 15% less to the tipper than if they were to leave gratuity in cash. After the tip, we aimed to leverage a captivated, satisfied audience by prompting them to leave a review, engage with the company's social media channels, or avail themselves of another experience by booking with a promo code.",
     sharingMethods: ["NFC cards", "QR codes", "Shareable links"],
+    buildingTheFeature: "TipDirect offers multiple tipping methods through its platform: links, QR codes, and NFC-enabled cards. To ensure a consistent user experience, we designed an identical payment flow regardless of which method a guide shares with their customer. We prioritised convenient \"on-the-go\" tipping by prominently featuring Google Pay and Apple Pay options. Once a customer completes their tip, we leverage this engagement moment to request a review—a feature that eventually expanded to include social media prompts and upsell opportunities.",
+    designSystemLinks: [
+      { label: "Design System", url: "https://tipdirect-design.com/" },
+      { label: "Components", url: "https://www.figma.com/design/kvqj5raBxuBkAxibfK1BFi/TipDirect_StyleGuide?node-id=53-82&t=PXzTHBWZl3BJ88Cx-1" },
+    ],
+    launchAnalytics: {
+      documentation: [
+        "Created detailed knowledge base articles explaining feature functionality",
+        "Provided step-by-step guides for setting up and using digital tipping",
+        "Crafted email and direct outreach initiatives",
+      ],
+      analytics: [
+        "Integrated Mixpanel tracking across key user interactions",
+        "Monitored flow completion rates",
+        "A/B tests for feature variations",
+      ],
+    },
+    whatIWorkedOn: ["UI Design", "UX Strategy", "User Interviews", "Marketing", "Growth Strategy", "Feature Analysis"],
     stats: [
       { value: "31%", label: "conversion rate increase (local currency AI detection)" },
       { value: "$24.26", label: "average tip received" },
@@ -97,6 +151,9 @@ export const projects: Project[] = [
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/RD-Example%401x-1.jpg?fit=595%2C595&ssl=1", alt: "Research document" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/09/Screenshot-2024-09-24-at-22.00.12.png?fit=800%2C325&ssl=1", alt: "User flow", wide: true },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Stats2.webp?fit=800%2C373&ssl=1", alt: "Stats overview", wide: true },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Stats1.webp?fit=800%2C373&ssl=1", alt: "Stats detail 1", wide: true },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Stats3.webp?fit=800%2C373&ssl=1", alt: "Stats detail 2", wide: true },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Stats4.webp?fit=800%2C373&ssl=1", alt: "Stats detail 3", wide: true },
     ],
     nextProject: "admin-dashboard",
   },
@@ -110,27 +167,29 @@ export const projects: Project[] = [
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/AdminDashboard.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/TipDirectHeader_Web-2.webp?fit=4018%2C2426&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/TipDirect_headerMobileWeb.webp?fit=655%2C1024&ssl=1",
+    toolsImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tools-1.webp?fit=800%2C115&ssl=1",
     liveLink: "https://eu.tip.direct/signup",
-    description: "Full admin dashboard for TipDirect — managing guides, tips, reviews, payments, and analytics. Platform processed thousands of tips totalling more than €6,000,000 in value.",
-    challenge: "TipDirect needed a comprehensive admin platform to manage the growing volume of guides, tips, reviews, and payments across multiple continents.",
+    description: "The TipDirect Admin Dashboard serves as the central management interface for company administrators to oversee and control platform operations. This comprehensive tool is designed to streamline the onboarding and management processes for tour guides and platform resources.\n\nThe dashboard implements role-based access control to provide different functionality and views based on user types.",
+    challenge: "In today's cashless society, tour guides face a key challenge: travelers rarely carry local currency, hindering the tipping system many guides depend on. Tour companies also lack efficient ways to collect customer reviews. To address these challenges we built TipDirect, a digital tipping and review collection platform.\n\nOur vision goes beyond solving payment and review collection issues; we aimed to build a community where guides share workloads and opportunities in a connected tourism ecosystem.",
+    whatIWorkedOn: ["Research", "UX Strategy", "Project Planning", "UI Design", "Design System", "Growth Strategy"],
     designProcess: [
-      { num: "01", title: "Research & Ideation", desc: "User interviews, pain points, journey mapping, success metrics" },
-      { num: "02", title: "Functional Specs & Wireframes", desc: "Low-fi wireframes, flows, diagrams, dev scoping" },
-      { num: "03", title: "Feature Planning & Roadmap", desc: "Gantt chart, kanban, prioritisation" },
-      { num: "04", title: "Design System", desc: "Atomic components in Figma, variant-based, naming conventions" },
-      { num: "05", title: "Design Handoff", desc: "Context, checklists, annotations, prototypes" },
-      { num: "06", title: "UAT, Launch & Measurement", desc: "ClickUp kanban, KPIs, Mixpanel, Looker Studio" },
+      { num: "01", title: "Research & Ideation", desc: "Honing in on the customer success team, I leveraged their contacts to conduct user interviews, identifying pain points in the tipping and review gathering process." },
+      { num: "02", title: "Functional Specs & Wireframes", desc: "We established a new structure for the platform based on the two user types. I created low definition wireframes for initial conversations with the lead dev." },
+      { num: "03", title: "Feature Planning & Roadmap", desc: "Working closely with senior management and the lead developer, we clearly defined product features and their scope, adding them to a roadmap which follows the kanban methodology." },
+      { num: "04", title: "Design System", desc: "Building upon an existing platform, I wanted to create a scalable atomic design system that would be easy to scale up as new features were required." },
+      { num: "05", title: "Design Handoff", desc: "I met regularly with the lead developer to discuss upcoming features before each sprint. Once finalised, designs were handed off and prepared for development." },
+      { num: "06", title: "UAT, Launch & Measurement", desc: "Before launch, each feature underwent user acceptance testing. After deployment, we monitored performance using predefined success metrics." },
     ],
     features: [
-      { title: "Dashboard", desc: "Overview of all key metrics" },
-      { title: "Get Tips", desc: "Tip collection management" },
-      { title: "Profile", desc: "Guide profile management" },
-      { title: "Payments", desc: "Payment processing & history" },
-      { title: "Setup", desc: "Account configuration" },
-      { title: "Reports", desc: "Analytics & reporting" },
-      { title: "Users", desc: "User management" },
-      { title: "Resources", desc: "Resource library" },
-      { title: "Settings", desc: "System settings" },
+      { title: "Dashboard", desc: "Easy access to tipping methods, a run-down of daily activity, display tipping group information and everyday functionality" },
+      { title: "Get Tips", desc: "Everything needed to access and gather tips on the go: QR codes, personal tip links & printouts" },
+      { title: "Profile", desc: "Profile photo, details, bio and preferred tip amounts & currency. Personalised accounts perform better" },
+      { title: "Payments", desc: "Track all payments and their status on the way to your account" },
+      { title: "Setup", desc: "For admins, setup reviews link, social & custom links" },
+      { title: "Reports", desc: "Usage analytics provides real-time metrics of platform effectiveness" },
+      { title: "Users", desc: "A user management portal for all guides on an admin's account" },
+      { title: "Resources", desc: "Add physical assets that guides & drivers can tag onto and earn tips from" },
+      { title: "Settings", desc: "Account settings, access to the knowledge base and subscription" },
     ],
     stats: [
       { value: "€6M+", label: "total tips processed" },
@@ -144,10 +203,14 @@ export const projects: Project[] = [
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Group-12.webp?fit=800%2C741&ssl=1", alt: "Payments" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Group-11.webp?fit=800%2C741&ssl=1", alt: "Setup" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Group-10.webp?fit=800%2C741&ssl=1", alt: "Reports" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Users-1.webp?fit=800%2C741&ssl=1", alt: "Users" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Resources-1.webp?fit=800%2C741&ssl=1", alt: "Resources" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Settings.webp?fit=800%2C741&ssl=1", alt: "Settings" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/DesignSystem_header.webp?fit=7401%2C4131&ssl=1", alt: "Design System", wide: true },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Colour.webp?fit=800%2C787&ssl=1", alt: "Colour palette" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Typography.webp?fit=800%2C787&ssl=1", alt: "Typography" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Components.webp?fit=4107%2C2089&ssl=1", alt: "Components", wide: true },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Group-16.webp?fit=7263%2C4866&ssl=1", alt: "Full platform overview", wide: true },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/TourGuides.webp?fit=800%2C979&ssl=1", alt: "Tour Guides management" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/DevHandoff.webp?fit=5555%2C2764&ssl=1", alt: "Dev handoff", wide: true },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/UAT-Launch.webp?fit=7401%2C4131&ssl=1", alt: "UAT & Launch", wide: true },
@@ -185,14 +248,48 @@ export const projects: Project[] = [
     client: "TipDirect",
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/TipDirect_App.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/TipDIrect_App_Header.webp?fit=4107%2C2089&ssl=1",
-    description: "Full native app for TipDirect on iOS & Android with payment links, tipping groups, tiered plans, voice reviews, analytics, and group management.",
+    toolsImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tools-1.webp?fit=800%2C115&ssl=1",
+    description: "The TipDirect app was designed as a natural extension of the TipDirect platform, providing tour guides with a streamlined, mobile-first solution for collecting tips on the go. As the lead designer, I focused on creating an experience that would complement the existing platform while addressing the unique needs of guides working in the field.",
+    whatIWorkedOn: ["UI/UX Design", "Product Research", "Project Management", "Customer Success"],
+    designGoals: [
+      { title: "Simplified Experience", desc: "Create a slimmed-down version of the platform focusing on the core functionality guides need while working on the go." },
+      { title: "Enhanced User Engagement", desc: "Foster a stickier relationship with guides by leveraging push notifications to keep them informed about their tips and getting the most from using the product." },
+      { title: "Seamless Integration", desc: "Ensure the app experience felt cohesive with the broader TipDirect ecosystem while being purpose-built for its primary workflow." },
+    ],
+    trimmingDown: "To optimise the TipDirect platform for mobile, we analysed the two user types on the web app: admins and guides. Using the guide persona as our baseline, we constructed information architecture diagrams that formed the foundation of the app's structure.\n\nOver time, we've introduced select admin features alongside the core guide functionality, whilst maintaining a clear distinction: the app serves as a tool for collecting tips and reviews in the field, whilst the web platform handles broader administrative tasks.",
+    engagementConsiderations: [
+      { title: "Context of Use", desc: "Tour guides are constantly on the move, often in outdoor environments or crowded tourist locations where pulling out a laptop is impractical. They needed a solution that could be accessed quickly with one hand while managing groups." },
+      { title: "Time Sensitivity", desc: "The moment immediately following a tour represents the peak opportunity for tip collection. Guides needed to share their tip links or QR codes instantly, without friction." },
+      { title: "Connectivity Challenges", desc: "Many popular tour locations have spotty wifi or cellular coverage. The app needed to be lightweight and capable of functioning effectively even in low-bandwidth situations." },
+      { title: "Habit Formation", desc: "By placing TipDirect directly on guides' home screens and leveraging push notifications, we could build daily touchpoints that kept the platform top-of-mind." },
+    ],
+    coreDesignPrinciples: [
+      { title: "Consistent Visual Language", desc: "The app employs the same colour palette, typography, iconography, and spacing system as the web platform, creating immediate familiarity." },
+      { title: "Component Library", desc: "We maintained the same foundational UI components such as buttons, form fields, cards and navigation elements, adapted for touch interactions." },
+      { title: "Brand Identity", desc: "The TipDirect brand personality and visual aesthetic remain consistent, reinforcing trust and recognition regardless of which platform users access." },
+    ],
+    mobileAdaptations: [
+      { title: "Simplified Navigation", desc: "The navigation structure was streamlined into a bottom tab bar, prioritising the most critical actions guides need while working." },
+      { title: "Optimised Typography", desc: "Font sizes were adjusted to ensure readability on smaller screens and in varying outdoor lighting conditions." },
+      { title: "Contextual Components", desc: "We introduced mobile-specific patterns like swipe gestures, pull-to-refresh, and bottom sheets that felt native to the mobile experience." },
+    ],
+    prototyping: "Before moving into development, I created a comprehensive interactive prototype of the TipDirect app in Figma. This prototyping phase proved essential to the design process, serving multiple critical functions that shaped the final product.",
+    prototypeLink: "https://www.figma.com/proto/kXnls8kYwzJJkHeBeRlF4w/TipDirect_App?page-id=0%3A1&node-id=1-2&p=f&viewport=16%2C295%2C0.5&t=k5YW9JjSfgAgnsjN-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A392&show-proto-sidebar=1",
+    coreFunctionality: [
+      { title: "Tip Collection", desc: "The app's primary function enables guides to share their unique tip links or QR codes instantly with tour participants. The tip collection interface was designed for speed and simplicity." },
+      { title: "Reviews", desc: "The review request is intentionally tied into the tip collection flow. When tourists complete a tip payment, they're immediately prompted to leave a review whilst the positive experience is still fresh." },
+    ],
     features: [
-      { title: "Payment Links", desc: "Bespoke payments on the go" },
-      { title: "Tipping Groups", desc: "Team up to gather tips and reviews" },
-      { title: "Tiered Plans", desc: "Gated functionality via subscription" },
-      { title: "Voice Reviews", desc: "AI-cleaned voice review submission" },
-      { title: "Analytics", desc: "Deep customer engagement tracking" },
-      { title: "Group Management", desc: "Join/leave teams, claim resources" },
+      { title: "Payment Links", desc: "Enabled guides to take bespoke payments on the go" },
+      { title: "Tipping Groups", desc: "Ability to team up and gather tips and reviews as a team" },
+      { title: "Tiered Plans", desc: "Featured gated functionality unlocked through tiered plans" },
+      { title: "Voice Reviews", desc: "Enabled guests to leave a review through voice, cleaned up with AI" },
+      { title: "Analytics", desc: "Deep analytics tracking customer engagement" },
+      { title: "Group Management", desc: "Ability to join, leave teams and claim resources on the go" },
+    ],
+    releaseReception: "The TipDirect app launched in 2024 and quickly gained traction across Europe and North America. What began as a mobile complement to the web platform rapidly became an essential tool for tour guides working in the field.\n\nToday, the app is used daily by over 10,000 guides across multiple markets, representing a significant milestone in TipDirect's growth. This widespread adoption has driven remarkable business results: the platform experienced 225% gross volume growth in revenue.",
+    designSystemLinks: [
+      { label: "Design System", url: "https://tipdirect-design.com/" },
     ],
     stats: [
       { value: "10K+", label: "daily active users on 2 continents" },
@@ -223,15 +320,19 @@ export const projects: Project[] = [
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/Spotify.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/SpotifyHeader_Web.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/SpotifyHeader_Mobile.webp?fit=800%2C825&ssl=1",
-    description: "RFP for integrating digital tipping into Spotify. Designed to empower users to support content creators directly. Solution placed in the second-page fold below main UI — below lyrics, videos, artist info. Three alternative placements explored: player fold, artist profile, track dropdown, Spotify Stories.",
+    description: "The TipDirect integration on the Spotify platform is designed to empower users to express their appreciation directly and provide meaningful financial support for content creators who enrich their listening experience on the audio streaming platform.\n\nWe embarked on a meticulous process of deconstructing the TipDirect platform, carefully analyzing and stripping back its components to their most fundamental elements. This methodical approach was essential to ensure a seamless integration with Spotify's existing user interface architecture.",
+    explorationDetail: "Our primary challenge was determining the optimal placement of the tipping integration—whether within a Spotify artist's profile or alongside a currently playing song. The player interface already contained numerous functional elements, and adding a tipping button prominently in the center would likely frustrate users. Therefore, we decided to avoid placing the tipping prompt within the initial viewport of the user's screen.\n\nFortunately, the solution for prompt placement was found further down the screen. Spotify already encourages users to explore artists through features like lyrics, videos, artist information, and ticket sales in the second-page fold. This section proved to be the ideal location for our tipping prompt.",
+    solutionDetail: "Our primary challenge was determining the optimal placement of the tipping integration. The player interface already contained numerous functional elements, and adding a tipping button prominently in the center would likely frustrate users.\n\nFortunately, the solution for prompt placement was found further down the screen. Spotify already encourages users to explore artists through features like lyrics, videos, artist information, and ticket sales in the second-page fold. This section proved to be the ideal location for our tipping prompt, a module placed just below the main UI was the selected placement.",
     whatIWorkedOn: ["UI Design", "Presentation"],
+    alternativeIntegrations: [
+      { title: "Artist Profile", desc: "Within the artist's profile, there is a monthly listeners module that includes information such as links to social media. This placement would be ideal since users viewing this section are highly engaged with the artist and more likely to tip.", image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/11/Alt_Step2.png?fit=499%2C1024&ssl=1" },
+      { title: "Track Dropdown", desc: "Each track on Spotify has a dropdown menu with additional options. Adding a tipping option here would be a subtle way to include it in every artist's profile.", image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/11/Alt_Step3.png?fit=499%2C1024&ssl=1" },
+      { title: "Spotify Stories", desc: "Spotify's new Stories feature, designed to increase user engagement on the platform, could highlight TipDirect's charitable aspect. We believe this would be an ideal placement that emphasizes the altruistic nature of donating to a cause.", image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/11/Alt_Step1.png?fit=499%2C1024&ssl=1" },
+    ],
     images: [
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/Group-7.webp?fit=800%2C944&ssl=1", alt: "Spotify integration concept" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/Group-12.webp?fit=800%2C754&ssl=1", alt: "Placement options" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/12/Group-13.webp?fit=800%2C425&ssl=1", alt: "Integration flow", wide: true },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/11/Alt_Step1.png?fit=499%2C1024&ssl=1", alt: "Alternative placement 1" },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/11/Alt_Step2.png?fit=499%2C1024&ssl=1", alt: "Alternative placement 2" },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/11/Alt_Step3.png?fit=499%2C1024&ssl=1", alt: "Alternative placement 3" },
     ],
     nextProject: "whitelabel",
   },
