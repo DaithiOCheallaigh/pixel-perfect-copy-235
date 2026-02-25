@@ -5,38 +5,27 @@ import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 
-const featured = projects.slice(0, 5);
+const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
 
 const Index = () => {
   return (
     <main>
       {/* Hero */}
       <section className="relative min-h-screen overflow-hidden px-6 pt-32 md:px-12 lg:px-24">
-        {/* Background grid */}
         <div className="pointer-events-none absolute inset-0 grid-background opacity-50" />
 
-        <div className="relative mx-auto max-w-5xl pt-12 md:pt-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="font-mono-label mb-6 block text-muted-foreground">
-              Digital Designer & UX Strategist
-            </span>
-          </motion.div>
-
+        <div className="relative mx-auto max-w-5xl pt-12 text-center md:pt-24">
           <motion.h1
             className="mb-6 text-5xl font-black tracking-tighter text-foreground md:text-7xl lg:text-8xl"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Hi, I'm <span className="text-primary">Dave!</span>
+            Hi, I'm Dave!
           </motion.h1>
 
           <motion.p
-            className="mb-10 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl"
+            className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -46,110 +35,100 @@ const Index = () => {
           </motion.p>
 
           <motion.div
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap justify-center gap-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Link
-              to="/work"
-              className="group inline-flex items-center gap-2 rounded-sm bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
-            >
-              Explore Work <span>→</span>
-            </Link>
             <a
               href="https://lacunadigital.io/wp-content/uploads/2025/08/David-Kelly-CV_Sep25.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-sm border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary"
+              className="inline-flex items-center gap-2 rounded-sm bg-foreground px-8 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
             >
-              Download CV ↓
+              ↓ Download my CV
             </a>
           </motion.div>
         </div>
-
-        {/* Hero logo image */}
-        <motion.div
-          className="relative mx-auto mt-16 max-w-4xl"
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <img
-            src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/01/Me.webp?fit=1880%2C256&ssl=1"
-            alt="Lacuna Digital wordmark"
-            className="w-full opacity-60"
-          />
-        </motion.div>
       </section>
 
-      {/* Featured Work */}
+      {/* Explore My Work — Featured Projects */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
-            <SectionLabel>Featured Work</SectionLabel>
-            <h2 className="mb-12 text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
-              Selected Projects
+            <h2 className="mb-16 text-center text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
+              Explore my work
             </h2>
           </ScrollReveal>
 
-          {/* First 2 hero cards */}
-          <div className="mb-2 grid gap-2 md:grid-cols-2">
-            {featured.slice(0, 2).map((project, i) => (
-              <ScrollReveal key={project.id} delay={i * 0.1}>
-                <Link
-                  to={`/case/${project.id}`}
-                  className="group relative block overflow-hidden rounded-sm bg-card"
-                >
-                  <div className="overflow-hidden">
-                    <img
-                      src={project.headerImage}
-                      alt={project.title}
-                      className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                      loading="lazy"
-                    />
+          {/* Featured project cards — side by side image + text like old site */}
+          <div className="space-y-2">
+            {/* AI Reviews — image left, text right */}
+            <ScrollReveal>
+              <Link
+                to="/case/ai-reviews"
+                className="group grid gap-0 overflow-hidden rounded-sm bg-card md:grid-cols-2"
+              >
+                <div className="overflow-hidden">
+                  <img
+                    src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1"
+                    alt="AI Assisted Reviews"
+                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="flex flex-col justify-center p-8 md:p-12">
+                  <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
+                    Leveraging AI to increase 5-star reviews by 45% on average
+                  </h3>
+                  <div className="mb-6 flex flex-wrap gap-2">
+                    {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
+                      <span key={tag} className="rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
+                    ))}
                   </div>
-                  <div className="p-6">
-                    <div className="mb-2 flex flex-wrap gap-2">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <span key={tag} className="font-mono-label text-muted-foreground">{tag}</span>
-                      ))}
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground transition-colors group-hover:text-primary">
-                      {project.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{project.subtitle}</p>
-                  </div>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
+                  <blockquote className="mb-4 text-sm italic text-muted-foreground">
+                    "Leveraging the power of AI & expanding our product to attract a new type of user could only have been possible with Dave on our team"
+                  </blockquote>
+                  <p className="text-sm font-semibold text-foreground">Andrew Kelly <span className="font-normal text-muted-foreground">- CTO, TipDirect</span></p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
+                    View Project <span>→</span>
+                  </span>
+                </div>
+              </Link>
+            </ScrollReveal>
 
-          {/* Next 3 in grid */}
-          <div className="grid gap-2 md:grid-cols-3">
-            {featured.slice(2, 5).map((project, i) => (
-              <ScrollReveal key={project.id} delay={i * 0.1}>
-                <Link
-                  to={`/case/${project.id}`}
-                  className="group block overflow-hidden rounded-sm bg-card transition-transform duration-300 hover:-translate-y-1"
-                >
-                  <div className="overflow-hidden">
-                    <img
-                      src={project.pillImage}
-                      alt={project.title}
-                      className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                      loading="lazy"
-                    />
+            {/* Digital Tipping — text left, image right */}
+            <ScrollReveal delay={0.1}>
+              <Link
+                to="/case/digital-tipping"
+                className="group grid gap-0 overflow-hidden rounded-sm bg-card md:grid-cols-2"
+              >
+                <div className="flex flex-col justify-center p-8 md:order-1 md:p-12">
+                  <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
+                    Enabling tour guides to receive an average tip of $25 through digital tipping
+                  </h3>
+                  <div className="mb-6 flex flex-wrap gap-2">
+                    {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
+                      <span key={tag} className="rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
+                    ))}
                   </div>
-                  <div className="p-5">
-                    <h3 className="text-base font-bold text-foreground transition-colors group-hover:text-primary">
-                      {project.title}
-                    </h3>
-                    <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{project.subtitle}</p>
-                  </div>
-                </Link>
-              </ScrollReveal>
-            ))}
+                  <p className="text-sm text-muted-foreground">
+                    Increasingly, people are not carrying cash with them in person. We worked with TripAdmit to pivot their entire business in a new direction by creating a brand centered around digital tipping, TipDirect.
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
+                    View Project <span>→</span>
+                  </span>
+                </div>
+                <div className="overflow-hidden md:order-2">
+                  <img
+                    src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/09/Pill2.webp?fit=800%2C800&ssl=1"
+                    alt="Digital Tipping"
+                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    loading="lazy"
+                  />
+                </div>
+              </Link>
+            </ScrollReveal>
           </div>
 
           <ScrollReveal delay={0.2}>
@@ -215,6 +194,17 @@ const Index = () => {
               </ScrollReveal>
             ))}
           </div>
+
+          <ScrollReveal delay={0.2}>
+            <div className="mt-12 text-center">
+              <Link
+                to="/about"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
+              >
+                Explore My Philosophy <span>→</span>
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

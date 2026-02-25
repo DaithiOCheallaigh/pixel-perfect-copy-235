@@ -87,7 +87,11 @@ const CaseStudy = () => {
               )}
               <div>
                 <SectionLabel>Overview</SectionLabel>
-                <p className="text-base leading-relaxed text-muted-foreground">{project.description}</p>
+                <div className="space-y-4">
+                  {project.description.split("\n\n").map((p, i) => (
+                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  ))}
+                </div>
 
                 {project.toolsImage && (
                   <div className="mt-8">
@@ -101,14 +105,94 @@ const CaseStudy = () => {
         </div>
       </section>
 
+      {/* Design Goals (TipDirect App) */}
+      {project.designGoals && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Design Goals</SectionLabel>
+              <div className="grid gap-4 md:grid-cols-3">
+                {project.designGoals.map((goal, i) => (
+                  <div key={i} className="rounded-sm bg-card p-6">
+                    <h3 className="mb-2 text-sm font-bold text-foreground">{goal.title}</h3>
+                    <p className="text-sm text-muted-foreground">{goal.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
       {/* Challenge */}
-      {project.challenge && project.challenge !== project.description && (
+      {project.challenge && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-7xl">
             <ScrollReveal>
               <div className="max-w-3xl">
                 <SectionLabel>The Challenge</SectionLabel>
-                <p className="text-base leading-relaxed text-muted-foreground">{project.challenge}</p>
+                <div className="space-y-4">
+                  {project.challenge.split("\n\n").map((p, i) => (
+                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Exploration */}
+      {(project.exploration || project.explorationDetail) && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="max-w-3xl">
+                <SectionLabel>Exploration</SectionLabel>
+                <div className="space-y-4">
+                  {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) => (
+                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Trimming Down (App) */}
+      {project.trimmingDown && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="max-w-3xl">
+                <SectionLabel>Trimming Down The Platform</SectionLabel>
+                <div className="space-y-4">
+                  {project.trimmingDown.split("\n\n").map((p, i) => (
+                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Engagement Considerations */}
+      {project.engagementConsiderations && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Considerations for Enhancing User Engagement</SectionLabel>
+              <div className="grid gap-4 md:grid-cols-2">
+                {project.engagementConsiderations.map((item, i) => (
+                  <ScrollReveal key={i} delay={i * 0.08}>
+                    <div className="rounded-sm bg-card p-6">
+                      <h3 className="mb-2 text-sm font-bold text-foreground">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    </div>
+                  </ScrollReveal>
+                ))}
               </div>
             </ScrollReveal>
           </div>
@@ -127,6 +211,38 @@ const CaseStudy = () => {
                     <p className="text-sm leading-relaxed text-muted-foreground">{finding}</p>
                   </div>
                 ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Building the Feature */}
+      {project.buildingTheFeature && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="max-w-3xl">
+                <SectionLabel>Building the Feature</SectionLabel>
+                <p className="text-base leading-relaxed text-muted-foreground">{project.buildingTheFeature}</p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Solution Detail (Spotify) */}
+      {project.solutionDetail && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="max-w-3xl">
+                <SectionLabel>The Solution</SectionLabel>
+                <div className="space-y-4">
+                  {project.solutionDetail.split("\n\n").map((p, i) => (
+                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  ))}
+                </div>
               </div>
             </ScrollReveal>
           </div>
@@ -193,6 +309,101 @@ const CaseStudy = () => {
         </section>
       )}
 
+      {/* Design System Links */}
+      {project.designSystemLinks && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Design System</SectionLabel>
+              <p className="mb-4 text-sm text-muted-foreground">To explore the look and feel of the whole product, please see below</p>
+              <div className="flex flex-wrap gap-3">
+                {project.designSystemLinks.map((link) => (
+                  <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                    {link.label} ↗
+                  </a>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Core Design Principles (App) */}
+      {project.coreDesignPrinciples && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Core Design Principles</SectionLabel>
+              <div className="grid gap-4 md:grid-cols-3">
+                {project.coreDesignPrinciples.map((p, i) => (
+                  <div key={i} className="rounded-sm bg-card p-6">
+                    <h3 className="mb-2 text-sm font-bold text-foreground">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground">{p.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Mobile Adaptations (App) */}
+      {project.mobileAdaptations && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Mobile-Specific Adaptations</SectionLabel>
+              <div className="grid gap-4 md:grid-cols-3">
+                {project.mobileAdaptations.map((a, i) => (
+                  <div key={i} className="rounded-sm bg-card p-6">
+                    <h3 className="mb-2 text-sm font-bold text-foreground">{a.title}</h3>
+                    <p className="text-sm text-muted-foreground">{a.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Prototyping */}
+      {project.prototyping && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="max-w-3xl">
+                <SectionLabel>Building the Prototype</SectionLabel>
+                <p className="text-base leading-relaxed text-muted-foreground">{project.prototyping}</p>
+                {project.prototypeLink && (
+                  <a href={project.prototypeLink} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                    View Prototype ↗
+                  </a>
+                )}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Core Functionality */}
+      {project.coreFunctionality && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Core Functionality</SectionLabel>
+              <div className="grid gap-4 md:grid-cols-2">
+                {project.coreFunctionality.map((f, i) => (
+                  <div key={i} className="rounded-sm bg-card p-6">
+                    <h3 className="mb-2 text-base font-bold text-foreground">{f.title}</h3>
+                    <p className="text-sm text-muted-foreground">{f.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
       {/* Features */}
       {project.features && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
@@ -208,6 +419,85 @@ const CaseStudy = () => {
                     </div>
                   </ScrollReveal>
                 ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Alternative Integrations (Spotify) */}
+      {project.alternativeIntegrations && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Other Integration Options</SectionLabel>
+              <div className="grid gap-6 md:grid-cols-3">
+                {project.alternativeIntegrations.map((alt, i) => (
+                  <ScrollReveal key={i} delay={i * 0.1}>
+                    <div className="group rounded-sm bg-card overflow-hidden">
+                      <div className="overflow-hidden">
+                        <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
+                      </div>
+                      <div className="p-5">
+                        <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Launch & Analytics */}
+      {project.launchAnalytics && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <SectionLabel>Launch & Analytics</SectionLabel>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-sm bg-card p-6">
+                  <h3 className="mb-3 text-base font-bold text-foreground">Documentation & Support</h3>
+                  <ul className="space-y-2">
+                    {project.launchAnalytics.documentation.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-sm bg-card p-6">
+                  <h3 className="mb-3 text-base font-bold text-foreground">Analytics Implementation</h3>
+                  <ul className="space-y-2">
+                    {project.launchAnalytics.analytics.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* Release & Reception */}
+      {project.releaseReception && (
+        <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="max-w-3xl">
+                <SectionLabel>Release & Reception</SectionLabel>
+                <div className="space-y-4">
+                  {project.releaseReception.split("\n\n").map((p, i) => (
+                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  ))}
+                </div>
               </div>
             </ScrollReveal>
           </div>
@@ -256,16 +546,13 @@ const CaseStudy = () => {
             <ScrollReveal>
               <SectionLabel>Gallery</SectionLabel>
             </ScrollReveal>
-            {/* Wide images full width, non-wide in grid */}
             <div className="space-y-2">
-              {/* Group non-wide images into rows of 2-3 */}
               {(() => {
                 const elements: JSX.Element[] = [];
                 let nonWideBuffer: typeof project.images = [];
                 
                 project.images!.forEach((img, i) => {
                   if (img.wide) {
-                    // Flush non-wide buffer first
                     if (nonWideBuffer.length > 0) {
                       const cols = nonWideBuffer.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2";
                       elements.push(
@@ -290,7 +577,6 @@ const CaseStudy = () => {
                     );
                   } else {
                     nonWideBuffer.push(img);
-                    // Flush when we hit 3
                     if (nonWideBuffer.length === 3) {
                       elements.push(
                         <div key={`grid-${i}`} className="grid gap-2 md:grid-cols-3">
@@ -308,7 +594,6 @@ const CaseStudy = () => {
                   }
                 });
                 
-                // Flush remaining
                 if (nonWideBuffer.length > 0) {
                   const cols = nonWideBuffer.length >= 3 ? "md:grid-cols-3" : nonWideBuffer.length === 2 ? "md:grid-cols-2" : "";
                   elements.push(
