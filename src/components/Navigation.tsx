@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 const Navigation = ({ visible }: { visible: boolean }) => {
   const location = useLocation();
@@ -23,12 +24,10 @@ const Navigation = ({ visible }: { visible: boolean }) => {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-1 text-lg font-extrabold tracking-tight text-foreground">
           <span className="text-primary">•</span> Lacuna Digital
         </Link>
 
-        {/* Desktop nav */}
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
             <Link
@@ -41,6 +40,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               {link.label}
             </Link>
           ))}
+          <ThemeToggle />
           <a
             href="https://www.linkedin.com/in/davidkelly89/"
             target="_blank"
@@ -51,28 +51,20 @@ const Navigation = ({ visible }: { visible: boolean }) => {
           </a>
         </nav>
 
-        {/* Mobile hamburger */}
-        <button
-          className="flex flex-col gap-1.5 md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <motion.span
-            className="block h-[2px] w-6 bg-foreground"
-            animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 6 : 0 }}
-          />
-          <motion.span
-            className="block h-[2px] w-6 bg-foreground"
-            animate={{ opacity: mobileOpen ? 0 : 1 }}
-          />
-          <motion.span
-            className="block h-[2px] w-6 bg-foreground"
-            animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? -6 : 0 }}
-          />
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle />
+          <button
+            className="flex flex-col gap-1.5"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            <motion.span className="block h-[2px] w-6 bg-foreground" animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 6 : 0 }} />
+            <motion.span className="block h-[2px] w-6 bg-foreground" animate={{ opacity: mobileOpen ? 0 : 1 }} />
+            <motion.span className="block h-[2px] w-6 bg-foreground" animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? -6 : 0 }} />
+          </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
       <motion.div
         className="border-t border-border md:hidden"
         initial={false}
@@ -86,9 +78,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               key={link.to}
               to={link.to}
               onClick={() => setMobileOpen(false)}
-              className={`text-lg font-semibold transition-colors ${
-                isActive(link.to) ? "text-primary" : "text-foreground"
-              }`}
+              className={`text-lg font-semibold transition-colors ${isActive(link.to) ? "text-primary" : "text-foreground"}`}
             >
               {link.label}
             </Link>
