@@ -11,7 +11,7 @@ const AvailabilityCTA = () => (
       </ScrollReveal>
       <ScrollReveal delay={0.1}>
         <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-foreground md:text-6xl">
-          Ready for Q1, 2026
+          Ready for new collaborations in Q1, 2026.
         </h2>
       </ScrollReveal>
       <ScrollReveal delay={0.2}>

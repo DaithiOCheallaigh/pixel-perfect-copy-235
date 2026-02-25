@@ -8,8 +8,8 @@ const Footer = () => (
       </p>
       <nav className="flex flex-wrap items-center justify-center gap-6">
         {[
-          { label: "Work", to: "/work" },
-          { label: "Skills", to: "/skills" },
+          { label: "My Work", to: "/work" },
+          { label: "Skill Set", to: "/skills" },
           { label: "About", to: "/about" },
         ].map((link) => (
           <Link

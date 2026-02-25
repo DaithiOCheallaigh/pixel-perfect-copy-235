@@ -31,7 +31,7 @@ const Work = () => (
                   />
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-foreground md:text-xl">{project.title}</h3>
-                    <p className="text-sm text-muted-foreground">{project.subtitle}</p>
+                    <p className="text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
                   </div>
                   <span className="font-mono-label text-muted-foreground">Coming Soon</span>
                 </div>
@@ -52,7 +52,7 @@ const Work = () => (
                     <h3 className="text-lg font-bold text-foreground transition-colors group-hover:text-primary md:text-xl">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">{project.subtitle}</p>
+                    <p className="text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
                   </div>
                   <div className="hidden flex-wrap gap-2 md:flex">
                     {project.tags.map((tag) => (
