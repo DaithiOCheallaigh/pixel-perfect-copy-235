@@ -6,27 +6,27 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 const serviceAreas = [
   {
     title: "MVP's for PMF",
-    desc: "Launch quickly with a strategically designed MVP; data-driven iterations to achieve optimal product-market fit and user satisfaction.",
+    desc: "I can help you launch your product quickly with a strategically designed Minimum Viable Product, followed by data-driven iterations to achieve optimal product-market fit and user satisfaction.",
   },
   {
     title: "Branding & Identity",
-    desc: "Unforgettable brand experiences through logo design, strategic colour palette development, and custom visual assets.",
+    desc: "I craft unforgettable brand experiences through expert logo design, strategic colour palette development, and custom visual assets that set you apart in the digital landscape.",
   },
   {
     title: "UX & Brand Strategy",
-    desc: "UX design and brand strategy in harmony; alignment between product values and audience needs; compelling digital experiences.",
+    desc: "My UX design and brand strategy services work in harmony to create a perfect alignment between your product's core values and your target audience's needs. I craft compelling digital experiences that resonate with your users while strengthening your brand identity.",
   },
   {
     title: "Onboarding",
-    desc: "Smooth and effortless onboarding experience for users; extensive experience across numerous clients.",
+    desc: "Drawing on my extensive experience in designing successful onboarding processes for numerous clients, I guarantee a smooth and effortless onboarding experience for your users.",
   },
   {
     title: "Product Launch",
-    desc: "Smooth rollout and launch; experience spans a wide range of digital products.",
+    desc: "I can partner with you to ensure a smooth rollout and launch of your product. My extensive experience spans a wide range of digital products and platforms.",
   },
   {
-    title: "Funnel Optimisation",
-    desc: "Analyze and refine every touchpoint; maximize engagement and conversions; data-driven approach.",
+    title: "Funnel Optimization",
+    desc: "Conversion Funnel Optimization: I analyze and refine every touchpoint in your product's user journey to maximize engagement and conversions. My data-driven approach ensures seamless user flows that transform visitors into loyal customers.",
   },
 ];
 
@@ -63,7 +63,7 @@ const capabilities: { category: string; items: { label: string; id: string }[] }
     items: [
       { label: "Digital Marketing Strategy", id: "digital-marketing-strategy" },
       { label: "Social Media Management", id: "social-media-management" },
-      { label: "Email Marketing", id: "email-marketing" },
+      { label: "Email Marketing Campaign", id: "email-marketing" },
       { label: "Content Marketing", id: "content-marketing" },
     ],
   },

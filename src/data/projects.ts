@@ -2,6 +2,7 @@ export interface Project {
   id: string;
   title: string;
   subtitle: string;
+  workDescription?: string;
   tags: string[];
   timeline: string;
   pillImage: string;
@@ -49,6 +50,7 @@ export const projects: Project[] = [
     id: "ai-reviews",
     title: "AI Assisted Reviews",
     subtitle: "Leveraging AI to increase 5-star reviews by 45% on average",
+    workDescription: "I worked with TripAdmit to leverage the power of AI generating reviews for tour and activity providers at the end of their experiences.",
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "3 months",
     client: "TipDirect",
@@ -118,6 +120,7 @@ export const projects: Project[] = [
     id: "digital-tipping",
     title: "Digital Tipping",
     subtitle: "Enabling tour guides to receive an average tip of $25 through digital tipping",
+    workDescription: "This digital tipping solution enables tour guides to take tips on the go, receiving immediate remittance via their selected payout method.",
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "6 months",
     client: "TipDirect",
@@ -171,6 +174,7 @@ export const projects: Project[] = [
     id: "admin-dashboard",
     title: "Admin Dashboard",
     subtitle: "A comprehensive admin platform processing €6,000,000+ in tips",
+    workDescription: "We built a dashboard for the TipDirect platform, providing customers with all the tools needed to facilitate digital tipping.",
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "Ongoing",
     client: "TipDirect",
@@ -229,8 +233,9 @@ export const projects: Project[] = [
   },
   {
     id: "website-tipdirect",
-    title: "Website — TipDirect",
+    title: "Website: TipDirect",
     subtitle: "Designing and developing the TipDirect marketing website",
+    workDescription: "Using Elementor on WordPress, I created a new marketing website for the TipDirect platform.",
     tags: ["UI/UX", "Web Dev"],
     timeline: "2 months",
     client: "TipDirect",
@@ -253,7 +258,8 @@ export const projects: Project[] = [
     id: "tipdirect-app",
     title: "TipDirect App",
     subtitle: "Native mobile app serving 10,000+ daily active users across 2 continents",
-    tags: ["UI/UX", "Atomic Design", "App", "iOS & Android"],
+    workDescription: "iOS & Android App for the guides using the TipDirect platform",
+    tags: ["UI/UX", "Atomic Design", "App"],
     timeline: "6 months",
     client: "TipDirect",
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/TipDirect_App.webp?fit=800%2C741&ssl=1",
@@ -322,8 +328,9 @@ export const projects: Project[] = [
   },
   {
     id: "spotify",
-    title: "Spotify Integration",
+    title: "Spotify Tipping Integration",
     subtitle: "RFP design for integrating digital tipping into Spotify",
+    workDescription: "TipDirect explored a request for proposal (RFP) for integrating tipping into the Spotify platform.",
     tags: ["UI/UX", "Integration"],
     timeline: "N/A",
     client: "Spotify",
@@ -348,8 +355,9 @@ export const projects: Project[] = [
   },
   {
     id: "whitelabel",
-    title: "Airline Whitelabel",
+    title: "Airline Tour & Activity White-label",
     subtitle: "Lead designer on airline white-label product — 85 airlines approached, 17 launched",
+    workDescription: "During my time at TripAdmit, I was the lead designer on the airline white label product.",
     tags: ["UI/UX", "Product Research", "Atomic Design"],
     timeline: "2 years",
     client: "TripAdmit",
@@ -387,6 +395,7 @@ export const projects: Project[] = [
     id: "booking-app",
     title: "Booking App & Site",
     subtitle: "Digital transformation of Therapie Clinic — £13m in online sales in first year",
+    workDescription: "A booking and appointments app for the beauty industry",
     tags: ["UI/UX", "App Design", "E-commerce"],
     timeline: "2 years (April 2018 – March 2020)",
     client: "Therapie Clinic",

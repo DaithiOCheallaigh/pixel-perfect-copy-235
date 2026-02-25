@@ -144,7 +144,7 @@ const About = () => (
 
           <div>
             <ScrollReveal>
-              <SectionLabel>Personal</SectionLabel>
+              <SectionLabel>Mission Statement</SectionLabel>
               <h2 className="mb-8 text-3xl font-black tracking-tighter text-foreground md:text-4xl">
                 David Kelly
               </h2>
