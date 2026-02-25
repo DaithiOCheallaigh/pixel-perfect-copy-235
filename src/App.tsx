@@ -10,6 +10,7 @@ import About from "./pages/About";
 import Skills from "./pages/Skills";
 import Blog from "./pages/Blog";
 import CaseStudy from "./pages/CaseStudy";
+import ServicePage from "./pages/ServicePage";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -43,6 +44,7 @@ const AppContent = () => {
         <Route path="/skills" element={<Skills />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/case/:id" element={<CaseStudy />} />
+        <Route path="/service/:id" element={<ServicePage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

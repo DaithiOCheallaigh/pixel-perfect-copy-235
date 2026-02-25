@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
@@ -29,13 +30,61 @@ const serviceAreas = [
   },
 ];
 
-const capabilities = [
-  { category: "Product", items: ["User Interface Design", "User Experience Design", "Strategy", "Prototypes"] },
-  { category: "Branding", items: ["Logo Design", "Brand Identity", "Branding Guidelines", "Creative Direction"] },
-  { category: "Web", items: ["CMS & Content Platforms", "Shopify", "AI Front-end Development", "Funnel Optimisation"] },
-  { category: "Marketing", items: ["Digital Marketing Strategy", "Social Media Management", "Email Marketing", "Content Marketing"] },
-  { category: "SEO", items: ["Keyword Research & Analysis", "Technical SEO Optimisation", "Local SEO", "Link Building & Authority"] },
-  { category: "System Design", items: ["Component Libraries", "Style Guides", "Advanced Prototyping", "Development Alignment"] },
+const capabilities: { category: string; items: { label: string; id: string }[] }[] = [
+  {
+    category: "Product",
+    items: [
+      { label: "User Interface Design", id: "user-interface-design" },
+      { label: "User Experience Design", id: "user-experience-design" },
+      { label: "Strategy", id: "design-strategy" },
+      { label: "Prototypes", id: "prototypes" },
+    ],
+  },
+  {
+    category: "Branding",
+    items: [
+      { label: "Logo Design", id: "logo-design" },
+      { label: "Brand Identity", id: "brand-identity" },
+      { label: "Branding Guidelines", id: "branding-guidelines" },
+      { label: "Creative Direction", id: "creative-direction" },
+    ],
+  },
+  {
+    category: "Web",
+    items: [
+      { label: "CMS & Content Platforms", id: "cms-content-platforms" },
+      { label: "Shopify", id: "shopify" },
+      { label: "AI Front-end Development", id: "ai-front-end-development" },
+      { label: "Funnel Optimisation", id: "funnel-optimisation" },
+    ],
+  },
+  {
+    category: "Marketing",
+    items: [
+      { label: "Digital Marketing Strategy", id: "digital-marketing-strategy" },
+      { label: "Social Media Management", id: "social-media-management" },
+      { label: "Email Marketing", id: "email-marketing" },
+      { label: "Content Marketing", id: "content-marketing" },
+    ],
+  },
+  {
+    category: "SEO",
+    items: [
+      { label: "Keyword Research & Analysis", id: "keyword-research" },
+      { label: "Technical SEO Optimisation", id: "technical-seo" },
+      { label: "Local SEO", id: "local-seo" },
+      { label: "Link Building & Authority", id: "link-building" },
+    ],
+  },
+  {
+    category: "System Design",
+    items: [
+      { label: "Component Libraries", id: "component-libraries" },
+      { label: "Style Guides", id: "style-guides" },
+      { label: "Advanced Prototyping", id: "advanced-prototyping" },
+      { label: "Development Alignment", id: "development-alignment" },
+    ],
+  },
 ];
 
 const Skills = () => (
@@ -79,7 +128,14 @@ const Skills = () => (
                 <h3 className="mb-4 font-mono-label text-primary">{cap.category}</h3>
                 <ul className="space-y-2">
                   {cap.items.map((item) => (
-                    <li key={item} className="text-sm text-foreground">{item}</li>
+                    <li key={item.id}>
+                      <Link
+                        to={`/service/${item.id}`}
+                        className="text-sm text-foreground transition-colors hover:text-primary"
+                      >
+                        {item.label} →
+                      </Link>
+                    </li>
                   ))}
                 </ul>
               </div>
