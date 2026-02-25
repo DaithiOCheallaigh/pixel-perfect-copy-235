@@ -2,11 +2,53 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
 import Index from "./pages/Index";
+import Work from "./pages/Work";
+import About from "./pages/About";
+import Skills from "./pages/Skills";
+import Blog from "./pages/Blog";
+import CaseStudy from "./pages/CaseStudy";
 import NotFound from "./pages/NotFound";
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
+import CustomCursor from "./components/CustomCursor";
+import PageLoader from "./components/PageLoader";
 
 const queryClient = new QueryClient();
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
+const AppContent = () => {
+  const [loaded, setLoaded] = useState(false);
+  const handleLoaderComplete = useCallback(() => setLoaded(true), []);
+
+  return (
+    <>
+      {!loaded && <PageLoader onComplete={handleLoaderComplete} />}
+      <CustomCursor />
+      <Navigation visible={loaded} />
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/work" element={<Work />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/skills" element={<Skills />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/case/:id" element={<CaseStudy />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -14,11 +56,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AppContent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
