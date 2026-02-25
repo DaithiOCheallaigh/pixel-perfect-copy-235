@@ -18,11 +18,11 @@ const Work = () => (
           </p>
         </ScrollReveal>
 
-        <div className="grid gap-8 sm:grid-cols-2">
+        <div className="grid gap-8 sm:grid-cols-2 [&>*]:h-full">
           {projects.map((project, i) => (
             <ScrollReveal key={project.id} delay={i * 0.08}>
               {project.comingSoon ? (
-                <div className="group overflow-hidden rounded-xl border border-border bg-card opacity-50">
+                <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card opacity-50">
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={project.pillImage}
@@ -31,9 +31,9 @@ const Work = () => (
                       loading="lazy"
                     />
                   </div>
-                  <div className="p-6">
+                  <div className="flex flex-1 flex-col p-6">
                     <h3 className="text-lg font-bold text-foreground md:text-xl">{project.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
+                    <p className="mt-1 flex-1 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
                     <div className="mt-4 flex items-center justify-between">
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag) => (
@@ -47,7 +47,7 @@ const Work = () => (
               ) : (
                 <Link
                   to={`/case/${project.id}`}
-                  className="group block overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
                 >
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
@@ -57,11 +57,11 @@ const Work = () => (
                       loading="lazy"
                     />
                   </div>
-                  <div className="p-6">
+                  <div className="flex flex-1 flex-col p-6">
                     <h3 className="text-lg font-bold text-foreground transition-colors group-hover:text-primary md:text-xl">
                       {project.title}
                     </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
+                    <p className="mt-1 flex-1 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
                     <div className="mt-4 flex items-center justify-between">
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag) => (
