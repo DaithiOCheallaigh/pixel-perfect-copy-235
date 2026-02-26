@@ -407,7 +407,6 @@ const CaseStudy = () => {
                 </div>
               )}
             </div>
-          </div>
         </div>
       </div>
 
