@@ -186,12 +186,12 @@ const Index = () => {
               },
             ].map((step, i) => (
               <ScrollReveal key={step.num} delay={i * 0.15}>
-                <div className="group">
+                <div className="group rounded-xl bg-white dark:bg-card p-4">
                   <div className="mb-4 overflow-hidden rounded-lg">
                     <img
                       src={step.image}
                       alt={step.title}
-                      className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                      className="w-full object-contain"
                       loading="lazy"
                     />
                   </div>
