@@ -14,6 +14,10 @@ import {
 import ScrollReveal from "@/components/ScrollReveal";
 import AvailabilityCTA from "@/components/AvailabilityCTA";
 import SectionLabel from "@/components/SectionLabel";
+import claudeLogo from "@/assets/logos/claude.png";
+import notionLogo from "@/assets/logos/notion.png";
+import lovableLogo from "@/assets/logos/lovable.png";
+import figmaLogo from "@/assets/logos/figma.svg";
 
 const steps = [
   {
