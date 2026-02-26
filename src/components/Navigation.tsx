@@ -2,6 +2,8 @@ import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { ShineBorder } from "./ui/shine-border";
+import avatarImg from "@/assets/avatar.jpeg";
 
 const Navigation = ({ visible }: { visible: boolean }) => {
   const location = useLocation();
