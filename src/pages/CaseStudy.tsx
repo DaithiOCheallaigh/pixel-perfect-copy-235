@@ -664,7 +664,7 @@ const CaseStudy = () => {
             <div className={`grid gap-2 ${project.stats.length === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3"}`}>
               {project.stats.map((stat, i) => (
                 <ScrollReveal key={i} delay={i * 0.1}>
-                  <div className="rounded-sm bg-card p-8 text-center">
+                   <div className="flex h-full flex-col items-center justify-center rounded-sm bg-card p-8 text-center">
                     <div className="text-4xl font-black text-primary md:text-5xl">{stat.value}</div>
                     <p className="mt-2 text-sm text-muted-foreground">{stat.label}</p>
                   </div>
