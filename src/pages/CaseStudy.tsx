@@ -17,7 +17,7 @@ const ImageGallery = ({ images }: { images: { src: string; alt: string; wide?: b
           <div key={`grid-${i}`} className={`grid gap-2 ${cols}`}>
             {nonWideBuffer.map((nwImg, j) => (
               <ScrollReveal key={j} delay={j * 0.05}>
-                <div className="overflow-hidden rounded-sm">
+                <div className="overflow-hidden rounded-xl shadow-md">
                   <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
                 </div>
               </ScrollReveal>
@@ -28,7 +28,7 @@ const ImageGallery = ({ images }: { images: { src: string; alt: string; wide?: b
       }
       elements.push(
         <ScrollReveal key={`wide-${i}`}>
-          <div className="overflow-hidden rounded-sm">
+          <div className="overflow-hidden rounded-xl shadow-md">
             <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
           </div>
         </ScrollReveal>
@@ -40,7 +40,7 @@ const ImageGallery = ({ images }: { images: { src: string; alt: string; wide?: b
           <div key={`grid-${i}`} className="grid gap-2 md:grid-cols-3">
             {nonWideBuffer.map((nwImg, j) => (
               <ScrollReveal key={j} delay={j * 0.05}>
-                <div className="overflow-hidden rounded-sm">
+                <div className="overflow-hidden rounded-xl shadow-md">
                   <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
                 </div>
               </ScrollReveal>
@@ -58,7 +58,7 @@ const ImageGallery = ({ images }: { images: { src: string; alt: string; wide?: b
       <div key="grid-final" className={`grid gap-2 ${cols}`}>
         {nonWideBuffer.map((nwImg, j) => (
           <ScrollReveal key={j} delay={j * 0.05}>
-            <div className="overflow-hidden rounded-sm">
+            <div className="overflow-hidden rounded-xl shadow-md">
               <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
             </div>
           </ScrollReveal>
@@ -67,7 +67,7 @@ const ImageGallery = ({ images }: { images: { src: string; alt: string; wide?: b
     );
   }
 
-  return <div className="space-y-2">{elements}</div>;
+  return <div className="space-y-4">{elements}</div>;
 };
 
 const CaseStudy = () => {
@@ -96,87 +96,78 @@ const CaseStudy = () => {
     img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report"
   ) || [];
 
+  // Get the small screenshots for the 3-step cards
+  const stepImages = project.images?.filter(img => 
+    ["NFC tap", "Create review", "Review output"].includes(img.alt)
+  ) || [];
+
   return (
     <main className="pt-24">
-      {/* Hero — side-by-side intro matching old portfolio layout */}
-      <section className="px-6 pt-12 pb-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-7xl">
+      {/* Hero — Title left, stacked mockups right */}
+      <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
             <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
           </motion.div>
 
           <motion.div
-            className={`grid gap-12 ${project.mobileImage ? "md:grid-cols-[1fr_1.2fr]" : ""}`}
+            className="grid gap-12 md:grid-cols-[1.2fr_1fr] items-start"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Left column: metadata + mobile image */}
-            {project.mobileImage && (
-              <div className="flex flex-col">
-                {project.client && (
-                  <div className="mb-6">
-                    <span className="font-mono-label mb-1 block text-muted-foreground">Client</span>
-                    <p className="text-sm font-semibold text-foreground">{project.client}</p>
-                  </div>
-                )}
-                {project.whatIWorkedOn && (
-                  <div className="mb-6">
-                    <span className="font-mono-label mb-2 block text-muted-foreground">What I Worked On</span>
-                    <div className="flex flex-wrap gap-2">
-                      {project.whatIWorkedOn.map((item) => (
-                        <span key={item} className="rounded-sm bg-card px-3 py-1.5 text-xs font-semibold text-foreground">{item}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <div className="mb-6">
-                  <span className="font-mono-label mb-1 block text-muted-foreground">Timeline</span>
-                  <p className="text-sm font-semibold text-foreground">{project.timeline}</p>
-                </div>
-                <div className="mt-auto flex items-start justify-center">
-                  <img src={project.mobileImage} alt={`${project.title} mobile`} className="max-h-[500px] w-auto rounded-sm object-contain" loading="lazy" />
-                </div>
-              </div>
-            )}
-
-            {/* Right column: title + description + tools */}
-            <div className="flex flex-col justify-center">
-              <h1 className="mb-4 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
-              <div className="space-y-4">
+            {/* Left: title + description + tags */}
+            <div className="flex flex-col">
+              {project.client && (
+                <span className="font-mono-label mb-4 text-muted-foreground">{project.client}</span>
+              )}
+              <h1 className="mb-6 text-4xl font-black tracking-tighter text-foreground md:text-5xl">{project.title}</h1>
+              <div className="space-y-4 mb-6">
                 {project.description.split("\n\n").map((p, i) => (
-                  <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                 ))}
               </div>
+              
+              {/* Tags/tools row */}
+              {project.whatIWorkedOn && (
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-2">
+                    {project.whatIWorkedOn.map((item) => (
+                      <span key={item} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">{item}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="mb-4">
+                <span className="font-mono-label text-muted-foreground">Timeline: </span>
+                <span className="text-sm font-semibold text-foreground">{project.timeline}</span>
+              </div>
+
               {project.toolsImage && (
-                <div className="mt-8">
-                  <span className="font-mono-label mb-3 block text-muted-foreground">Tools</span>
+                <div className="mb-6">
+                  <span className="font-mono-label mb-2 block text-muted-foreground">Tools</span>
                   <img src={project.toolsImage} alt="Tools used" className="max-w-xs" loading="lazy" />
                 </div>
               )}
+
               {project.liveLink && (
-                <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex w-fit items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90">
                   View Live ↗
                 </a>
               )}
             </div>
 
-            {/* Fallback for projects without mobile image */}
-            {!project.mobileImage && (
-              <div className="flex flex-col justify-center">
-                {project.whatIWorkedOn && (
-                  <div className="mb-6">
-                    <span className="font-mono-label mb-2 block text-muted-foreground">What I Worked On</span>
-                    <div className="flex flex-wrap gap-2">
-                      {project.whatIWorkedOn.map((item) => (
-                        <span key={item} className="rounded-sm bg-card px-3 py-1.5 text-xs font-semibold text-foreground">{item}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <div className="mb-6">
-                  <span className="font-mono-label mb-1 block text-muted-foreground">Timeline</span>
-                  <p className="text-sm font-semibold text-foreground">{project.timeline}</p>
+            {/* Right: stacked mobile mockups */}
+            {project.mobileImage && (
+              <div className="flex flex-col items-center gap-4">
+                <div className="relative">
+                  <img 
+                    src={project.mobileImage} 
+                    alt={`${project.title} mobile mockup`} 
+                    className="max-h-[520px] w-auto rounded-xl object-contain shadow-lg" 
+                    loading="lazy" 
+                  />
                 </div>
               </div>
             )}
@@ -184,261 +175,278 @@ const CaseStudy = () => {
         </div>
       </section>
 
-      {/* Challenge */}
-      {project.challenge && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <div className="max-w-3xl">
-                <SectionLabel>The Challenge</SectionLabel>
-                <div className="space-y-4">
-                  {project.challenge.split("\n\n").map((p, i) => (
-                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* Exploration */}
-      {(project.exploration || project.explorationDetail) && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <div className="max-w-3xl">
-                <SectionLabel>Exploration</SectionLabel>
-                <div className="space-y-4">
-                  {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) => (
-                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-            {project.explorationVideo && (
-              <ScrollReveal>
-                <div className="mt-8 overflow-hidden rounded-sm">
-                  <video
-                    src={project.explorationVideo}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full object-cover"
-                  />
-                </div>
-              </ScrollReveal>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Design Goals */}
-      {project.designGoals && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <SectionLabel>Design Goals</SectionLabel>
-              <div className="grid gap-4 md:grid-cols-3">
-                {project.designGoals.map((goal, i) => (
-                  <div key={i} className="rounded-sm bg-card p-6">
-                    <h3 className="mb-2 text-sm font-bold text-foreground">{goal.title}</h3>
-                    <p className="text-sm text-muted-foreground">{goal.desc}</p>
+      {/* Sidebar Meta + Main Content wrapper */}
+      <div className="px-6 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid gap-12 md:grid-cols-[200px_1fr]">
+            {/* Sticky sidebar meta block */}
+            <aside className="hidden md:block">
+              <div className="sticky top-24 space-y-6">
+                {project.whatIWorkedOn && (
+                  <div>
+                    <span className="font-mono-label mb-1 block text-muted-foreground">Role</span>
+                    <p className="text-sm text-foreground">{project.whatIWorkedOn.join(", ")}</p>
                   </div>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* Trimming Down */}
-      {project.trimmingDown && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <div className="max-w-3xl">
-                <SectionLabel>Trimming Down The Platform</SectionLabel>
-                <div className="space-y-4">
-                  {project.trimmingDown.split("\n\n").map((p, i) => (
-                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
-                  ))}
+                )}
+                {project.client && (
+                  <div>
+                    <span className="font-mono-label mb-1 block text-muted-foreground">Client</span>
+                    <p className="text-sm text-foreground">{project.client}</p>
+                  </div>
+                )}
+                <div>
+                  <span className="font-mono-label mb-1 block text-muted-foreground">Timeline</span>
+                  <p className="text-sm text-foreground">{project.timeline}</p>
                 </div>
+                {project.toolsImage && (
+                  <div>
+                    <span className="font-mono-label mb-1 block text-muted-foreground">Tools</span>
+                    <img src={project.toolsImage} alt="Tools" className="max-w-[160px]" loading="lazy" />
+                  </div>
+                )}
               </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
+            </aside>
 
-      {/* Engagement Considerations */}
-      {project.engagementConsiderations && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <SectionLabel>Considerations for Enhancing User Engagement</SectionLabel>
-              <div className="grid gap-4 md:grid-cols-2">
-                {project.engagementConsiderations.map((item, i) => (
-                  <ScrollReveal key={i} delay={i * 0.08}>
-                    <div className="rounded-sm bg-card p-6">
-                      <h3 className="mb-2 text-sm font-bold text-foreground">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+            {/* Main content column */}
+            <div className="space-y-20">
+              {/* The Challenge */}
+              {project.challenge && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>The Challenge</SectionLabel>
+                    <div className="space-y-4">
+                      {project.challenge.split("\n\n").map((p, i) => (
+                        <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      ))}
                     </div>
-                  </ScrollReveal>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* Research Findings */}
-      {project.researchFindings && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <SectionLabel>Research Findings</SectionLabel>
-              {project.researchIntro && (
-                <p className="mb-6 max-w-3xl text-base leading-relaxed text-muted-foreground">{project.researchIntro}</p>
-              )}
-              <div className="grid gap-8 md:grid-cols-2">
-                {project.researchFindings.map((finding, i) => {
-                  const [title, ...rest] = finding.split(": ");
-                  const content = rest.join(": ");
-                  return (
-                    <div key={i}>
-                      <h3 className="mb-3 text-base font-bold text-foreground">{title}</h3>
-                      <ul className="space-y-2">
-                        {content.split(". ").filter(Boolean).map((point, j) => (
-                          <li key={j} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
-                            <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
-                            {point.endsWith(".") ? point : `${point}.`}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  );
-                })}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* Building the Feature */}
-      {project.buildingTheFeature && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <div className="max-w-3xl">
-                <SectionLabel>Building the Feature</SectionLabel>
-                <p className="text-base leading-relaxed text-muted-foreground">{project.buildingTheFeature}</p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* Inline image: AI Review Steps (after Building the Feature) */}
-      {inlineImages.filter(img => img.alt === "AI Review Steps").map((img, i) => (
-        <section key={`inline-steps-${i}`} className="px-6 py-4 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <div className="overflow-hidden rounded-sm">
-                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      ))}
-
-      {/* Design Process */}
-      {project.designProcess && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <SectionLabel>Design Process</SectionLabel>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {project.designProcess.map((phase, i) => (
-                  <ScrollReveal key={i} delay={i * 0.08}>
-                    <div className="rounded-sm bg-card p-6">
-                      <span className="font-mono-label text-primary">{phase.num}</span>
-                      <h3 className="mt-2 text-base font-bold text-foreground">{phase.title}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{phase.desc}</p>
-                    </div>
-                  </ScrollReveal>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* Design System Links */}
-      {project.designSystemLinks && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <SectionLabel>Design System</SectionLabel>
-              <p className="mb-4 text-sm text-muted-foreground">To explore the look and feel of the whole product, please see below</p>
-              <div className="flex flex-wrap gap-3">
-                {project.designSystemLinks.map((link) => (
-                  <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
-                    {link.label} ↗
-                  </a>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* Solution Intro + How It Works */}
-      {project.solutionIntro && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            <ScrollReveal>
-              <div className="max-w-3xl">
-                <SectionLabel>How The Solution Works</SectionLabel>
-                <div className="space-y-4">
-                  {project.solutionIntro.split("\n\n").map((p, i) => (
-                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
-
-      {/* How It Works Steps */}
-      {project.howItWorks && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
-            {!project.solutionIntro && (
-              <ScrollReveal>
-                <SectionLabel>How It Works</SectionLabel>
-              </ScrollReveal>
-            )}
-            <div className="grid gap-6 md:grid-cols-3">
-              {project.howItWorks.map((step, i) => (
-                <ScrollReveal key={i} delay={i * 0.1}>
-                  <div className="rounded-sm bg-card p-6">
-                    <span className="font-mono-label text-primary">{step.step}</span>
-                    <h3 className="mt-2 text-lg font-bold text-foreground">{step.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
                   </div>
                 </ScrollReveal>
-              ))}
+              )}
+
+              {/* Exploration */}
+              {(project.exploration || project.explorationDetail) && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>Exploration</SectionLabel>
+                    <div className="space-y-4 mb-6">
+                      {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) => (
+                        <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      ))}
+                    </div>
+                    {project.explorationVideo && (
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <video
+                          src={project.explorationVideo}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="w-full object-cover"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Research Findings */}
+              {project.researchFindings && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>Research Findings</SectionLabel>
+                    {project.researchIntro && (
+                      <p className="mb-8 text-[15px] leading-[1.7] text-muted-foreground">{project.researchIntro}</p>
+                    )}
+                    <div className="grid gap-8 md:grid-cols-2 mb-8">
+                      {project.researchFindings.map((finding, i) => {
+                        const [title, ...rest] = finding.split(": ");
+                        const content = rest.join(": ");
+                        return (
+                          <div key={i}>
+                            <h3 className="mb-3 text-base font-bold text-foreground">{title}</h3>
+                            <ul className="space-y-2">
+                              {content.split(". ").filter(Boolean).map((point, j) => (
+                                <li key={j} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
+                                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                                  {point.endsWith(".") ? point : `${point}.`}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {/* Research images side by side */}
+                    {galleryImages.filter(img => ["Group overview"].includes(img.alt)).length > 0 && (
+                      <div className="grid gap-4 md:grid-cols-2">
+                        {galleryImages.filter(img => !img.wide).slice(0, 2).map((img, i) => (
+                          <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Building the Feature */}
+              {project.buildingTheFeature && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>Building the Feature</SectionLabel>
+                    <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.buildingTheFeature}</p>
+                    {/* Inline image: AI Review Steps */}
+                    {inlineImages.filter(img => img.alt === "AI Review Steps").map((img, i) => (
+                      <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                        <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Design Goals */}
+              {project.designGoals && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>Design Goals</SectionLabel>
+                    <div className="grid gap-4 md:grid-cols-3">
+                      {project.designGoals.map((goal, i) => (
+                        <div key={i} className="rounded-xl bg-card p-6">
+                          <h3 className="mb-2 text-sm font-bold text-foreground">{goal.title}</h3>
+                          <p className="text-sm text-muted-foreground">{goal.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Trimming Down */}
+              {project.trimmingDown && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>Trimming Down The Platform</SectionLabel>
+                    <div className="space-y-4">
+                      {project.trimmingDown.split("\n\n").map((p, i) => (
+                        <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Engagement Considerations */}
+              {project.engagementConsiderations && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>Considerations for Enhancing User Engagement</SectionLabel>
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {project.engagementConsiderations.map((item, i) => (
+                        <div key={i} className="rounded-xl bg-card p-6">
+                          <h3 className="mb-2 text-sm font-bold text-foreground">{item.title}</h3>
+                          <p className="text-sm text-muted-foreground">{item.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Design System Links */}
+              {project.designSystemLinks && (
+                <ScrollReveal>
+                  <div className="text-center">
+                    <SectionLabel>Design System</SectionLabel>
+                    <p className="mb-6 text-[15px] text-muted-foreground">To explore the look and feel of the whole product, please see below</p>
+                    <div className="flex flex-wrap justify-center gap-3">
+                      {project.designSystemLinks.map((link) => (
+                        <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                          {link.label} ↗
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Solution Intro + How It Works */}
+              {project.solutionIntro && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>How The Solution Works</SectionLabel>
+                    <div className="space-y-4">
+                      {project.solutionIntro.split("\n\n").map((p, i) => (
+                        <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Design Process */}
+              {project.designProcess && (
+                <ScrollReveal>
+                  <div>
+                    <SectionLabel>Design Process</SectionLabel>
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {project.designProcess.map((phase, i) => (
+                        <ScrollReveal key={i} delay={i * 0.08}>
+                          <div className="rounded-xl bg-card p-6">
+                            <span className="font-mono-label text-primary">{phase.num}</span>
+                            <h3 className="mt-2 text-base font-bold text-foreground">{phase.title}</h3>
+                            <p className="mt-2 text-sm text-muted-foreground">{phase.desc}</p>
+                          </div>
+                        </ScrollReveal>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Numbered Feature Steps (3-column cards with screenshots) */}
+              {project.howItWorks && (
+                <div>
+                  {!project.solutionIntro && (
+                    <ScrollReveal>
+                      <SectionLabel>How It Works</SectionLabel>
+                    </ScrollReveal>
+                  )}
+                  <div className="grid gap-6 md:grid-cols-3">
+                    {project.howItWorks.map((step, i) => (
+                      <ScrollReveal key={i} delay={i * 0.1}>
+                        <div className="flex flex-col rounded-xl bg-card overflow-hidden">
+                          <div className="p-6">
+                            <span className="text-2xl font-black text-primary">{step.step}</span>
+                            <h3 className="mt-2 text-lg font-bold text-foreground">{step.title}</h3>
+                            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+                          </div>
+                          {/* Step screenshot if available */}
+                          {stepImages[i] && (
+                            <div className="px-4 pb-4">
+                              <div className="overflow-hidden rounded-lg">
+                                <img src={stepImages[i].src} alt={stepImages[i].alt} className="w-full object-cover" loading="lazy" />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </ScrollReveal>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </div>
 
-      {/* Big Stats Callout */}
+      {/* Full-width sections below the sidebar layout */}
+
+      {/* Big Stats Callout — centered large text */}
       {project.stats && project.stats.length > 0 && project.featureImpact && (
-        <section className="px-6 py-16 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+        <section className="px-6 py-20 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div className="text-center">
                 <h2 className="text-3xl font-black tracking-tight text-foreground md:text-5xl lg:text-6xl">
@@ -456,12 +464,12 @@ const CaseStudy = () => {
       {/* Sharing Methods */}
       {project.sharingMethods && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Sharing Methods</SectionLabel>
               <div className="flex flex-wrap gap-3">
                 {project.sharingMethods.map((method) => (
-                  <span key={method} className="rounded-sm bg-card px-4 py-2 text-sm font-semibold text-foreground">{method}</span>
+                  <span key={method} className="rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">{method}</span>
                 ))}
               </div>
             </ScrollReveal>
@@ -469,16 +477,16 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Solution Detail (Spotify) */}
+      {/* Solution Detail */}
       {project.solutionDetail && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div className="max-w-3xl">
                 <SectionLabel>The Solution</SectionLabel>
                 <div className="space-y-4">
                   {project.solutionDetail.split("\n\n").map((p, i) => (
-                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                   ))}
                 </div>
               </div>
@@ -490,12 +498,12 @@ const CaseStudy = () => {
       {/* Core Design Principles */}
       {project.coreDesignPrinciples && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Core Design Principles</SectionLabel>
               <div className="grid gap-4 md:grid-cols-3">
                 {project.coreDesignPrinciples.map((p, i) => (
-                  <div key={i} className="rounded-sm bg-card p-6">
+                  <div key={i} className="rounded-xl bg-card p-6">
                     <h3 className="mb-2 text-sm font-bold text-foreground">{p.title}</h3>
                     <p className="text-sm text-muted-foreground">{p.desc}</p>
                   </div>
@@ -509,12 +517,12 @@ const CaseStudy = () => {
       {/* Mobile Adaptations */}
       {project.mobileAdaptations && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Mobile-Specific Adaptations</SectionLabel>
               <div className="grid gap-4 md:grid-cols-3">
                 {project.mobileAdaptations.map((a, i) => (
-                  <div key={i} className="rounded-sm bg-card p-6">
+                  <div key={i} className="rounded-xl bg-card p-6">
                     <h3 className="mb-2 text-sm font-bold text-foreground">{a.title}</h3>
                     <p className="text-sm text-muted-foreground">{a.desc}</p>
                   </div>
@@ -528,13 +536,13 @@ const CaseStudy = () => {
       {/* Prototyping */}
       {project.prototyping && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div className="max-w-3xl">
                 <SectionLabel>Building the Prototype</SectionLabel>
-                <p className="text-base leading-relaxed text-muted-foreground">{project.prototyping}</p>
+                <p className="text-[15px] leading-[1.7] text-muted-foreground">{project.prototyping}</p>
                 {project.prototypeLink && (
-                  <a href={project.prototypeLink} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                  <a href={project.prototypeLink} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
                     View Prototype ↗
                   </a>
                 )}
@@ -547,12 +555,12 @@ const CaseStudy = () => {
       {/* Core Functionality */}
       {project.coreFunctionality && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Core Functionality</SectionLabel>
               <div className="grid gap-4 md:grid-cols-2">
                 {project.coreFunctionality.map((f, i) => (
-                  <div key={i} className="rounded-sm bg-card p-6">
+                  <div key={i} className="rounded-xl bg-card p-6">
                     <h3 className="mb-2 text-base font-bold text-foreground">{f.title}</h3>
                     <p className="text-sm text-muted-foreground">{f.desc}</p>
                   </div>
@@ -566,13 +574,13 @@ const CaseStudy = () => {
       {/* Features */}
       {project.features && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Key Features</SectionLabel>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {project.features.map((feature, i) => (
                   <ScrollReveal key={i} delay={i * 0.06}>
-                    <div className="rounded-sm bg-card p-5">
+                    <div className="rounded-xl bg-card p-5">
                       <h3 className="text-sm font-bold text-foreground">{feature.title}</h3>
                       <p className="mt-1 text-xs text-muted-foreground">{feature.desc}</p>
                     </div>
@@ -587,13 +595,13 @@ const CaseStudy = () => {
       {/* Alternative Integrations */}
       {project.alternativeIntegrations && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Other Integration Options</SectionLabel>
               <div className="grid gap-6 md:grid-cols-3">
                 {project.alternativeIntegrations.map((alt, i) => (
                   <ScrollReveal key={i} delay={i * 0.1}>
-                    <div className="group rounded-sm bg-card overflow-hidden">
+                    <div className="group overflow-hidden rounded-xl bg-card">
                       <div className="overflow-hidden">
                         <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
                       </div>
@@ -610,30 +618,31 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Launch & Analytics */}
+      {/* Launch & Analytics — two-column */}
       {project.launchAnalytics && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Launch & Analytics</SectionLabel>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-sm bg-card p-6">
-                  <h3 className="mb-3 text-base font-bold text-foreground">Documentation & Support</h3>
-                  <ul className="space-y-2">
+              <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">After launching our AI review feature, we implemented a comprehensive approach to ensure successful adoption and measure impact:</p>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="rounded-xl bg-card p-6">
+                  <h3 className="mb-4 text-base font-bold text-foreground">Documentation & Support</h3>
+                  <ul className="space-y-3">
                     {project.launchAnalytics.documentation.map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="rounded-sm bg-card p-6">
-                  <h3 className="mb-3 text-base font-bold text-foreground">Analytics Implementation</h3>
-                  <ul className="space-y-2">
+                <div className="rounded-xl bg-card p-6">
+                  <h3 className="mb-4 text-base font-bold text-foreground">Analytics Implementation</h3>
+                  <ul className="space-y-3">
                     {project.launchAnalytics.analytics.map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
                         {item}
                       </li>
                     ))}
@@ -648,9 +657,9 @@ const CaseStudy = () => {
       {/* Inline image: Mixpanel (after Launch & Analytics) */}
       {inlineImages.filter(img => img.alt === "Mixpanel analytics report").map((img, i) => (
         <section key={`inline-mixpanel-${i}`} className="px-6 py-4 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
-              <div className="overflow-hidden rounded-sm">
+              <div className="overflow-hidden rounded-xl shadow-md">
                 <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
               </div>
             </ScrollReveal>
@@ -658,21 +667,21 @@ const CaseStudy = () => {
         </section>
       ))}
 
-      {/* Feature Impact */}
+      {/* Feature Impact — 3 stat columns with accent color */}
       {project.featureImpact && (
-        <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+        <section className="px-6 py-16 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Feature Impact</SectionLabel>
             </ScrollReveal>
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-3">
               {project.featureImpact.map((impact, i) => (
                 <ScrollReveal key={i} delay={i * 0.1}>
-                  <div className="rounded-sm bg-card p-8 text-center">
+                  <div className="rounded-xl bg-card p-8">
                     <span className="font-mono-label text-muted-foreground">{impact.period}</span>
-                    <div className="mt-3 text-4xl font-black text-primary md:text-5xl">{impact.value}</div>
-                    <p className="mt-2 text-sm font-semibold text-foreground">{impact.label}</p>
-                    <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{impact.description}</p>
+                    <div className="mt-3 text-5xl font-black text-primary md:text-6xl">{impact.value}</div>
+                    <p className="mt-3 text-sm font-semibold text-foreground">{impact.label}</p>
+                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{impact.description}</p>
                   </div>
                 </ScrollReveal>
               ))}
@@ -684,13 +693,13 @@ const CaseStudy = () => {
       {/* Release & Reception */}
       {project.releaseReception && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div className="max-w-3xl">
                 <SectionLabel>Release & Reception</SectionLabel>
                 <div className="space-y-4">
                   {project.releaseReception.split("\n\n").map((p, i) => (
-                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                   ))}
                 </div>
               </div>
@@ -702,7 +711,7 @@ const CaseStudy = () => {
       {/* Quote */}
       {project.quote && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <blockquote className="border-l-2 border-primary pl-6">
                 <p className="text-lg italic text-foreground">"{project.quote.text}"</p>
@@ -713,17 +722,17 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Stats / Key Results */}
+      {/* Stats / Key Results (for projects without featureImpact) */}
       {project.stats && project.stats.length > 0 && !project.featureImpact && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Key Results</SectionLabel>
             </ScrollReveal>
-            <div className={`grid gap-2 ${project.stats.length === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3"}`}>
+            <div className={`grid gap-4 ${project.stats.length === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3"}`}>
               {project.stats.map((stat, i) => (
                 <ScrollReveal key={i} delay={i * 0.1}>
-                   <div className="flex h-full flex-col items-center justify-center rounded-sm bg-card p-8 text-center">
+                  <div className="flex h-full flex-col items-center justify-center rounded-xl bg-card p-8 text-center">
                     <div className="text-4xl font-black text-primary md:text-5xl">{stat.value}</div>
                     <p className="mt-2 text-sm text-muted-foreground">{stat.label}</p>
                   </div>
@@ -737,7 +746,7 @@ const CaseStudy = () => {
       {/* Image Gallery */}
       {galleryImages.length > 0 && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Gallery</SectionLabel>
             </ScrollReveal>
@@ -746,21 +755,33 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Next Project */}
+      {/* Next Project — full-width card with background */}
       {nextProject && (
-        <section className="px-6 py-24 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-7xl">
+        <section className="px-6 py-20 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Next Project</SectionLabel>
-              <Link to={`/case/${nextProject.id}`} className="group flex items-center gap-6">
-                <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-sm">
-                  <img src={nextProject.pillImage} alt={nextProject.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
+              <Link 
+                to={`/case/${nextProject.id}`} 
+                className="group relative block overflow-hidden rounded-2xl"
+              >
+                <div className="relative h-64 md:h-80">
+                  <img 
+                    src={nextProject.headerImage} 
+                    alt={nextProject.title} 
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                    loading="lazy" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <span className="font-mono-label mb-2 block text-white/70">Up Next</span>
+                    <h3 className="text-2xl font-black text-white md:text-4xl">{nextProject.title}</h3>
+                    <p className="mt-1 text-sm text-white/70">{nextProject.subtitle}</p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white transition-all group-hover:gap-3">
+                      View Project →
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-foreground transition-colors group-hover:text-primary md:text-3xl">{nextProject.title}</h3>
-                  <p className="text-sm text-muted-foreground">{nextProject.subtitle}</p>
-                </div>
-                <span className="ml-auto text-3xl text-muted-foreground transition-colors group-hover:text-primary">→</span>
               </Link>
             </ScrollReveal>
           </div>
