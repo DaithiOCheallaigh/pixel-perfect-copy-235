@@ -98,39 +98,71 @@ const CaseStudy = () => {
 
   return (
     <main className="pt-24">
-      {/* Hero */}
-      <section className="px-6 pt-12 md:px-12 lg:px-24">
+      {/* Hero — side-by-side intro matching old portfolio layout */}
+      <section className="px-6 pt-12 pb-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
             <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
-            <div className="mb-4 flex flex-wrap gap-3">
-              {project.tags.map((tag) => (
-                <span key={tag} className="font-mono-label text-primary">{tag}</span>
-              ))}
-            </div>
-            <h1 className="mb-4 text-4xl font-black tracking-tighter text-foreground md:text-6xl">{project.title}</h1>
-            <p className="mb-8 max-w-2xl text-lg text-muted-foreground">{project.subtitle}</p>
-          </motion.div>
-
-          <motion.div className="overflow-hidden rounded-sm" initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}>
-            <img src={project.headerImage} alt={project.title} className="w-full object-cover" />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Intro: Mobile image + description */}
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-7xl">
-          <ScrollReveal>
-            <div className={`grid gap-12 ${project.mobileImage ? "md:grid-cols-2" : ""}`}>
-              {project.mobileImage && (
-                <div className="flex items-start justify-center">
+          <motion.div
+            className={`grid gap-12 ${project.mobileImage ? "md:grid-cols-[1fr_1.2fr]" : ""}`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Left column: metadata + mobile image */}
+            {project.mobileImage && (
+              <div className="flex flex-col">
+                {project.client && (
+                  <div className="mb-6">
+                    <span className="font-mono-label mb-1 block text-muted-foreground">Client</span>
+                    <p className="text-sm font-semibold text-foreground">{project.client}</p>
+                  </div>
+                )}
+                {project.whatIWorkedOn && (
+                  <div className="mb-6">
+                    <span className="font-mono-label mb-2 block text-muted-foreground">What I Worked On</span>
+                    <div className="flex flex-wrap gap-2">
+                      {project.whatIWorkedOn.map((item) => (
+                        <span key={item} className="rounded-sm bg-card px-3 py-1.5 text-xs font-semibold text-foreground">{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="mb-6">
+                  <span className="font-mono-label mb-1 block text-muted-foreground">Timeline</span>
+                  <p className="text-sm font-semibold text-foreground">{project.timeline}</p>
+                </div>
+                <div className="mt-auto flex items-start justify-center">
                   <img src={project.mobileImage} alt={`${project.title} mobile`} className="max-h-[500px] w-auto rounded-sm object-contain" loading="lazy" />
                 </div>
+              </div>
+            )}
+
+            {/* Right column: title + description + tools */}
+            <div className="flex flex-col justify-center">
+              <h1 className="mb-4 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
+              <div className="space-y-4">
+                {project.description.split("\n\n").map((p, i) => (
+                  <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
+                ))}
+              </div>
+              {project.toolsImage && (
+                <div className="mt-8">
+                  <span className="font-mono-label mb-3 block text-muted-foreground">Tools</span>
+                  <img src={project.toolsImage} alt="Tools used" className="max-w-xs" loading="lazy" />
+                </div>
               )}
+              {project.liveLink && (
+                <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex w-fit items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                  View Live ↗
+                </a>
+              )}
+            </div>
+
+            {/* Fallback for projects without mobile image */}
+            {!project.mobileImage && (
               <div className="flex flex-col justify-center">
                 {project.whatIWorkedOn && (
                   <div className="mb-6">
@@ -146,26 +178,9 @@ const CaseStudy = () => {
                   <span className="font-mono-label mb-1 block text-muted-foreground">Timeline</span>
                   <p className="text-sm font-semibold text-foreground">{project.timeline}</p>
                 </div>
-                <SectionLabel>Overview</SectionLabel>
-                <div className="space-y-4">
-                  {project.description.split("\n\n").map((p, i) => (
-                    <p key={i} className="text-base leading-relaxed text-muted-foreground">{p}</p>
-                  ))}
-                </div>
-                {project.toolsImage && (
-                  <div className="mt-8">
-                    <span className="font-mono-label mb-3 block text-muted-foreground">Tools</span>
-                    <img src={project.toolsImage} alt="Tools used" className="max-w-xs" loading="lazy" />
-                  </div>
-                )}
-                {project.liveLink && (
-                  <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex w-fit items-center gap-2 rounded-sm border border-border px-5 py-2 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
-                    View Live ↗
-                  </a>
-                )}
               </div>
-            </div>
-          </ScrollReveal>
+            )}
+          </motion.div>
         </div>
       </section>
 
@@ -286,12 +301,24 @@ const CaseStudy = () => {
               {project.researchIntro && (
                 <p className="mb-6 max-w-3xl text-base leading-relaxed text-muted-foreground">{project.researchIntro}</p>
               )}
-              <div className="grid gap-4 md:grid-cols-3">
-                {project.researchFindings.map((finding, i) => (
-                  <div key={i} className="rounded-sm bg-card p-6">
-                    <p className="text-sm leading-relaxed text-muted-foreground">{finding}</p>
-                  </div>
-                ))}
+              <div className="grid gap-8 md:grid-cols-2">
+                {project.researchFindings.map((finding, i) => {
+                  const [title, ...rest] = finding.split(": ");
+                  const content = rest.join(": ");
+                  return (
+                    <div key={i}>
+                      <h3 className="mb-3 text-base font-bold text-foreground">{title}</h3>
+                      <ul className="space-y-2">
+                        {content.split(". ").filter(Boolean).map((point, j) => (
+                          <li key={j} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
+                            <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                            {point.endsWith(".") ? point : `${point}.`}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
               </div>
             </ScrollReveal>
           </div>
