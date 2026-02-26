@@ -53,7 +53,10 @@ export function ShaderAnimation() {
           }
         }
         
-        gl_FragColor = vec4(color, 1.0);
+        float brightness = max(color.r, max(color.g, color.b));
+        float alpha = smoothstep(0.0, 0.3, brightness);
+        
+        gl_FragColor = vec4(color, alpha);
       }
     `
 
