@@ -389,8 +389,8 @@ const CaseStudy = () => {
                         <div className="flex h-full flex-col rounded-xl bg-card overflow-hidden">
                           {/* Screenshot on top */}
                           {stepImages[i] && (
-                            <div className="aspect-square overflow-hidden">
-                              <img src={stepImages[i].src} alt={stepImages[i].alt} className="h-full w-full object-cover" loading="lazy" />
+                            <div className="overflow-hidden bg-card">
+                              <img src={stepImages[i].src} alt={stepImages[i].alt} className="w-full object-cover" loading="lazy" />
                             </div>
                           )}
                           <div className="p-6">
