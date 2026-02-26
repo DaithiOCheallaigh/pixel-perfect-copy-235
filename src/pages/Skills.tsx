@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
+import { ShineBorder } from "../components/ui/shine-border";
 
 const serviceAreas = [
   {
@@ -103,7 +104,8 @@ const Skills = () => (
         <div className="mb-24 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
           {serviceAreas.map((area, i) => (
             <ScrollReveal key={area.title} delay={i * 0.08}>
-              <div className="flex h-full flex-col rounded-sm bg-card p-6 transition-transform duration-300 hover:-translate-y-1">
+              <div className="relative flex h-full flex-col rounded-sm bg-card p-6 transition-transform duration-300 hover:-translate-y-1">
+                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <h3 className="mb-3 text-lg font-bold text-foreground">{area.title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground">{area.desc}</p>
               </div>
