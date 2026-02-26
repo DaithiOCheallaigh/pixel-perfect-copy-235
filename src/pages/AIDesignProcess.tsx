@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { GlowingStarsBackgroundCard } from "@/components/ui/glowing-stars";
 import { motion } from "framer-motion";
 import {
   Cpu,
@@ -89,8 +90,11 @@ const AIDesignProcess = () => {
   return (
     <main className="min-h-screen pt-24">
       {/* Hero */}
-      <section className="px-6 py-20 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl text-center">
+      <section className="relative px-6 py-20 md:px-12 lg:px-24">
+        <GlowingStarsBackgroundCard className="absolute inset-0">
+          <span />
+        </GlowingStarsBackgroundCard>
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
           <ScrollReveal>
             <div className="mb-6 flex justify-center text-primary">
               <Cpu size="48" variant="TwoTone" />
