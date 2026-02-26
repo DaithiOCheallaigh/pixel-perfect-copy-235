@@ -4,6 +4,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
+import { ShineBorder } from "../components/ui/shine-border";
 
 const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
 
@@ -97,8 +98,9 @@ const Index = () => {
             <ScrollReveal>
               <Link
                 to="/case/ai-reviews"
-                className="group grid gap-0 overflow-hidden rounded-sm bg-card md:grid-cols-2"
+                className="group relative grid gap-0 overflow-hidden rounded-sm bg-card md:grid-cols-2"
               >
+                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden">
                   <img
                     src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1"
@@ -131,8 +133,9 @@ const Index = () => {
             <ScrollReveal delay={0.1}>
               <Link
                 to="/case/digital-tipping"
-                className="group grid gap-0 overflow-hidden rounded-sm bg-card md:grid-cols-2"
+                className="group relative grid gap-0 overflow-hidden rounded-sm bg-card md:grid-cols-2"
               >
+                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="flex flex-col justify-center p-8 md:order-1 md:p-12">
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
                     Enabling tour guides to receive an average tip of $25 through digital tipping
@@ -269,7 +272,8 @@ const Index = () => {
               },
             ].map((testimonial, i) => (
               <ScrollReveal key={testimonial.name} delay={i * 0.1}>
-                <div className="flex h-full flex-col rounded-sm bg-card p-6">
+                 <div className="relative flex h-full flex-col rounded-sm bg-card p-6">
+                   <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                   <p className="flex-1 text-sm leading-relaxed text-muted-foreground">
                     "{testimonial.text}"
                   </p>

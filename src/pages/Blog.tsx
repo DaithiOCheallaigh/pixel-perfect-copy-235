@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
+import { ShineBorder } from "../components/ui/shine-border";
 
 const blogPosts = [
   {
@@ -63,7 +64,8 @@ const Blog = () => (
         <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post, i) => (
             <ScrollReveal key={post.id} delay={i * 0.08}>
-              <div className="group flex h-full flex-col overflow-hidden rounded-sm bg-card">
+              <div className="group relative flex h-full flex-col overflow-hidden rounded-sm bg-card">
+                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden">
                   <img
                     src={post.image}

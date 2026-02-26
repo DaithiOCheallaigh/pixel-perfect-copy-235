@@ -3,6 +3,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
+import { ShineBorder } from "../components/ui/shine-border";
 
 const Work = () => (
   <main className="pt-24">
@@ -22,7 +23,8 @@ const Work = () => (
           {projects.map((project, i) => (
             <ScrollReveal key={project.id} delay={i * 0.08}>
               {project.comingSoon ? (
-                <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card opacity-50">
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card opacity-50">
+                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={project.pillImage}
@@ -47,8 +49,9 @@ const Work = () => (
               ) : (
                 <Link
                   to={`/case/${project.id}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
                 >
+                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={project.pillImage}
