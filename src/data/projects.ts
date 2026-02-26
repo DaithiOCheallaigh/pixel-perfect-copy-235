@@ -110,8 +110,8 @@ export const projects: Project[] = [
     whatIWorkedOn: ["UI Design", "UX Strategy", "User Interviews", "Marketing", "Growth Strategy", "Feature Analysis"],
     images: [
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIReview_Steps.webp?fit=4500%2C2007&ssl=1", alt: "AI Review Steps", wide: true },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/02/Create.webp?fit=800%2C741&ssl=1", alt: "Create review" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/02/NFC.webp?fit=800%2C741&ssl=1", alt: "NFC tap" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/02/Create.webp?fit=800%2C741&ssl=1", alt: "Create review" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/02/Review.webp?fit=800%2C741&ssl=1", alt: "Review output" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Group-4.webp?fit=800%2C800&ssl=1", alt: "Group overview" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Mixpanel_Report.webp?fit=4062%2C2169&ssl=1", alt: "Mixpanel analytics report", wide: true },
