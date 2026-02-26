@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
 const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains("dark"));
 
   const toggle = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle("dark");
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
   };
 
   return (

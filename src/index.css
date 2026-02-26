@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
+@font-face {
+  font-family: 'Mona Sans';
+  src: url('https://github.com/github/mona-sans/raw/main/fonts/variable/Mona-Sans.woff2') format('woff2');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -16,7 +23,7 @@
     --popover: 40 15% 96%;
     --popover-foreground: 0 0% 3.1%;
 
-    --primary: 340 65% 65%;
+    --primary: 310 100% 92%;
     --primary-foreground: 0 0% 3.1%;
 
     --secondary: 40 8% 90%;
@@ -25,7 +32,7 @@
     --muted: 40 8% 90%;
     --muted-foreground: 0 0% 40%;
 
-    --accent: 340 65% 65%;
+    --accent: 310 100% 92%;
     --accent-foreground: 0 0% 3.1%;
 
     --destructive: 0 84.2% 60.2%;
@@ -33,7 +40,7 @@
 
     --border: 40 8% 85%;
     --input: 40 8% 85%;
-    --ring: 340 65% 65%;
+    --ring: 310 100% 92%;
 
     --radius: 12px;
     --radius-inner: 8px;
@@ -53,12 +60,12 @@
     /* Sidebar */
     --sidebar-background: 40 12% 93%;
     --sidebar-foreground: 0 0% 3.1%;
-    --sidebar-primary: 340 65% 65%;
+    --sidebar-primary: 310 100% 92%;
     --sidebar-primary-foreground: 0 0% 3.1%;
     --sidebar-accent: 40 8% 90%;
     --sidebar-accent-foreground: 0 0% 3.1%;
     --sidebar-border: 40 8% 85%;
-    --sidebar-ring: 340 65% 65%;
+    --sidebar-ring: 310 100% 92%;
   }
 
   .dark {
@@ -71,7 +78,7 @@
     --popover: 0 0% 7.8%;
     --popover-foreground: 40 15.4% 94.1%;
 
-    --primary: 340 70% 70%;
+    --primary: 310 100% 92%;
     --primary-foreground: 0 0% 3.1%;
 
     --secondary: 0 0% 11.8%;
@@ -80,7 +87,7 @@
     --muted: 0 0% 17.3%;
     --muted-foreground: 0 0% 53.3%;
 
-    --accent: 340 70% 70%;
+    --accent: 310 100% 92%;
     --accent-foreground: 0 0% 3.1%;
 
     --destructive: 0 84.2% 60.2%;
@@ -88,7 +95,7 @@
 
     --border: 0 0% 17.3%;
     --input: 0 0% 17.3%;
-    --ring: 340 70% 70%;
+    --ring: 310 100% 92%;
 
     --grey-1: 0 0% 7.8%;
     --grey-2: 0 0% 11.8%;
@@ -98,12 +105,12 @@
 
     --sidebar-background: 0 0% 7.8%;
     --sidebar-foreground: 40 15.4% 94.1%;
-    --sidebar-primary: 340 70% 70%;
+    --sidebar-primary: 310 100% 92%;
     --sidebar-primary-foreground: 0 0% 3.1%;
     --sidebar-accent: 0 0% 11.8%;
     --sidebar-accent-foreground: 40 15.4% 94.1%;
     --sidebar-border: 0 0% 17.3%;
-    --sidebar-ring: 340 70% 70%;
+    --sidebar-ring: 310 100% 92%;
   }
 }
 
@@ -118,13 +125,13 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Hanken Grotesk', sans-serif;
+    font-family: 'Mona Sans', sans-serif;
     line-height: 1.7;
     
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Hanken Grotesk', sans-serif;
+    font-family: 'Mona Sans', sans-serif;
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.1;
@@ -137,7 +144,7 @@
 
 
   ::selection {
-    background: hsl(340 65% 65% / 0.3);
+    background: hsl(310 100% 92% / 0.3);
     color: hsl(0 0% 3.1%);
   }
 
