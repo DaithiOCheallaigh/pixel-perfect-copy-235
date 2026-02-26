@@ -14,6 +14,10 @@ import {
 import ScrollReveal from "@/components/ScrollReveal";
 import AvailabilityCTA from "@/components/AvailabilityCTA";
 import SectionLabel from "@/components/SectionLabel";
+import claudeLogo from "@/assets/logos/claude.png";
+import notionLogo from "@/assets/logos/notion.png";
+import lovableLogo from "@/assets/logos/lovable.png";
+import figmaLogo from "@/assets/logos/figma.svg";
 
 const steps = [
   {
@@ -75,10 +79,10 @@ const steps = [
 ];
 
 const tools = [
-  { name: "Claude", icon: <Cpu size="18" variant="TwoTone" /> },
-  { name: "Notion", icon: <Note size="18" variant="TwoTone" /> },
-  { name: "Lovable", icon: <Code size="18" variant="TwoTone" /> },
-  { name: "Figma", icon: <Brush size="18" variant="TwoTone" /> },
+  { name: "Claude", logo: claudeLogo },
+  { name: "Notion", logo: notionLogo },
+  { name: "Lovable", logo: lovableLogo },
+  { name: "Figma", logo: figmaLogo },
 ];
 
 const AIDesignProcess = () => {
@@ -124,9 +128,9 @@ const AIDesignProcess = () => {
           {tools.map((tool) => (
             <span
               key={tool.name}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground"
+              className="inline-flex items-center gap-2.5 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground"
             >
-              <span className="text-primary">{tool.icon}</span>
+              <img src={tool.logo} alt={tool.name} className="h-5 w-5 object-contain" />
               {tool.name}
             </span>
           ))}
