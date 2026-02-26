@@ -5,6 +5,7 @@ import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
+import { ShaderAnimation } from "../components/ui/shader-animation";
 
 const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
 
@@ -14,34 +15,8 @@ const Index = () => {
       {/* Hero */}
       <section className="relative min-h-screen overflow-hidden px-6 pt-32 md:px-12 lg:px-24">
         {/* Animated gradient orbs */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <motion.div
-            className="absolute -top-1/4 -right-1/4 h-[60vh] w-[60vh] rounded-full bg-primary/[0.07] blur-[100px]"
-            animate={{
-              x: [0, 30, -20, 0],
-              y: [0, -40, 20, 0],
-              scale: [1, 1.15, 0.95, 1],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute -bottom-1/4 -left-1/4 h-[50vh] w-[50vh] rounded-full bg-primary/[0.05] blur-[120px]"
-            animate={{
-              x: [0, -25, 35, 0],
-              y: [0, 30, -25, 0],
-              scale: [1, 0.9, 1.1, 1],
-            }}
-            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute top-1/3 left-1/2 h-[30vh] w-[30vh] -translate-x-1/2 rounded-full bg-primary/[0.04] blur-[80px]"
-            animate={{
-              x: [0, 40, -30, 0],
-              y: [0, -20, 35, 0],
-              scale: [1, 1.2, 0.85, 1],
-            }}
-            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          />
+        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-40">
+          <ShaderAnimation />
         </div>
         <div className="pointer-events-none absolute inset-0 grid-background opacity-50" />
 
