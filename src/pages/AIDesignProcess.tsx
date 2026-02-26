@@ -124,7 +124,7 @@ const AIDesignProcess = () => {
       {/* Tools Strip */}
       <section className="border-y border-border px-6 py-6">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6">
-          <span className="font-mono-label text-muted-foreground">Powered By</span>
+          <span className="font-mono-label text-muted-foreground">Tools Used</span>
           {tools.map((tool) => (
             <span
               key={tool.name}
