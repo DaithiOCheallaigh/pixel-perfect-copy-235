@@ -5,20 +5,20 @@ export default function LiquidBlobCursor() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const x = useSpring(mouseX, { stiffness: 650, damping: 45, mass: 0.9 });
-  const y = useSpring(mouseY, { stiffness: 650, damping: 45, mass: 0.9 });
+  const x = useSpring(mouseX, { stiffness: 180, damping: 22, mass: 0.6 });
+  const y = useSpring(mouseY, { stiffness: 180, damping: 22, mass: 0.6 });
 
-  const fx1 = useSpring(x, { stiffness: 420, damping: 34, mass: 1.0 });
-  const fy1 = useSpring(y, { stiffness: 420, damping: 34, mass: 1.0 });
+  const fx1 = useSpring(x, { stiffness: 120, damping: 20, mass: 0.8 });
+  const fy1 = useSpring(y, { stiffness: 120, damping: 20, mass: 0.8 });
 
-  const fx2 = useSpring(fx1, { stiffness: 380, damping: 38, mass: 1.25 });
-  const fy2 = useSpring(fy1, { stiffness: 380, damping: 38, mass: 1.25 });
+  const fx2 = useSpring(fx1, { stiffness: 90, damping: 18, mass: 1.0 });
+  const fy2 = useSpring(fy1, { stiffness: 90, damping: 18, mass: 1.0 });
 
-  const fx3 = useSpring(fx2, { stiffness: 340, damping: 42, mass: 1.5 });
-  const fy3 = useSpring(fy2, { stiffness: 340, damping: 42, mass: 1.5 });
+  const fx3 = useSpring(fx2, { stiffness: 65, damping: 16, mass: 1.2 });
+  const fy3 = useSpring(fy2, { stiffness: 65, damping: 16, mass: 1.2 });
 
-  const fx4 = useSpring(fx3, { stiffness: 300, damping: 46, mass: 1.75 });
-  const fy4 = useSpring(fy3, { stiffness: 300, damping: 46, mass: 1.75 });
+  const fx4 = useSpring(fx3, { stiffness: 45, damping: 14, mass: 1.4 });
+  const fy4 = useSpring(fy3, { stiffness: 45, damping: 14, mass: 1.4 });
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
