@@ -25,6 +25,7 @@ export interface Project {
   mobileImage?: string;
   toolsImage?: string;
   exploration?: string;
+  explorationVideo?: string;
   buildingTheFeature?: string;
   launchAnalytics?: { documentation: string[]; analytics: string[] };
   designSystemLinks?: { label: string; url: string }[];

@@ -201,6 +201,20 @@ const CaseStudy = () => {
                 </div>
               </div>
             </ScrollReveal>
+            {project.explorationVideo && (
+              <ScrollReveal>
+                <div className="mt-8 overflow-hidden rounded-sm">
+                  <video
+                    src={project.explorationVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full object-cover"
+                  />
+                </div>
+              </ScrollReveal>
+            )}
           </div>
         </section>
       )}
