@@ -14,7 +14,7 @@ import ServicePage from "./pages/ServicePage";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-import LiquidBlobCursor from "./components/LiquidBlobCursor";
+
 
 const queryClient = new QueryClient();
 
@@ -29,7 +29,6 @@ const ScrollToTop = () => {
 const AppContent = () => {
   return (
     <>
-      <LiquidBlobCursor />
       <Navigation visible={true} />
       <ScrollToTop />
       <Routes>
