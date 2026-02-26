@@ -11,6 +11,7 @@ import Skills from "./pages/Skills";
 import Blog from "./pages/Blog";
 import CaseStudy from "./pages/CaseStudy";
 import ServicePage from "./pages/ServicePage";
+import AIDesignProcess from "./pages/AIDesignProcess";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
