@@ -53,10 +53,7 @@ export function ShaderAnimation() {
           }
         }
         
-        float brightness = max(color.r, max(color.g, color.b));
-        float alpha = clamp(brightness, 0.0, 1.0);
-        
-        gl_FragColor = vec4(color / max(brightness, 0.001), alpha);
+        gl_FragColor = vec4(color, 1.0);
       }
     `
 
@@ -80,8 +77,7 @@ export function ShaderAnimation() {
     const mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-    renderer.setClearColor(0x000000, 0)
+    const renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio(window.devicePixelRatio)
 
     container.appendChild(renderer.domElement)
