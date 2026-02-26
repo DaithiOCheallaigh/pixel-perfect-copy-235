@@ -679,7 +679,7 @@ const CaseStudy = () => {
                 <ScrollReveal key={i} delay={i * 0.1} className="h-full">
                   <div className="flex h-full flex-col rounded-xl bg-card p-8">
                     <span className="font-mono-label text-muted-foreground">{impact.period}</span>
-                    <div className="mt-3 text-5xl font-black text-primary md:text-6xl">{impact.value}</div>
+                    <div className="mt-3 text-3xl font-black text-primary md:text-4xl">{impact.value}</div>
                     <p className="mt-3 text-sm font-semibold text-foreground">{impact.label}</p>
                     <p className="mt-auto pt-2 text-xs leading-relaxed text-muted-foreground">{impact.description}</p>
                   </div>
