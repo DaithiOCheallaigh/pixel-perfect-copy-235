@@ -29,6 +29,7 @@ const ScrollToTop = () => {
 const AppContent = () => {
   return (
     <>
+      <LiquidBlobCursor />
       <Navigation visible={true} />
       <ScrollToTop />
       <Routes>
