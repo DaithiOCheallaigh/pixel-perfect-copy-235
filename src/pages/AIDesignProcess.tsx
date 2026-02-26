@@ -128,9 +128,9 @@ const AIDesignProcess = () => {
           {tools.map((tool) => (
             <span
               key={tool.name}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground"
+              className="inline-flex items-center gap-2.5 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground"
             >
-              <span className="text-primary">{tool.icon}</span>
+              <img src={tool.logo} alt={tool.name} className="h-5 w-5 object-contain" />
               {tool.name}
             </span>
           ))}
