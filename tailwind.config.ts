@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Hanken Grotesk", "sans-serif"],
+        sans: ["Mona Sans", "sans-serif"],
         mono: ["DM Mono", "monospace"],
       },
       colors: {
