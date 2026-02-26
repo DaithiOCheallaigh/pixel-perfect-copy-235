@@ -13,7 +13,7 @@ const Index = () => {
   return (
     <main>
       {/* Hero */}
-      <section className="relative min-h-screen overflow-hidden bg-white dark:bg-background px-6 pt-32 md:px-12 lg:px-24">
+      <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-32 md:px-12 lg:px-24">
         {/* Animated gradient orbs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-30 dark:opacity-100">
           <ShaderAnimation />
