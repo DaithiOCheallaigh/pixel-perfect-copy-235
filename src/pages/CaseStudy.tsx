@@ -385,8 +385,8 @@ const CaseStudy = () => {
                   )}
                   <div className="grid gap-6 md:grid-cols-3">
                     {project.howItWorks.map((step, i) => (
-                      <ScrollReveal key={i} delay={i * 0.1}>
-                        <div className="flex flex-col rounded-xl bg-card overflow-hidden">
+                      <ScrollReveal key={i} delay={i * 0.1} className="h-full">
+                        <div className="flex h-full flex-col rounded-xl bg-card overflow-hidden">
                           {/* Screenshot on top */}
                           {stepImages[i] && (
                             <div className="aspect-square overflow-hidden">
