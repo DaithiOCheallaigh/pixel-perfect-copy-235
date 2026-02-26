@@ -301,12 +301,24 @@ const CaseStudy = () => {
               {project.researchIntro && (
                 <p className="mb-6 max-w-3xl text-base leading-relaxed text-muted-foreground">{project.researchIntro}</p>
               )}
-              <div className="grid gap-4 md:grid-cols-3">
-                {project.researchFindings.map((finding, i) => (
-                  <div key={i} className="rounded-sm bg-card p-6">
-                    <p className="text-sm leading-relaxed text-muted-foreground">{finding}</p>
-                  </div>
-                ))}
+              <div className="grid gap-8 md:grid-cols-2">
+                {project.researchFindings.map((finding, i) => {
+                  const [title, ...rest] = finding.split(": ");
+                  const content = rest.join(": ");
+                  return (
+                    <div key={i}>
+                      <h3 className="mb-3 text-base font-bold text-foreground">{title}</h3>
+                      <ul className="space-y-2">
+                        {content.split(". ").filter(Boolean).map((point, j) => (
+                          <li key={j} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
+                            <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                            {point.endsWith(".") ? point : `${point}.`}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
               </div>
             </ScrollReveal>
           </div>
