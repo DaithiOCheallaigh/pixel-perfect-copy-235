@@ -75,7 +75,7 @@ const Index = () => {
               href="https://lacunadigital.io/wp-content/uploads/2025/08/David-Kelly-CV_Sep25.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-sm bg-foreground px-8 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-lg bg-foreground px-8 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
             >
               ↓ Download my CV
             </a>
@@ -93,12 +93,12 @@ const Index = () => {
           </ScrollReveal>
 
           {/* Featured project cards — side by side image + text like old site */}
-          <div className="space-y-2">
+          <div className="space-y-8">
             {/* AI Reviews — image left, text right */}
             <ScrollReveal>
               <Link
                 to="/case/ai-reviews"
-                className="group relative grid gap-0 overflow-hidden rounded-sm bg-card md:grid-cols-2"
+                className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
               >
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden">
@@ -113,9 +113,9 @@ const Index = () => {
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
                     Leveraging AI to increase 5-star reviews by 45% on average
                   </h3>
-                  <div className="mb-6 flex flex-wrap gap-2">
-                    {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
-                      <span key={tag} className="rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
+                   <div className="mb-8 flex flex-wrap gap-2">
+                     {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
+                       <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
                     ))}
                   </div>
                   <blockquote className="mb-4 text-sm italic text-muted-foreground">
@@ -133,16 +133,16 @@ const Index = () => {
             <ScrollReveal delay={0.1}>
               <Link
                 to="/case/digital-tipping"
-                className="group relative grid gap-0 overflow-hidden rounded-sm bg-card md:grid-cols-2"
+                className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
               >
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="flex flex-col justify-center p-8 md:order-1 md:p-12">
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
                     Enabling tour guides to receive an average tip of $25 through digital tipping
                   </h3>
-                  <div className="mb-6 flex flex-wrap gap-2">
-                    {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
-                      <span key={tag} className="rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
+                   <div className="mb-8 flex flex-wrap gap-2">
+                     {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
+                       <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
                     ))}
                   </div>
                   <p className="text-sm text-muted-foreground">
@@ -212,7 +212,7 @@ const Index = () => {
             ].map((step, i) => (
               <ScrollReveal key={step.num} delay={i * 0.15}>
                 <div className="group">
-                  <div className="mb-4 overflow-hidden rounded-sm">
+                  <div className="mb-4 overflow-hidden rounded-lg">
                     <img
                       src={step.image}
                       alt={step.title}
@@ -256,7 +256,7 @@ const Index = () => {
             </div>
           </ScrollReveal>
 
-          <div className="mt-8 grid gap-2 md:grid-cols-3">
+          <div className="mt-8 grid gap-8 md:grid-cols-3">
             {[
               {
                 name: "Patrick Rooney",
@@ -272,7 +272,7 @@ const Index = () => {
               },
             ].map((testimonial, i) => (
               <ScrollReveal key={testimonial.name} delay={i * 0.1}>
-                 <div className="relative flex h-full flex-col rounded-sm bg-card p-6">
+                 <div className="relative flex h-full flex-col rounded-xl bg-card p-8">
                    <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                   <p className="flex-1 text-sm leading-relaxed text-muted-foreground">
                     "{testimonial.text}"

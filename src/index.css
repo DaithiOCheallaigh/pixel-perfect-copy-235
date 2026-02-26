@@ -35,7 +35,9 @@
     --input: 40 8% 85%;
     --ring: 340 65% 65%;
 
-    --radius: 2px;
+    --radius: 12px;
+    --radius-inner: 8px;
+    --radius-xs: 4px;
 
     /* Custom tokens */
     --grey-1: 40 12% 93%;

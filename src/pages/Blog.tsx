@@ -61,10 +61,10 @@ const Blog = () => (
           </p>
         </ScrollReveal>
 
-        <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post, i) => (
             <ScrollReveal key={post.id} delay={i * 0.08}>
-              <div className="group relative flex h-full flex-col overflow-hidden rounded-sm bg-card">
+              <div className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-card">
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden">
                   <img
@@ -74,7 +74,7 @@ const Blog = () => (
                     loading="lazy"
                   />
                 </div>
-                <div className="flex flex-1 flex-col p-6">
+                <div className="flex flex-1 flex-col p-8">
                   <span className="font-mono-label mb-2 text-muted-foreground">
                     {post.date} · {post.readTime}
                   </span>
