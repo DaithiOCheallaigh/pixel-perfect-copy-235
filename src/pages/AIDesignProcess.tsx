@@ -79,10 +79,10 @@ const steps = [
 ];
 
 const tools = [
-  { name: "Claude", icon: <Cpu size="18" variant="TwoTone" /> },
-  { name: "Notion", icon: <Note size="18" variant="TwoTone" /> },
-  { name: "Lovable", icon: <Code size="18" variant="TwoTone" /> },
-  { name: "Figma", icon: <Brush size="18" variant="TwoTone" /> },
+  { name: "Claude", logo: claudeLogo },
+  { name: "Notion", logo: notionLogo },
+  { name: "Lovable", logo: lovableLogo },
+  { name: "Figma", logo: figmaLogo },
 ];
 
 const AIDesignProcess = () => {
