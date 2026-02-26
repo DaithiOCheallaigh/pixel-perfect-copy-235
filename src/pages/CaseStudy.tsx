@@ -175,39 +175,9 @@ const CaseStudy = () => {
         </div>
       </section>
 
-      {/* Sidebar Meta + Main Content wrapper */}
+      {/* Main Content */}
       <div className="px-6 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
-          <div className="grid gap-12 md:grid-cols-[200px_1fr]">
-            {/* Sticky sidebar meta block */}
-            <aside className="hidden md:block">
-              <div className="sticky top-24 space-y-6">
-                {project.whatIWorkedOn && (
-                  <div>
-                    <span className="font-mono-label mb-1 block text-muted-foreground">Role</span>
-                    <p className="text-sm text-foreground">{project.whatIWorkedOn.join(", ")}</p>
-                  </div>
-                )}
-                {project.client && (
-                  <div>
-                    <span className="font-mono-label mb-1 block text-muted-foreground">Client</span>
-                    <p className="text-sm text-foreground">{project.client}</p>
-                  </div>
-                )}
-                <div>
-                  <span className="font-mono-label mb-1 block text-muted-foreground">Timeline</span>
-                  <p className="text-sm text-foreground">{project.timeline}</p>
-                </div>
-                {project.toolsImage && (
-                  <div>
-                    <span className="font-mono-label mb-1 block text-muted-foreground">Tools</span>
-                    <img src={project.toolsImage} alt="Tools" className="max-w-[160px]" loading="lazy" />
-                  </div>
-                )}
-              </div>
-            </aside>
-
-            {/* Main content column */}
             <div className="space-y-20">
               {/* The Challenge */}
               {project.challenge && (
