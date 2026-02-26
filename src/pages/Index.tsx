@@ -54,6 +54,12 @@ const Index = () => {
             >
               ↓ Download my CV
             </a>
+            <Link
+              to="/ai-design-process"
+              className="group inline-flex items-center gap-2 rounded-lg border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary hover:gap-3"
+            >
+              AI Design Process <span className="transition-all">→</span>
+            </Link>
           </motion.div>
         </div>
       </section>
