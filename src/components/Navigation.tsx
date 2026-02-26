@@ -26,8 +26,16 @@ const Navigation = ({ visible }: { visible: boolean }) => {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12">
-        <Link to="/" className="flex items-center gap-1 text-lg font-extrabold tracking-tight text-foreground">
-          <span className="text-primary">•</span> Lacuna Digital
+        <Link to="/" className="relative flex items-center">
+          <div className="relative h-9 w-9 overflow-hidden rounded-full">
+            <img src={avatarImg} alt="Dave" className="h-full w-full object-cover" />
+            <ShineBorder
+              shineColor={["#A855F7", "#EC4899", "#F97316"]}
+              duration={10}
+              borderWidth={2}
+              className="rounded-full"
+            />
+          </div>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
