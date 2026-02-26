@@ -387,19 +387,17 @@ const CaseStudy = () => {
                     {project.howItWorks.map((step, i) => (
                       <ScrollReveal key={i} delay={i * 0.1}>
                         <div className="flex flex-col rounded-xl bg-card overflow-hidden">
-                          <div className="p-6">
-                            <span className="text-2xl font-black text-primary">{step.step}</span>
-                            <h3 className="mt-2 text-lg font-bold text-foreground">{step.title}</h3>
-                            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
-                          </div>
-                          {/* Step screenshot if available */}
+                          {/* Screenshot on top */}
                           {stepImages[i] && (
-                            <div className="px-4 pb-4">
-                              <div className="overflow-hidden rounded-lg">
-                                <img src={stepImages[i].src} alt={stepImages[i].alt} className="w-full object-cover" loading="lazy" />
-                              </div>
+                            <div className="aspect-square overflow-hidden">
+                              <img src={stepImages[i].src} alt={stepImages[i].alt} className="h-full w-full object-cover" loading="lazy" />
                             </div>
                           )}
+                          <div className="p-6">
+                            <span className="text-2xl font-black text-foreground">{step.step}.</span>
+                            <h3 className="mt-1 text-xl font-bold text-foreground">{step.title}</h3>
+                            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+                          </div>
                         </div>
                       </ScrollReveal>
                     ))}
