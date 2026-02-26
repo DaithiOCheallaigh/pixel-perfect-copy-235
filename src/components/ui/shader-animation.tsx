@@ -77,7 +77,8 @@ export function ShaderAnimation() {
     const mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true })
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    renderer.setClearColor(0x000000, 0)
     renderer.setPixelRatio(window.devicePixelRatio)
 
     container.appendChild(renderer.domElement)
