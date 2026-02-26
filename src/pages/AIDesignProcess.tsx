@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { GlowingStarsBackgroundCard } from "@/components/ui/glowing-stars";
 import { motion } from "framer-motion";
 import {
   Cpu,
