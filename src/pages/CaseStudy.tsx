@@ -408,6 +408,24 @@ const CaseStudy = () => {
         </section>
       )}
 
+      {/* Big Stats Callout */}
+      {project.stats && project.stats.length > 0 && project.featureImpact && (
+        <section className="px-6 py-16 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <div className="text-center">
+                <h2 className="text-3xl font-black tracking-tight text-foreground md:text-5xl lg:text-6xl">
+                  Avg Increase in 5 star reviews per company:{" "}
+                  <span className="text-primary">
+                    {project.stats.find(s => s.label.toLowerCase().includes("avg"))?.value || project.stats[0].value}
+                  </span>
+                </h2>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
       {/* Sharing Methods */}
       {project.sharingMethods && (
         <section className="px-6 py-12 md:px-12 lg:px-24">
