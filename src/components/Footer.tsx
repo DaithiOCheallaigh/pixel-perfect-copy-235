@@ -4,7 +4,7 @@ const Footer = () => (
   <footer className="border-t border-border bg-background px-6 py-12 md:px-12">
     <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
       <p className="text-sm text-muted-foreground">
-        © 2025 Lacuna Digital — David Kelly
+        © 2026 Lacuna Digital — David Kelly
       </p>
       <nav className="flex flex-wrap items-center justify-center gap-6">
         {[
