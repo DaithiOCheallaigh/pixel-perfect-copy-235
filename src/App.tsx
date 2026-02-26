@@ -11,6 +11,7 @@ import Skills from "./pages/Skills";
 import Blog from "./pages/Blog";
 import CaseStudy from "./pages/CaseStudy";
 import ServicePage from "./pages/ServicePage";
+import AIDesignProcess from "./pages/AIDesignProcess";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -39,6 +40,7 @@ const AppContent = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/case/:id" element={<CaseStudy />} />
         <Route path="/service/:id" element={<ServicePage />} />
+        <Route path="/ai-design-process" element={<AIDesignProcess />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
