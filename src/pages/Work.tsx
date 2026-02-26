@@ -25,7 +25,7 @@ const Work = () => (
               {project.comingSoon ? (
                 <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card opacity-50">
                   <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
                     <img
                       src={project.pillImage}
                       alt={project.title}
@@ -52,7 +52,7 @@ const Work = () => (
                   className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
                 >
                   <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
                     <img
                       src={project.pillImage}
                       alt={project.title}
