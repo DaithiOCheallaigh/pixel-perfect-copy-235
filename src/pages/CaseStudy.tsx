@@ -674,14 +674,14 @@ const CaseStudy = () => {
             <ScrollReveal>
               <SectionLabel>Feature Impact</SectionLabel>
             </ScrollReveal>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid grid-rows-1 gap-6 md:grid-cols-3">
               {project.featureImpact.map((impact, i) => (
-                <ScrollReveal key={i} delay={i * 0.1}>
-                  <div className="rounded-xl bg-card p-8">
+                <ScrollReveal key={i} delay={i * 0.1} className="h-full">
+                  <div className="flex h-full flex-col rounded-xl bg-card p-8">
                     <span className="font-mono-label text-muted-foreground">{impact.period}</span>
                     <div className="mt-3 text-5xl font-black text-primary md:text-6xl">{impact.value}</div>
                     <p className="mt-3 text-sm font-semibold text-foreground">{impact.label}</p>
-                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{impact.description}</p>
+                    <p className="mt-auto pt-2 text-xs leading-relaxed text-muted-foreground">{impact.description}</p>
                   </div>
                 </ScrollReveal>
               ))}
