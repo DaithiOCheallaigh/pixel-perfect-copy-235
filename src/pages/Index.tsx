@@ -185,19 +185,19 @@ const Index = () => {
                 text: "I believe in creating purpose-driven designs that resonate with target audiences. Each project is carefully crafted to ensure maximum impact and meaningful connections with users.",
               },
             ].map((step, i) => (
-              <ScrollReveal key={step.num} delay={i * 0.15}>
-                <div className="group rounded-xl bg-white dark:bg-card p-4">
+              <ScrollReveal key={step.num} delay={i * 0.15} className="h-full">
+                <div className="group flex h-full flex-col rounded-xl bg-white dark:bg-card p-4">
                   <div className="mb-4 overflow-hidden rounded-lg">
                     <img
                       src={step.image}
                       alt={step.title}
-                      className="w-full object-contain"
+                      className="w-full object-contain dark:invert"
                       loading="lazy"
                     />
                   </div>
                   <span className="font-mono-label text-primary">{step.num}</span>
                   <h3 className="mt-2 text-xl font-bold text-foreground">{step.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
                 </div>
               </ScrollReveal>
             ))}
