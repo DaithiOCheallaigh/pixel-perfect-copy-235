@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
+import { SearchNormal1, Calendar, Bezier, TaskSquare, Code1, Chart2 } from "iconsax-react";
+import { type ReactNode } from "react";
 
-const lifecycleSteps = [
+const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: string[] }[] = [
   {
     num: "1",
     title: "Discovery & Research",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/1.Discovery-and-Research.png?fit=256%2C232&ssl=1",
+    icon: <SearchNormal1 size={32} variant="Bulk" className="text-primary" />,
     items: [
       "Market analysis and competitor research",
       "User interviews and surveys",
@@ -18,7 +20,7 @@ const lifecycleSteps = [
   {
     num: "2",
     title: "Strategy & Planning",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/2.Strategy-Planning.png?fit=233%2C228&ssl=1",
+    icon: <Calendar size={32} variant="Bulk" className="text-primary" />,
     items: [
       "Define project goals and success metrics",
       "Create user personas and journey maps",
@@ -29,7 +31,7 @@ const lifecycleSteps = [
   {
     num: "3",
     title: "Design & Ideation",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/3.Design-and-Ideation.png?fit=227%2C218&ssl=1",
+    icon: <Bezier size={32} variant="Bulk" className="text-primary" />,
     items: [
       "Sketching and wireframing",
       "Information architecture development",
@@ -40,7 +42,7 @@ const lifecycleSteps = [
   {
     num: "4",
     title: "Testing & Validation",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/4.Testing-Validation.png?fit=231%2C226&ssl=1",
+    icon: <TaskSquare size={32} variant="Bulk" className="text-primary" />,
     items: [
       "Usability testing",
       "A/B testing",
@@ -51,7 +53,7 @@ const lifecycleSteps = [
   {
     num: "5",
     title: "Implementation",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/5.Implementation.png?fit=226%2C227&ssl=1",
+    icon: <Code1 size={32} variant="Bulk" className="text-primary" />,
     items: [
       "Developer handoff",
       "Design specifications documentation",
@@ -62,7 +64,7 @@ const lifecycleSteps = [
   {
     num: "6",
     title: "Post-Launch Analysis",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/6.Post_Launch-Analysis.png?fit=230%2C231&ssl=1",
+    icon: <Chart2 size={32} variant="Bulk" className="text-primary" />,
     items: [
       "User behaviour monitoring",
       "Performance metrics tracking",
@@ -74,60 +76,6 @@ const lifecycleSteps = [
 
 const About = () => (
   <main className="pt-24">
-    {/* Product Design Lifecycle Philosophy */}
-    <section className="px-6 py-24 md:px-12 lg:px-24">
-      <div className="mx-auto max-w-7xl">
-        <ScrollReveal>
-          <SectionLabel>About</SectionLabel>
-          <h1 className="mb-4 text-center text-4xl font-black tracking-tighter text-foreground md:text-6xl">
-            My Product Design<br />Lifecycle Philosophy
-          </h1>
-          <p className="mx-auto mb-16 max-w-3xl text-center text-base leading-relaxed text-muted-foreground">
-            As a seasoned product designer, I've developed a comprehensive approach to creating meaningful, user-centered solutions. My design philosophy seamlessly integrates research, iteration, and validation to craft products that not only meet business objectives but genuinely enhance user experiences. Let me walk you through my methodology and showcase how I bring ideas to life.
-          </p>
-        </ScrollReveal>
-
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {lifecycleSteps.map((step, i) => (
-            <ScrollReveal key={step.num} delay={i * 0.08}>
-              <div className="rounded-sm bg-card p-6">
-                <img
-                  src={step.image}
-                  alt={step.title}
-                  className="mb-4 h-16 w-16 object-contain"
-                  loading="lazy"
-                />
-                <h3 className="mb-3 text-lg font-bold text-foreground">
-                  {step.num}. {step.title}
-                </h3>
-                <ul className="space-y-1">
-                  {step.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        <ScrollReveal delay={0.2}>
-          <div className="mt-12 text-center">
-            <Link
-              to="/work"
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
-            >
-              Explore projects which use this methodology <span>→</span>
-            </Link>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-
-    <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-
     {/* Personal Section */}
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
@@ -144,10 +92,10 @@ const About = () => (
 
           <div>
             <ScrollReveal>
-              <SectionLabel>Mission Statement</SectionLabel>
-              <h2 className="mb-8 text-3xl font-black tracking-tighter text-foreground md:text-4xl">
+              <SectionLabel>About</SectionLabel>
+              <h1 className="mb-8 text-3xl font-black tracking-tighter text-foreground md:text-4xl">
                 David Kelly
-              </h2>
+              </h1>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
@@ -211,6 +159,55 @@ const About = () => (
             </ScrollReveal>
           ))}
         </div>
+      </div>
+    </section>
+
+    <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
+
+    {/* Product Design Lifecycle Philosophy */}
+    <section className="px-6 py-24 md:px-12 lg:px-24">
+      <div className="mx-auto max-w-7xl">
+        <ScrollReveal>
+          <SectionLabel>Process</SectionLabel>
+          <h2 className="mb-4 text-center text-3xl font-black tracking-tighter text-foreground md:text-5xl">
+            My Product Design<br />Lifecycle Philosophy
+          </h2>
+          <p className="mx-auto mb-16 max-w-3xl text-center text-base leading-relaxed text-muted-foreground">
+            As a seasoned product designer, I've developed a comprehensive approach to creating meaningful, user-centered solutions. My design philosophy seamlessly integrates research, iteration, and validation to craft products that not only meet business objectives but genuinely enhance user experiences.
+          </p>
+        </ScrollReveal>
+
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {lifecycleSteps.map((step, i) => (
+            <ScrollReveal key={step.num} delay={i * 0.08}>
+              <div className="rounded-sm bg-card p-6">
+                <div className="mb-4">{step.icon}</div>
+                <h3 className="mb-3 text-lg font-bold text-foreground">
+                  {step.num}. {step.title}
+                </h3>
+                <ul className="space-y-1">
+                  {step.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <ScrollReveal delay={0.2}>
+          <div className="mt-12 text-center">
+            <Link
+              to="/work"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
+            >
+              Explore projects which use this methodology <span>→</span>
+            </Link>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
 
