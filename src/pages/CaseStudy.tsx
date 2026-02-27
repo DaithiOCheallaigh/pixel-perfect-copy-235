@@ -85,7 +85,6 @@ const CaseStudy = () => {
           <Link to="/work" className="mt-4 inline-block text-primary">← Back to Work</Link>
         </div>
       </main>);
-
   }
 
   // Separate images for inline placement vs gallery
@@ -110,6 +109,14 @@ const CaseStudy = () => {
             <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
           </motion.div>
 
+          {/* Hero subtitle for pages like website-tipdirect, tipdirect-app, booking-app */}
+          {project.heroSubtitle && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
+              <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
+              <p className="mb-8 text-lg text-muted-foreground md:text-xl">{project.heroSubtitle}</p>
+            </motion.div>
+          )}
+
           <motion.div
             className="grid gap-12 md:grid-cols-[1.2fr_1fr] items-start"
             initial={{ opacity: 0, y: 30 }}
@@ -118,10 +125,18 @@ const CaseStudy = () => {
 
             {/* Left: title + description + tags */}
             <div className="flex flex-col">
-              {project.client &&
-              <span className="font-mono-label mb-4 text-muted-foreground">{project.client}</span>
-              }
-              <h1 className="mb-6 text-4xl font-black tracking-tighter text-foreground md:text-5xl">{project.title}</h1>
+              {/* Client logo */}
+              {project.clientLogo ? (
+                <div className="mb-6">
+                  <img src={project.clientLogo} alt={project.client || "Client"} className="max-h-20 w-auto object-contain" loading="lazy" />
+                </div>
+              ) : project.client ? (
+                <span className="font-mono-label mb-4 text-muted-foreground">{project.client}</span>
+              ) : null}
+              
+              {!project.heroSubtitle && (
+                <h1 className="mb-6 text-4xl font-black tracking-tighter text-foreground md:text-5xl">{project.title}</h1>
+              )}
               <div className="space-y-4 mb-6">
                 {project.description.split("\n\n").map((p, i) =>
                 <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
@@ -167,7 +182,6 @@ const CaseStudy = () => {
                   alt={`${project.title} mobile mockup`}
                   className="max-h-[520px] w-auto rounded-xl object-contain shadow-lg"
                   loading="lazy" />
-
                 </div>
               </div>
             }
@@ -186,6 +200,20 @@ const CaseStudy = () => {
                     <SectionLabel>The Challenge</SectionLabel>
                     <div className="space-y-4">
                       {project.challenge.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Initial Approach (Booking App) */}
+              {project.initialApproach &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Initial Approach & User Journey Map</SectionLabel>
+                    <div className="space-y-4">
+                      {project.initialApproach.split("\n\n").map((p, i) =>
                   <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                   )}
                     </div>
@@ -212,7 +240,6 @@ const CaseStudy = () => {
                     muted
                     playsInline
                     className="w-full object-cover" />
-
                       </div>
                 }
                   </div>
@@ -243,10 +270,8 @@ const CaseStudy = () => {
                           )}
                             </ul>
                           </div>);
-
                   })}
                     </div>
-                    {/* Research images side by side */}
                     {galleryImages.filter((img) => ["Group overview"].includes(img.alt)).length > 0 &&
                 <div className="grid gap-4 md:grid-cols-2">
                         {galleryImages.filter((img) => !img.wide).slice(0, 2).map((img, i) =>
@@ -266,12 +291,32 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Building the Feature</SectionLabel>
                     <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.buildingTheFeature}</p>
-                    {/* Inline image: AI Review Steps */}
                     {inlineImages.filter((img) => img.alt === "AI Review Steps").map((img, i) =>
                 <div key={i} className="overflow-hidden rounded-xl shadow-md">
                         <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
                       </div>
                 )}
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Tipping Flow */}
+              {project.tippingFlow && project.id !== "spotify" &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Tipping Flow</SectionLabel>
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.tippingFlow.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {project.tippingFlowGif &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={project.tippingFlowGif} alt="Tipping flow" className="w-full object-contain" loading="lazy" />
+                        </div>
+                  }
+                    </div>
                   </div>
                 </ScrollReveal>
             }
@@ -320,6 +365,16 @@ const CaseStudy = () => {
                         </div>
                   )}
                     </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Design System Description */}
+              {project.designSystemDescription &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Design System</SectionLabel>
+                    <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.designSystemDescription}</p>
                   </div>
                 </ScrollReveal>
             }
@@ -375,6 +430,41 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* Detailed Design Process Phases */}
+              {project.designProcessDetails &&
+                project.designProcessDetails.map((phase, i) => (
+                  <ScrollReveal key={`phase-${i}`}>
+                    <div>
+                      <SectionLabel>{`${phase.num}/ ${phase.title}`}</SectionLabel>
+                      <div className="space-y-4 mb-6">
+                        {phase.text.split("\n").filter(Boolean).map((line, j) => {
+                          if (line.startsWith("- ")) {
+                            return (
+                              <li key={j} className="ml-4 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
+                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                                {line.replace("- ", "")}
+                              </li>
+                            );
+                          }
+                          return <p key={j} className="text-[15px] leading-[1.7] text-muted-foreground">{line}</p>;
+                        })}
+                      </div>
+                      {phase.outcomes && (
+                        <div className="rounded-xl bg-card p-6 mb-6">
+                          <h4 className="mb-2 text-sm font-bold text-foreground">Outcomes</h4>
+                          <p className="text-sm text-muted-foreground">{phase.outcomes}</p>
+                        </div>
+                      )}
+                      {phase.image && (
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={phase.image} alt={phase.title} className="w-full object-cover" loading="lazy" />
+                        </div>
+                      )}
+                    </div>
+                  </ScrollReveal>
+                ))
+              }
+
               {/* Numbered Feature Steps (3-column cards with screenshots) */}
               {project.howItWorks &&
             <div>
@@ -387,7 +477,6 @@ const CaseStudy = () => {
                     {project.howItWorks.map((step, i) =>
                 <ScrollReveal key={i} delay={i * 0.1} className="h-full">
                         <div className="flex h-full flex-col rounded-xl bg-card overflow-hidden">
-                          {/* Screenshot on top */}
                           {stepImages[i] &&
                     <div className="overflow-hidden bg-card">
                               <img src={stepImages[i].src} alt={stepImages[i].alt} className="w-full object-cover" loading="lazy" />
@@ -404,13 +493,79 @@ const CaseStudy = () => {
                   </div>
                 </div>
             }
+
+              {/* New Skills (Website TipDirect) */}
+              {project.newSkills &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>A Chance to Grow My Skills</SectionLabel>
+                    <div className="space-y-4">
+                      {project.newSkills.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Component Focused (Website TipDirect) */}
+              {project.componentFocused &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Component Focused</SectionLabel>
+                    <p className="text-[15px] leading-[1.7] text-muted-foreground">{project.componentFocused}</p>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Component Library (Booking App) */}
+              {project.componentLibrary &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Component Library</SectionLabel>
+                    <div className="space-y-4">
+                      {project.componentLibrary.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Launch & Traction (Booking App) */}
+              {project.launchTraction &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Launch & Traction</SectionLabel>
+                    <div className="space-y-4">
+                      {project.launchTraction.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* eCommerce (Booking App) */}
+              {project.ecommerce &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>e-Commerce Functionality</SectionLabel>
+                    <div className="space-y-4">
+                      {project.ecommerce.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
             </div>
         </div>
       </div>
 
-      {/* Full-width sections below the sidebar layout */}
+      {/* Full-width sections below */}
 
-      {/* Big Stats Callout — centered large text */}
+      {/* Big Stats Callout */}
       {project.stats && project.stats.length > 0 && project.featureImpact &&
       <section className="px-6 py-20 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
@@ -505,11 +660,21 @@ const CaseStudy = () => {
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
-              <div className="max-w-3xl">
+              <div>
                 <SectionLabel>Building the Prototype</SectionLabel>
-                <p className="text-[15px] leading-[1.7] text-muted-foreground">{project.prototyping}</p>
+                <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.prototyping}</p>
+                {project.prototypingDetails && (
+                  <div className="grid gap-4 md:grid-cols-2 mb-6">
+                    {project.prototypingDetails.map((detail, i) => (
+                      <div key={i} className="rounded-xl bg-card p-6">
+                        <h3 className="mb-2 text-sm font-bold text-foreground">{detail.title}</h3>
+                        <p className="text-sm text-muted-foreground">{detail.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {project.prototypeLink &&
-              <a href={project.prototypeLink} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+              <a href={project.prototypeLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
                     View Prototype ↗
                   </a>
               }
@@ -533,6 +698,11 @@ const CaseStudy = () => {
                   </div>
               )}
               </div>
+              {project.prototypeLink &&
+                <a href={project.prototypeLink} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                  View Prototype ↗
+                </a>
+              }
             </ScrollReveal>
           </div>
         </section>
@@ -543,16 +713,27 @@ const CaseStudy = () => {
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
-              <SectionLabel>Key Features</SectionLabel>
+              <SectionLabel>{project.id === "tipdirect-app" ? "Other App Features" : "Key Features"}</SectionLabel>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-                {project.features.map((feature, i) =>
-              <ScrollReveal key={i} delay={i * 0.06}>
-                    <div className="rounded-xl bg-card p-5">
-                      <h3 className="text-sm font-bold text-foreground">{feature.title}</h3>
-                      <p className="mt-1 text-xs text-muted-foreground">{feature.desc}</p>
-                    </div>
-                  </ScrollReveal>
-              )}
+                {project.features.map((feature, i) => {
+                  // For tipdirect-app, pair features with pill images
+                  const featurePillImages = project.id === "tipdirect-app" ? project.images?.filter(img => img.alt === feature.title) : [];
+                  return (
+                    <ScrollReveal key={i} delay={i * 0.06}>
+                      <div className="rounded-xl bg-card overflow-hidden">
+                        {featurePillImages && featurePillImages.length > 0 && (
+                          <div className="overflow-hidden">
+                            <img src={featurePillImages[0].src} alt={feature.title} className="w-full object-cover" loading="lazy" />
+                          </div>
+                        )}
+                        <div className="p-5">
+                          <h3 className="text-sm font-bold text-foreground">{feature.title}</h3>
+                          <p className="mt-1 text-xs text-muted-foreground">{feature.desc}</p>
+                        </div>
+                      </div>
+                    </ScrollReveal>
+                  );
+                })}
               </div>
             </ScrollReveal>
           </div>
@@ -585,7 +766,7 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Launch & Analytics — two-column */}
+      {/* Launch & Analytics */}
       {project.launchAnalytics &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
@@ -621,7 +802,7 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Inline image: Mixpanel (after Launch & Analytics) */}
+      {/* Inline image: Mixpanel */}
       {inlineImages.filter((img) => img.alt === "Mixpanel analytics report").map((img, i) =>
       <section key={`inline-mixpanel-${i}`} className="px-6 py-4 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
@@ -634,7 +815,7 @@ const CaseStudy = () => {
         </section>
       )}
 
-      {/* Feature Impact — 3 stat columns with accent color */}
+      {/* Feature Impact */}
       {project.featureImpact &&
       <section className="px-6 py-16 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
@@ -689,7 +870,7 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Stats / Key Results (for projects without featureImpact) */}
+      {/* Stats / Key Results */}
       {project.stats && project.stats.length > 0 && !project.featureImpact &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
@@ -713,16 +894,13 @@ const CaseStudy = () => {
       {/* Image Gallery */}
       {galleryImages.length > 0 &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
-          
-
-
-
-
-
+          <div className="mx-auto max-w-5xl">
+            <ImageGallery images={galleryImages} />
+          </div>
         </section>
       }
 
-      {/* Next Project — full-width card with background */}
+      {/* Next Project */}
       {nextProject &&
       <section className="px-6 py-20 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
@@ -731,14 +909,12 @@ const CaseStudy = () => {
               <Link
               to={`/case/${nextProject.id}`}
               className="group relative block overflow-hidden rounded-2xl">
-
                 <div className="relative h-64 md:h-80">
                   <img
                   src={nextProject.headerImage}
                   alt={nextProject.title}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy" />
-
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-8">
                     <span className="font-mono-label mb-2 block text-white/70">Up Next</span>
@@ -758,7 +934,6 @@ const CaseStudy = () => {
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <AvailabilityCTA />
     </main>);
-
 };
 
 export default CaseStudy;
