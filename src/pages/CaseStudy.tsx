@@ -1263,7 +1263,20 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Digital Tipping: Stats dashboard images 2x2 grid */}
+      {/* Big stat callout for digital-tipping */}
+      {project.id === "digital-tipping" && project.stats?.find((s) => s.label.includes("active")) &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <h2 className="text-center text-2xl font-black tracking-tight text-foreground md:text-3xl lg:text-4xl">
+                Percentage of overall users using the product at least once per week{" "}
+                <span className="text-primary">{project.stats.find((s) => s.label.includes("active"))?.value}</span>
+              </h2>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {project.id === "digital-tipping" && project.images &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
