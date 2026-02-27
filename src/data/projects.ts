@@ -457,7 +457,7 @@ export const projects: Project[] = [
     tags: ["UI/UX", "Product Research", "Atomic Design"],
     timeline: "2 years",
     client: "TripAdmit",
-    clientLogo: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/images.png?fit=515%2C98&ssl=1",
+    clientLogo: "/logos/tripadmit.svg",
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AirlineWhitelabel.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Whitelabel_Header.webp?fit=4107%2C2358&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/MobileWhitelabel.webp?fit=648%2C1024&ssl=1",
