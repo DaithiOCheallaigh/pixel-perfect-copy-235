@@ -219,11 +219,18 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>The Challenge</SectionLabel>
                     <div className="space-y-4">
-                      {project.challenge.split("\n\n").map((p, i) => {}
-
+                      {project.challenge.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                   )}
                     </div>
                   </div>
+                </ScrollReveal>
+            }
+
+              {/* Image Gallery (before Initial Approach) */}
+              {galleryImages.length > 0 &&
+            <ScrollReveal>
+                  <ImageGallery images={galleryImages} />
                 </ScrollReveal>
             }
 
@@ -942,14 +949,6 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Image Gallery */}
-      {galleryImages.length > 0 &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ImageGallery images={galleryImages} />
-          </div>
-        </section>
-      }
 
       {/* Next Project */}
       {nextProject &&
