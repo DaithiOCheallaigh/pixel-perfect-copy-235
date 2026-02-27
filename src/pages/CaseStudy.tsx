@@ -676,8 +676,8 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Solution Detail */}
-      {project.solutionDetail &&
+      {/* Solution Detail (non-Spotify) */}
+      {project.solutionDetail && project.id !== "spotify" &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
@@ -688,12 +688,6 @@ const CaseStudy = () => {
                 <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                 )}
                 </div>
-                {/* Spotify UI placement image */}
-                {project.id === "spotify" && project.images?.filter((img) => img.alt === "Spotify UI placement").map((img, i) =>
-              <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                    <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                  </div>
-              )}
               </div>
             </ScrollReveal>
           </div>
