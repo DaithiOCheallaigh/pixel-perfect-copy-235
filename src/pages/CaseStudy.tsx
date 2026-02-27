@@ -243,15 +243,23 @@ const CaseStudy = () => {
       <div className="px-6 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
             <div className="space-y-20">
-              {/* The Challenge */}
+              {/* The Challenge — 2-column: image left + text right (matches WordPress) */}
               {project.challenge &&
             <ScrollReveal>
-                  <div>
-                    <SectionLabel>The Challenge</SectionLabel>
-                    <div className="space-y-4">
-                      {project.challenge.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                  <div className="grid gap-8 md:grid-cols-[1fr_1.5fr] items-start">
+                    {/* Challenge image — first non-wide image from gallery */}
+                    {galleryImages.filter(img => !img.wide).length > 0 && (
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src={galleryImages.filter(img => !img.wide)[0].src} alt={galleryImages.filter(img => !img.wide)[0].alt} className="w-full object-cover" loading="lazy" />
+                      </div>
+                    )}
+                    <div>
+                      <SectionLabel>The Challenge</SectionLabel>
+                      <div className="space-y-4">
+                        {project.challenge.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
