@@ -238,7 +238,7 @@ const CaseStudy = () => {
               <div className="flex flex-col">
                 {project.clientLogo &&
                 <div className="mb-8">
-                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
+                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${(project.clientLogo?.includes('tripadmit') || project.clientLogo?.includes('tipdirect')) ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
                   </div>
                 }
                 {project.whatIWorkedOn &&
