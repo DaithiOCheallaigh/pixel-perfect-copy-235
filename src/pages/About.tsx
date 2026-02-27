@@ -83,14 +83,21 @@ const About = () => (
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-12 md:grid-cols-2">
           <ScrollReveal>
-            <div className="overflow-hidden rounded-sm">
-              <img
-                src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/MeWife.webp?fit=2372%2C3154&ssl=1"
-                alt="Dave Kelly"
-                className="w-full object-cover"
-              />
+            <div className="flex items-start">
+              <div className="relative h-28 w-28 overflow-hidden rounded-full">
+                <img
+                  src={avatarImg}
+                  alt="Dave Kelly"
+                  className="h-full w-full object-cover"
+                />
+                <ShineBorder
+                  shineColor={["#A855F7", "#EC4899", "#F97316"]}
+                  duration={10}
+                  borderWidth={2}
+                  className="rounded-full"
+                />
+              </div>
             </div>
-          </ScrollReveal>
 
           <div>
             <ScrollReveal>
