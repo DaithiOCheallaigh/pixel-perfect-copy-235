@@ -173,6 +173,11 @@ export const projects: Project[] = [
       ],
     },
     whatIWorkedOn: ["UI Design", "UX Strategy", "User Interviews", "Marketing", "Growth Strategy", "Feature Analysis"],
+    featureImpact: [
+      { period: "Local Currency", value: "31%", label: "conversion rate increase", description: "When we used AI to automatically detect a user's own currency." },
+      { period: "Average Tip", value: "$24.26", label: "received", description: "Guides who used the TipDirect platform received on average $24.26 per tip." },
+      { period: "Largest Tip", value: "$4,000", label: "for a group booking", description: "In summer 2024, a guide using the TipDirect platform received a tip of $4,000." },
+    ],
     stats: [
       { value: "31%", label: "conversion rate increase (local currency AI detection)" },
       { value: "$24.26", label: "average tip received" },
