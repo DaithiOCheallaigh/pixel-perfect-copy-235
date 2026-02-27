@@ -81,10 +81,10 @@ const About = () => (
     {/* Personal Section */}
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-12 md:grid-cols-2">
+        <div className="max-w-3xl">
           <ScrollReveal>
-            <div className="flex items-start">
-              <div className="relative h-28 w-28 overflow-hidden rounded-full">
+            <div className="flex items-center gap-6 mb-8">
+              <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-full">
                 <img
                   src={avatarImg}
                   alt="Dave Kelly"
@@ -97,36 +97,33 @@ const About = () => (
                   className="rounded-full"
                 />
               </div>
+              <div>
+                <SectionLabel>About</SectionLabel>
+                <h1 className="text-3xl font-black tracking-tighter text-foreground md:text-4xl">
+                  David Kelly
+                </h1>
+              </div>
             </div>
           </ScrollReveal>
 
-          <div>
-            <ScrollReveal>
-              <SectionLabel>About</SectionLabel>
-              <h1 className="mb-8 text-3xl font-black tracking-tighter text-foreground md:text-4xl">
-                David Kelly
-              </h1>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.1}>
-              <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
-                <p>
-                  Throughout my career, I've had the privilege of being at the forefront of delivering high-quality,
-                  comprehensive design solutions. With a keen eye for detail and a deep understanding of user
-                  experience, I consistently produce innovative and effective designs across various digital platforms.
-                </p>
-                <p>
-                  I bring both creativity and technical expertise to create tailored solutions that not only meet but
-                  exceed expectations. From web design to mobile applications, my commitment to excellence has earned
-                  me a reputation as a trusted partner in the digital design landscape.
-                </p>
-                <p>
-                  I look forward to hearing about your digital aspirations and beginning the process of bringing them
-                  to life, together.
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
+          <ScrollReveal delay={0.1}>
+            <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
+              <p>
+                Throughout my career, I've had the privilege of being at the forefront of delivering high-quality,
+                comprehensive design solutions. With a keen eye for detail and a deep understanding of user
+                experience, I consistently produce innovative and effective designs across various digital platforms.
+              </p>
+              <p>
+                I bring both creativity and technical expertise to create tailored solutions that not only meet but
+                exceed expectations. From web design to mobile applications, my commitment to excellence has earned
+                me a reputation as a trusted partner in the digital design landscape.
+              </p>
+              <p>
+                I look forward to hearing about your digital aspirations and beginning the process of bringing them
+                to life, together.
+              </p>
+            </div>
+          </ScrollReveal>
         </div>
 
         {/* Interests / Facts / Hobbies */}
