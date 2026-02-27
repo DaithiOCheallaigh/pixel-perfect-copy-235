@@ -452,7 +452,62 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Research Findings */}
+              {/* Whitelabel: Scaling the White-Label Solution — 2-column: text left, video right */}
+              {project.scalingPartnership &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Scaling the White-Label Solution: Global Airline Partnerships</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.scalingPartnership.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {project.scalingVideo &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <video
+                      src={project.scalingVideo}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full object-cover" />
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Improving the Product — 2-column: PDF cover left, text right */}
+              {project.improvingProduct &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Improving the Product</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{
+                  __html: project.improvingProduct.split("\n\n").map(p => {
+                    const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                    return `<p>${formatted}</p>`;
+                  }).join('')
+                }} />
+                      {project.improvingProductReportLink &&
+                  <div className="flex items-start">
+                          <a
+                      href={project.improvingProductReportLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
+                    >
+                            📄 View Report
+                          </a>
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
               {project.researchFindings &&
             <ScrollReveal>
                   <div>
