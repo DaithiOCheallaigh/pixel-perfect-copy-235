@@ -91,9 +91,19 @@ const CaseStudy = () => {
   const inlineImages = project.images?.filter((img) =>
   img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
   ) || [];
+  
+  // For booking-app, images are placed inline with sections, not in gallery
+  const bookingAppInlineAlts = [
+    "User journey map", "App screens", "Design artboard", "Architecture wireframes",
+    "iOS Style Guide", "Booking system", "High definition renders", "Shop integration"
+  ];
   const galleryImages = project.images?.filter((img) =>
-  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report"
+  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
+  !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt))
   ) || [];
+
+  // Helper to find booking-app images by alt
+  const findImage = (alt: string) => project.images?.find((img) => img.alt === alt);
 
   // Get the small screenshots for the 3-step cards
   const stepImages = project.images?.filter((img) =>
@@ -227,22 +237,38 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Image Gallery (before Initial Approach) */}
-              {galleryImages.length > 0 &&
+              {/* Full-width image before Initial Approach (booking-app: User journey map) */}
+              {project.id === "booking-app" && findImage("User journey map") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("User journey map")!.src} alt="User journey map" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Image Gallery (non-booking-app) */}
+              {project.id !== "booking-app" && galleryImages.length > 0 &&
             <ScrollReveal>
                   <ImageGallery images={galleryImages} />
                 </ScrollReveal>
             }
 
-              {/* Initial Approach (Booking App) */}
+              {/* Initial Approach (Booking App) — 2-column: text left, image right */}
               {project.initialApproach &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Initial Approach & User Journey Map</SectionLabel>
-                    <div className="space-y-4">
-                      {project.initialApproach.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.initialApproach.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {findImage("App screens") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("App screens")!.src} alt="App screens" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
                     </div>
                   </div>
                 </ScrollReveal>
@@ -570,43 +596,86 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Component Library (Booking App) */}
+              {/* Wireframes row (Booking App) */}
+              {project.id === "booking-app" &&
+            <ScrollReveal>
+                  <div className="space-y-4">
+                    {[findImage("Design artboard"), findImage("Architecture wireframes")].filter(Boolean).map((img, i) =>
+                <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                        <img src={img!.src} alt={img!.alt} className="w-full object-cover" loading="lazy" />
+                      </div>
+                )}
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Component Library (Booking App) — 2-column: image left, text right */}
               {project.componentLibrary &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Component Library</SectionLabel>
-                    <div className="space-y-4">
-                      {project.componentLibrary.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      {findImage("iOS Style Guide") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("iOS Style Guide")!.src} alt="iOS Style Guide" className="w-full object-contain" loading="lazy" />
+                        </div>
+                  }
+                      <div className="space-y-4">
+                        {project.componentLibrary.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
             }
 
-              {/* Launch & Traction (Booking App) */}
+              {/* Full-width booking showcase */}
+              {project.id === "booking-app" && findImage("Booking system") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Booking system")!.src} alt="Booking system" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Launch & Traction (Booking App) — 2-column: text left, image right */}
               {project.launchTraction &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Launch & Traction</SectionLabel>
-                    <div className="space-y-4">
-                      {project.launchTraction.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.launchTraction.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {findImage("High definition renders") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("High definition renders")!.src} alt="High definition renders" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
                     </div>
                   </div>
                 </ScrollReveal>
             }
 
-              {/* eCommerce (Booking App) */}
+              {/* eCommerce (Booking App) — 2-column: image left, text right */}
               {project.ecommerce &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>e-Commerce Functionality</SectionLabel>
-                    <div className="space-y-4">
-                      {project.ecommerce.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      {findImage("Shop integration") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("Shop integration")!.src} alt="Shop integration" className="w-full object-contain" loading="lazy" />
+                        </div>
+                  }
+                      <div className="space-y-4">
+                        {project.ecommerce.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
