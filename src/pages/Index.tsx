@@ -82,7 +82,7 @@ const Index = () => {
                 className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
               >
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                <div className="overflow-hidden">
+                <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
                   <img
                     src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1"
                     alt="AI Assisted Reviews"
@@ -133,7 +133,7 @@ const Index = () => {
                     View Project <span>→</span>
                   </span>
                 </div>
-                <div className="overflow-hidden md:order-2">
+                <div className="overflow-hidden rounded-r-xl md:rounded-r-xl md:rounded-l-none rounded-b-xl md:rounded-b-none md:order-2">
                   <img
                     src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/09/Pill2.webp?fit=800%2C800&ssl=1"
                     alt="Digital Tipping"
