@@ -803,15 +803,18 @@ const CaseStudy = () => {
                         </a>
                   )}
                     </div>
-                    {/* Big stat callout for digital-tipping */}
-                    {project.id === "digital-tipping" && project.stats?.find((s) => s.label.includes("active")) &&
-                    <div>
-                      <h2 className="text-2xl font-black tracking-tight text-foreground md:text-3xl lg:text-4xl">
-                        Percentage of overall users using the product at least once per week{" "}
-                        <span className="text-primary">{project.stats.find((s) => s.label.includes("active"))?.value}</span>
-                      </h2>
-                    </div>
-                    }
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Big stat callout for digital-tipping */}
+              {project.id === "digital-tipping" && project.stats?.find((s) => s.label.includes("active")) &&
+            <ScrollReveal>
+                  <div>
+                    <h2 className="text-2xl font-black tracking-tight text-foreground md:text-3xl lg:text-4xl">
+                      Percentage of overall users using the product at least once per week{" "}
+                      <span className="text-primary">{project.stats.find((s) => s.label.includes("active"))?.value}</span>
+                    </h2>
                   </div>
                 </ScrollReveal>
             }
