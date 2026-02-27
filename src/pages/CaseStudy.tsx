@@ -797,14 +797,14 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Other Integration Options</SectionLabel>
-              <div className="grid gap-6 md:grid-cols-3">
+              <div className="grid gap-6 md:grid-cols-3 items-stretch">
                 {project.alternativeIntegrations.map((alt, i) =>
-              <ScrollReveal key={i} delay={i * 0.1}>
-                    <div className="group overflow-hidden rounded-xl bg-card">
+              <ScrollReveal key={i} delay={i * 0.1} className="h-full">
+                    <div className="group overflow-hidden rounded-xl bg-card h-full flex flex-col">
                       <div className="overflow-hidden">
                         <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
                       </div>
-                      <div className="p-5">
+                      <div className="p-5 flex-1">
                         <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
                         <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
                       </div>
