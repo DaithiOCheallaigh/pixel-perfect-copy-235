@@ -475,6 +475,7 @@ export const projects: Project[] = [
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AirlineWhitelabel.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Whitelabel_Header.webp?fit=4107%2C2358&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/MobileWhitelabel.webp?fit=648%2C1024&ssl=1",
+    toolsImage: "/images/whitelabel-tools.png",
     // liveLink removed - old site shows "Not Active"
     description: "TripAdmit was founded on the belief that tours and activities represent a largely untapped revenue source in the airline industry. These experiences can be sold as ancillary products to travelers during their booking and travel journey, similar to how car rentals, hotel bookings, baggage allowances, and seat selections are offered. Tours and activities were seen as a natural addition to the booking experience.\n\nTripAdmit aimed to capitalise on this opportunity in two ways: by fostering relationships with large online travel agencies such as Viator and GetYourGuide, and by securing partnerships with airlines to provide them with a branded white-label solution integrated into their systems.",
     whatIWorkedOn: ["UI Design", "UX Strategy", "User Interviews", "Product Research", "Customer Success"],
