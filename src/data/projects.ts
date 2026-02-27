@@ -32,7 +32,8 @@ export interface Project {
   exploration?: string;
   explorationVideo?: string;
   buildingTheFeature?: string;
-  launchAnalytics?: { documentation: string[]; analytics: string[] };
+  launchAnalytics?: { intro?: string; documentation: string[]; analytics: string[] };
+  challengeImage?: string;
   designSystemLinks?: { label: string; url: string }[];
   designGoals?: { title: string; desc: string }[];
   coreDesignPrinciples?: { title: string; desc: string }[];
@@ -170,7 +171,9 @@ export const projects: Project[] = [
     toolsImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tools-1.webp?fit=800%2C115&ssl=1",
     liveLink: "https://tip.direct/",
     description: "TipDirect aims to transform the tipping experience in the travel industry by providing a seamless, digital solution for visitors to show appreciation to their guides. This innovative platform leverages cutting-edge technology to create a user-friendly, efficient, and secure tipping system.\n\nBy digitizing the tipping process, we seeked to enhance the overall travel experience, fostering stronger connections between visitors and guides while streamlining financial transactions in the tourism sector.",
+    challengeImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tipping-Profile-1.webp?fit=800%2C942&ssl=1",
     challenge: "In today's world, visitors to tourist attractions are increasingly going cashless. We were tasked with developing an easy-to-use, mobile solution that would allow tour guides to collect tips and reviews from groups at the end of their tours.\n\nTo accomplish this, we leveraged multiple methods for sharing a guide's profile on the go: NFC cards, QR codes, and shareable links.\n\nBy implementing quick tip options and integrating popular digital payment methods like Apple Pay and Google Pay, we simplified the tipping process. This reduced the cognitive load on visitors, making it a quicker and easier decision when they're on the move.",
+    researchIntro: "TripAdmit was fortunate to have a highly engaged user base actively seeking a review feature for their tour experiences. Through comprehensive quantitative research involving interview feedback sessions, we were able to compile a detailed understanding of user needs and preferences. Our research yielded several significant findings, outlined below:",
     exploration: "From customer interviews and shadowing, we quickly determined that tour guides required multiple ways of sharing their profiles with varying group sizes. For this reason, we chose to employ three methods. Crucially, once any of these methods had been used to access a profile, it was imperative that the tipping user didn't have to deduce what was being asked of them.\n\nFacial ID payments drastically reduce the time required to make an impulsive payment decision, while contactless payments appear 15% less to the tipper than if they were to leave gratuity in cash. After the tip, we aimed to leverage a captivated, satisfied audience by prompting them to leave a review, engage with the company's social media channels, or avail themselves of another experience by booking with a promo code.",
     sharingMethods: ["NFC cards", "QR codes", "Shareable links"],
     buildingTheFeature: "TipDirect offers multiple tipping methods through its platform: links, QR codes, and NFC-enabled cards. To ensure a consistent user experience, we designed an identical payment flow regardless of which method a guide shares with their customer. We prioritised convenient \"on-the-go\" tipping by prominently featuring Google Pay and Apple Pay options. Once a customer completes their tip, we leverage this engagement moment to request a review—a feature that eventually expanded to include social media prompts and upsell opportunities.",
@@ -181,6 +184,7 @@ export const projects: Project[] = [
       { label: "Components", url: "https://www.figma.com/design/kvqj5raBxuBkAxibfK1BFi/TipDirect_StyleGuide?node-id=53-82&t=PXzTHBWZl3BJ88Cx-1" },
     ],
     launchAnalytics: {
+      intro: "The initial feature set of the TipDirect platform consisted of digital tipping coupled with AI-assisted reviews. Through early conversations with potential customers, we were fortunate to have several eager early adopters ready to use the product. However, we still placed high importance on the following.",
       documentation: [
         "Created detailed knowledge base articles explaining feature functionality",
         "Provided step-by-step guides for setting up and using digital tipping",

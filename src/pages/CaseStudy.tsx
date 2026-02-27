@@ -102,10 +102,16 @@ const CaseStudy = () => {
     "Atomic design system", "Passenger journey map", "Displaying tours",
     "Tour option UI", "Design overview", "Ticketing system slider"
   ];
+  // For digital-tipping, all images are placed inline in specific sections
+  const digitalTippingInlineAlts = [
+    "Tech stack", "Survey example", "Mind map", "Research document",
+    "User flow", "Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"
+  ];
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
-  !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt))
+  !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt)) &&
+  !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
@@ -118,26 +124,28 @@ const CaseStudy = () => {
 
   return (
     <main className="pt-24">
-      {/* Whitelabel: Full-width hero image */}
-      {project.id === "whitelabel" &&
+      {/* Whitelabel / Digital Tipping: Full-width hero image */}
+      {(project.id === "whitelabel" || project.id === "digital-tipping") &&
       <section className="px-6 pb-8 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
             </motion.div>
+            {project.id === "whitelabel" &&
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
               <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
               <p className="mb-8 text-lg text-muted-foreground">{project.subtitle}</p>
             </motion.div>
+            }
           </div>
           <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <img src="/images/whitelabel-hero.png" alt="TripAdmit white-label platform" className="w-full object-cover" />
+            <img src={project.id === "digital-tipping" ? project.headerImage : "/images/whitelabel-hero.png"} alt={project.title} className="w-full object-cover" />
           </motion.div>
         </section>
       }
 
       {/* Hero — Title left, stacked mockups right (non-whitelabel) */}
-      {project.id !== "whitelabel" &&
+      {project.id !== "whitelabel" && project.id !== "digital-tipping" &&
       <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
@@ -225,8 +233,8 @@ const CaseStudy = () => {
       </section>
       }
 
-      {/* Whitelabel: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
-      {project.id === "whitelabel" &&
+      {/* Whitelabel / Digital Tipping: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
+      {(project.id === "whitelabel" || project.id === "digital-tipping") &&
       <section className="px-6 py-16 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div
@@ -251,15 +259,20 @@ const CaseStudy = () => {
                     </ul>
                   </div>
                 }
-                <div>
+                <div className="mb-6">
                   <span className="text-sm font-bold text-foreground">Timeline: </span>
                   <span className="text-sm text-foreground">{project.timeline}</span>
                 </div>
+                {project.liveLink &&
+                <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
+                    View Live ↗
+                  </a>
+                }
               </div>
 
               {/* Right: heading + description + tools */}
               <div className="flex flex-col">
-                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">An Untapped Revenue Stream</h2>
+                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.title}</h2>
                 <div className="space-y-4 mb-8">
                   {project.description.split("\n\n").map((p, i) =>
                   <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
@@ -306,11 +319,24 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>The Challenge</SectionLabel>
+                    {project.challengeImage ?
+                    <div className={`grid gap-12 md:grid-cols-2 items-start ${project.challengeImageRight ? 'md:[&>*:first-child]:order-2' : ''}`}>
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src={project.challengeImage} alt="Challenge" className="w-full object-cover" loading="lazy" />
+                      </div>
+                      <div className="space-y-4">
+                        {project.challenge.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                    </div>
+                    :
                     <div className="space-y-4">
                       {project.challenge.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
                     </div>
+                    }
                   </div>
                 </ScrollReveal>
             }
@@ -621,6 +647,29 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* Digital Tipping: Research images 3-column grid with labels */}
+              {project.id === "digital-tipping" &&
+            <ScrollReveal>
+                  <div className="grid gap-6 md:grid-cols-3">
+                    {[
+                      { alt: "Survey example", label: "Tour Guide Tipping Survey", sublabel: "Personal Experience Questionnaire" },
+                      { alt: "Mind map", label: "Mindmap", sublabel: "Digital Tipping" },
+                      { alt: "Research document", label: "R&D", sublabel: "London Observations | 2024" },
+                    ].map((item, i) => {
+                      const img = findImage(item.alt);
+                      if (!img) return null;
+                      return (
+                        <ScrollReveal key={i} delay={i * 0.1}>
+                          <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={img.src} alt={item.alt} className="w-full object-cover" loading="lazy" />
+                          </div>
+                        </ScrollReveal>
+                      );
+                    })}
+                  </div>
+                </ScrollReveal>
+            }
+
               {/* Building the Feature */}
               {project.buildingTheFeature &&
             <ScrollReveal>
@@ -632,6 +681,15 @@ const CaseStudy = () => {
                         <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
                       </div>
                 )}
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Digital Tipping: User flow diagram (full-width) before tipping flow */}
+              {project.id === "digital-tipping" && findImage("User flow") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md bg-muted/30">
+                    <img src={findImage("User flow")!.src} alt="User flow" className="w-full object-cover" loading="lazy" />
                   </div>
                 </ScrollReveal>
             }
@@ -736,13 +794,22 @@ const CaseStudy = () => {
                   <div className="text-center">
                     <SectionLabel>Design System</SectionLabel>
                     <p className="mb-6 text-[15px] text-muted-foreground">To explore the look and feel of the whole product, please see below</p>
-                    <div className="flex flex-wrap justify-center gap-3">
+                    <div className="flex flex-wrap justify-center gap-3 mb-12">
                       {project.designSystemLinks.map((link) =>
-                  <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
-                          {link.label} ↗
+                  <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90">
+                          {link.label === "Design System" ? "🖥 " : "🧩 "}{link.label}
                         </a>
                   )}
                     </div>
+                    {/* Big stat callout for digital-tipping */}
+                    {project.id === "digital-tipping" && project.stats?.find((s) => s.label.includes("active")) &&
+                    <div>
+                      <h2 className="text-2xl font-black tracking-tight text-foreground md:text-3xl lg:text-4xl">
+                        Percentage of overall users using the product at least once per week{" "}
+                        <span className="text-primary">{project.stats.find((s) => s.label.includes("active"))?.value}</span>
+                      </h2>
+                    </div>
+                    }
                   </div>
                 </ScrollReveal>
             }
@@ -1172,7 +1239,7 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Launch & Analytics</SectionLabel>
-              <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">After launching our AI review feature, we implemented a comprehensive approach to ensure successful adoption and measure impact:</p>
+              <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.launchAnalytics.intro || "After launching our AI review feature, we implemented a comprehensive approach to ensure successful adoption and measure impact:"}</p>
               <div className="grid gap-6 md:grid-cols-2">
                 <div className="rounded-xl bg-card p-6">
                   <h3 className="mb-4 text-base font-bold text-foreground">Documentation & Support</h3>
@@ -1202,7 +1269,23 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Inline image: Mixpanel */}
+      {/* Digital Tipping: Stats dashboard images 2x2 grid */}
+      {project.id === "digital-tipping" && project.images &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="grid gap-4 md:grid-cols-2">
+                {project.images.filter((img) => ["Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"].includes(img.alt)).map((img, i) =>
+              <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                    <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                  </div>
+              )}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {inlineImages.filter((img) => img.alt === "Mixpanel analytics report").map((img, i) =>
       <section key={`inline-mixpanel-${i}`} className="px-6 py-4 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
