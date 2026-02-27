@@ -62,6 +62,7 @@ export interface Project {
   componentLibrary?: string;
   launchTraction?: string;
   ecommerce?: string;
+  vimeoEmbed?: string;
 }
 
 export const projects: Project[] = [
