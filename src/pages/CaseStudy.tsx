@@ -450,6 +450,7 @@ const CaseStudy = () => {
                 }
                   </div>
                 </ScrollReveal>
+            }
 
               {/* Research Findings */}
               {project.researchFindings &&
