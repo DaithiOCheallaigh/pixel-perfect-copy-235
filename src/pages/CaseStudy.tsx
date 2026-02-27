@@ -279,79 +279,99 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Exploration */}
-              {(project.exploration || project.explorationDetail) &&
-            <ScrollReveal>
-                  <div>
-                    <SectionLabel>Exploration</SectionLabel>
-                    <div className="space-y-4 mb-6">
-                      {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
-                    </div>
-                    {/* Exploration images (e.g. Spotify) */}
-                    {project.id === "spotify" && project.images && (
-                      <div className="grid gap-4 md:grid-cols-2 mb-6">
-                        {project.images.filter(img => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
-                          <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                          </div>
+              {/* Exploration + Research Findings — side-by-side 2-column (matches WordPress) */}
+              {(project.exploration || project.explorationDetail) && project.researchFindings ? (
+                <ScrollReveal>
+                  <div className="grid gap-12 md:grid-cols-2 items-start">
+                    {/* LEFT: Exploration */}
+                    <div>
+                      <SectionLabel>Exploration</SectionLabel>
+                      <div className="space-y-4 mb-6">
+                        {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                          <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                         )}
                       </div>
-                    )}
-                    {project.explorationVideo &&
-                <div className="overflow-hidden rounded-xl shadow-md">
-                        <video
-                    src={project.explorationVideo}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full object-cover" />
-                      </div>
-                }
-                  </div>
-                </ScrollReveal>
-            }
-
-              {/* Research Findings */}
-              {project.researchFindings &&
-            <ScrollReveal>
-                  <div>
-                    <SectionLabel>Research Findings</SectionLabel>
-                    {project.researchIntro &&
-                <p className="mb-8 text-[15px] leading-[1.7] text-muted-foreground">{project.researchIntro}</p>
-                }
-                    <div className="grid gap-8 md:grid-cols-2 mb-8">
-                      {project.researchFindings.map((finding, i) => {
-                    const [title, ...rest] = finding.split(": ");
-                    const content = rest.join(": ");
-                    return (
-                      <div key={i}>
-                            <h3 className="mb-3 text-base font-bold text-foreground">{title}</h3>
-                            <ul className="space-y-2">
-                              {content.split(". ").filter(Boolean).map((point, j) =>
-                          <li key={j} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
-                                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
-                                  {point.endsWith(".") ? point : `${point}.`}
-                                </li>
+                      {project.explorationVideo &&
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                          <video src={project.explorationVideo} autoPlay loop muted playsInline className="w-full object-cover" />
+                        </div>
+                      }
+                      {/* Exploration images (e.g. Spotify) */}
+                      {project.id === "spotify" && project.images && (
+                        <div className="grid gap-4 md:grid-cols-1 mt-6">
+                          {project.images.filter(img => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
+                            <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                              <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                            </div>
                           )}
-                            </ul>
-                          </div>);
-                  })}
+                        </div>
+                      )}
                     </div>
-                    {galleryImages.filter((img) => ["Group overview"].includes(img.alt)).length > 0 &&
-                <div className="grid gap-4 md:grid-cols-2">
-                        {galleryImages.filter((img) => !img.wide).slice(0, 2).map((img, i) =>
-                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                          </div>
-                  )}
-                      </div>
-                }
+                    {/* RIGHT: Research Findings */}
+                    <div>
+                      <SectionLabel>Research Findings</SectionLabel>
+                      {project.researchIntro &&
+                        <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.researchIntro}</p>
+                      }
+                    </div>
                   </div>
                 </ScrollReveal>
-            }
+              ) : (
+                <>
+                  {/* Exploration standalone */}
+                  {(project.exploration || project.explorationDetail) &&
+                    <ScrollReveal>
+                      <div>
+                        <SectionLabel>Exploration</SectionLabel>
+                        <div className="space-y-4 mb-6">
+                          {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                            <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                          )}
+                        </div>
+                        {project.id === "spotify" && project.images && (
+                          <div className="grid gap-4 md:grid-cols-2 mb-6">
+                            {project.images.filter(img => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
+                              <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        {project.explorationVideo &&
+                          <div className="overflow-hidden rounded-xl shadow-md">
+                            <video src={project.explorationVideo} autoPlay loop muted playsInline className="w-full object-cover" />
+                          </div>
+                        }
+                      </div>
+                    </ScrollReveal>
+                  }
+
+                  {/* Research Findings standalone */}
+                  {project.researchFindings &&
+                    <ScrollReveal>
+                      <div>
+                        <SectionLabel>Research Findings</SectionLabel>
+                        {project.researchIntro &&
+                          <p className="mb-8 text-[15px] leading-[1.7] text-muted-foreground">{project.researchIntro}</p>
+                        }
+                      </div>
+                    </ScrollReveal>
+                  }
+                </>
+              )}
+
+              {/* Research images — 3-column grid (matches WordPress) */}
+              {project.researchFindings && galleryImages.filter(img => !img.wide && !["Group overview"].includes(img.alt)).length > 0 && (
+                <ScrollReveal>
+                  <div className="grid gap-4 md:grid-cols-3">
+                    {galleryImages.filter(img => !img.wide && ["Survey example", "Mind map", "Research document"].includes(img.alt)).map((img, i) =>
+                      <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                        <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                      </div>
+                    )}
+                  </div>
+                </ScrollReveal>
+              )}
 
               {/* Building the Feature */}
               {project.buildingTheFeature &&
