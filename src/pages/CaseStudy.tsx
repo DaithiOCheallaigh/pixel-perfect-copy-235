@@ -794,7 +794,7 @@ const CaseStudy = () => {
               {project.designSystemLinks &&
             <ScrollReveal>
                   <div className="text-center">
-                    <SectionLabel>Design System</SectionLabel>
+                    <h2 className="mb-4 text-2xl font-bold text-center">Design System</h2>
                     <p className="mb-6 text-[15px] text-muted-foreground">To explore the look and feel of the whole product, please see below</p>
                     <div className="flex flex-wrap justify-center gap-3 mb-12">
                       {project.designSystemLinks.map((link) =>
