@@ -74,6 +74,10 @@ export interface Project {
   activityDetailPage?: string;
   closingTextLeft?: string;
   closingTextRight?: string;
+  scalingPartnership?: string;
+  improvingProduct?: string;
+  improvingProductReportLink?: string;
+  scalingVideo?: string;
 }
 
 export const projects: Project[] = [
