@@ -1,3 +1,5 @@
+import tipdirectLogo from "@/assets/logos/tipdirect.svg";
+
 export interface Project {
   id: string;
   title: string;
