@@ -347,7 +347,6 @@ const CaseStudy = () => {
                         <div className="overflow-hidden rounded-xl shadow-md">
                           <img src="/images/SpotifyHeader_Web-2.webp" alt="Spotify tipping flow screens" className="w-full object-cover" loading="lazy" />
                         </div>
-                      </div>
                       </div> :
 
                 <div className="grid gap-8 md:grid-cols-2 items-start">
