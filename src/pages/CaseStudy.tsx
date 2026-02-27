@@ -313,11 +313,24 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>The Challenge</SectionLabel>
+                    {project.challengeImage ?
+                    <div className={`grid gap-12 md:grid-cols-2 items-start ${project.challengeImageRight ? 'md:[&>*:first-child]:order-2' : ''}`}>
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src={project.challengeImage} alt="Challenge" className="w-full object-cover" loading="lazy" />
+                      </div>
+                      <div className="space-y-4">
+                        {project.challenge.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                    </div>
+                    :
                     <div className="space-y-4">
                       {project.challenge.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
                     </div>
+                    }
                   </div>
                 </ScrollReveal>
             }
