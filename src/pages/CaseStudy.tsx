@@ -652,14 +652,14 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>{project.id === "spotify" ? "The Tipping Flow" : "Tipping Flow"}</SectionLabel>
                     {project.id === "spotify" ?
-                <div className="space-y-6">
-                        <div className="space-y-4">
+                <div>
+                        <div className="space-y-4 mb-8">
                           {project.tippingFlow.split("\n\n").map((p, i) =>
                     <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                     )}
                         </div>
-                        {project.images?.filter((img) => ["Tipping flow desktop", "Tipping flow mobile"].includes(img.alt)).map((img, i) =>
-                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                        {project.images?.filter((img) => img.alt === "Tipping flow desktop").map((img, i) =>
+                  <div key={i} className="overflow-hidden rounded-2xl shadow-lg">
                             <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
                           </div>
                   )}
