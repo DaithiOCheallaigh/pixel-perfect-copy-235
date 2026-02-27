@@ -102,10 +102,16 @@ const CaseStudy = () => {
     "Atomic design system", "Passenger journey map", "Displaying tours",
     "Tour option UI", "Design overview", "Ticketing system slider"
   ];
+  // For digital-tipping, all images are placed inline in specific sections
+  const digitalTippingInlineAlts = [
+    "Tech stack", "Survey example", "Mind map", "Research document",
+    "User flow", "Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"
+  ];
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
-  !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt))
+  !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt)) &&
+  !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
