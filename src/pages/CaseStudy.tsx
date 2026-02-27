@@ -219,8 +219,8 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>The Challenge</SectionLabel>
                     <div className="space-y-4">
-                      {project.challenge.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      {project.challenge.split("\n\n").map((p, i) => {}
+
                   )}
                     </div>
                   </div>
