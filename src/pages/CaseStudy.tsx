@@ -118,7 +118,26 @@ const CaseStudy = () => {
 
   return (
     <main className="pt-24">
-      {/* Hero — Title left, stacked mockups right */}
+      {/* Whitelabel: Full-width hero image */}
+      {project.id === "whitelabel" &&
+      <section className="px-6 pb-8 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+              <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
+              <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
+              <p className="mb-8 text-lg text-muted-foreground">{project.subtitle}</p>
+            </motion.div>
+          </div>
+          <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
+            <img src="/images/whitelabel-hero.png" alt="TripAdmit white-label platform" className="w-full object-cover" />
+          </motion.div>
+        </section>
+      }
+
+      {/* Hero — Title left, stacked mockups right (non-whitelabel) */}
+      {project.id !== "whitelabel" &&
       <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
@@ -178,7 +197,7 @@ const CaseStudy = () => {
               {project.toolsImage &&
               <div className="mb-6">
                   <span className="font-mono-label mb-2 block text-muted-foreground">Tools</span>
-                  <img src={project.toolsImage} alt="Tools used" className="max-w-xs" loading="lazy" />
+                  <img src={project.toolsImage} alt="Tools used" className="max-w-[200px]" loading="lazy" />
                 </div>
               }
 
@@ -204,6 +223,59 @@ const CaseStudy = () => {
           </motion.div>
         </div>
       </section>
+      }
+
+      {/* Whitelabel: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
+      {project.id === "whitelabel" &&
+      <section className="px-6 py-16 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <motion.div
+              className="grid gap-12 md:grid-cols-[0.8fr_1.2fr] items-start"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+              {/* Left: logo + what I worked on + timeline */}
+              <div className="flex flex-col">
+                {project.clientLogo &&
+                <div className="mb-8">
+                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
+                  </div>
+                }
+                {project.whatIWorkedOn &&
+                <div className="mb-8">
+                    <h3 className="mb-3 text-sm font-bold text-foreground">What I Worked On</h3>
+                    <ul className="space-y-1">
+                      {project.whatIWorkedOn.map((item) =>
+                    <li key={item} className="text-sm text-muted-foreground">{item}</li>
+                    )}
+                    </ul>
+                  </div>
+                }
+                <div>
+                  <span className="text-sm font-bold text-foreground">Timeline: </span>
+                  <span className="text-sm text-foreground">{project.timeline}</span>
+                </div>
+              </div>
+
+              {/* Right: heading + description + tools */}
+              <div className="flex flex-col">
+                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">An Untapped Revenue Stream</h2>
+                <div className="space-y-4 mb-8">
+                  {project.description.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                </div>
+                {project.toolsImage &&
+                <div>
+                    <span className="text-sm font-bold text-foreground mb-3 block">Tools:</span>
+                    <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
+                  </div>
+                }
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      }
 
       {/* Vimeo Video Embed */}
       {project.vimeoEmbed &&
