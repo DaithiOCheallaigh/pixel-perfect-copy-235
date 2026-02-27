@@ -1269,7 +1269,23 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Inline image: Mixpanel */}
+      {/* Digital Tipping: Stats dashboard images 2x2 grid */}
+      {project.id === "digital-tipping" && project.images &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="grid gap-4 md:grid-cols-2">
+                {project.images.filter((img) => ["Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"].includes(img.alt)).map((img, i) =>
+              <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                    <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                  </div>
+              )}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {inlineImages.filter((img) => img.alt === "Mixpanel analytics report").map((img, i) =>
       <section key={`inline-mixpanel-${i}`} className="px-6 py-4 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
