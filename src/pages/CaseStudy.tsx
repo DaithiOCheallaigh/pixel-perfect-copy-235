@@ -18,7 +18,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
             {nonWideBuffer.map((nwImg, j) =>
             <ScrollReveal key={j} delay={j * 0.05}>
                 <div className="overflow-hidden rounded-xl shadow-md">
-                  
+                  <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
                 </div>
               </ScrollReveal>
             )}
@@ -29,7 +29,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
       elements.push(
         <ScrollReveal key={`wide-${i}`}>
           <div className="overflow-hidden rounded-xl shadow-md">
-            
+            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
           </div>
         </ScrollReveal>
       );
@@ -59,7 +59,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
         {nonWideBuffer.map((nwImg, j) =>
         <ScrollReveal key={j} delay={j * 0.05}>
             <div className="overflow-hidden rounded-xl shadow-md">
-              
+              <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
             </div>
           </ScrollReveal>
         )}
@@ -87,16 +87,29 @@ const CaseStudy = () => {
       </main>);
   }
 
-  // Images used inline in whitelabel sections
-  const whitelabelInlineAlts = ["Atomic design system", "Passenger journey map", "Displaying tours", "Tour option UI", "Design overview"];
-
   // Separate images for inline placement vs gallery
   const inlineImages = project.images?.filter((img) =>
   img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
   ) || [];
+  
+  // For booking-app, images are placed inline with sections, not in gallery
+  const bookingAppInlineAlts = [
+    "User journey map", "App screens", "Design artboard", "Architecture wireframes",
+    "iOS Style Guide", "Booking system", "High definition renders", "Shop integration"
+  ];
+  // For whitelabel, all images are placed inline
+  const whitelabelInlineAlts = [
+    "Atomic design system", "Passenger journey map", "Displaying tours",
+    "Tour option UI", "Design overview", "Ticketing system slider"
+  ];
   const galleryImages = project.images?.filter((img) =>
-  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" && !whitelabelInlineAlts.includes(img.alt)
+  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
+  !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
+  !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt))
   ) || [];
+
+  // Helper to find booking-app images by alt
+  const findImage = (alt: string) => project.images?.find((img) => img.alt === alt);
 
   // Get the small screenshots for the 3-step cards
   const stepImages = project.images?.filter((img) =>
@@ -105,7 +118,26 @@ const CaseStudy = () => {
 
   return (
     <main className="pt-24">
-      {/* Hero — Title left, stacked mockups right */}
+      {/* Whitelabel: Full-width hero image */}
+      {project.id === "whitelabel" &&
+      <section className="px-6 pb-8 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+              <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
+              <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
+              <p className="mb-8 text-lg text-muted-foreground">{project.subtitle}</p>
+            </motion.div>
+          </div>
+          <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
+            <img src="/images/whitelabel-hero.png" alt="TripAdmit white-label platform" className="w-full object-cover" />
+          </motion.div>
+        </section>
+      }
+
+      {/* Hero — Title left, stacked mockups right (non-whitelabel) */}
+      {project.id !== "whitelabel" &&
       <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
@@ -131,7 +163,7 @@ const CaseStudy = () => {
               {/* Client logo */}
               {project.clientLogo ?
               <div className="mb-6">
-                  <img src={project.clientLogo} alt={project.client || "Client"} className="max-h-20 w-auto object-contain" loading="lazy" />
+                  <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
                 </div> :
               project.client ?
               <span className="font-mono-label mb-4 text-muted-foreground">{project.client}</span> :
@@ -165,7 +197,7 @@ const CaseStudy = () => {
               {project.toolsImage &&
               <div className="mb-6">
                   <span className="font-mono-label mb-2 block text-muted-foreground">Tools</span>
-                  <img src={project.toolsImage} alt="Tools used" className="max-w-xs" loading="lazy" />
+                  <img src={project.toolsImage} alt="Tools used" className="max-w-[200px]" loading="lazy" />
                 </div>
               }
 
@@ -191,6 +223,59 @@ const CaseStudy = () => {
           </motion.div>
         </div>
       </section>
+      }
+
+      {/* Whitelabel: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
+      {project.id === "whitelabel" &&
+      <section className="px-6 py-16 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <motion.div
+              className="grid gap-12 md:grid-cols-[0.8fr_1.2fr] items-start"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+              {/* Left: logo + what I worked on + timeline */}
+              <div className="flex flex-col">
+                {project.clientLogo &&
+                <div className="mb-8">
+                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
+                  </div>
+                }
+                {project.whatIWorkedOn &&
+                <div className="mb-8">
+                    <h3 className="mb-3 text-sm font-bold text-foreground">What I Worked On</h3>
+                    <ul className="space-y-1">
+                      {project.whatIWorkedOn.map((item) =>
+                    <li key={item} className="text-sm text-muted-foreground">{item}</li>
+                    )}
+                    </ul>
+                  </div>
+                }
+                <div>
+                  <span className="text-sm font-bold text-foreground">Timeline: </span>
+                  <span className="text-sm text-foreground">{project.timeline}</span>
+                </div>
+              </div>
+
+              {/* Right: heading + description + tools */}
+              <div className="flex flex-col">
+                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">An Untapped Revenue Stream</h2>
+                <div className="space-y-4 mb-8">
+                  {project.description.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                </div>
+                {project.toolsImage &&
+                <div>
+                    <span className="text-sm font-bold text-foreground mb-3 block">Tools:</span>
+                    <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
+                  </div>
+                }
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      }
 
       {/* Vimeo Video Embed */}
       {project.vimeoEmbed &&
@@ -222,25 +307,46 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>The Challenge</SectionLabel>
                     <div className="space-y-4">
-                      {project.challenge.split("\n\n").map((p, i) => (
-                        <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                      )
-
+                      {project.challenge.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                   )}
                     </div>
                   </div>
                 </ScrollReveal>
             }
 
-              {/* Initial Approach (Booking App) */}
+              {/* Full-width image before Initial Approach (booking-app: User journey map) */}
+              {project.id === "booking-app" && findImage("User journey map") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("User journey map")!.src} alt="User journey map" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Image Gallery (non-booking-app) */}
+              {project.id !== "booking-app" && galleryImages.length > 0 &&
+            <ScrollReveal>
+                  <ImageGallery images={galleryImages} />
+                </ScrollReveal>
+            }
+
+              {/* Initial Approach (Booking App) — 2-column: text left, image right */}
               {project.initialApproach &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Initial Approach & User Journey Map</SectionLabel>
-                    <div className="space-y-4">
-                      {project.initialApproach.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.initialApproach.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {findImage("App screens") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("App screens")!.src} alt="App screens" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
                     </div>
                   </div>
                 </ScrollReveal>
@@ -281,7 +387,202 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Research Findings */}
+              {/* Whitelabel: Passenger Journey Map (full-width) */}
+              {project.id === "whitelabel" && findImage("Passenger journey map") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Passenger journey map")!.src} alt="Passenger journey map" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Understanding the Journey — 2-column */}
+              {project.journeyUnderstanding &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Understanding the Journey</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.journeyUnderstanding.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {project.journeyStages &&
+                  <div>
+                          <p className="mb-4 text-[15px] font-semibold text-foreground">Key stages included:</p>
+                          <ul className="space-y-4">
+                            {project.journeyStages.map((stage, i) =>
+                      <li key={i} className="text-sm leading-relaxed text-muted-foreground">
+                                <span className="font-bold text-foreground">{stage.phase}:</span> {stage.text}
+                              </li>
+                      )}
+                          </ul>
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Atomic Design System — full-width image + 2-column text */}
+              {project.atomicDesignSystem &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>An Atomic Design System</SectionLabel>
+                    {findImage("Atomic design system") &&
+                <div className="mb-10 overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("Atomic design system")!.src} alt="Atomic design system" className="w-full object-cover" loading="lazy" />
+                      </div>
+                }
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{
+                  __html: project.atomicDesignSystem.split("\n\n").map(p => {
+                    const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                    return `<p>${formatted}</p>`;
+                  }).join('')
+                }} />
+                      {project.atomicDesignSystemRight &&
+                  <div className="space-y-4">
+                          {project.atomicDesignSystemRight.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Displaying Tours — 2-column: text left, image right */}
+              {project.displayingTours &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Displaying Tours</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.displayingTours.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {findImage("Displaying tours") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("Displaying tours")!.src} alt="Displaying tours" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Activity Detail Page — 2-column: image left, text right */}
+              {project.activityDetailPage &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Activity Detail Page Template</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      {findImage("Tour option UI") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("Tour option UI")!.src} alt="Tour option UI" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
+                      <div className="space-y-4">
+                        {project.activityDetailPage.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Full-width design overview (ANA screens) */}
+              {project.id === "whitelabel" && findImage("Design overview") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Design overview")!.src} alt="Design overview" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Closing text — 2-column */}
+              {project.closingTextLeft &&
+            <ScrollReveal>
+                  <div className="grid gap-12 md:grid-cols-2 items-start">
+                    <div className="space-y-4">
+                      {project.closingTextLeft.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                    {project.closingTextRight &&
+                <div className="space-y-4">
+                        {project.closingTextRight.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                      </div>
+                }
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Scaling the White-Label Solution — 2-column: text left, video right */}
+              {project.scalingPartnership &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Scaling the White-Label Solution: Global Airline Partnerships</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.scalingPartnership.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {project.scalingVideo &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <video
+                      src={project.scalingVideo}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full object-cover" />
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Improving the Product — 2-column: PDF cover left, text right */}
+              {project.improvingProduct &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Improving the Product</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src="/images/whitelabel-ux-report-cover.png" alt="White Label UX & Consumer Psychology Report" className="w-full object-cover" loading="lazy" />
+                      </div>
+                      <div>
+                        <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground mb-6" dangerouslySetInnerHTML={{
+                    __html: project.improvingProduct.split("\n\n").map(p => {
+                      const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                      return `<p>${formatted}</p>`;
+                    }).join('')
+                  }} />
+                        {project.improvingProductReportLink &&
+                    <a
+                        href={project.improvingProductReportLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
+                      >
+                          📄 View Report
+                        </a>
+                    }
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
               {project.researchFindings &&
             <ScrollReveal>
                   <div>
@@ -347,9 +648,11 @@ const CaseStudy = () => {
                     <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                     )}
                         </div>
-                        <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src="/images/SpotifyHeader_Web-2.webp" alt="Spotify tipping flow screens" className="w-full object-cover" loading="lazy" />
-                        </div>
+                        {project.images?.filter((img) => ["Tipping flow desktop", "Tipping flow mobile"].includes(img.alt)).map((img, i) =>
+                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                          </div>
+                  )}
                       </div> :
 
                 <div className="grid gap-8 md:grid-cols-2 items-start">
@@ -566,43 +869,86 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Component Library (Booking App) */}
+              {/* Wireframes row (Booking App) */}
+              {project.id === "booking-app" &&
+            <ScrollReveal>
+                  <div className="space-y-4">
+                    {[findImage("Design artboard"), findImage("Architecture wireframes")].filter(Boolean).map((img, i) =>
+                <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                        <img src={img!.src} alt={img!.alt} className="w-full object-cover" loading="lazy" />
+                      </div>
+                )}
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Component Library (Booking App) — 2-column: image left, text right */}
               {project.componentLibrary &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Component Library</SectionLabel>
-                    <div className="space-y-4">
-                      {project.componentLibrary.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      {findImage("iOS Style Guide") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("iOS Style Guide")!.src} alt="iOS Style Guide" className="w-full object-contain" loading="lazy" />
+                        </div>
+                  }
+                      <div className="space-y-4">
+                        {project.componentLibrary.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
             }
 
-              {/* Launch & Traction (Booking App) */}
+              {/* Full-width booking showcase */}
+              {project.id === "booking-app" && findImage("Booking system") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Booking system")!.src} alt="Booking system" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Launch & Traction (Booking App) — 2-column: text left, image right */}
               {project.launchTraction &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Launch & Traction</SectionLabel>
-                    <div className="space-y-4">
-                      {project.launchTraction.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.launchTraction.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {findImage("High definition renders") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("High definition renders")!.src} alt="High definition renders" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
                     </div>
                   </div>
                 </ScrollReveal>
             }
 
-              {/* eCommerce (Booking App) */}
+              {/* eCommerce (Booking App) — 2-column: image left, text right */}
               {project.ecommerce &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>e-Commerce Functionality</SectionLabel>
-                    <div className="space-y-4">
-                      {project.ecommerce.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      {findImage("Shop integration") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("Shop integration")!.src} alt="Shop integration" className="w-full object-contain" loading="lazy" />
+                        </div>
+                  }
+                      <div className="space-y-4">
+                        {project.ecommerce.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
@@ -610,213 +956,6 @@ const CaseStudy = () => {
             </div>
         </div>
       </div>
-
-      {/* Journey Understanding */}
-      {project.journeyUnderstanding &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <SectionLabel>Understanding the Passenger Journey</SectionLabel>
-              <div className="space-y-4">
-                {project.journeyUnderstanding.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                )}
-              </div>
-            </ScrollReveal>
-            {project.journeyStages &&
-            <ScrollReveal>
-                <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {project.journeyStages.map((stage, i) =>
-                <ScrollReveal key={i} delay={i * 0.06} className="h-full">
-                      <div className="flex h-full flex-col rounded-xl bg-card p-6">
-                        <span className="font-mono-label text-primary">{stage.phase}</span>
-                        <p className="mt-2 text-sm text-muted-foreground">{stage.text}</p>
-                      </div>
-                    </ScrollReveal>
-                )}
-                </div>
-              </ScrollReveal>
-            }
-            {/* Journey map image */}
-            {project.images?.filter((img) => img.alt === "Passenger journey map").map((img, i) =>
-            <ScrollReveal key={i}>
-                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
-                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                </div>
-              </ScrollReveal>
-            )}
-          </div>
-        </section>
-      }
-
-      {/* Atomic Design System */}
-      {project.atomicDesignSystem &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <SectionLabel>Atomic Design System</SectionLabel>
-              <div className="grid gap-8 md:grid-cols-2 items-start">
-                <div className="space-y-4">
-                  {project.atomicDesignSystem.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{ __html: p.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>') }} />
-                  )}
-                </div>
-                {project.atomicDesignSystemRight &&
-                <div className="space-y-4">
-                    {project.atomicDesignSystemRight.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                    )}
-                  </div>
-                }
-              </div>
-            </ScrollReveal>
-            {/* Atomic design image */}
-            {project.images?.filter((img) => img.alt === "Atomic design system").map((img, i) =>
-            <ScrollReveal key={i}>
-                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
-                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                </div>
-              </ScrollReveal>
-            )}
-          </div>
-        </section>
-      }
-
-      {/* Scaling & Partnership */}
-      {project.scalingPartnership &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <SectionLabel>Scaling the Partnership</SectionLabel>
-              <div className="space-y-4">
-                {project.scalingPartnership.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                )}
-              </div>
-            </ScrollReveal>
-            {project.scalingVideo &&
-            <ScrollReveal>
-                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
-                  <video src={project.scalingVideo} controls className="w-full" preload="metadata" />
-                </div>
-              </ScrollReveal>
-            }
-          </div>
-        </section>
-      }
-
-      {/* Improving the Product */}
-      {project.improvingProduct &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <SectionLabel>Improving the Product</SectionLabel>
-              <div className="space-y-4">
-                {project.improvingProduct.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{ __html: p.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>') }} />
-                )}
-              </div>
-              {project.improvingProductReportLink &&
-              <a href={project.improvingProductReportLink} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
-                  View UX Report ↗
-                </a>
-              }
-            </ScrollReveal>
-          </div>
-        </section>
-      }
-
-      {/* Displaying Tours & Templates */}
-      {project.displayingTours &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <SectionLabel>Displaying Tours & Activities</SectionLabel>
-              <div className="space-y-4">
-                {project.displayingTours.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                )}
-              </div>
-              {project.displayingToursTemplates &&
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
-                  {project.displayingToursTemplates.map((template, i) => {
-                  const [title, ...rest] = template.split(" — ");
-                  return (
-                    <div key={i} className="rounded-xl bg-card p-6">
-                        <h3 className="mb-2 text-sm font-bold text-foreground">{title}</h3>
-                        <p className="text-sm text-muted-foreground">{rest.join(" — ")}</p>
-                      </div>);
-                })}
-                </div>
-              }
-            </ScrollReveal>
-            {/* Displaying tours image */}
-            {project.images?.filter((img) => img.alt === "Displaying tours").map((img, i) =>
-            <ScrollReveal key={i}>
-                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
-                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                </div>
-              </ScrollReveal>
-            )}
-          </div>
-        </section>
-      }
-
-      {/* Activity Detail Page */}
-      {project.activityDetailPage &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <SectionLabel>Activity Detail Page</SectionLabel>
-              <div className="space-y-4">
-                {project.activityDetailPage.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                )}
-              </div>
-            </ScrollReveal>
-            {/* Tour option UI image */}
-            {project.images?.filter((img) => img.alt === "Tour option UI").map((img, i) =>
-            <ScrollReveal key={i}>
-                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
-                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                </div>
-              </ScrollReveal>
-            )}
-          </div>
-        </section>
-      }
-
-      {/* Closing Text */}
-      {project.closingTextLeft &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <div className="grid gap-8 md:grid-cols-2 items-start">
-                <div className="space-y-4">
-                  {project.closingTextLeft.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
-                </div>
-                {project.closingTextRight &&
-                <div className="space-y-4">
-                    {project.closingTextRight.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                    )}
-                  </div>
-                }
-              </div>
-            </ScrollReveal>
-            {/* Design overview image */}
-            {project.images?.filter((img) => img.alt === "Design overview").map((img, i) =>
-            <ScrollReveal key={i}>
-                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
-                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                </div>
-              </ScrollReveal>
-            )}
-          </div>
-        </section>
-      }
 
       {/* Full-width sections below */}
 
@@ -1007,14 +1146,14 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Other Integration Options</SectionLabel>
-              <div className="grid gap-6 md:grid-cols-3 items-stretch">
+              <div className="grid gap-6 md:grid-cols-3">
                 {project.alternativeIntegrations.map((alt, i) =>
-              <ScrollReveal key={i} delay={i * 0.1} className="h-full">
-                    <div className="group overflow-hidden rounded-xl bg-card h-full flex flex-col">
+              <ScrollReveal key={i} delay={i * 0.1}>
+                    <div className="group overflow-hidden rounded-xl bg-card">
                       <div className="overflow-hidden">
                         <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
                       </div>
-                      <div className="p-5 flex-1">
+                      <div className="p-5">
                         <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
                         <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
                       </div>
@@ -1152,14 +1291,6 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Image Gallery */}
-      {galleryImages.length > 0 &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ImageGallery images={galleryImages} />
-          </div>
-        </section>
-      }
 
       {/* Next Project */}
       {nextProject &&
