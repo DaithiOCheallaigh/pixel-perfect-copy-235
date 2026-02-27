@@ -253,10 +253,15 @@ const CaseStudy = () => {
                     </ul>
                   </div>
                 }
-                <div>
+                <div className="mb-6">
                   <span className="text-sm font-bold text-foreground">Timeline: </span>
                   <span className="text-sm text-foreground">{project.timeline}</span>
                 </div>
+                {project.liveLink &&
+                <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
+                    View Live ↗
+                  </a>
+                }
               </div>
 
               {/* Right: heading + description + tools */}
