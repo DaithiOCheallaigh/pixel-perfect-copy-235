@@ -4,6 +4,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { getServiceById, services } from "../data/services";
+import avatarImg from "@/assets/avatar.jpeg";
 
 const ServicePage = () => {
   const { id } = useParams<{ id: string }>();
@@ -166,7 +167,7 @@ const ServicePage = () => {
           <ScrollReveal>
             <div className="flex gap-6 rounded-sm bg-card p-6 md:p-8">
               <img
-                src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/01/Me_on_my_weddingday.webp?resize=150%2C150&ssl=1"
+                src={avatarImg}
                 alt="Dave Kelly"
                 className="h-16 w-16 flex-shrink-0 rounded-full object-cover"
                 loading="lazy"
