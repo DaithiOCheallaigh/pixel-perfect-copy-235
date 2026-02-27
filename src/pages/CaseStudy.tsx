@@ -949,14 +949,6 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Image Gallery */}
-      {galleryImages.length > 0 &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ImageGallery images={galleryImages} />
-          </div>
-        </section>
-      }
 
       {/* Next Project */}
       {nextProject &&
