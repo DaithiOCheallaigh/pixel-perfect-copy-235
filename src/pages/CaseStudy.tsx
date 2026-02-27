@@ -97,9 +97,15 @@ const CaseStudy = () => {
     "User journey map", "App screens", "Design artboard", "Architecture wireframes",
     "iOS Style Guide", "Booking system", "High definition renders", "Shop integration"
   ];
+  // For whitelabel, all images are placed inline
+  const whitelabelInlineAlts = [
+    "Atomic design system", "Passenger journey map", "Displaying tours",
+    "Tour option UI", "Design overview", "Ticketing system slider"
+  ];
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
-  !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt))
+  !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
+  !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
@@ -303,6 +309,143 @@ const CaseStudy = () => {
                     muted
                     playsInline
                     className="w-full object-cover" />
+                      </div>
+                }
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Passenger Journey Map (full-width) */}
+              {project.id === "whitelabel" && findImage("Passenger journey map") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Passenger journey map")!.src} alt="Passenger journey map" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Understanding the Journey — 2-column */}
+              {project.journeyUnderstanding &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Understanding the Journey</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.journeyUnderstanding.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {project.journeyStages &&
+                  <div>
+                          <p className="mb-4 text-[15px] font-semibold text-foreground">Key stages included:</p>
+                          <ul className="space-y-4">
+                            {project.journeyStages.map((stage, i) =>
+                      <li key={i} className="text-sm leading-relaxed text-muted-foreground">
+                                <span className="font-bold text-foreground">{stage.phase}:</span> {stage.text}
+                              </li>
+                      )}
+                          </ul>
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Atomic Design System — full-width image + 2-column text */}
+              {project.atomicDesignSystem &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>An Atomic Design System</SectionLabel>
+                    {findImage("Atomic design system") &&
+                <div className="mb-10 overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("Atomic design system")!.src} alt="Atomic design system" className="w-full object-cover" loading="lazy" />
+                      </div>
+                }
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{
+                  __html: project.atomicDesignSystem.split("\n\n").map(p => {
+                    const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                    return `<p>${formatted}</p>`;
+                  }).join('')
+                }} />
+                      {project.atomicDesignSystemRight &&
+                  <div className="space-y-4">
+                          {project.atomicDesignSystemRight.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Displaying Tours — 2-column: text left, image right */}
+              {project.displayingTours &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Displaying Tours</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.displayingTours.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {findImage("Displaying tours") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("Displaying tours")!.src} alt="Displaying tours" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Activity Detail Page — 2-column: image left, text right */}
+              {project.activityDetailPage &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Activity Detail Page Template</SectionLabel>
+                    <div className="grid gap-12 md:grid-cols-2 items-start">
+                      {findImage("Tour option UI") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("Tour option UI")!.src} alt="Tour option UI" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
+                      <div className="space-y-4">
+                        {project.activityDetailPage.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Full-width design overview (ANA screens) */}
+              {project.id === "whitelabel" && findImage("Design overview") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Design overview")!.src} alt="Design overview" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Whitelabel: Closing text — 2-column */}
+              {project.closingTextLeft &&
+            <ScrollReveal>
+                  <div className="grid gap-12 md:grid-cols-2 items-start">
+                    <div className="space-y-4">
+                      {project.closingTextLeft.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                    {project.closingTextRight &&
+                <div className="space-y-4">
+                        {project.closingTextRight.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
                       </div>
                 }
                   </div>
