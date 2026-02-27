@@ -435,7 +435,7 @@ const CaseStudy = () => {
                 project.designProcessDetails.map((phase, i) => (
                   <ScrollReveal key={`phase-${i}`}>
                     <div>
-                      <SectionLabel>{phase.num}/ {phase.title}</SectionLabel>
+                      <SectionLabel>{`${phase.num}/ ${phase.title}`}</SectionLabel>
                       <div className="space-y-4 mb-6">
                         {phase.text.split("\n").filter(Boolean).map((line, j) => {
                           if (line.startsWith("- ")) {
