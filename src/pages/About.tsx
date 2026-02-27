@@ -98,6 +98,7 @@ const About = () => (
                 />
               </div>
             </div>
+          </ScrollReveal>
 
           <div>
             <ScrollReveal>
