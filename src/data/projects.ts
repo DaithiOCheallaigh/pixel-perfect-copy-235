@@ -1,4 +1,5 @@
 import tipdirectLogo from "@/assets/logos/tipdirect.svg";
+import tipdirectLogoWhite from "@/assets/logos/tipdirect-white.svg";
 
 export interface Project {
   id: string;
