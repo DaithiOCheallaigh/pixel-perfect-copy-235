@@ -183,6 +183,7 @@ export const projects: Project[] = [
       { label: "Design System", url: "https://tipdirect-design.com/" },
       { label: "Components", url: "https://www.figma.com/design/kvqj5raBxuBkAxibfK1BFi/TipDirect_StyleGuide?node-id=53-82&t=PXzTHBWZl3BJ88Cx-1" },
     ],
+    launchAnalytics: {
       intro: "The initial feature set of the TipDirect platform consisted of digital tipping coupled with AI-assisted reviews. Through early conversations with potential customers, we were fortunate to have several eager early adopters ready to use the product. However, we still placed high importance on the following.",
       documentation: [
         "Created detailed knowledge base articles explaining feature functionality",
