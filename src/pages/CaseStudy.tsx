@@ -97,9 +97,15 @@ const CaseStudy = () => {
     "User journey map", "App screens", "Design artboard", "Architecture wireframes",
     "iOS Style Guide", "Booking system", "High definition renders", "Shop integration"
   ];
+  // For whitelabel, all images are placed inline
+  const whitelabelInlineAlts = [
+    "Atomic design system", "Passenger journey map", "Displaying tours",
+    "Tour option UI", "Design overview", "Ticketing system slider"
+  ];
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
-  !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt))
+  !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
+  !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
