@@ -334,19 +334,34 @@ const CaseStudy = () => {
               {project.tippingFlow &&
             <ScrollReveal>
                   <div>
-                    <SectionLabel>Tipping Flow</SectionLabel>
-                    <div className="grid gap-8 md:grid-cols-2 items-start">
-                      <div className="space-y-4">
-                        {project.tippingFlow.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                    )}
-                      </div>
-                      {project.tippingFlowGif &&
-                  <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={project.tippingFlowGif} alt="Tipping flow" className="w-full object-contain" loading="lazy" />
+                    <SectionLabel>{project.id === "spotify" ? "The Tipping Flow" : "Tipping Flow"}</SectionLabel>
+                    {project.id === "spotify" ? (
+                      <div className="space-y-6">
+                        <div className="space-y-4">
+                          {project.tippingFlow.split("\n\n").map((p, i) =>
+                            <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                          )}
                         </div>
-                  }
-                    </div>
+                        {project.images?.filter(img => ["Tipping flow desktop", "Tipping flow mobile"].includes(img.alt)).map((img, i) =>
+                          <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="grid gap-8 md:grid-cols-2 items-start">
+                        <div className="space-y-4">
+                          {project.tippingFlow.split("\n\n").map((p, i) =>
+                      <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      )}
+                        </div>
+                        {project.tippingFlowGif &&
+                    <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={project.tippingFlowGif} alt="Tipping flow" className="w-full object-contain" loading="lazy" />
+                          </div>
+                    }
+                      </div>
+                    )}
                   </div>
                 </ScrollReveal>
             }
