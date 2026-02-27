@@ -18,7 +18,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
             {nonWideBuffer.map((nwImg, j) =>
             <ScrollReveal key={j} delay={j * 0.05}>
                 <div className="overflow-hidden rounded-xl shadow-md">
-                  <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
+                  
                 </div>
               </ScrollReveal>
             )}
@@ -219,8 +219,7 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>The Challenge</SectionLabel>
                     <div className="space-y-4">
-                      {project.challenge.split("\n\n").map((p, i) =>
-                        <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      {project.challenge.split("\n\n").map((p, i) => {}
 
                   )}
                     </div>
@@ -247,63 +246,32 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>Exploration</SectionLabel>
-                    {project.id === "spotify" && project.images ? (
-                      <>
-                        <div className="grid gap-12 md:grid-cols-2 items-start">
-                          <div className="space-y-4">
-                            {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
-                              <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                            )}
+                    <div className="space-y-4 mb-6">
+                      {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                    {/* Exploration images (e.g. Spotify) */}
+                    {project.id === "spotify" && project.images &&
+                <div className="grid gap-4 md:grid-cols-2 mb-6">
+                        {project.images.filter((img) => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
+                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
                           </div>
-                          <div className="space-y-4">
-                            {project.images.filter((img) => ["Spotify integration concept"].includes(img.alt)).map((img, i) =>
-                              <div key={i} className="overflow-hidden rounded-xl shadow-md aspect-square">
-                                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        {/* Second exploration image with Solution text beside it */}
-                        <div className="grid gap-12 md:grid-cols-2 items-start mt-12">
-                          <div className="space-y-4">
-                            {project.images.filter((img) => ["Placement options"].includes(img.alt)).map((img, i) =>
-                              <div key={i} className="overflow-hidden rounded-xl shadow-md aspect-square">
-                                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
-                              </div>
-                            )}
-                          </div>
-                          {project.solutionDetail && (
-                            <div>
-                              <SectionLabel>The Solution</SectionLabel>
-                              <div className="space-y-4">
-                                {project.solutionDetail.split("\n\n").map((p, i) =>
-                                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="space-y-4 mb-6">
-                          {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
-                            <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                          )}
-                        </div>
-                        {project.explorationVideo &&
-                          <div className="overflow-hidden rounded-xl shadow-md">
-                            <video
-                              src={project.explorationVideo}
-                              autoPlay
-                              loop
-                              muted
-                              playsInline
-                              className="w-full object-cover" />
-                          </div>
-                        }
-                      </>
-                    )}
+                  )}
+                      </div>
+                }
+                    {project.explorationVideo &&
+                <div className="overflow-hidden rounded-xl shadow-md">
+                        <video
+                    src={project.explorationVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full object-cover" />
+                      </div>
+                }
                   </div>
                 </ScrollReveal>
             }
@@ -676,8 +644,8 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Solution Detail (non-Spotify) */}
-      {project.solutionDetail && project.id !== "spotify" &&
+      {/* Solution Detail */}
+      {project.solutionDetail &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
@@ -688,6 +656,12 @@ const CaseStudy = () => {
                 <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                 )}
                 </div>
+                {/* Spotify UI placement image */}
+                {project.id === "spotify" && project.images?.filter((img) => img.alt === "Spotify UI placement").map((img, i) =>
+              <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                    <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                  </div>
+              )}
               </div>
             </ScrollReveal>
           </div>
