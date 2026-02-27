@@ -1239,7 +1239,7 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <SectionLabel>Launch & Analytics</SectionLabel>
-              <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">After launching our AI review feature, we implemented a comprehensive approach to ensure successful adoption and measure impact:</p>
+              <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.launchAnalytics.intro || "After launching our AI review feature, we implemented a comprehensive approach to ensure successful adoption and measure impact:"}</p>
               <div className="grid gap-6 md:grid-cols-2">
                 <div className="rounded-xl bg-card p-6">
                   <h3 className="mb-4 text-base font-bold text-foreground">Documentation & Support</h3>
