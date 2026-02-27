@@ -138,7 +138,7 @@ const CaseStudy = () => {
               {/* Client logo */}
               {project.clientLogo ?
               <div className="mb-6">
-                  <img src={project.clientLogo} alt={project.client || "Client"} className="max-h-20 w-auto object-contain" loading="lazy" />
+                  <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogo?.includes('tripadmit') ? 'dark:invert dark:brightness-200' : ''}`} loading="lazy" />
                 </div> :
               project.client ?
               <span className="font-mono-label mb-4 text-muted-foreground">{project.client}</span> :
