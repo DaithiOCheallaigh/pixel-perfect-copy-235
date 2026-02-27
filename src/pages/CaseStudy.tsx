@@ -248,20 +248,42 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Exploration</SectionLabel>
                     {project.id === "spotify" && project.images ? (
-                      <div className="grid gap-12 md:grid-cols-2 items-start">
-                        <div className="space-y-4">
-                          {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
-                            <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                          )}
+                      <>
+                        <div className="grid gap-12 md:grid-cols-2 items-start">
+                          <div className="space-y-4">
+                            {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                              <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                            )}
+                          </div>
+                          <div className="space-y-4">
+                            {project.images.filter((img) => ["Spotify integration concept"].includes(img.alt)).map((img, i) =>
+                              <div key={i} className="overflow-hidden rounded-xl shadow-md aspect-square">
+                                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
+                              </div>
+                            )}
+                          </div>
                         </div>
-                        <div className="space-y-4">
-                          {project.images.filter((img) => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
-                            <div key={i} className="overflow-hidden rounded-xl shadow-md aspect-square">
-                              <img src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
+                        {/* Second exploration image with Solution text beside it */}
+                        <div className="grid gap-12 md:grid-cols-2 items-start mt-12">
+                          <div className="space-y-4">
+                            {project.images.filter((img) => ["Placement options"].includes(img.alt)).map((img, i) =>
+                              <div key={i} className="overflow-hidden rounded-xl shadow-md aspect-square">
+                                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
+                              </div>
+                            )}
+                          </div>
+                          {project.solutionDetail && (
+                            <div>
+                              <SectionLabel>The Solution</SectionLabel>
+                              <div className="space-y-4">
+                                {project.solutionDetail.split("\n\n").map((p, i) =>
+                                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                                )}
+                              </div>
                             </div>
                           )}
                         </div>
-                      </div>
+                      </>
                     ) : (
                       <>
                         <div className="space-y-4 mb-6">
