@@ -82,7 +82,7 @@ const Index = () => {
                 className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
               >
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                <div className="overflow-hidden">
+                <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
                   <img
                     src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1"
                     alt="AI Assisted Reviews"
