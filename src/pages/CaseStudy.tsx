@@ -29,7 +29,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
       elements.push(
         <ScrollReveal key={`wide-${i}`}>
           <div className="overflow-hidden rounded-xl shadow-md">
-            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+            
           </div>
         </ScrollReveal>
       );
