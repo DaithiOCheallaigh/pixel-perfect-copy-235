@@ -341,6 +341,7 @@ export const projects: Project[] = [
     timeline: "2 months",
     client: "TipDirect",
     clientLogo: tipdirectLogo,
+    clientLogoDark: tipdirectLogoWhite,
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Website.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Web_Web.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Web_Mobile.webp?fit=800%2C755&ssl=1",
