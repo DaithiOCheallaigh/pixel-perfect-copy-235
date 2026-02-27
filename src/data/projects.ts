@@ -64,6 +64,16 @@ export interface Project {
   launchTraction?: string;
   ecommerce?: string;
   vimeoEmbed?: string;
+  // Whitelabel-specific fields
+  journeyUnderstanding?: string;
+  journeyStages?: { phase: string; text: string }[];
+  atomicDesignSystem?: string;
+  atomicDesignSystemRight?: string;
+  displayingTours?: string;
+  displayingToursTemplates?: string[];
+  activityDetailPage?: string;
+  closingTextLeft?: string;
+  closingTextRight?: string;
 }
 
 export const projects: Project[] = [
