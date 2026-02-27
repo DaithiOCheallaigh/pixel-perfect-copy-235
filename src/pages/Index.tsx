@@ -86,7 +86,7 @@ const Index = () => {
                   <img
                     src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1"
                     alt="AI Assisted Reviews"
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
                     loading="lazy"
                   />
                 </div>
