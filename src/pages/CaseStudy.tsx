@@ -151,11 +151,11 @@ const CaseStudy = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
 
-            {/* Left: mobile mockup + logo + What I Worked On + timeline + view live */}
+            {/* Left: logo + What I Worked On + timeline + view live (mobile mockup hidden on desktop per WordPress) */}
             <div className="flex flex-col md:max-w-[280px]">
-              {/* Mobile mockup */}
+              {/* Mobile mockup — only visible on mobile, hidden on desktop (matches WordPress) */}
               {project.mobileImage && (
-                <div className="mb-6">
+                <div className="mb-6 md:hidden">
                   <img
                     src={project.mobileImage}
                     alt={`${project.title} mobile mockup`}
