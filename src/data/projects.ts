@@ -10,6 +10,7 @@ export interface Project {
   liveLink?: string;
   description: string;
   challenge?: string;
+  challengeImageRight?: boolean;
   stats?: { value: string; label: string }[];
   quote?: { text: string; author: string };
   images?: { src: string; alt: string; wide?: boolean }[];
