@@ -4,6 +4,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { getServiceById, services } from "../data/services";
+import avatarImg from "@/assets/avatar.jpeg";
 
 const ServicePage = () => {
   const { id } = useParams<{ id: string }>();
