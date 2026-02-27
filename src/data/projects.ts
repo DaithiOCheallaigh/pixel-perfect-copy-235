@@ -208,6 +208,8 @@ export const projects: Project[] = [
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "Ongoing",
     client: "TipDirect",
+    clientLogo: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/TipDirect_Logo.webp?fit=800%2C196&ssl=1",
+    challengeImageRight: true,
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/AdminDashboard.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/TipDirectHeader_Web-2.webp?fit=4018%2C2426&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/TipDirect_headerMobileWeb.webp?fit=655%2C1024&ssl=1",
