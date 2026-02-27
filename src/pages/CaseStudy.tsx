@@ -485,24 +485,27 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Improving the Product</SectionLabel>
                     <div className="grid gap-12 md:grid-cols-2 items-start">
-                      <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{
-                  __html: project.improvingProduct.split("\n\n").map(p => {
-                    const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
-                    return `<p>${formatted}</p>`;
-                  }).join('')
-                }} />
-                      {project.improvingProductReportLink &&
-                  <div className="flex items-start">
-                          <a
-                      href={project.improvingProductReportLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
-                    >
-                            📄 View Report
-                          </a>
-                        </div>
-                  }
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src="/images/whitelabel-ux-report-cover.png" alt="White Label UX & Consumer Psychology Report" className="w-full object-cover" loading="lazy" />
+                      </div>
+                      <div>
+                        <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground mb-6" dangerouslySetInnerHTML={{
+                    __html: project.improvingProduct.split("\n\n").map(p => {
+                      const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                      return `<p>${formatted}</p>`;
+                    }).join('')
+                  }} />
+                        {project.improvingProductReportLink &&
+                    <a
+                        href={project.improvingProductReportLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
+                      >
+                          📄 View Report
+                        </a>
+                    }
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
