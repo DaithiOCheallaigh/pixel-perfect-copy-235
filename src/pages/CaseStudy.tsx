@@ -301,7 +301,7 @@ const CaseStudy = () => {
             }
 
               {/* Tipping Flow */}
-              {project.tippingFlow && project.id !== "spotify" &&
+              {project.tippingFlow &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Tipping Flow</SectionLabel>
