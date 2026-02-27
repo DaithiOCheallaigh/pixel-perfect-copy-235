@@ -100,7 +100,7 @@ const About = () => (
               <div>
                 <SectionLabel>About</SectionLabel>
                 <h1 className="text-3xl font-black tracking-tighter text-foreground md:text-4xl">
-                  David Kelly
+                  Dave Kelly
                 </h1>
               </div>
             </div>
