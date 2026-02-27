@@ -227,6 +227,13 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* Image Gallery (before Initial Approach) */}
+              {galleryImages.length > 0 &&
+            <ScrollReveal>
+                  <ImageGallery images={galleryImages} />
+                </ScrollReveal>
+            }
+
               {/* Initial Approach (Booking App) */}
               {project.initialApproach &&
             <ScrollReveal>
