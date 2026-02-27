@@ -344,7 +344,7 @@ const CaseStudy = () => {
                         </div>
                         {project.images?.filter((img) => ["Tipping flow desktop", "Tipping flow mobile"].includes(img.alt)).map((img, i) =>
                   <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                            
                           </div>
                   )}
                       </div> :
