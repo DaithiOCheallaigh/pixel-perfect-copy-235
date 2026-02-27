@@ -10,6 +10,7 @@ export interface Project {
   timeline: string;
   pillImage: string;
   headerImage: string;
+  clientLogoDark?: string;
   liveLink?: string;
   description: string;
   challenge?: string;
