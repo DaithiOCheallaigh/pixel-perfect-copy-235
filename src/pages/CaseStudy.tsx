@@ -87,12 +87,15 @@ const CaseStudy = () => {
       </main>);
   }
 
+  // Images used inline in whitelabel sections
+  const whitelabelInlineAlts = ["Atomic design system", "Passenger journey map", "Displaying tours", "Tour option UI", "Design overview"];
+
   // Separate images for inline placement vs gallery
   const inlineImages = project.images?.filter((img) =>
   img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
   ) || [];
   const galleryImages = project.images?.filter((img) =>
-  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report"
+  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" && !whitelabelInlineAlts.includes(img.alt)
   ) || [];
 
   // Get the small screenshots for the 3-step cards
@@ -719,6 +722,98 @@ const CaseStudy = () => {
                 </a>
               }
             </ScrollReveal>
+          </div>
+        </section>
+      }
+
+      {/* Displaying Tours & Templates */}
+      {project.displayingTours &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <SectionLabel>Displaying Tours & Activities</SectionLabel>
+              <div className="space-y-4">
+                {project.displayingTours.split("\n\n").map((p, i) =>
+                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                )}
+              </div>
+              {project.displayingToursTemplates &&
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                  {project.displayingToursTemplates.map((template, i) => {
+                  const [title, ...rest] = template.split(" — ");
+                  return (
+                    <div key={i} className="rounded-xl bg-card p-6">
+                        <h3 className="mb-2 text-sm font-bold text-foreground">{title}</h3>
+                        <p className="text-sm text-muted-foreground">{rest.join(" — ")}</p>
+                      </div>);
+                })}
+                </div>
+              }
+            </ScrollReveal>
+            {/* Displaying tours image */}
+            {project.images?.filter((img) => img.alt === "Displaying tours").map((img, i) =>
+            <ScrollReveal key={i}>
+                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
+                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                </div>
+              </ScrollReveal>
+            )}
+          </div>
+        </section>
+      }
+
+      {/* Activity Detail Page */}
+      {project.activityDetailPage &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <SectionLabel>Activity Detail Page</SectionLabel>
+              <div className="space-y-4">
+                {project.activityDetailPage.split("\n\n").map((p, i) =>
+                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                )}
+              </div>
+            </ScrollReveal>
+            {/* Tour option UI image */}
+            {project.images?.filter((img) => img.alt === "Tour option UI").map((img, i) =>
+            <ScrollReveal key={i}>
+                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
+                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                </div>
+              </ScrollReveal>
+            )}
+          </div>
+        </section>
+      }
+
+      {/* Closing Text */}
+      {project.closingTextLeft &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="grid gap-8 md:grid-cols-2 items-start">
+                <div className="space-y-4">
+                  {project.closingTextLeft.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                </div>
+                {project.closingTextRight &&
+                <div className="space-y-4">
+                    {project.closingTextRight.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                  </div>
+                }
+              </div>
+            </ScrollReveal>
+            {/* Design overview image */}
+            {project.images?.filter((img) => img.alt === "Design overview").map((img, i) =>
+            <ScrollReveal key={i}>
+                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
+                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                </div>
+              </ScrollReveal>
+            )}
           </div>
         </section>
       }
