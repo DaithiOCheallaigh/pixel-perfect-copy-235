@@ -102,89 +102,119 @@ const CaseStudy = () => {
 
   return (
     <main className="pt-24">
-      {/* Hero — Title left, stacked mockups right */}
-      <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
-            <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
-          </motion.div>
+      {/* Hero subtitle banner for pages like booking-app */}
+      {project.heroSubtitle && (
+        <section className="px-6 pt-8 pb-8 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+              <h1 className="mb-3 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
+              <p className="text-lg text-muted-foreground md:text-xl max-w-4xl">{project.heroSubtitle}</p>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
-          {/* Hero subtitle for pages like website-tipdirect, tipdirect-app, booking-app */}
-          {project.heroSubtitle && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
-              <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
-              <p className="mb-8 text-lg text-muted-foreground md:text-xl">{project.heroSubtitle}</p>
+      {/* Full-width hero header image */}
+      {project.headerImage && (
+        <section className="px-6 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-7xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src={project.headerImage}
+                  alt={`${project.title} hero`}
+                  className="w-full object-cover"
+                  loading="eager"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Intro section — WordPress layout: LEFT = mockup + logo + meta, RIGHT = title + description + tools */}
+      <section className="px-6 pt-12 pb-16 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          {!project.heroSubtitle && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+              <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
             </motion.div>
           )}
 
           <motion.div
-            className="grid gap-12 md:grid-cols-[1.2fr_1fr] items-start"
+            className="grid gap-12 md:grid-cols-[auto_1fr] items-start"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+            transition={{ delay: 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
 
-            {/* Left: title + description + tags */}
-            <div className="flex flex-col">
+            {/* Left: mobile mockup + logo + What I Worked On + timeline + view live */}
+            <div className="flex flex-col md:max-w-[280px]">
+              {/* Mobile mockup */}
+              {project.mobileImage && (
+                <div className="mb-6">
+                  <img
+                    src={project.mobileImage}
+                    alt={`${project.title} mobile mockup`}
+                    className="w-full max-h-[400px] object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+
               {/* Client logo */}
               {project.clientLogo ? (
                 <div className="mb-6">
-                  <img src={project.clientLogo} alt={project.client || "Client"} className="max-h-20 w-auto object-contain" loading="lazy" />
+                  <img src={project.clientLogo} alt={project.client || "Client"} className="max-h-16 w-auto object-contain" loading="lazy" />
                 </div>
-              ) : project.client ? (
-                <span className="font-mono-label mb-4 text-muted-foreground">{project.client}</span>
               ) : null}
-              
-              {!project.heroSubtitle && (
-                <h1 className="mb-6 text-4xl font-black tracking-tighter text-foreground md:text-5xl">{project.title}</h1>
+
+              {/* What I Worked On — simple vertical list */}
+              {project.whatIWorkedOn && (
+                <div className="mb-6">
+                  <p className="text-sm font-bold text-foreground mb-2">What I Worked On</p>
+                  <ul className="space-y-1">
+                    {project.whatIWorkedOn.map((item) => (
+                      <li key={item} className="text-sm text-muted-foreground">{item}</li>
+                    ))}
+                  </ul>
+                </div>
               )}
-              <div className="space-y-4 mb-6">
-                {project.description.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                )}
-              </div>
-              
-              {/* Tags/tools row */}
-              {project.whatIWorkedOn &&
-              <div className="mb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {project.whatIWorkedOn.map((item) =>
-                  <span key={item} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">{item}</span>
-                  )}
-                  </div>
-                </div>
-              }
 
-              <div className="mb-4">
-                <span className="font-mono-label text-muted-foreground">Timeline: </span>
-                <span className="text-sm font-semibold text-foreground">{project.timeline}</span>
-              </div>
-
-              {project.toolsImage &&
+              {/* Timeline */}
               <div className="mb-6">
-                  <span className="font-mono-label mb-2 block text-muted-foreground">Tools</span>
-                  <img src={project.toolsImage} alt="Tools used" className="max-w-xs" loading="lazy" />
-                </div>
-              }
+                <p className="text-sm font-bold text-foreground">Timeline: {project.timeline}</p>
+              </div>
 
-              {project.liveLink &&
-              <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90">
-                  View Live ↗
+              {/* View Live */}
+              {project.liveLink && (
+                <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
+                  View Live
                 </a>
-              }
+              )}
             </div>
 
-            {/* Right: stacked mobile mockups */}
-            {project.mobileImage &&
-            <div className="flex flex-col items-center gap-4">
-                <div className="relative">
-                  <img
-                  src={project.mobileImage}
-                  alt={`${project.title} mobile mockup`}
-                  className="max-h-[520px] w-auto rounded-xl object-contain shadow-lg"
-                  loading="lazy" />
-                </div>
+            {/* Right: title + description + tools */}
+            <div className="flex flex-col">
+              {!project.heroSubtitle && (
+                <h1 className="mb-6 text-3xl font-black tracking-tighter text-foreground md:text-4xl">{project.title}</h1>
+              )}
+              <div className="space-y-4 mb-6">
+                {project.description.split("\n\n").map((p, i) => (
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                ))}
               </div>
-            }
+
+              {project.toolsImage && (
+                <div className="mb-6">
+                  <p className="text-sm font-bold text-foreground mb-3">Tools:</p>
+                  <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
+                </div>
+              )}
+            </div>
           </motion.div>
         </div>
       </section>
