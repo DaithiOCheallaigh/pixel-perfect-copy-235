@@ -87,12 +87,15 @@ const CaseStudy = () => {
       </main>);
   }
 
+  // Images used inline in whitelabel sections
+  const whitelabelInlineAlts = ["Atomic design system", "Passenger journey map", "Displaying tours", "Tour option UI", "Design overview"];
+
   // Separate images for inline placement vs gallery
   const inlineImages = project.images?.filter((img) =>
   img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
   ) || [];
   const galleryImages = project.images?.filter((img) =>
-  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report"
+  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" && !whitelabelInlineAlts.includes(img.alt)
   ) || [];
 
   // Get the small screenshots for the 3-step cards
