@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
+import { ShineBorder } from "../components/ui/shine-border";
 import { SearchNormal1, Calendar, Bezier, TaskSquare, Code1, Chart2 } from "iconsax-react";
 import { type ReactNode } from "react";
+import avatarImg from "@/assets/avatar.jpeg";
 
 const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: string[] }[] = [
   {
