@@ -344,11 +344,9 @@ const CaseStudy = () => {
                     <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                     )}
                         </div>
-                        {project.images?.filter((img) => ["Tipping flow desktop", "Tipping flow mobile"].includes(img.alt)).map((img, i) =>
-                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                            
-                          </div>
-                  )}
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src="/images/SpotifyHeader_Web-2.webp" alt="Spotify tipping flow screens" className="w-full object-cover" loading="lazy" />
+                        </div>
                       </div> :
 
                 <div className="grid gap-8 md:grid-cols-2 items-start">
