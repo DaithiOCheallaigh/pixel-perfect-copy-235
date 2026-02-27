@@ -32,7 +32,8 @@ export interface Project {
   exploration?: string;
   explorationVideo?: string;
   buildingTheFeature?: string;
-  launchAnalytics?: { documentation: string[]; analytics: string[] };
+  launchAnalytics?: { intro?: string; documentation: string[]; analytics: string[] };
+  challengeImage?: string;
   designSystemLinks?: { label: string; url: string }[];
   designGoals?: { title: string; desc: string }[];
   coreDesignPrinciples?: { title: string; desc: string }[];
