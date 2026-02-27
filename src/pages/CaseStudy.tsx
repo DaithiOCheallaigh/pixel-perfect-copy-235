@@ -207,9 +207,15 @@ const CaseStudy = () => {
               </div>
             )}
             {project.toolsImage && (
-              <div>
+              <div className="mb-6">
                 <p className="text-sm font-bold text-foreground mb-3">Tools:</p>
                 <img src={project.toolsImage} alt="Tools used" className="max-w-[200px]" loading="lazy" />
+              </div>
+            )}
+            {project.clientLogo && (
+              <div className="mb-6">
+                {project.client && <p className="text-xs font-bold text-muted-foreground mb-2">Client:</p>}
+                <img src={project.clientLogo} alt={project.client || "Client"} className="max-w-[160px] object-contain" loading="lazy" />
               </div>
             )}
           </div>
