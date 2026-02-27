@@ -91,9 +91,19 @@ const CaseStudy = () => {
   const inlineImages = project.images?.filter((img) =>
   img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
   ) || [];
+  
+  // For booking-app, images are placed inline with sections, not in gallery
+  const bookingAppInlineAlts = [
+    "User journey map", "App screens", "Design artboard", "Architecture wireframes",
+    "iOS Style Guide", "Booking system", "High definition renders", "Shop integration"
+  ];
   const galleryImages = project.images?.filter((img) =>
-  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report"
+  img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
+  !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt))
   ) || [];
+
+  // Helper to find booking-app images by alt
+  const findImage = (alt: string) => project.images?.find((img) => img.alt === alt);
 
   // Get the small screenshots for the 3-step cards
   const stepImages = project.images?.filter((img) =>
