@@ -608,6 +608,121 @@ const CaseStudy = () => {
         </div>
       </div>
 
+      {/* Journey Understanding */}
+      {project.journeyUnderstanding &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <SectionLabel>Understanding the Passenger Journey</SectionLabel>
+              <div className="space-y-4">
+                {project.journeyUnderstanding.split("\n\n").map((p, i) =>
+                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                )}
+              </div>
+            </ScrollReveal>
+            {project.journeyStages &&
+            <ScrollReveal>
+                <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {project.journeyStages.map((stage, i) =>
+                <ScrollReveal key={i} delay={i * 0.06} className="h-full">
+                      <div className="flex h-full flex-col rounded-xl bg-card p-6">
+                        <span className="font-mono-label text-primary">{stage.phase}</span>
+                        <p className="mt-2 text-sm text-muted-foreground">{stage.text}</p>
+                      </div>
+                    </ScrollReveal>
+                )}
+                </div>
+              </ScrollReveal>
+            }
+            {/* Journey map image */}
+            {project.images?.filter((img) => img.alt === "Passenger journey map").map((img, i) =>
+            <ScrollReveal key={i}>
+                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
+                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                </div>
+              </ScrollReveal>
+            )}
+          </div>
+        </section>
+      }
+
+      {/* Atomic Design System */}
+      {project.atomicDesignSystem &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <SectionLabel>Atomic Design System</SectionLabel>
+              <div className="grid gap-8 md:grid-cols-2 items-start">
+                <div className="space-y-4">
+                  {project.atomicDesignSystem.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{ __html: p.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>') }} />
+                  )}
+                </div>
+                {project.atomicDesignSystemRight &&
+                <div className="space-y-4">
+                    {project.atomicDesignSystemRight.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                  </div>
+                }
+              </div>
+            </ScrollReveal>
+            {/* Atomic design image */}
+            {project.images?.filter((img) => img.alt === "Atomic design system").map((img, i) =>
+            <ScrollReveal key={i}>
+                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
+                  <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                </div>
+              </ScrollReveal>
+            )}
+          </div>
+        </section>
+      }
+
+      {/* Scaling & Partnership */}
+      {project.scalingPartnership &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <SectionLabel>Scaling the Partnership</SectionLabel>
+              <div className="space-y-4">
+                {project.scalingPartnership.split("\n\n").map((p, i) =>
+                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                )}
+              </div>
+            </ScrollReveal>
+            {project.scalingVideo &&
+            <ScrollReveal>
+                <div className="mt-8 overflow-hidden rounded-xl shadow-md">
+                  <video src={project.scalingVideo} controls className="w-full" preload="metadata" />
+                </div>
+              </ScrollReveal>
+            }
+          </div>
+        </section>
+      }
+
+      {/* Improving the Product */}
+      {project.improvingProduct &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <SectionLabel>Improving the Product</SectionLabel>
+              <div className="space-y-4">
+                {project.improvingProduct.split("\n\n").map((p, i) =>
+                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{ __html: p.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>') }} />
+                )}
+              </div>
+              {project.improvingProductReportLink &&
+              <a href={project.improvingProductReportLink} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
+                  View UX Report ↗
+                </a>
+              }
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {/* Full-width sections below */}
 
       {/* Big Stats Callout */}
