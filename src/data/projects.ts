@@ -62,6 +62,7 @@ export interface Project {
   componentLibrary?: string;
   launchTraction?: string;
   ecommerce?: string;
+  vimeoEmbed?: string;
 }
 
 export const projects: Project[] = [
@@ -173,6 +174,11 @@ export const projects: Project[] = [
       ],
     },
     whatIWorkedOn: ["UI Design", "UX Strategy", "User Interviews", "Marketing", "Growth Strategy", "Feature Analysis"],
+    featureImpact: [
+      { period: "Local Currency", value: "31%", label: "conversion rate increase", description: "When we used AI to automatically detect a user's own currency." },
+      { period: "Average Tip", value: "$24.26", label: "received", description: "Guides who used the TipDirect platform received on average $24.26 per tip." },
+      { period: "Largest Tip", value: "$4,000", label: "for a group booking", description: "In summer 2024, a guide using the TipDirect platform received a tip of $4,000." },
+    ],
     stats: [
       { value: "31%", label: "conversion rate increase (local currency AI detection)" },
       { value: "$24.26", label: "average tip received" },
@@ -310,6 +316,7 @@ export const projects: Project[] = [
     toolsImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Group-22.webp?fit=800%2C138&ssl=1",
     liveLink: "https://tip.direct/",
     description: "I designed and developed the TipDirect website using WordPress with Elementor as the primary page builder, carefully crafting a distinct visual identity that maintained its own unique character while acknowledging its origins as a TripAdmit spinoff. The site was implemented with responsive design principles ensuring mobile-first functionality, and I created custom widgets and templates to establish a fresh, independent brand presence throughout.",
+    vimeoEmbed: "https://player.vimeo.com/video/1086437551",
     whatIWorkedOn: ["Web Development", "Launch Strategy", "SEO", "Branding"],
     newSkills: "Taking on the TipDirect website project marked a significant milestone in my professional development as a designer. Though WordPress is often seen as a simpler solution than custom development, leading this project from start to finish pushed me to expand my skills and creative horizons.\n\nThe project challenged me to make key technical decisions independently, a responsibility that helped me step outside my comfort zone. Rather than defaulting to image-based solutions where I felt most confident, I challenged myself to build reusable components wherever possible.",
     componentFocused: "The project challenged me to make key technical decisions independently, a responsibility that helped me step outside my comfort zone. Rather than defaulting to image-based solutions where I felt most confident, I challenged myself to build reusable components wherever possible.",
@@ -392,11 +399,11 @@ export const projects: Project[] = [
     images: [
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Screenshot-2025-11-04-at-16.38.09.png?fit=1901%2C961&ssl=1", alt: "Information architecture", wide: true },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Group-21.webp?fit=3615%2C1259&ssl=1", alt: "App overview", wide: true },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill1.webp?fit=800%2C1014&ssl=1", alt: "Payment Links" },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill2.webp?fit=800%2C1014&ssl=1", alt: "Tipping Groups" },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill3.webp?fit=800%2C1014&ssl=1", alt: "Tiered Plans" },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill4.webp?fit=800%2C1014&ssl=1", alt: "Voice Reviews" },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill5.webp?fit=800%2C1014&ssl=1", alt: "Analytics" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill5.webp?fit=800%2C1014&ssl=1", alt: "Payment Links" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill3.webp?fit=800%2C1014&ssl=1", alt: "Tipping Groups" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill1.webp?fit=800%2C1014&ssl=1", alt: "Tiered Plans" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill2.webp?fit=800%2C1014&ssl=1", alt: "Voice Reviews" },
+      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill4.webp?fit=800%2C1014&ssl=1", alt: "Analytics" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Pill6.webp?fit=800%2C1014&ssl=1", alt: "Group Management" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Colour.webp?fit=800%2C787&ssl=1", alt: "Colour system" },
       { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/09/Typography.webp?fit=800%2C787&ssl=1", alt: "Typography system" },
@@ -447,7 +454,7 @@ export const projects: Project[] = [
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AirlineWhitelabel.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Whitelabel_Header.webp?fit=4107%2C2358&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/MobileWhitelabel.webp?fit=648%2C1024&ssl=1",
-    liveLink: "https://tip.direct/platform-admin/",
+    // liveLink removed - old site shows "Not Active"
     description: "During my time at TripAdmit, I led the design of the white-label solution – a comprehensive booking platform that empowers airlines to offer travel experiences under their own brand.\n\nThe platform features a highly customizable interface that adapts to any brand identity, while maintaining robust functionality including real-time inventory management, multi-currency payment processing, and responsive design across all devices.\n\nWhat sets this solution apart is its emphasis on easy integration, allowing businesses to implement a sophisticated booking system with minimal technical overhead.",
     whatIWorkedOn: ["UI Design", "UX Strategy", "User Interviews", "Marketing", "Growth Strategy"],
     exploration: "As part of the design process, we conducted a comprehensive study of the entire airline passenger booking journey. This involved mapping out every touchpoint from initial flight search to post-booking management, identifying pain points, and understanding user expectations at each stage. We conducted in-depth interviews with frequent flyers and analysed booking patterns across different demographics. This research provided invaluable insights into user behaviour and preferences, directly informing our design decisions and ensuring the white-label solution would seamlessly integrate into the natural flow of travel planning.",
