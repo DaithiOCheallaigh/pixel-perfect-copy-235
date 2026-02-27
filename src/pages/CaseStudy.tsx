@@ -189,6 +189,26 @@ const CaseStudy = () => {
         </div>
       </section>
 
+      {/* Vimeo Video Embed */}
+      {project.vimeoEmbed &&
+      <section className="px-6 py-8 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="overflow-hidden rounded-xl shadow-md" style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+                <iframe
+                  src={project.vimeoEmbed}
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title="Video walkthrough"
+                />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {/* Main Content */}
       <div className="px-6 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -231,6 +251,16 @@ const CaseStudy = () => {
                   <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                   )}
                     </div>
+                    {/* Exploration images (e.g. Spotify) */}
+                    {project.id === "spotify" && project.images && (
+                      <div className="grid gap-4 md:grid-cols-2 mb-6">
+                        {project.images.filter(img => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
+                          <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                          </div>
+                        )}
+                      </div>
+                    )}
                     {project.explorationVideo &&
                 <div className="overflow-hidden rounded-xl shadow-md">
                         <video
