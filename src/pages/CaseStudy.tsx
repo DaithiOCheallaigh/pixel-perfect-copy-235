@@ -215,7 +215,7 @@ const CaseStudy = () => {
             {project.toolsImage && (
               <div>
                 <p className="text-sm font-bold text-foreground mb-3">Tools:</p>
-                <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
+                <img src={project.toolsImage} alt="Tools used" className="max-w-[200px]" loading="lazy" />
               </div>
             )}
           </div>
