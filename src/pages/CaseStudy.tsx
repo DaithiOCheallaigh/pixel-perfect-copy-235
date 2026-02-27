@@ -237,22 +237,38 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Image Gallery (before Initial Approach) */}
-              {galleryImages.length > 0 &&
+              {/* Full-width image before Initial Approach (booking-app: User journey map) */}
+              {project.id === "booking-app" && findImage("User journey map") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("User journey map")!.src} alt="User journey map" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Image Gallery (non-booking-app) */}
+              {project.id !== "booking-app" && galleryImages.length > 0 &&
             <ScrollReveal>
                   <ImageGallery images={galleryImages} />
                 </ScrollReveal>
             }
 
-              {/* Initial Approach (Booking App) */}
+              {/* Initial Approach (Booking App) — 2-column: text left, image right */}
               {project.initialApproach &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Initial Approach & User Journey Map</SectionLabel>
-                    <div className="space-y-4">
-                      {project.initialApproach.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className="grid gap-8 md:grid-cols-2 items-start">
+                      <div className="space-y-4">
+                        {project.initialApproach.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
+                      {findImage("App screens") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("App screens")!.src} alt="App screens" className="w-full object-cover" loading="lazy" />
+                        </div>
+                  }
                     </div>
                   </div>
                 </ScrollReveal>
