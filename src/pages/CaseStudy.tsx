@@ -794,13 +794,22 @@ const CaseStudy = () => {
                   <div className="text-center">
                     <SectionLabel>Design System</SectionLabel>
                     <p className="mb-6 text-[15px] text-muted-foreground">To explore the look and feel of the whole product, please see below</p>
-                    <div className="flex flex-wrap justify-center gap-3">
+                    <div className="flex flex-wrap justify-center gap-3 mb-12">
                       {project.designSystemLinks.map((link) =>
-                  <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary">
-                          {link.label} ↗
+                  <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90">
+                          {link.label === "Design System" ? "🖥 " : "🧩 "}{link.label}
                         </a>
                   )}
                     </div>
+                    {/* Big stat callout for digital-tipping */}
+                    {project.id === "digital-tipping" && project.stats?.find((s) => s.label.includes("active")) &&
+                    <div>
+                      <h2 className="text-2xl font-black tracking-tight text-foreground md:text-3xl lg:text-4xl">
+                        Percentage of overall users using the product at least once per week{" "}
+                        <span className="text-primary">{project.stats.find((s) => s.label.includes("active"))?.value}</span>
+                      </h2>
+                    </div>
+                    }
                   </div>
                 </ScrollReveal>
             }
