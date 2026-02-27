@@ -647,6 +647,29 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* Digital Tipping: Research images 3-column grid with labels */}
+              {project.id === "digital-tipping" &&
+            <ScrollReveal>
+                  <div className="grid gap-6 md:grid-cols-3">
+                    {[
+                      { alt: "Survey example", label: "Tour Guide Tipping Survey", sublabel: "Personal Experience Questionnaire" },
+                      { alt: "Mind map", label: "Mindmap", sublabel: "Digital Tipping" },
+                      { alt: "Research document", label: "R&D", sublabel: "London Observations | 2024" },
+                    ].map((item, i) => {
+                      const img = findImage(item.alt);
+                      if (!img) return null;
+                      return (
+                        <ScrollReveal key={i} delay={i * 0.1}>
+                          <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={img.src} alt={item.alt} className="w-full object-cover" loading="lazy" />
+                          </div>
+                        </ScrollReveal>
+                      );
+                    })}
+                  </div>
+                </ScrollReveal>
+            }
+
               {/* Building the Feature */}
               {project.buildingTheFeature &&
             <ScrollReveal>
@@ -658,6 +681,15 @@ const CaseStudy = () => {
                         <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
                       </div>
                 )}
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Digital Tipping: User flow diagram (full-width) before tipping flow */}
+              {project.id === "digital-tipping" && findImage("User flow") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md bg-muted/30">
+                    <img src={findImage("User flow")!.src} alt="User flow" className="w-full object-cover" loading="lazy" />
                   </div>
                 </ScrollReveal>
             }
