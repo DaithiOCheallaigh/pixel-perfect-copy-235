@@ -1,3 +1,5 @@
+import tipdirectLogo from "@/assets/logos/tipdirect.svg";
+
 export interface Project {
   id: string;
   title: string;
@@ -89,7 +91,7 @@ export const projects: Project[] = [
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "3 months",
     client: "TipDirect",
-    clientLogo: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/TipDirect_Logo.webp?fit=800%2C196&ssl=1",
+    clientLogo: tipdirectLogo,
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AI_Header-1.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/MobileAI.webp?fit=800%2C764&ssl=1",
@@ -161,7 +163,7 @@ export const projects: Project[] = [
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "6 months",
     client: "TipDirect",
-    clientLogo: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/TipDirect_Logo.webp?fit=800%2C196&ssl=1",
+    clientLogo: tipdirectLogo,
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/09/Pill2.webp?fit=800%2C800&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tipping_HeaderProfile.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tipping-Profile-1.webp?fit=800%2C942&ssl=1",
@@ -223,7 +225,7 @@ export const projects: Project[] = [
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "Ongoing",
     client: "TipDirect",
-    clientLogo: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/TipDirect_Logo.webp?fit=800%2C196&ssl=1",
+    clientLogo: tipdirectLogo,
     challengeImageRight: true,
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/AdminDashboard.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/TipDirectHeader_Web-2.webp?fit=4018%2C2426&ssl=1",
@@ -329,7 +331,7 @@ export const projects: Project[] = [
     tags: ["UI/UX", "Web Dev"],
     timeline: "2 months",
     client: "TipDirect",
-    clientLogo: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/TipDirect_Logo.webp?fit=800%2C196&ssl=1",
+    clientLogo: tipdirectLogo,
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Website.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Web_Web.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Web_Mobile.webp?fit=800%2C755&ssl=1",
@@ -358,7 +360,7 @@ export const projects: Project[] = [
     tags: ["UI/UX", "Atomic Design", "App"],
     timeline: "6 Months",
     client: "TipDirect",
-    clientLogo: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/TipDirect_Logo.webp?fit=800%2C196&ssl=1",
+    clientLogo: tipdirectLogo,
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/TipDirect_App.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/TipDIrect_App_Header.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/10/WL_BannerMobileWeb.webp?w=800&ssl=1",
