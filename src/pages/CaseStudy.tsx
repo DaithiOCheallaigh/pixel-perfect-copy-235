@@ -926,9 +926,11 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>Overview of the Design Process</SectionLabel>
-                    <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">Fortunately, we didn't start from scratch. Having previously built a ticketing system for tour providers, we already had access to a network within our target market and a platform we could pivot toward this new focus.</p>
-                    <div className="overflow-hidden rounded-xl shadow-md">
-                      <img src={findImage("Ticketing System")!.src} alt="Ticketing System" className="w-full object-cover" loading="lazy" />
+                    <div className="grid items-center gap-8 md:grid-cols-2">
+                      <p className="text-[15px] leading-[1.7] text-muted-foreground">Fortunately, we didn't start from scratch. Having previously built a ticketing system for tour providers, we already had access to a network within our target market and a platform we could pivot toward this new focus.</p>
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src="/images/work/ticketing-system.webp" alt="Ticketing System" className="w-full object-cover" loading="lazy" />
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
