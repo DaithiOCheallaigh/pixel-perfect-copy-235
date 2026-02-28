@@ -235,7 +235,7 @@ const CaseStudy = () => {
       }
 
       {/* Whitelabel / Digital Tipping: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "ai-reviews") &&
       <section className="px-6 py-16 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div
