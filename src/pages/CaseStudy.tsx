@@ -41,7 +41,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
             {nonWideBuffer.map((nwImg, j) =>
             <ScrollReveal key={j} delay={j * 0.05}>
                 <div className="overflow-hidden rounded-xl shadow-md">
-                  <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
+                  
                 </div>
               </ScrollReveal>
             )}
@@ -89,48 +89,29 @@ const CaseStudy = () => {
 
   // Separate images for inline placement vs gallery
   const inlineImages = project.images?.filter((img) =>
-  img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report" || img.alt === "Group overview"
+  img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
   ) || [];
-  
+
   // For booking-app, images are placed inline with sections, not in gallery
   const bookingAppInlineAlts = [
-    "User journey map", "App screens", "Design artboard", "Architecture wireframes",
-    "iOS Style Guide", "Booking system", "High definition renders", "Shop integration"
-  ];
+  "User journey map", "App screens", "Design artboard", "Architecture wireframes",
+  "iOS Style Guide", "Booking system", "High definition renders", "Shop integration"];
+
   // For whitelabel, all images are placed inline
   const whitelabelInlineAlts = [
-    "Atomic design system", "Passenger journey map", "Displaying tours",
-    "Tour option UI", "Design overview", "Ticketing system slider"
-  ];
-  // For tipdirect-app, specific images placed inline
-  const tipdirectAppInlineAlts = [
-    "Information architecture", "App overview", "Colour system", "Typography system", "Tour guides",
-    "Payment Links", "Tipping Groups", "Tiered Plans", "Voice Reviews", "Analytics", "Group Management",
-  ];
+  "Atomic design system", "Passenger journey map", "Displaying tours",
+  "Tour option UI", "Design overview", "Ticketing system slider"];
+
   // For digital-tipping, all images are placed inline in specific sections
   const digitalTippingInlineAlts = [
-    "Tech stack", "Survey example", "Mind map", "Research document",
-    "User flow", "Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"
-  ];
-  // For website-tipdirect, all images placed inline
-  const websiteTipdirectInlineAlts = [
-    "CTA section", "Component library", "Mobile responsive views", "Success stories section", "Tools & tech stack",
-  ];
-  // For admin-dashboard, all images placed inline
-  const adminDashboardInlineAlts = [
-    "Tour Guides", "UX Initial Phases", "Ticketing System", "Design System",
-    "Colour palette", "Typography", "Components", "Dashboard", "Get Tips",
-    "Profile", "Payments", "Setup", "Reports", "Users", "Resources", "Settings",
-    "Full platform overview", "Dev handoff", "UAT & Launch",
-  ];
+  "Tech stack", "Survey example", "Mind map", "Research document",
+  "User flow", "Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"];
+
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
   !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt)) &&
-  !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt)) &&
-  !(project.id === "tipdirect-app" && tipdirectAppInlineAlts.includes(img.alt)) &&
-  !(project.id === "website-tipdirect" && websiteTipdirectInlineAlts.includes(img.alt)) &&
-  !(project.id === "admin-dashboard" && adminDashboardInlineAlts.includes(img.alt))
+  !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
@@ -144,27 +125,27 @@ const CaseStudy = () => {
   return (
     <main className="pt-24">
       {/* Whitelabel / Digital Tipping: Full-width hero image */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard" || project.id === "ai-reviews") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping") &&
       <section className="px-6 pb-8 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
             </motion.div>
-            {(project.id === "whitelabel" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard" || project.id === "ai-reviews") &&
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
+            {project.id === "whitelabel" &&
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
               <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
-              <p className="mb-8 text-lg text-muted-foreground">{project.heroSubtitle || project.subtitle}</p>
+              <p className="mb-8 text-lg text-muted-foreground">{project.subtitle}</p>
             </motion.div>
-            }
+          }
           </div>
           <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <img src={project.id === "whitelabel" ? "/images/whitelabel-hero.png" : project.headerImage} alt={project.title} className="w-full object-cover" />
+            <img src={project.id === "digital-tipping" ? project.headerImage : "/images/whitelabel-hero.png"} alt={project.title} className="w-full object-cover" />
           </motion.div>
         </section>
       }
 
       {/* Hero — Title left, stacked mockups right (non-whitelabel) */}
-      {project.id !== "whitelabel" && project.id !== "digital-tipping" && project.id !== "tipdirect-app" && project.id !== "website-tipdirect" && project.id !== "admin-dashboard" && project.id !== "ai-reviews" &&
+      {project.id !== "whitelabel" && project.id !== "digital-tipping" &&
       <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
@@ -190,7 +171,7 @@ const CaseStudy = () => {
               {/* Client logo */}
               {project.clientLogo ?
               <div className="mb-6">
-                  <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : (project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : '')}`} loading="lazy" />
+                  <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
                   {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" loading="lazy" />}
                 </div> :
               project.client ?
@@ -254,72 +235,59 @@ const CaseStudy = () => {
       }
 
       {/* Whitelabel / Digital Tipping: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard" || project.id === "ai-reviews") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping") &&
       <section className="px-6 py-16 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div
-              className="grid gap-12 md:grid-cols-[0.8fr_1.2fr] items-start"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+            className="grid gap-12 md:grid-cols-[0.8fr_1.2fr] items-start"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
               {/* Left: logo + what I worked on + timeline */}
               <div className="flex flex-col">
                 {project.clientLogo &&
-                <div className="mb-8">
-                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : (project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : '')}`} loading="lazy" />
+              <div className="mb-8">
+                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
                     {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" loading="lazy" />}
                   </div>
-                }
+              }
                 {project.whatIWorkedOn &&
-                <div className="mb-8">
+              <div className="mb-8">
                     <h3 className="mb-3 text-sm font-bold text-foreground">What I Worked On</h3>
                     <ul className="space-y-1">
                       {project.whatIWorkedOn.map((item) =>
-                    <li key={item} className="text-sm text-muted-foreground">{item}</li>
-                    )}
+                  <li key={item} className="text-sm text-muted-foreground">{item}</li>
+                  )}
                     </ul>
                   </div>
-                }
+              }
                 <div className="mb-6">
                   <span className="text-sm font-bold text-foreground">Timeline: </span>
                   <span className="text-sm text-foreground">{project.timeline}</span>
                 </div>
                 {project.liveLink &&
-                <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
+              <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
                     View Live ↗
                   </a>
-                }
+              }
               </div>
 
               {/* Right: heading + description + tools */}
               <div className="flex flex-col">
-                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.id === "tipdirect-app" ? "Extension of the TipDirect Platform" : project.id === "website-tipdirect" ? "A New Web Presence" : project.id === "admin-dashboard" ? "Admin Dashboard" : project.id === "ai-reviews" ? "AI-Assisted Reviews" : project.title}</h2>
+                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.title}</h2>
                 <div className="space-y-4 mb-8">
                   {project.description.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                )}
                 </div>
                 {project.toolsImage &&
-                <div>
+              <div>
                     <span className="text-sm font-bold text-foreground mb-3 block">Tools:</span>
                     <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
                   </div>
-                }
+              }
               </div>
             </motion.div>
-          </div>
-        </section>
-      }
-
-      {/* Tools Used Image (full-width, between intro and challenge) */}
-      {project.toolsUsedImage && (project.id === "ai-reviews") &&
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <div className="overflow-hidden rounded-xl shadow-md">
-                <img src={project.toolsUsedImage} alt="Tools used" className="w-full object-cover" loading="lazy" />
-              </div>
-            </ScrollReveal>
           </div>
         </section>
       }
@@ -354,7 +322,7 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>The Challenge</SectionLabel>
                     {project.challengeImage ?
-                    <div className={`grid gap-12 md:grid-cols-2 items-start ${project.challengeImageRight ? 'md:[&>*:first-child]:order-2' : ''}`}>
+                <div className={`grid gap-12 md:grid-cols-2 items-start ${project.challengeImageRight ? 'md:[&>*:first-child]:order-2' : ''}`}>
                       <div className="overflow-hidden rounded-xl shadow-md">
                         <img src={project.challengeImage} alt="Challenge" className="w-full object-cover" loading="lazy" />
                       </div>
@@ -363,14 +331,14 @@ const CaseStudy = () => {
                     <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                     )}
                       </div>
-                    </div>
-                    :
-                    <div className="space-y-4">
+                    </div> :
+
+                <div className="space-y-4">
                       {project.challenge.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                    )}
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
                     </div>
-                    }
+                }
                   </div>
                 </ScrollReveal>
             }
@@ -496,11 +464,11 @@ const CaseStudy = () => {
                 }
                     <div className="grid gap-12 md:grid-cols-2 items-start">
                       <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground" dangerouslySetInnerHTML={{
-                  __html: project.atomicDesignSystem.split("\n\n").map(p => {
-                    const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
-                    return `<p>${formatted}</p>`;
-                  }).join('')
-                }} />
+                    __html: project.atomicDesignSystem.split("\n\n").map((p) => {
+                      const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                      return `<p>${formatted}</p>`;
+                    }).join('')
+                  }} />
                       {project.atomicDesignSystemRight &&
                   <div className="space-y-4">
                           {project.atomicDesignSystemRight.split("\n\n").map((p, i) =>
@@ -622,18 +590,18 @@ const CaseStudy = () => {
                       </div>
                       <div>
                         <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground mb-6" dangerouslySetInnerHTML={{
-                    __html: project.improvingProduct.split("\n\n").map(p => {
-                      const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
-                      return `<p>${formatted}</p>`;
-                    }).join('')
-                  }} />
+                      __html: project.improvingProduct.split("\n\n").map((p) => {
+                        const formatted = p.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                        return `<p>${formatted}</p>`;
+                      }).join('')
+                    }} />
                         {project.improvingProductReportLink &&
                     <a
-                        href={project.improvingProductReportLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
-                      >
+                      href={project.improvingProductReportLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90">
+
                           📄 View Report
                         </a>
                     }
@@ -686,20 +654,20 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div className="grid gap-6 md:grid-cols-3">
                     {[
-                      { alt: "Survey example", label: "Tour Guide Tipping Survey", sublabel: "Personal Experience Questionnaire" },
-                      { alt: "Mind map", label: "Mindmap", sublabel: "Digital Tipping" },
-                      { alt: "Research document", label: "R&D", sublabel: "London Observations | 2024" },
-                    ].map((item, i) => {
-                      const img = findImage(item.alt);
-                      if (!img) return null;
-                      return (
-                        <ScrollReveal key={i} delay={i * 0.1}>
+                { alt: "Survey example", label: "Tour Guide Tipping Survey", sublabel: "Personal Experience Questionnaire" },
+                { alt: "Mind map", label: "Mindmap", sublabel: "Digital Tipping" },
+                { alt: "Research document", label: "R&D", sublabel: "London Observations | 2024" }].
+                map((item, i) => {
+                  const img = findImage(item.alt);
+                  if (!img) return null;
+                  return (
+                    <ScrollReveal key={i} delay={i * 0.1}>
                           <div className="overflow-hidden rounded-xl shadow-md">
                             <img src={img.src} alt={item.alt} className="w-full object-cover" loading="lazy" />
                           </div>
-                        </ScrollReveal>
-                      );
-                    })}
+                        </ScrollReveal>);
+
+                })}
                   </div>
                 </ScrollReveal>
             }
@@ -781,40 +749,19 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-
-
-              {/* TipDirect App: Sitemap image */}
-              {project.id === "tipdirect-app" &&
-            <ScrollReveal>
-                  <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src="/images/work/tipdirect-sitemap.png" alt="TipDirect proposed sitemap" className="w-full object-cover" loading="lazy" />
-                  </div>
-                </ScrollReveal>
-            }
-
               {/* Trimming Down */}
               {project.trimmingDown &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Trimming Down The Platform</SectionLabel>
-                    <div className={`${project.id === "tipdirect-app" && project.pillImage ? "grid gap-8 md:grid-cols-2 items-start" : ""}`}>
-                      {project.id === "tipdirect-app" && project.pillImage &&
-                    <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={project.pillImage} alt="TipDirect App overview" className="w-full object-cover" loading="lazy" />
-                        </div>
-                    }
-                      <div className="space-y-4">
-                        {project.trimmingDown.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                    )}
-                      </div>
+                    <div className="space-y-4">
+                      {project.trimmingDown.split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
                     </div>
                   </div>
                 </ScrollReveal>
             }
-
-
-
 
               {/* Engagement Considerations */}
               {project.engagementConsiderations &&
@@ -837,64 +784,8 @@ const CaseStudy = () => {
               {project.designSystemDescription &&
             <ScrollReveal>
                   <div>
-                    <SectionLabel>{project.id === "admin-dashboard" ? "Establishing a Design System" : "Design System"}</SectionLabel>
-                    <div className="space-y-4 mb-8">
-                      {project.designSystemDescription.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                    )}
-                    </div>
-                    {/* Admin Dashboard: Design System header image */}
-                    {project.id === "admin-dashboard" && findImage("Design System") &&
-                  <div className="overflow-hidden rounded-xl shadow-md mb-8">
-                        <img src={findImage("Design System")!.src} alt="Design System" className="w-full object-cover" loading="lazy" />
-                      </div>
-                  }
-                    {/* Admin Dashboard + TipDirect App: Colour + Typography side by side */}
-                    {(project.id === "admin-dashboard" || project.id === "tipdirect-app") &&
-                  <div className="mb-8">
-                        <div className="grid gap-4 md:grid-cols-2 mb-4">
-                          {[findImage("Colour palette") || findImage("Colour system"), findImage("Typography") || findImage("Typography system")].filter(Boolean).map((img, i) =>
-                      <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                              <img src={img!.src} alt={img!.alt} className="w-full object-cover" loading="lazy" />
-                            </div>
-                      )}
-                        </div>
-                        {project.id === "admin-dashboard" &&
-                      <div className="grid gap-8 md:grid-cols-2 items-start mb-8">
-                            <div>
-                              <h3 className="mb-2 text-base font-bold text-foreground">Colour & Type Library</h3>
-                              <ul className="space-y-2 text-sm text-muted-foreground">
-                                <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />All colour and type from the design system is embedded in Figma, ensuring that every colour and type decision is cohesive.</li>
-                                <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />Like the component library, all colours and fonts can be updated across all designs from their root file.</li>
-                              </ul>
-                            </div>
-                            <div />
-                          </div>
-                      }
-                      </div>
-                  }
-                    {/* Admin Dashboard: Components full-width */}
-                    {project.id === "admin-dashboard" && findImage("Components") &&
-                  <div className="mb-4">
-                        <div className="overflow-hidden rounded-xl shadow-md mb-4">
-                          <img src={findImage("Components")!.src} alt="Components" className="w-full object-cover" loading="lazy" />
-                        </div>
-                        <div className="max-w-2xl">
-                          <h3 className="mb-2 text-base font-bold text-foreground">Component Assets</h3>
-                          <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />The component library enables rapid assembly of new interface concepts while maintaining brand cohesion, dramatically shortening the path from ideation to testable prototypes.</li>
-                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />A key advantage is the ability to globally update components from a single source, with changes automatically propagating across all designs.</li>
-                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />The library enhances prototyping capabilities, as component variants seamlessly demonstrate different states and interactions.</li>
-                          </ul>
-                        </div>
-                      </div>
-                  }
-                    {/* TipDirect App: Full-width app overview */}
-                    {project.id === "tipdirect-app" && findImage("App overview") &&
-                  <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("App overview")!.src} alt="App overview" className="w-full object-cover" loading="lazy" />
-                      </div>
-                  }
+                    <SectionLabel>Design System</SectionLabel>
+                    <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.designSystemDescription}</p>
                   </div>
                 </ScrollReveal>
             }
@@ -917,9 +808,6 @@ const CaseStudy = () => {
             }
 
 
-
-
-
               {/* Solution Intro + How It Works */}
               {project.solutionIntro &&
             <ScrollReveal>
@@ -929,25 +817,6 @@ const CaseStudy = () => {
                       {project.solutionIntro.split("\n\n").map((p, i) =>
                   <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                   )}
-                    </div>
-                  </div>
-                </ScrollReveal>
-            }
-
-              {/* Admin Dashboard: Ticketing System image before Design Process */}
-              {project.id === "admin-dashboard" && findImage("Ticketing System") &&
-            <ScrollReveal>
-                  <div>
-                    <SectionLabel>Overview of the Design Process</SectionLabel>
-                    <div className="grid items-center gap-8 md:grid-cols-2">
-                      <div className="space-y-4">
-                        <p className="text-[15px] leading-[1.7] text-muted-foreground">Fortunately, we didn't start from scratch. Having previously built a ticketing system for tour providers, we already had access to a network within our target market and a platform we could pivot toward this new focus.</p>
-                        <p className="text-[15px] leading-[1.7] text-muted-foreground">The existing ticketing platform gave us deep insight into the day-to-day workflows of tour operators — from managing bookings and tracking inventory to handling barcodes and customer data. This foundation meant we could skip months of discovery and move straight into validating our new concept with real users.</p>
-                        <p className="text-[15px] leading-[1.7] text-muted-foreground">By leveraging the relationships we'd already built with tour providers across Ireland, we were able to conduct early interviews, gather feedback on pain points, and co-design features that addressed genuine operational needs rather than assumptions.</p>
-                      </div>
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src="/images/work/ticketing-system.webp" alt="Ticketing System" className="w-full object-cover" loading="lazy" />
-                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
@@ -1051,42 +920,6 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Website TipDirect: CTA + Component library images with descriptions */}
-              {project.id === "website-tipdirect" &&
-            <>
-                  {findImage("CTA section") &&
-                <ScrollReveal>
-                      <div className="grid items-center gap-8 md:grid-cols-2">
-                        <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("CTA section")!.src} alt="CTA section" className="w-full object-cover" loading="lazy" />
-                        </div>
-                        <div>
-                          <h3 className="mb-3 text-xl font-bold tracking-tight text-foreground">Strategic CTA Placement</h3>
-                          <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                            The "Let's make some tips" call-to-action was designed to appear at key decision points throughout the page, reinforcing the platform's core value proposition. Placement was informed by scroll-depth analytics and heatmap data from similar SaaS landing pages — ensuring the CTA lands where visitor intent is highest and drop-off risk is greatest.
-                          </p>
-                        </div>
-                      </div>
-                    </ScrollReveal>
-                }
-                  {findImage("Component library") &&
-                <ScrollReveal>
-                      <div className="grid items-center gap-8 md:grid-cols-2">
-                        <div>
-                          <h3 className="mb-3 text-xl font-bold tracking-tight text-foreground">Get Started CTAs &amp; Pricing Tiers</h3>
-                          <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                            Clear, tiered pricing backed by prominent "Get Started" buttons removes friction from the conversion funnel. Each tier is visually distinct with a highlighted recommended plan, guiding users toward the option that best fits their needs. The component-driven approach ensures pricing cards remain consistent, accessible, and easy to update as the product evolves.
-                          </p>
-                        </div>
-                        <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("Component library")!.src} alt="Component library" className="w-full object-cover" loading="lazy" />
-                        </div>
-                      </div>
-                    </ScrollReveal>
-                }
-                </>
-            }
-
               {/* Component Focused (Website TipDirect) */}
               {project.componentFocused &&
             <ScrollReveal>
@@ -1095,42 +928,6 @@ const CaseStudy = () => {
                     <p className="text-[15px] leading-[1.7] text-muted-foreground">{project.componentFocused}</p>
                   </div>
                 </ScrollReveal>
-            }
-
-              {/* Website TipDirect: Mobile + Success stories images with descriptions */}
-              {project.id === "website-tipdirect" &&
-            <>
-                  {findImage("Mobile responsive views") &&
-                <ScrollReveal>
-                      <div className="grid items-center gap-8 md:grid-cols-2">
-                        <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("Mobile responsive views")!.src} alt="Mobile responsive views" className="w-full object-cover" loading="lazy" />
-                        </div>
-                        <div>
-                          <h3 className="mb-3 text-xl font-bold tracking-tight text-foreground">Mobile-First Responsiveness</h3>
-                          <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                            With over 60% of web traffic now coming from mobile devices, every component was built mobile-first and scaled up. The responsive layouts ensure that CTAs, pricing cards, and content sections maintain their visual hierarchy and usability across all breakpoints — from compact smartphone screens to wide desktop displays.
-                          </p>
-                        </div>
-                      </div>
-                    </ScrollReveal>
-                }
-                  {findImage("Success stories section") &&
-                <ScrollReveal>
-                      <div className="grid items-center gap-8 md:grid-cols-2">
-                        <div>
-                          <h3 className="mb-3 text-xl font-bold tracking-tight text-foreground">Case Studies &amp; Social Proof</h3>
-                          <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                            Dedicated case study sections showcase real success stories from active TipDirect guides, serving as powerful social proof. In web design, testimonials and case studies positioned near conversion points can increase trust signals by up to 34%. Each story is presented with measurable outcomes, reinforcing credibility and helping prospective users visualise their own success on the platform.
-                          </p>
-                        </div>
-                        <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("Success stories section")!.src} alt="Success stories section" className="w-full object-cover" loading="lazy" />
-                        </div>
-                      </div>
-                    </ScrollReveal>
-                }
-                </>
             }
 
               {/* Wireframes row (Booking App) */}
@@ -1380,11 +1177,11 @@ const CaseStudy = () => {
               <SectionLabel>{project.id === "tipdirect-app" ? "Other App Features" : "Key Features"}</SectionLabel>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {project.features.map((feature, i) => {
-                // For tipdirect-app and admin-dashboard, pair features with pill images
-                const featurePillImages = (project.id === "tipdirect-app" || project.id === "admin-dashboard") ? project.images?.filter((img) => img.alt === feature.title) : [];
+                // For tipdirect-app, pair features with pill images
+                const featurePillImages = project.id === "tipdirect-app" ? project.images?.filter((img) => img.alt === feature.title) : [];
                 return (
-                  <ScrollReveal key={i} delay={i * 0.06} className="h-full">
-                      <div className="h-full rounded-xl bg-card overflow-hidden flex flex-col">
+                  <ScrollReveal key={i} delay={i * 0.06}>
+                      <div className="rounded-xl bg-card overflow-hidden">
                         {featurePillImages && featurePillImages.length > 0 &&
                       <div className="overflow-hidden">
                             <img src={featurePillImages[0].src} alt={feature.title} className="w-full object-cover" loading="lazy" />
@@ -1398,19 +1195,6 @@ const CaseStudy = () => {
                     </ScrollReveal>);
 
               })}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      }
-
-      {/* Admin Dashboard: Full platform overview before design handoff details */}
-      {project.id === "admin-dashboard" && findImage("Full platform overview") &&
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <div className="overflow-hidden rounded-xl shadow-md">
-                <img src={findImage("Full platform overview")!.src} alt="Full platform overview" className="w-full object-cover" loading="lazy" />
               </div>
             </ScrollReveal>
           </div>
@@ -1556,19 +1340,6 @@ const CaseStudy = () => {
                 <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                 )}
                 </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      }
-
-      {/* TipDirect App: Tour guides image before stats */}
-      {project.id === "tipdirect-app" && findImage("Tour guides") &&
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <div className="overflow-hidden rounded-xl shadow-md">
-                <img src={findImage("Tour guides")!.src} alt="Tour guides using TipDirect" className="w-full object-cover" loading="lazy" />
               </div>
             </ScrollReveal>
           </div>
