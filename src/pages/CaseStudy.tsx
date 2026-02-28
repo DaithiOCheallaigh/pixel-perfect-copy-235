@@ -67,7 +67,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
     );
   }
 
-  return <div className="space-y-4">{elements}</div>;
+  return;
 };
 
 const CaseStudy = () => {
