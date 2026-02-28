@@ -89,7 +89,7 @@ const CaseStudy = () => {
 
   // Separate images for inline placement vs gallery
   const inlineImages = project.images?.filter((img) =>
-  img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
+  img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report" || img.alt === "Group overview"
   ) || [];
   
   // For booking-app, images are placed inline with sections, not in gallery
