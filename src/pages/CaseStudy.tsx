@@ -1385,6 +1385,19 @@ const CaseStudy = () => {
         </section>
       }
 
+      {/* Admin Dashboard: Full platform overview before design handoff details */}
+      {project.id === "admin-dashboard" && findImage("Full platform overview") &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="overflow-hidden rounded-xl shadow-md">
+                <img src={findImage("Full platform overview")!.src} alt="Full platform overview" className="w-full object-cover" loading="lazy" />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {/* Alternative Integrations */}
       {project.alternativeIntegrations &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
