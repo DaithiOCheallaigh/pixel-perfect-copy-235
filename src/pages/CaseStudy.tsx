@@ -792,6 +792,22 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Design System</SectionLabel>
                     <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.designSystemDescription}</p>
+                    {/* TipDirect App: Colour + Typography side by side */}
+                    {project.id === "tipdirect-app" &&
+                  <div className="grid gap-4 md:grid-cols-2 mb-8">
+                        {[findImage("Colour system"), findImage("Typography system")].filter(Boolean).map((img, i) =>
+                    <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                              <img src={img!.src} alt={img!.alt} className="w-full object-cover" loading="lazy" />
+                            </div>
+                    )}
+                      </div>
+                  }
+                    {/* TipDirect App: Full-width app overview */}
+                    {project.id === "tipdirect-app" && findImage("App overview") &&
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("App overview")!.src} alt="App overview" className="w-full object-cover" loading="lazy" />
+                      </div>
+                  }
                   </div>
                 </ScrollReveal>
             }
