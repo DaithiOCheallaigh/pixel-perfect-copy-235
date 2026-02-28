@@ -67,7 +67,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
     );
   }
 
-  return;
+  return <div className="space-y-2">{elements}</div>;
 };
 
 const CaseStudy = () => {
@@ -708,11 +708,9 @@ const CaseStudy = () => {
                     <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                     )}
                         </div>
-                        {project.images?.filter((img) => ["Tipping flow desktop", "Tipping flow mobile"].includes(img.alt)).map((img, i) =>
-                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                            
-                          </div>
-                  )}
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src="/images/work/spotify-tipping-flow.png" alt="Spotify tipping flow" className="w-full object-contain" loading="lazy" />
+                        </div>
                       </div> :
 
                 <div className="grid gap-8 md:grid-cols-2 items-start">
