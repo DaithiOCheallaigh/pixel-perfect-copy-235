@@ -89,7 +89,7 @@ const CaseStudy = () => {
 
   // Separate images for inline placement vs gallery
   const inlineImages = project.images?.filter((img) =>
-  img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report"
+  img.alt === "AI Review Steps" || img.alt === "Mixpanel analytics report" || img.alt === "Group overview"
   ) || [];
   
   // For booking-app, images are placed inline with sections, not in gallery
@@ -144,13 +144,13 @@ const CaseStudy = () => {
   return (
     <main className="pt-24">
       {/* Whitelabel / Digital Tipping: Full-width hero image */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard" || project.id === "ai-reviews") &&
       <section className="px-6 pb-8 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
             </motion.div>
-            {(project.id === "whitelabel" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard") &&
+            {(project.id === "whitelabel" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard" || project.id === "ai-reviews") &&
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
               <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
               <p className="mb-8 text-lg text-muted-foreground">{project.heroSubtitle || project.subtitle}</p>
@@ -164,7 +164,7 @@ const CaseStudy = () => {
       }
 
       {/* Hero — Title left, stacked mockups right (non-whitelabel) */}
-      {project.id !== "whitelabel" && project.id !== "digital-tipping" && project.id !== "tipdirect-app" && project.id !== "website-tipdirect" && project.id !== "admin-dashboard" &&
+      {project.id !== "whitelabel" && project.id !== "digital-tipping" && project.id !== "tipdirect-app" && project.id !== "website-tipdirect" && project.id !== "admin-dashboard" && project.id !== "ai-reviews" &&
       <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
@@ -254,7 +254,7 @@ const CaseStudy = () => {
       }
 
       {/* Whitelabel / Digital Tipping: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard" || project.id === "ai-reviews") &&
       <section className="px-6 py-16 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div
@@ -293,7 +293,7 @@ const CaseStudy = () => {
 
               {/* Right: heading + description + tools */}
               <div className="flex flex-col">
-                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.id === "tipdirect-app" ? "Extension of the TipDirect Platform" : project.id === "website-tipdirect" ? "A New Web Presence" : project.id === "admin-dashboard" ? "Admin Dashboard" : project.title}</h2>
+                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.id === "tipdirect-app" ? "Extension of the TipDirect Platform" : project.id === "website-tipdirect" ? "A New Web Presence" : project.id === "admin-dashboard" ? "Admin Dashboard" : project.id === "ai-reviews" ? "AI-Assisted Reviews" : project.title}</h2>
                 <div className="space-y-4 mb-8">
                   {project.description.split("\n\n").map((p, i) =>
                   <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
@@ -307,6 +307,19 @@ const CaseStudy = () => {
                 }
               </div>
             </motion.div>
+          </div>
+        </section>
+      }
+
+      {/* Tools Used Image (full-width, between intro and challenge) */}
+      {project.toolsUsedImage && (project.id === "ai-reviews") &&
+      <section className="px-6 py-8 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="overflow-hidden rounded-xl shadow-md">
+                <img src={project.toolsUsedImage} alt="Tools used" className="w-full object-cover" loading="lazy" />
+              </div>
+            </ScrollReveal>
           </div>
         </section>
       }
