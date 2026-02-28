@@ -1217,8 +1217,8 @@ const CaseStudy = () => {
                 // For tipdirect-app, pair features with pill images
                 const featurePillImages = project.id === "tipdirect-app" ? project.images?.filter((img) => img.alt === feature.title) : [];
                 return (
-                  <ScrollReveal key={i} delay={i * 0.06}>
-                      <div className="rounded-xl bg-card overflow-hidden">
+                  <ScrollReveal key={i} delay={i * 0.06} className="h-full">
+                      <div className="h-full rounded-xl bg-card overflow-hidden flex flex-col">
                         {featurePillImages && featurePillImages.length > 0 &&
                       <div className="overflow-hidden">
                             <img src={featurePillImages[0].src} alt={feature.title} className="w-full object-cover" loading="lazy" />
