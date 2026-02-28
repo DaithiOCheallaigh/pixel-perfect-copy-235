@@ -1208,11 +1208,11 @@ const CaseStudy = () => {
               <div className="grid gap-6 md:grid-cols-3">
                 {project.alternativeIntegrations.map((alt, i) =>
               <ScrollReveal key={i} delay={i * 0.1}>
-                    <div className="group overflow-hidden rounded-xl bg-card">
+                    <div className="group flex h-full flex-col overflow-hidden rounded-xl bg-card">
                       <div className="overflow-hidden">
                         <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
                       </div>
-                      <div className="p-5">
+                      <div className="flex flex-1 flex-col p-5">
                         <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
                         <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
                       </div>
