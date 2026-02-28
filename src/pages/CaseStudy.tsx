@@ -841,14 +841,8 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* TipDirect App: Full-width pill image after engagement considerations */}
-              {project.id === "tipdirect-app" && project.pillImage &&
-            <ScrollReveal>
-                  <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src={project.pillImage} alt="TipDirect App overview" className="w-full object-cover" loading="lazy" />
-                  </div>
-                </ScrollReveal>
-            }
+
+
 
 
               {/* Solution Intro + How It Works */}
