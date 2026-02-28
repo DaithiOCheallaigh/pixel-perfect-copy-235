@@ -116,7 +116,8 @@ const CaseStudy = () => {
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
   !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt)) &&
-  !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt))
+  !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt)) &&
+  !(project.id === "tipdirect-app" && tipdirectAppInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
