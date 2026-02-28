@@ -1001,6 +1001,26 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* Website TipDirect: Mobile + Success stories images after Component Focused */}
+              {project.id === "website-tipdirect" &&
+            <>
+                  {findImage("Mobile responsive views") &&
+                <ScrollReveal>
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("Mobile responsive views")!.src} alt="Mobile responsive views" className="w-full object-cover" loading="lazy" />
+                      </div>
+                    </ScrollReveal>
+                }
+                  {findImage("Success stories section") &&
+                <ScrollReveal>
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("Success stories section")!.src} alt="Success stories section" className="w-full object-cover" loading="lazy" />
+                      </div>
+                    </ScrollReveal>
+                }
+                </>
+            }
+
               {/* Wireframes row (Booking App) */}
               {project.id === "booking-app" &&
             <ScrollReveal>
