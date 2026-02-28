@@ -1386,6 +1386,19 @@ const CaseStudy = () => {
         </section>
       }
 
+      {/* TipDirect App: Tour guides image before stats */}
+      {project.id === "tipdirect-app" && findImage("Tour guides") &&
+      <section className="px-6 py-8 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="overflow-hidden rounded-xl shadow-md">
+                <img src={findImage("Tour guides")!.src} alt="Tour guides using TipDirect" className="w-full object-cover" loading="lazy" />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {/* Quote */}
       {project.quote &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
