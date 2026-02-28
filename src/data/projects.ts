@@ -459,6 +459,7 @@ export const projects: Project[] = [
     id: "spotify",
     title: "Spotify Tipping Integration",
     subtitle: "RFP design for integrating digital tipping into Spotify",
+    heroSubtitle: "Digital Tipping For Artists & Creators",
     workDescription: "TipDirect explored a request for proposal (RFP) for integrating tipping into the Spotify platform.",
     tags: ["UI/UX", "Integration"],
     timeline: "N/A",
