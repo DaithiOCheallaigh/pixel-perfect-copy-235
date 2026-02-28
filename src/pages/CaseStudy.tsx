@@ -971,20 +971,36 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Website TipDirect: CTA + Component library images after New Skills */}
+              {/* Website TipDirect: CTA + Component library images with descriptions */}
               {project.id === "website-tipdirect" &&
             <>
                   {findImage("CTA section") &&
                 <ScrollReveal>
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("CTA section")!.src} alt="CTA section" className="w-full object-cover" loading="lazy" />
+                      <div className="grid items-center gap-8 md:grid-cols-2">
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("CTA section")!.src} alt="CTA section" className="w-full object-cover" loading="lazy" />
+                        </div>
+                        <div>
+                          <h3 className="mb-3 text-xl font-bold tracking-tight text-foreground">Strategic CTA Placement</h3>
+                          <p className="text-[15px] leading-[1.7] text-muted-foreground">
+                            The "Let's make some tips" call-to-action was designed to appear at key decision points throughout the page, reinforcing the platform's core value proposition. Placement was informed by scroll-depth analytics and heatmap data from similar SaaS landing pages — ensuring the CTA lands where visitor intent is highest and drop-off risk is greatest.
+                          </p>
+                        </div>
                       </div>
                     </ScrollReveal>
                 }
                   {findImage("Component library") &&
                 <ScrollReveal>
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("Component library")!.src} alt="Component library" className="w-full object-cover" loading="lazy" />
+                      <div className="grid items-center gap-8 md:grid-cols-2">
+                        <div>
+                          <h3 className="mb-3 text-xl font-bold tracking-tight text-foreground">Get Started CTAs &amp; Pricing Tiers</h3>
+                          <p className="text-[15px] leading-[1.7] text-muted-foreground">
+                            Clear, tiered pricing backed by prominent "Get Started" buttons removes friction from the conversion funnel. Each tier is visually distinct with a highlighted recommended plan, guiding users toward the option that best fits their needs. The component-driven approach ensures pricing cards remain consistent, accessible, and easy to update as the product evolves.
+                          </p>
+                        </div>
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={findImage("Component library")!.src} alt="Component library" className="w-full object-cover" loading="lazy" />
+                        </div>
                       </div>
                     </ScrollReveal>
                 }
