@@ -145,7 +145,7 @@ const CaseStudy = () => {
             }
           </div>
           <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <img src={project.id === "digital-tipping" ? project.headerImage : "/images/whitelabel-hero.png"} alt={project.title} className="w-full object-cover" />
+            <img src={project.id === "whitelabel" ? "/images/whitelabel-hero.png" : project.headerImage} alt={project.title} className="w-full object-cover" />
           </motion.div>
         </section>
       }
