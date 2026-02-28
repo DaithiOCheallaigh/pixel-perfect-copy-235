@@ -1348,8 +1348,8 @@ const CaseStudy = () => {
               <SectionLabel>{project.id === "tipdirect-app" ? "Other App Features" : "Key Features"}</SectionLabel>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {project.features.map((feature, i) => {
-                // For tipdirect-app, pair features with pill images
-                const featurePillImages = project.id === "tipdirect-app" ? project.images?.filter((img) => img.alt === feature.title) : [];
+                // For tipdirect-app and admin-dashboard, pair features with pill images
+                const featurePillImages = (project.id === "tipdirect-app" || project.id === "admin-dashboard") ? project.images?.filter((img) => img.alt === feature.title) : [];
                 return (
                   <ScrollReveal key={i} delay={i * 0.06} className="h-full">
                       <div className="h-full rounded-xl bg-card overflow-hidden flex flex-col">
