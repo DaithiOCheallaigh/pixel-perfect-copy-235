@@ -154,41 +154,47 @@ const WebDesignServices = () => {
             </p>
           </ScrollReveal>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {recentProjects.map((project, i) => (
-              <ScrollReveal key={project.name} delay={i * 0.1}>
-                <motion.a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/40"
-                >
-                  <div className="overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={`${project.name} website preview`}
-                      className="aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col justify-between p-5">
-                    <div>
-                      <h3 className="text-base font-bold text-foreground transition-colors group-hover:text-primary">
-                        {project.name}
-                      </h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{project.descriptor}</p>
+          <Carousel opts={{ align: "start", loop: true }} className="w-full">
+            <CarouselContent className="-ml-4">
+              {recentProjects.map((project) => (
+                <CarouselItem key={project.name} className="pl-4 sm:basis-1/2">
+                  <motion.a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/40"
+                  >
+                    <div className="overflow-hidden">
+                      <img
+                        src={project.image}
+                        alt={`${project.name} website preview`}
+                        className="aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
                     </div>
-                    <div className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground transition-colors group-hover:text-primary">
-                      <span className="truncate">{project.url.replace("https://", "")}</span>
-                      <ExportSquare size={14} variant="TwoTone" className="flex-shrink-0" />
+                    <div className="flex flex-1 flex-col justify-between p-5">
+                      <div>
+                        <h3 className="text-base font-bold text-foreground transition-colors group-hover:text-primary">
+                          {project.name}
+                        </h3>
+                        <p className="mt-1 text-sm text-muted-foreground">{project.descriptor}</p>
+                      </div>
+                      <div className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground transition-colors group-hover:text-primary">
+                        <span className="truncate">{project.url.replace("https://", "")}</span>
+                        <ExportSquare size={14} variant="TwoTone" className="flex-shrink-0" />
+                      </div>
                     </div>
-                  </div>
-                </motion.a>
-              </ScrollReveal>
-            ))}
-          </div>
+                  </motion.a>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <CarouselPrevious className="static translate-y-0" />
+              <CarouselNext className="static translate-y-0" />
+            </div>
+          </Carousel>
         </div>
       </section>
 
