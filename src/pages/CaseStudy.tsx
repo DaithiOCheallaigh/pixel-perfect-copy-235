@@ -145,7 +145,7 @@ const CaseStudy = () => {
       }
 
       {/* Hero — Title left, stacked mockups right (non-whitelabel) */}
-      {project.id !== "whitelabel" && project.id !== "digital-tipping" &&
+      {project.id !== "whitelabel" && project.id !== "digital-tipping" && project.id !== "ai-reviews" &&
       <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
