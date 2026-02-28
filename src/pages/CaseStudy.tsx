@@ -755,17 +755,7 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* TipDirect App: Tools Used image */}
-              {project.id === "tipdirect-app" && project.toolsUsedImage &&
-            <ScrollReveal>
-                  <div>
-                    <SectionLabel>Tools Used</SectionLabel>
-                    <div className="overflow-hidden rounded-xl shadow-md">
-                      <img src={project.toolsUsedImage} alt="Tools used" className="w-full object-cover" loading="lazy" />
-                    </div>
-                  </div>
-                </ScrollReveal>
-            }
+
 
               {/* Trimming Down */}
               {project.trimmingDown &&
