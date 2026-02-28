@@ -29,7 +29,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
       elements.push(
         <ScrollReveal key={`wide-${i}`}>
           <div className="overflow-hidden rounded-xl shadow-md">
-            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+            
           </div>
         </ScrollReveal>
       );
@@ -125,27 +125,27 @@ const CaseStudy = () => {
   return (
     <main className="pt-24">
       {/* Whitelabel / Digital Tipping: Full-width hero image */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "ai-reviews" || project.id === "spotify") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping") &&
       <section className="px-6 pb-8 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
             </motion.div>
-            {(project.id === "whitelabel" || project.id === "ai-reviews" || project.id === "spotify") &&
+            {project.id === "whitelabel" &&
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
               <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
-              <p className="mb-8 text-lg text-muted-foreground">{project.heroSubtitle || project.subtitle}</p>
+              <p className="mb-8 text-lg text-muted-foreground">{project.subtitle}</p>
             </motion.div>
           }
           </div>
           <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <img src={project.id === "whitelabel" ? "/images/whitelabel-hero.png" : project.headerImage} alt={project.title} className="w-full object-cover" />
+            <img src={project.id === "digital-tipping" ? project.headerImage : "/images/whitelabel-hero.png"} alt={project.title} className="w-full object-cover" />
           </motion.div>
         </section>
       }
 
       {/* Hero — Title left, stacked mockups right (non-whitelabel) */}
-      {project.id !== "whitelabel" && project.id !== "digital-tipping" && project.id !== "ai-reviews" && project.id !== "spotify" &&
+      {project.id !== "whitelabel" && project.id !== "digital-tipping" &&
       <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
@@ -235,7 +235,7 @@ const CaseStudy = () => {
       }
 
       {/* Whitelabel / Digital Tipping: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "ai-reviews" || project.id === "spotify") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping") &&
       <section className="px-6 py-16 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div
@@ -243,86 +243,50 @@ const CaseStudy = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+              {/* Left: logo + what I worked on + timeline */}
+              <div className="flex flex-col">
+                {project.clientLogo &&
+              <div className="mb-8">
+                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
+                    {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" loading="lazy" />}
+                  </div>
+              }
+                {project.whatIWorkedOn &&
+              <div className="mb-8">
+                    <h3 className="mb-3 text-sm font-bold text-foreground">What I Worked On</h3>
+                    <ul className="space-y-1">
+                      {project.whatIWorkedOn.map((item) =>
+                  <li key={item} className="text-sm text-muted-foreground">{item}</li>
+                  )}
+                    </ul>
+                  </div>
+              }
+                <div className="mb-6">
+                  <span className="text-sm font-bold text-foreground">Timeline: </span>
+                  <span className="text-sm text-foreground">{project.timeline}</span>
+                </div>
+                {project.liveLink &&
+              <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
+                    View Live ↗
+                  </a>
+              }
+              </div>
 
-              {project.id === "spotify" ? (
-                <>
-                  {/* Spotify: Left = title + description */}
-                  <div className="flex flex-col md:col-span-1 order-2 md:order-1">
-                    <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">Digital Tipping<br />For Artists &<br />Creators</h2>
-                    <div className="space-y-4 mb-8">
-                      {project.description.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                      )}
-                    </div>
+              {/* Right: heading + description + tools */}
+              <div className="flex flex-col">
+                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.title}</h2>
+                <div className="space-y-4 mb-8">
+                  {project.description.split("\n\n").map((p, i) =>
+                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                )}
+                </div>
+                {project.toolsImage &&
+              <div>
+                    <span className="text-sm font-bold text-foreground mb-3 block">Tools:</span>
+                    <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
                   </div>
-                  {/* Spotify: Right = client logo + what I worked on */}
-                  <div className="flex flex-col order-1 md:order-2">
-                    <span className="font-mono-label text-muted-foreground mb-3">Client:</span>
-                    {project.clientLogo &&
-                  <div className="mb-8">
-                        <img src={project.clientLogo} alt={project.client || "Client"} className="max-h-12 w-auto object-contain dark:brightness-0 dark:invert" loading="lazy" />
-                      </div>
-                    }
-                    {project.whatIWorkedOn &&
-                  <div className="mb-8">
-                        <h3 className="mb-3 text-sm font-bold text-foreground">What We Worked On</h3>
-                        <ul className="space-y-1">
-                          {project.whatIWorkedOn.map((item) =>
-                      <li key={item} className="text-sm text-muted-foreground">{item}</li>
-                          )}
-                        </ul>
-                      </div>
-                    }
-                  </div>
-                </>
-              ) : (
-                <>
-                  {/* Default: Left = logo + what I worked on + timeline */}
-                  <div className="flex flex-col">
-                    {project.clientLogo &&
-                  <div className="mb-8">
-                        <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
-                        {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" loading="lazy" />}
-                      </div>
-                    }
-                    {project.whatIWorkedOn &&
-                  <div className="mb-8">
-                        <h3 className="mb-3 text-sm font-bold text-foreground">What I Worked On</h3>
-                        <ul className="space-y-1">
-                          {project.whatIWorkedOn.map((item) =>
-                      <li key={item} className="text-sm text-muted-foreground">{item}</li>
-                          )}
-                        </ul>
-                      </div>
-                    }
-                    <div className="mb-6">
-                      <span className="text-sm font-bold text-foreground">Timeline: </span>
-                      <span className="text-sm text-foreground">{project.timeline}</span>
-                    </div>
-                    {project.liveLink &&
-                  <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
-                        View Live ↗
-                      </a>
-                    }
-                  </div>
-
-                  {/* Default: Right = heading + description + tools */}
-                  <div className="flex flex-col">
-                    <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.title}</h2>
-                    <div className="space-y-4 mb-8">
-                      {project.description.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                      )}
-                    </div>
-                    {project.toolsImage &&
-                  <div>
-                        <span className="text-sm font-bold text-foreground mb-3 block">Tools:</span>
-                        <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
-                      </div>
-                    }
-                  </div>
-                </>
-              )}
+              }
+              </div>
             </motion.div>
           </div>
         </section>
@@ -421,43 +385,32 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>Exploration</SectionLabel>
-                    {project.id === "spotify" ? (
-                      <div className="grid gap-8 md:grid-cols-2 items-start">
-                        <div className="space-y-4">
-                          {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
-                      <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                          )}
-                        </div>
-                        {project.images &&
-                      <div className="grid gap-4 grid-cols-2">
-                            {project.images.filter((img) => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
-                        <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                              </div>
-                        )}
+                    <div className="space-y-4 mb-6">
+                      {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                  )}
+                    </div>
+                    {/* Exploration images (e.g. Spotify) */}
+                    {project.id === "spotify" && project.images &&
+                <div className="grid gap-4 md:grid-cols-2 mb-6">
+                        {project.images.filter((img) => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
+                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
                           </div>
-                        }
+                  )}
                       </div>
-                    ) : (
-                      <>
-                        <div className="space-y-4 mb-6">
-                          {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
-                      <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                          )}
-                        </div>
-                        {project.explorationVideo &&
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                            <video
-                        src={project.explorationVideo}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full object-cover" />
-                          </div>
-                        }
-                      </>
-                    )}
+                }
+                    {project.explorationVideo &&
+                <div className="overflow-hidden rounded-xl shadow-md">
+                        <video
+                    src={project.explorationVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full object-cover" />
+                      </div>
+                }
                   </div>
                 </ScrollReveal>
             }
@@ -1107,36 +1060,18 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div>
-                {project.id === "spotify" ? (
-                  <div className="grid gap-8 md:grid-cols-2 items-start">
-                    {/* Left: stacked images */}
-                    <div className="space-y-4">
-                      {project.images?.filter((img) => ["Spotify UI placement"].includes(img.alt)).map((img, i) =>
-                    <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                          <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                        </div>
-                      )}
-                    </div>
-                    {/* Right: text */}
-                    <div>
-                      <SectionLabel>The Solution</SectionLabel>
-                      <div className="space-y-4">
-                        {project.solutionDetail.split("\n\n").map((p, i) =>
-                      <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <SectionLabel>The Solution</SectionLabel>
-                    <div className="space-y-4 mb-6">
-                      {project.solutionDetail.split("\n\n").map((p, i) =>
-                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                      )}
-                    </div>
-                  </>
+                <SectionLabel>The Solution</SectionLabel>
+                <div className="space-y-4 mb-6">
+                  {project.solutionDetail.split("\n\n").map((p, i) =>
+                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                 )}
+                </div>
+                {/* Spotify UI placement image */}
+                {project.id === "spotify" && project.images?.filter((img) => img.alt === "Spotify UI placement").map((img, i) =>
+              <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                    <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                  </div>
+              )}
               </div>
             </ScrollReveal>
           </div>
@@ -1271,16 +1206,18 @@ const CaseStudy = () => {
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
-              <h2 className="mb-12 text-center text-2xl font-black tracking-tight text-foreground md:text-3xl">Other Integration Options</h2>
-              <div className="grid gap-8 md:grid-cols-3">
+              <SectionLabel>Other Integration Options</SectionLabel>
+              <div className="grid gap-6 md:grid-cols-3">
                 {project.alternativeIntegrations.map((alt, i) =>
               <ScrollReveal key={i} delay={i * 0.1}>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="mb-6 overflow-hidden rounded-2xl shadow-lg">
-                        <img src={alt.image} alt={alt.title} className="w-full object-cover" loading="lazy" />
+                    <div className="group overflow-hidden rounded-xl bg-card">
+                      <div className="overflow-hidden">
+                        <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
                       </div>
-                      <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
+                      <div className="p-5">
+                        <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
+                      </div>
                     </div>
                   </ScrollReveal>
               )}
