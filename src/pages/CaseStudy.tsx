@@ -125,21 +125,21 @@ const CaseStudy = () => {
   return (
     <main className="pt-24">
       {/* Whitelabel / Digital Tipping: Full-width hero image */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "ai-reviews") &&
       <section className="px-6 pb-8 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
             </motion.div>
-            {project.id === "whitelabel" &&
+            {(project.id === "whitelabel" || project.id === "ai-reviews") &&
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
               <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
-              <p className="mb-8 text-lg text-muted-foreground">{project.subtitle}</p>
+              <p className="mb-8 text-lg text-muted-foreground">{project.heroSubtitle || project.subtitle}</p>
             </motion.div>
           }
           </div>
           <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <img src={project.id === "digital-tipping" ? project.headerImage : "/images/whitelabel-hero.png"} alt={project.title} className="w-full object-cover" />
+            <img src={project.id === "whitelabel" ? "/images/whitelabel-hero.png" : project.headerImage} alt={project.title} className="w-full object-cover" />
           </motion.div>
         </section>
       }
