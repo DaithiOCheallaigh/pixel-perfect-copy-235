@@ -311,6 +311,19 @@ const CaseStudy = () => {
         </section>
       }
 
+      {/* Tools Used Image (full-width, between intro and challenge) */}
+      {project.toolsUsedImage && (project.id === "ai-reviews") &&
+      <section className="px-6 py-8 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="overflow-hidden rounded-xl shadow-md">
+                <img src={project.toolsUsedImage} alt="Tools used" className="w-full object-cover" loading="lazy" />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {/* Vimeo Video Embed */}
       {project.vimeoEmbed &&
       <section className="px-6 py-8 md:px-12 lg:px-24">
