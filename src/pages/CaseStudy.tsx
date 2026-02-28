@@ -769,6 +769,15 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* TipDirect App: Full-width IA screenshot after trimming down */}
+              {project.id === "tipdirect-app" && findImage("Information architecture") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Information architecture")!.src} alt="Information architecture" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
               {/* Engagement Considerations */}
               {project.engagementConsiderations &&
             <ScrollReveal>
