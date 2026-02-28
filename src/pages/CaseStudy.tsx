@@ -1107,18 +1107,36 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div>
-                <SectionLabel>The Solution</SectionLabel>
-                <div className="space-y-4 mb-6">
-                  {project.solutionDetail.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                )}
-                </div>
-                {/* Spotify UI placement image */}
-                {project.id === "spotify" && project.images?.filter((img) => img.alt === "Spotify UI placement").map((img, i) =>
-              <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                    <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                {project.id === "spotify" ? (
+                  <div className="grid gap-8 md:grid-cols-2 items-start">
+                    {/* Left: stacked images */}
+                    <div className="space-y-4">
+                      {project.images?.filter((img) => ["Spotify UI placement"].includes(img.alt)).map((img, i) =>
+                    <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                          <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                        </div>
+                      )}
+                    </div>
+                    {/* Right: text */}
+                    <div>
+                      <SectionLabel>The Solution</SectionLabel>
+                      <div className="space-y-4">
+                        {project.solutionDetail.split("\n\n").map((p, i) =>
+                      <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-              )}
+                ) : (
+                  <>
+                    <SectionLabel>The Solution</SectionLabel>
+                    <div className="space-y-4 mb-6">
+                      {project.solutionDetail.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             </ScrollReveal>
           </div>
