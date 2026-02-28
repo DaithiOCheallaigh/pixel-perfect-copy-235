@@ -280,7 +280,7 @@ const CaseStudy = () => {
 
               {/* Right: heading + description + tools */}
               <div className="flex flex-col">
-                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.title}</h2>
+                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.id === "tipdirect-app" ? "Extension of the TipDirect Platform" : project.title}</h2>
                 <div className="space-y-4 mb-8">
                   {project.description.split("\n\n").map((p, i) =>
                   <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
