@@ -102,6 +102,11 @@ const CaseStudy = () => {
     "Atomic design system", "Passenger journey map", "Displaying tours",
     "Tour option UI", "Design overview", "Ticketing system slider"
   ];
+  // For tipdirect-app, specific images placed inline
+  const tipdirectAppInlineAlts = [
+    "Information architecture", "App overview", "Colour system", "Typography system", "Tour guides",
+    "Payment Links", "Tipping Groups", "Tiered Plans", "Voice Reviews", "Analytics", "Group Management",
+  ];
   // For digital-tipping, all images are placed inline in specific sections
   const digitalTippingInlineAlts = [
     "Tech stack", "Survey example", "Mind map", "Research document",
