@@ -235,7 +235,7 @@ const CaseStudy = () => {
       }
 
       {/* Whitelabel / Digital Tipping: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "ai-reviews") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "ai-reviews" || project.id === "spotify") &&
       <section className="px-6 py-16 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div
@@ -243,50 +243,86 @@ const CaseStudy = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
-              {/* Left: logo + what I worked on + timeline */}
-              <div className="flex flex-col">
-                {project.clientLogo &&
-              <div className="mb-8">
-                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
-                    {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" loading="lazy" />}
-                  </div>
-              }
-                {project.whatIWorkedOn &&
-              <div className="mb-8">
-                    <h3 className="mb-3 text-sm font-bold text-foreground">What I Worked On</h3>
-                    <ul className="space-y-1">
-                      {project.whatIWorkedOn.map((item) =>
-                  <li key={item} className="text-sm text-muted-foreground">{item}</li>
-                  )}
-                    </ul>
-                  </div>
-              }
-                <div className="mb-6">
-                  <span className="text-sm font-bold text-foreground">Timeline: </span>
-                  <span className="text-sm text-foreground">{project.timeline}</span>
-                </div>
-                {project.liveLink &&
-              <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
-                    View Live ↗
-                  </a>
-              }
-              </div>
 
-              {/* Right: heading + description + tools */}
-              <div className="flex flex-col">
-                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.title}</h2>
-                <div className="space-y-4 mb-8">
-                  {project.description.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                )}
-                </div>
-                {project.toolsImage &&
-              <div>
-                    <span className="text-sm font-bold text-foreground mb-3 block">Tools:</span>
-                    <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
+              {project.id === "spotify" ? (
+                <>
+                  {/* Spotify: Left = title + description */}
+                  <div className="flex flex-col md:col-span-1 order-2 md:order-1">
+                    <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">Digital Tipping<br />For Artists &<br />Creators</h2>
+                    <div className="space-y-4 mb-8">
+                      {project.description.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      )}
+                    </div>
                   </div>
-              }
-              </div>
+                  {/* Spotify: Right = client logo + what I worked on */}
+                  <div className="flex flex-col order-1 md:order-2">
+                    <span className="font-mono-label text-muted-foreground mb-3">Client:</span>
+                    {project.clientLogo &&
+                  <div className="mb-8">
+                        <img src={project.clientLogo} alt={project.client || "Client"} className="max-h-12 w-auto object-contain dark:brightness-0 dark:invert" loading="lazy" />
+                      </div>
+                    }
+                    {project.whatIWorkedOn &&
+                  <div className="mb-8">
+                        <h3 className="mb-3 text-sm font-bold text-foreground">What We Worked On</h3>
+                        <ul className="space-y-1">
+                          {project.whatIWorkedOn.map((item) =>
+                      <li key={item} className="text-sm text-muted-foreground">{item}</li>
+                          )}
+                        </ul>
+                      </div>
+                    }
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Default: Left = logo + what I worked on + timeline */}
+                  <div className="flex flex-col">
+                    {project.clientLogo &&
+                  <div className="mb-8">
+                        <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
+                        {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" loading="lazy" />}
+                      </div>
+                    }
+                    {project.whatIWorkedOn &&
+                  <div className="mb-8">
+                        <h3 className="mb-3 text-sm font-bold text-foreground">What I Worked On</h3>
+                        <ul className="space-y-1">
+                          {project.whatIWorkedOn.map((item) =>
+                      <li key={item} className="text-sm text-muted-foreground">{item}</li>
+                          )}
+                        </ul>
+                      </div>
+                    }
+                    <div className="mb-6">
+                      <span className="text-sm font-bold text-foreground">Timeline: </span>
+                      <span className="text-sm text-foreground">{project.timeline}</span>
+                    </div>
+                    {project.liveLink &&
+                  <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-all hover:opacity-90">
+                        View Live ↗
+                      </a>
+                    }
+                  </div>
+
+                  {/* Default: Right = heading + description + tools */}
+                  <div className="flex flex-col">
+                    <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.title}</h2>
+                    <div className="space-y-4 mb-8">
+                      {project.description.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      )}
+                    </div>
+                    {project.toolsImage &&
+                  <div>
+                        <span className="text-sm font-bold text-foreground mb-3 block">Tools:</span>
+                        <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
+                      </div>
+                    }
+                  </div>
+                </>
+              )}
             </motion.div>
           </div>
         </section>
