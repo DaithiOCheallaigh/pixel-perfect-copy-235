@@ -1271,18 +1271,16 @@ const CaseStudy = () => {
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
-              <SectionLabel>Other Integration Options</SectionLabel>
-              <div className="grid gap-6 md:grid-cols-3">
+              <h2 className="mb-12 text-center text-2xl font-black tracking-tight text-foreground md:text-3xl">Other Integration Options</h2>
+              <div className="grid gap-8 md:grid-cols-3">
                 {project.alternativeIntegrations.map((alt, i) =>
               <ScrollReveal key={i} delay={i * 0.1}>
-                    <div className="group overflow-hidden rounded-xl bg-card">
-                      <div className="overflow-hidden">
-                        <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
+                    <div className="flex flex-col items-center text-center">
+                      <div className="mb-6 overflow-hidden rounded-2xl shadow-lg">
+                        <img src={alt.image} alt={alt.title} className="w-full object-cover" loading="lazy" />
                       </div>
-                      <div className="p-5">
-                        <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
-                        <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
-                      </div>
+                      <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
                     </div>
                   </ScrollReveal>
               )}
