@@ -95,13 +95,14 @@ interface RecentProject {
   name: string;
   descriptor: string;
   url: string;
+  image: string;
 }
 
 const recentProjects: RecentProject[] = [
-  { name: "Nicholas Moody Kitchens", descriptor: "Bespoke kitchen design studio based in Cork", url: "https://nicholasmoodykitchens.com" },
-  { name: "Ease Dental", descriptor: "State-of-the-art dental clinic in Dublin 12", url: "https://easedental.ie" },
-  { name: "Glimmers Mental Health Services", descriptor: "Mental health therapy practice led by Dr. Claire Mc Grotty, PhD, LCPC", url: "https://glimmersmhs.com" },
-  { name: "Savvy Kitchens", descriptor: "Contemporary kitchen design and project showcase", url: "https://savvykitchens.ie" },
+  { name: "Nicholas Moody Kitchens", descriptor: "Bespoke kitchen design studio based in Cork", url: "https://nicholasmoodykitchens.com", image: "/images/work/nicholas-moody-kitchens.png" },
+  { name: "Ease Dental", descriptor: "State-of-the-art dental clinic in Dublin 12", url: "https://easedental.ie", image: "/images/work/ease-dental.png" },
+  { name: "Glimmers Mental Health Services", descriptor: "Mental health therapy practice led by Dr. Claire Mc Grotty, PhD, LCPC", url: "https://glimmersmhs.com", image: "/images/work/glimmers-mhs.png" },
+  { name: "Savvy Kitchens", descriptor: "Contemporary kitchen design and project showcase", url: "https://savvykitchens.ie", image: "/images/work/savvy-kitchens.png" },
 ];
 
 /* ------------------------------------------------------------------ */
