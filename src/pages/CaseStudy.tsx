@@ -757,6 +757,15 @@ const CaseStudy = () => {
 
 
 
+              {/* TipDirect App: Sitemap image */}
+              {project.id === "tipdirect-app" &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src="/images/work/tipdirect-sitemap.png" alt="TipDirect proposed sitemap" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
               {/* Trimming Down */}
               {project.trimmingDown &&
             <ScrollReveal>
