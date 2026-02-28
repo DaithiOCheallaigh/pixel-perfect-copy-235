@@ -762,10 +762,17 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>Trimming Down The Platform</SectionLabel>
-                    <div className="space-y-4">
-                      {project.trimmingDown.split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
+                    <div className={`${project.id === "tipdirect-app" && project.pillImage ? "grid gap-8 md:grid-cols-2 items-start" : ""}`}>
+                      {project.id === "tipdirect-app" && project.pillImage &&
+                    <div className="overflow-hidden rounded-xl shadow-md">
+                          <img src={project.pillImage} alt="TipDirect App overview" className="w-full object-cover" loading="lazy" />
+                        </div>
+                    }
+                      <div className="space-y-4">
+                        {project.trimmingDown.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
@@ -834,14 +841,8 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* TipDirect App: Full-width pill image after engagement considerations */}
-              {project.id === "tipdirect-app" && project.pillImage &&
-            <ScrollReveal>
-                  <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src={project.pillImage} alt="TipDirect App overview" className="w-full object-cover" loading="lazy" />
-                  </div>
-                </ScrollReveal>
-            }
+
+
 
 
               {/* Solution Intro + How It Works */}
