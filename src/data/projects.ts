@@ -32,6 +32,7 @@ export interface Project {
   sharingMethods?: string[];
   mobileImage?: string;
   toolsImage?: string;
+  toolsUsedImage?: string;
   exploration?: string;
   explorationVideo?: string;
   buildingTheFeature?: string;
@@ -377,6 +378,7 @@ export const projects: Project[] = [
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/TipDIrect_App_Header.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/10/WL_BannerMobileWeb.webp?w=800&ssl=1",
     toolsImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tools-1.webp?fit=800%2C115&ssl=1",
+    toolsUsedImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Group-2.webp?fit=800%2C752&ssl=1",
     description: "The TipDirect app was designed as a natural extension of the TipDirect platform, providing tour guides with a streamlined, mobile-first solution for collecting tips on the go. As the lead designer, I focused on creating an experience that would complement the existing platform while addressing the unique needs of guides working in the field.",
     whatIWorkedOn: ["UI/UX Design", "Product Research", "Project Management", "Customer Success"],
     designGoals: [
