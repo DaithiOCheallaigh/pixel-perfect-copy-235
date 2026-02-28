@@ -150,7 +150,7 @@ const CaseStudy = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
             </motion.div>
-            {(project.id === "whitelabel" || project.id === "tipdirect-app" || project.id === "website-tipdirect") &&
+            {(project.id === "whitelabel" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard") &&
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
               <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
               <p className="mb-8 text-lg text-muted-foreground">{project.heroSubtitle || project.subtitle}</p>
