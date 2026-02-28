@@ -277,3 +277,19 @@
   border-left: 3px solid hsl(var(--primary));
   padding-left: 1.25rem;
 }
+
+.blog-content > p:first-child {
+  font-size: 1.25rem;
+  line-height: 1.75;
+  color: hsl(var(--foreground));
+}
+
+.blog-content > p:first-child::first-letter {
+  font-size: 3.5em;
+  font-weight: 800;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.1em;
+  margin-top: 0.05em;
+  color: hsl(var(--primary));
+}
