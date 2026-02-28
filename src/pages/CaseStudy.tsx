@@ -971,6 +971,26 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* Website TipDirect: CTA + Component library images after New Skills */}
+              {project.id === "website-tipdirect" &&
+            <>
+                  {findImage("CTA section") &&
+                <ScrollReveal>
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("CTA section")!.src} alt="CTA section" className="w-full object-cover" loading="lazy" />
+                      </div>
+                    </ScrollReveal>
+                }
+                  {findImage("Component library") &&
+                <ScrollReveal>
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("Component library")!.src} alt="Component library" className="w-full object-cover" loading="lazy" />
+                      </div>
+                    </ScrollReveal>
+                }
+                </>
+            }
+
               {/* Component Focused (Website TipDirect) */}
               {project.componentFocused &&
             <ScrollReveal>
