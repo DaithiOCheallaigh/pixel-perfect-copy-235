@@ -59,7 +59,7 @@ const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boole
         {nonWideBuffer.map((nwImg, j) =>
         <ScrollReveal key={j} delay={j * 0.05}>
             <div className="overflow-hidden rounded-xl shadow-md">
-              <img src={nwImg.src} alt={nwImg.alt} className="w-full object-cover" loading="lazy" />
+              
             </div>
           </ScrollReveal>
         )}
