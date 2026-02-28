@@ -421,32 +421,43 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>Exploration</SectionLabel>
-                    <div className="space-y-4 mb-6">
-                      {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
-                    </div>
-                    {/* Exploration images (e.g. Spotify) */}
-                    {project.id === "spotify" && project.images &&
-                <div className="grid gap-4 md:grid-cols-2 mb-6">
-                        {project.images.filter((img) => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
-                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                    {project.id === "spotify" ? (
+                      <div className="grid gap-8 md:grid-cols-2 items-start">
+                        <div className="space-y-4">
+                          {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                      <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                          )}
+                        </div>
+                        {project.images &&
+                      <div className="grid gap-4 grid-cols-2">
+                            {project.images.filter((img) => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
+                        <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                              </div>
+                        )}
                           </div>
-                  )}
+                        }
                       </div>
-                }
-                    {project.explorationVideo &&
-                <div className="overflow-hidden rounded-xl shadow-md">
-                        <video
-                    src={project.explorationVideo}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full object-cover" />
-                      </div>
-                }
+                    ) : (
+                      <>
+                        <div className="space-y-4 mb-6">
+                          {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                      <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                          )}
+                        </div>
+                        {project.explorationVideo &&
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                            <video
+                        src={project.explorationVideo}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full object-cover" />
+                          </div>
+                        }
+                      </>
+                    )}
                   </div>
                 </ScrollReveal>
             }
@@ -1096,18 +1107,36 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div>
-                <SectionLabel>The Solution</SectionLabel>
-                <div className="space-y-4 mb-6">
-                  {project.solutionDetail.split("\n\n").map((p, i) =>
-                <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                )}
-                </div>
-                {/* Spotify UI placement image */}
-                {project.id === "spotify" && project.images?.filter((img) => img.alt === "Spotify UI placement").map((img, i) =>
-              <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                    <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                {project.id === "spotify" ? (
+                  <div className="grid gap-8 md:grid-cols-2 items-start">
+                    {/* Left: stacked images */}
+                    <div className="space-y-4">
+                      {project.images?.filter((img) => ["Spotify UI placement"].includes(img.alt)).map((img, i) =>
+                    <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                          <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                        </div>
+                      )}
+                    </div>
+                    {/* Right: text */}
+                    <div>
+                      <SectionLabel>The Solution</SectionLabel>
+                      <div className="space-y-4">
+                        {project.solutionDetail.split("\n\n").map((p, i) =>
+                      <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-              )}
+                ) : (
+                  <>
+                    <SectionLabel>The Solution</SectionLabel>
+                    <div className="space-y-4 mb-6">
+                      {project.solutionDetail.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             </ScrollReveal>
           </div>
@@ -1242,18 +1271,16 @@ const CaseStudy = () => {
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
-              <SectionLabel>Other Integration Options</SectionLabel>
-              <div className="grid gap-6 md:grid-cols-3">
+              <h2 className="mb-12 text-center text-2xl font-black tracking-tight text-foreground md:text-3xl">Other Integration Options</h2>
+              <div className="grid gap-8 md:grid-cols-3">
                 {project.alternativeIntegrations.map((alt, i) =>
               <ScrollReveal key={i} delay={i * 0.1}>
-                    <div className="group overflow-hidden rounded-xl bg-card">
-                      <div className="overflow-hidden">
-                        <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
+                    <div className="flex flex-col items-center text-center">
+                      <div className="mb-6 overflow-hidden rounded-2xl shadow-lg">
+                        <img src={alt.image} alt={alt.title} className="w-full object-cover" loading="lazy" />
                       </div>
-                      <div className="p-5">
-                        <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
-                        <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
-                      </div>
+                      <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">{alt.desc}</p>
                     </div>
                   </ScrollReveal>
               )}
