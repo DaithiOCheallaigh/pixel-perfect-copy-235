@@ -116,13 +116,21 @@ const CaseStudy = () => {
   const websiteTipdirectInlineAlts = [
     "CTA section", "Component library", "Mobile responsive views", "Success stories section", "Tools & tech stack",
   ];
+  // For admin-dashboard, all images placed inline
+  const adminDashboardInlineAlts = [
+    "Tour Guides", "UX Initial Phases", "Ticketing System", "Design System",
+    "Colour palette", "Typography", "Components", "Dashboard", "Get Tips",
+    "Profile", "Payments", "Setup", "Reports", "Users", "Resources", "Settings",
+    "Full platform overview", "Dev handoff", "UAT & Launch",
+  ];
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
   !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt)) &&
   !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt)) &&
   !(project.id === "tipdirect-app" && tipdirectAppInlineAlts.includes(img.alt)) &&
-  !(project.id === "website-tipdirect" && websiteTipdirectInlineAlts.includes(img.alt))
+  !(project.id === "website-tipdirect" && websiteTipdirectInlineAlts.includes(img.alt)) &&
+  !(project.id === "admin-dashboard" && adminDashboardInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
@@ -136,13 +144,13 @@ const CaseStudy = () => {
   return (
     <main className="pt-24">
       {/* Whitelabel / Digital Tipping: Full-width hero image */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard") &&
       <section className="px-6 pb-8 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
             </motion.div>
-            {(project.id === "whitelabel" || project.id === "tipdirect-app" || project.id === "website-tipdirect") &&
+            {(project.id === "whitelabel" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard") &&
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
               <h1 className="mb-2 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">{project.title}</h1>
               <p className="mb-8 text-lg text-muted-foreground">{project.heroSubtitle || project.subtitle}</p>
@@ -156,7 +164,7 @@ const CaseStudy = () => {
       }
 
       {/* Hero — Title left, stacked mockups right (non-whitelabel) */}
-      {project.id !== "whitelabel" && project.id !== "digital-tipping" && project.id !== "tipdirect-app" && project.id !== "website-tipdirect" &&
+      {project.id !== "whitelabel" && project.id !== "digital-tipping" && project.id !== "tipdirect-app" && project.id !== "website-tipdirect" && project.id !== "admin-dashboard" &&
       <section className="px-6 pt-8 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
@@ -246,7 +254,7 @@ const CaseStudy = () => {
       }
 
       {/* Whitelabel / Digital Tipping: Intro section — left: logo + what I worked on + timeline; right: heading + description + tools */}
-      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect") &&
+      {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "tipdirect-app" || project.id === "website-tipdirect" || project.id === "admin-dashboard") &&
       <section className="px-6 py-16 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <motion.div
@@ -285,7 +293,7 @@ const CaseStudy = () => {
 
               {/* Right: heading + description + tools */}
               <div className="flex flex-col">
-                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.id === "tipdirect-app" ? "Extension of the TipDirect Platform" : project.id === "website-tipdirect" ? "A New Web Presence" : project.title}</h2>
+                <h2 className="mb-6 text-3xl font-black tracking-tight text-foreground md:text-4xl">{project.id === "whitelabel" ? "An Untapped Revenue Stream" : project.id === "tipdirect-app" ? "Extension of the TipDirect Platform" : project.id === "website-tipdirect" ? "A New Web Presence" : project.id === "admin-dashboard" ? "Admin Dashboard" : project.title}</h2>
                 <div className="space-y-4 mb-8">
                   {project.description.split("\n\n").map((p, i) =>
                   <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
@@ -816,16 +824,56 @@ const CaseStudy = () => {
               {project.designSystemDescription &&
             <ScrollReveal>
                   <div>
-                    <SectionLabel>Design System</SectionLabel>
-                    <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.designSystemDescription}</p>
-                    {/* TipDirect App: Colour + Typography side by side */}
-                    {project.id === "tipdirect-app" &&
-                  <div className="grid gap-4 md:grid-cols-2 mb-8">
-                        {[findImage("Colour system"), findImage("Typography system")].filter(Boolean).map((img, i) =>
-                    <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                    <SectionLabel>{project.id === "admin-dashboard" ? "Establishing a Design System" : "Design System"}</SectionLabel>
+                    <div className="space-y-4 mb-8">
+                      {project.designSystemDescription.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                    </div>
+                    {/* Admin Dashboard: Design System header image */}
+                    {project.id === "admin-dashboard" && findImage("Design System") &&
+                  <div className="overflow-hidden rounded-xl shadow-md mb-8">
+                        <img src={findImage("Design System")!.src} alt="Design System" className="w-full object-cover" loading="lazy" />
+                      </div>
+                  }
+                    {/* Admin Dashboard + TipDirect App: Colour + Typography side by side */}
+                    {(project.id === "admin-dashboard" || project.id === "tipdirect-app") &&
+                  <div className="mb-8">
+                        <div className="grid gap-4 md:grid-cols-2 mb-4">
+                          {[findImage("Colour palette") || findImage("Colour system"), findImage("Typography") || findImage("Typography system")].filter(Boolean).map((img, i) =>
+                      <div key={i} className="overflow-hidden rounded-xl shadow-md">
                               <img src={img!.src} alt={img!.alt} className="w-full object-cover" loading="lazy" />
                             </div>
-                    )}
+                      )}
+                        </div>
+                        {project.id === "admin-dashboard" &&
+                      <div className="grid gap-8 md:grid-cols-2 items-start mb-8">
+                            <div>
+                              <h3 className="mb-2 text-base font-bold text-foreground">Colour & Type Library</h3>
+                              <ul className="space-y-2 text-sm text-muted-foreground">
+                                <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />All colour and type from the design system is embedded in Figma, ensuring that every colour and type decision is cohesive.</li>
+                                <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />Like the component library, all colours and fonts can be updated across all designs from their root file.</li>
+                              </ul>
+                            </div>
+                            <div />
+                          </div>
+                      }
+                      </div>
+                  }
+                    {/* Admin Dashboard: Components full-width */}
+                    {project.id === "admin-dashboard" && findImage("Components") &&
+                  <div className="mb-4">
+                        <div className="overflow-hidden rounded-xl shadow-md mb-4">
+                          <img src={findImage("Components")!.src} alt="Components" className="w-full object-cover" loading="lazy" />
+                        </div>
+                        <div className="max-w-2xl">
+                          <h3 className="mb-2 text-base font-bold text-foreground">Component Assets</h3>
+                          <ul className="space-y-2 text-sm text-muted-foreground">
+                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />The component library enables rapid assembly of new interface concepts while maintaining brand cohesion, dramatically shortening the path from ideation to testable prototypes.</li>
+                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />A key advantage is the ability to globally update components from a single source, with changes automatically propagating across all designs.</li>
+                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />The library enhances prototyping capabilities, as component variants seamlessly demonstrate different states and interactions.</li>
+                          </ul>
+                        </div>
                       </div>
                   }
                     {/* TipDirect App: Full-width app overview */}
@@ -868,6 +916,19 @@ const CaseStudy = () => {
                       {project.solutionIntro.split("\n\n").map((p, i) =>
                   <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
                   )}
+                    </div>
+                  </div>
+                </ScrollReveal>
+            }
+
+              {/* Admin Dashboard: Ticketing System image before Design Process */}
+              {project.id === "admin-dashboard" && findImage("Ticketing System") &&
+            <ScrollReveal>
+                  <div>
+                    <SectionLabel>Overview of the Design Process</SectionLabel>
+                    <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">Fortunately, we didn't start from scratch. Having previously built a ticketing system for tour providers, we already had access to a network within our target market and a platform we could pivot toward this new focus.</p>
+                    <div className="overflow-hidden rounded-xl shadow-md">
+                      <img src={findImage("Ticketing System")!.src} alt="Ticketing System" className="w-full object-cover" loading="lazy" />
                     </div>
                   </div>
                 </ScrollReveal>
@@ -1300,8 +1361,8 @@ const CaseStudy = () => {
               <SectionLabel>{project.id === "tipdirect-app" ? "Other App Features" : "Key Features"}</SectionLabel>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {project.features.map((feature, i) => {
-                // For tipdirect-app, pair features with pill images
-                const featurePillImages = project.id === "tipdirect-app" ? project.images?.filter((img) => img.alt === feature.title) : [];
+                // For tipdirect-app and admin-dashboard, pair features with pill images
+                const featurePillImages = (project.id === "tipdirect-app" || project.id === "admin-dashboard") ? project.images?.filter((img) => img.alt === feature.title) : [];
                 return (
                   <ScrollReveal key={i} delay={i * 0.06} className="h-full">
                       <div className="h-full rounded-xl bg-card overflow-hidden flex flex-col">
@@ -1318,6 +1379,19 @@ const CaseStudy = () => {
                     </ScrollReveal>);
 
               })}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
+      {/* Admin Dashboard: Full platform overview before design handoff details */}
+      {project.id === "admin-dashboard" && findImage("Full platform overview") &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="overflow-hidden rounded-xl shadow-md">
+                <img src={findImage("Full platform overview")!.src} alt="Full platform overview" className="w-full object-cover" loading="lazy" />
               </div>
             </ScrollReveal>
           </div>
