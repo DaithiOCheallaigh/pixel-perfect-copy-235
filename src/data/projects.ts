@@ -32,6 +32,7 @@ export interface Project {
   sharingMethods?: string[];
   mobileImage?: string;
   toolsImage?: string;
+  toolsUsedImage?: string;
   exploration?: string;
   explorationVideo?: string;
   buildingTheFeature?: string;
