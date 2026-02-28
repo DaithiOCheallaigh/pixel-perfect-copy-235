@@ -104,6 +104,7 @@ const recentProjects: RecentProject[] = [
   { name: "Savvy Kitchens", descriptor: "Contemporary kitchen design and project showcase", url: "https://savvykitchens.ie", image: "/images/work/savvy-kitchens.png" },
   { name: "Glimmers Mental Health Services", descriptor: "Mental health therapy practice led by Dr. Claire Mc Grotty, PhD, LCPC", url: "https://glimmersmhs.com", image: "/images/work/glimmers-mhs.png" },
   { name: "Ease Dental", descriptor: "State-of-the-art dental clinic in Dublin 12", url: "https://easedental.ie", image: "/images/work/ease-dental.png" },
+  { name: "KBB Digital", descriptor: "Interior design photography & digital marketing studio", url: "https://kbb-digital-studio.lovable.app", image: "/images/work/kbb-digital.png" },
 ];
 
 /* ------------------------------------------------------------------ */
