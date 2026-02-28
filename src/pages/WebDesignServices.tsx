@@ -221,7 +221,7 @@ const WebDesignServices = () => {
                   <ul className="mt-6 flex-1 space-y-3">
                     {tier.features.map((f, fi) => (
                       <li key={fi} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <TickCircle size={16} variant="TwoTone" className="mt-0.5 flex-shrink-0 text-primary" />
+                        <TickCircle size={16} variant="Bulk" className="mt-0.5 flex-shrink-0 text-primary" />
                         <span>{f}</span>
                       </li>
                     ))}
