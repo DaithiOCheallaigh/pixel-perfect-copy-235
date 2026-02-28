@@ -335,7 +335,7 @@ export const projects: Project[] = [
   },
   {
     id: "website-tipdirect",
-    title: "Website: TipDirect",
+    title: "TipDirect - a digital tipping platform for tour guides",
     subtitle: "Designing and developing the TipDirect marketing website",
     heroSubtitle: "A case study of the development and launch of the TipDirect website",
     workDescription: "Using Elementor on WordPress, I created a new marketing website for the TipDirect platform.",
