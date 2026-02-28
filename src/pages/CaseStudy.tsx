@@ -116,6 +116,13 @@ const CaseStudy = () => {
   const websiteTipdirectInlineAlts = [
     "CTA section", "Component library", "Mobile responsive views", "Success stories section", "Tools & tech stack",
   ];
+  // For admin-dashboard, all images placed inline
+  const adminDashboardInlineAlts = [
+    "Tour Guides", "UX Initial Phases", "Ticketing System", "Design System",
+    "Colour palette", "Typography", "Components", "Dashboard", "Get Tips",
+    "Profile", "Payments", "Setup", "Reports", "Users", "Resources", "Settings",
+    "Full platform overview", "Dev handoff", "UAT & Launch",
+  ];
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
