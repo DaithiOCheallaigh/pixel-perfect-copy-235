@@ -927,7 +927,11 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Overview of the Design Process</SectionLabel>
                     <div className="grid items-center gap-8 md:grid-cols-2">
-                      <p className="text-[15px] leading-[1.7] text-muted-foreground">Fortunately, we didn't start from scratch. Having previously built a ticketing system for tour providers, we already had access to a network within our target market and a platform we could pivot toward this new focus.</p>
+                      <div className="space-y-4">
+                        <p className="text-[15px] leading-[1.7] text-muted-foreground">Fortunately, we didn't start from scratch. Having previously built a ticketing system for tour providers, we already had access to a network within our target market and a platform we could pivot toward this new focus.</p>
+                        <p className="text-[15px] leading-[1.7] text-muted-foreground">The existing ticketing platform gave us deep insight into the day-to-day workflows of tour operators — from managing bookings and tracking inventory to handling barcodes and customer data. This foundation meant we could skip months of discovery and move straight into validating our new concept with real users.</p>
+                        <p className="text-[15px] leading-[1.7] text-muted-foreground">By leveraging the relationships we'd already built with tour providers across Ireland, we were able to conduct early interviews, gather feedback on pain points, and co-design features that addressed genuine operational needs rather than assumptions.</p>
+                      </div>
                       <div className="overflow-hidden rounded-xl shadow-md">
                         <img src="/images/work/ticketing-system.webp" alt="Ticketing System" className="w-full object-cover" loading="lazy" />
                       </div>
