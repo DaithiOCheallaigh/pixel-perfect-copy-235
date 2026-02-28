@@ -63,7 +63,7 @@ const BlogPost = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.15}>
-            <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-2xl prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-xl prose-p:leading-relaxed prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground prose-ul:my-4">
+            <div className="blog-content space-y-6">
               {post.content}
             </div>
           </ScrollReveal>
