@@ -112,12 +112,17 @@ const CaseStudy = () => {
     "Tech stack", "Survey example", "Mind map", "Research document",
     "User flow", "Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"
   ];
+  // For website-tipdirect, all images placed inline
+  const websiteTipdirectInlineAlts = [
+    "CTA section", "Component library", "Mobile responsive views", "Success stories section", "Tools & tech stack",
+  ];
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
   !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt)) &&
   !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt)) &&
-  !(project.id === "tipdirect-app" && tipdirectAppInlineAlts.includes(img.alt))
+  !(project.id === "tipdirect-app" && tipdirectAppInlineAlts.includes(img.alt)) &&
+  !(project.id === "website-tipdirect" && websiteTipdirectInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
