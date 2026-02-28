@@ -4,6 +4,7 @@ import { TickCircle, InfoCircle, ExportSquare } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "../components/ui/carousel";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
