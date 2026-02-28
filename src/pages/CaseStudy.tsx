@@ -824,16 +824,56 @@ const CaseStudy = () => {
               {project.designSystemDescription &&
             <ScrollReveal>
                   <div>
-                    <SectionLabel>Design System</SectionLabel>
-                    <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.designSystemDescription}</p>
-                    {/* TipDirect App: Colour + Typography side by side */}
-                    {project.id === "tipdirect-app" &&
-                  <div className="grid gap-4 md:grid-cols-2 mb-8">
-                        {[findImage("Colour system"), findImage("Typography system")].filter(Boolean).map((img, i) =>
-                    <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                    <SectionLabel>{project.id === "admin-dashboard" ? "Establishing a Design System" : "Design System"}</SectionLabel>
+                    <div className="space-y-4 mb-8">
+                      {project.designSystemDescription.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                    </div>
+                    {/* Admin Dashboard: Design System header image */}
+                    {project.id === "admin-dashboard" && findImage("Design System") &&
+                  <div className="overflow-hidden rounded-xl shadow-md mb-8">
+                        <img src={findImage("Design System")!.src} alt="Design System" className="w-full object-cover" loading="lazy" />
+                      </div>
+                  }
+                    {/* Admin Dashboard + TipDirect App: Colour + Typography side by side */}
+                    {(project.id === "admin-dashboard" || project.id === "tipdirect-app") &&
+                  <div className="mb-8">
+                        <div className="grid gap-4 md:grid-cols-2 mb-4">
+                          {[findImage("Colour palette") || findImage("Colour system"), findImage("Typography") || findImage("Typography system")].filter(Boolean).map((img, i) =>
+                      <div key={i} className="overflow-hidden rounded-xl shadow-md">
                               <img src={img!.src} alt={img!.alt} className="w-full object-cover" loading="lazy" />
                             </div>
-                    )}
+                      )}
+                        </div>
+                        {project.id === "admin-dashboard" &&
+                      <div className="grid gap-8 md:grid-cols-2 items-start mb-8">
+                            <div>
+                              <h3 className="mb-2 text-base font-bold text-foreground">Colour & Type Library</h3>
+                              <ul className="space-y-2 text-sm text-muted-foreground">
+                                <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />All colour and type from the design system is embedded in Figma, ensuring that every colour and type decision is cohesive.</li>
+                                <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />Like the component library, all colours and fonts can be updated across all designs from their root file.</li>
+                              </ul>
+                            </div>
+                            <div />
+                          </div>
+                      }
+                      </div>
+                  }
+                    {/* Admin Dashboard: Components full-width */}
+                    {project.id === "admin-dashboard" && findImage("Components") &&
+                  <div className="mb-4">
+                        <div className="overflow-hidden rounded-xl shadow-md mb-4">
+                          <img src={findImage("Components")!.src} alt="Components" className="w-full object-cover" loading="lazy" />
+                        </div>
+                        <div className="max-w-2xl">
+                          <h3 className="mb-2 text-base font-bold text-foreground">Component Assets</h3>
+                          <ul className="space-y-2 text-sm text-muted-foreground">
+                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />The component library enables rapid assembly of new interface concepts while maintaining brand cohesion, dramatically shortening the path from ideation to testable prototypes.</li>
+                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />A key advantage is the ability to globally update components from a single source, with changes automatically propagating across all designs.</li>
+                            <li className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />The library enhances prototyping capabilities, as component variants seamlessly demonstrate different states and interactions.</li>
+                          </ul>
+                        </div>
                       </div>
                   }
                     {/* TipDirect App: Full-width app overview */}
