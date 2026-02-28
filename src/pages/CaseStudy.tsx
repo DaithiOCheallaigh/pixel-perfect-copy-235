@@ -129,7 +129,8 @@ const CaseStudy = () => {
   !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt)) &&
   !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt)) &&
   !(project.id === "tipdirect-app" && tipdirectAppInlineAlts.includes(img.alt)) &&
-  !(project.id === "website-tipdirect" && websiteTipdirectInlineAlts.includes(img.alt))
+  !(project.id === "website-tipdirect" && websiteTipdirectInlineAlts.includes(img.alt)) &&
+  !(project.id === "admin-dashboard" && adminDashboardInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
