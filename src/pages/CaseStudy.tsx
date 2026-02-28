@@ -971,24 +971,17 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Website TipDirect: CTA + Component library images after New Skills */}
+              {/* Website TipDirect: 2x2 image grid with pink background */}
               {project.id === "website-tipdirect" &&
-            <>
-                  {findImage("CTA section") &&
-                <ScrollReveal>
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("CTA section")!.src} alt="CTA section" className="w-full object-cover" loading="lazy" />
+            <ScrollReveal>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {[findImage("CTA section"), findImage("Component library"), findImage("Mobile responsive views"), findImage("Success stories section")].filter(Boolean).map((img, i) =>
+                  <div key={i} className="overflow-hidden rounded-2xl bg-primary/15 p-4">
+                        <img src={img!.src} alt={img!.alt} className="w-full rounded-xl object-cover" loading="lazy" />
                       </div>
-                    </ScrollReveal>
-                }
-                  {findImage("Component library") &&
-                <ScrollReveal>
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("Component library")!.src} alt="Component library" className="w-full object-cover" loading="lazy" />
-                      </div>
-                    </ScrollReveal>
-                }
-                </>
+                  )}
+                  </div>
+                </ScrollReveal>
             }
 
               {/* Component Focused (Website TipDirect) */}
@@ -999,26 +992,6 @@ const CaseStudy = () => {
                     <p className="text-[15px] leading-[1.7] text-muted-foreground">{project.componentFocused}</p>
                   </div>
                 </ScrollReveal>
-            }
-
-              {/* Website TipDirect: Mobile + Success stories images after Component Focused */}
-              {project.id === "website-tipdirect" &&
-            <>
-                  {findImage("Mobile responsive views") &&
-                <ScrollReveal>
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("Mobile responsive views")!.src} alt="Mobile responsive views" className="w-full object-cover" loading="lazy" />
-                      </div>
-                    </ScrollReveal>
-                }
-                  {findImage("Success stories section") &&
-                <ScrollReveal>
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("Success stories section")!.src} alt="Success stories section" className="w-full object-cover" loading="lazy" />
-                      </div>
-                    </ScrollReveal>
-                }
-                </>
             }
 
               {/* Wireframes row (Booking App) */}
