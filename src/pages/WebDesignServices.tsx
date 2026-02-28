@@ -142,6 +142,54 @@ const WebDesignServices = () => {
         </div>
       </section>
 
+      {/* ── RECENT WORK ──────────────────────────────────────── */}
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <SectionLabel>Recent Work</SectionLabel>
+            <p className="mb-8 text-sm text-muted-foreground">
+              A selection of recently designed and deployed websites.
+            </p>
+          </ScrollReveal>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {recentProjects.map((project, i) => (
+              <ScrollReveal key={project.name} delay={i * 0.1}>
+                <motion.a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/40"
+                >
+                  <div className="overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={`${project.name} website preview`}
+                      className="aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col justify-between p-5">
+                    <div>
+                      <h3 className="text-base font-bold text-foreground transition-colors group-hover:text-primary">
+                        {project.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-muted-foreground">{project.descriptor}</p>
+                    </div>
+                    <div className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground transition-colors group-hover:text-primary">
+                      <span className="truncate">{project.url.replace("https://", "")}</span>
+                      <ExportSquare size={14} variant="TwoTone" className="flex-shrink-0" />
+                    </div>
+                  </div>
+                </motion.a>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── PRICING ──────────────────────────────────────────── */}
       <section id="pricing" className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -192,86 +240,6 @@ const WebDesignServices = () => {
                     {tier.cta}
                   </a>
                 </motion.div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── ADD-ONS ──────────────────────────────────────────── */}
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Add-ons &amp; Extras</SectionLabel>
-          </ScrollReveal>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {addOns.map((item, i) => (
-              <ScrollReveal key={i} delay={i * 0.06}>
-                <div className="flex h-full flex-col justify-between rounded-lg border border-border bg-card p-5">
-                  <p className="text-sm font-medium text-foreground">{item.service}</p>
-                  <p className="mt-2 font-mono-label text-primary">{item.cost}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── IMPORTANT NOTES ──────────────────────────────────── */}
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <div className="rounded-xl border border-border bg-card p-6 md:p-8">
-              <div className="mb-4 flex items-center gap-2">
-                <InfoCircle size={18} variant="TwoTone" className="text-primary" />
-                <h3 className="text-sm font-bold text-foreground">Important Notes</h3>
-              </div>
-              <ul className="space-y-3">
-                {notes.map((note, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
-                    <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-muted-foreground" />
-                    {note}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ── RECENT WORK ──────────────────────────────────────── */}
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Recent Work</SectionLabel>
-            <p className="mb-8 text-sm text-muted-foreground">
-              A selection of recently designed and deployed websites.
-            </p>
-          </ScrollReveal>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {recentProjects.map((project, i) => (
-              <ScrollReveal key={project.name} delay={i * 0.1}>
-                <motion.a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  className="group flex h-full flex-col justify-between rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40"
-                >
-                  <div>
-                    <h3 className="text-base font-bold text-foreground transition-colors group-hover:text-primary">
-                      {project.name}
-                    </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{project.descriptor}</p>
-                  </div>
-                  <div className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground transition-colors group-hover:text-primary">
-                    <span className="truncate">{project.url.replace("https://", "")}</span>
-                    <ExportSquare size={14} variant="TwoTone" className="flex-shrink-0" />
-                  </div>
-                </motion.a>
               </ScrollReveal>
             ))}
           </div>
