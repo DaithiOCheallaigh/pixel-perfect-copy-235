@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
 @font-face {
   font-family: 'Mona Sans';
-  src: url('https://github.com/github/mona-sans/raw/main/fonts/variable/Mona-Sans.woff2') format('woff2');
+  src: url('/fonts/MonaSans-Variable.ttf') format('truetype');
   font-weight: 200 900;
   font-style: normal;
   font-display: swap;
