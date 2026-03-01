@@ -338,31 +338,6 @@ const WebDesignServices = () => {
         </div>
       </section>
 
-      {/* ── CTA ──────────────────────────────────────────────── */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl text-center">
-          <ScrollReveal>
-            <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">Ready to get started?</h2>
-            <p className="mb-8 text-sm text-muted-foreground md:text-base">
-              Let's talk about your project. We'll scope it, price it, and build it — properly.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="#pricing"
-                className="inline-flex items-center justify-center rounded-lg border border-border bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-all hover:bg-accent hover:text-accent-foreground"
-              >
-                View Pricing
-              </a>
-              <Link
-                to="/start-project"
-                className="group inline-flex items-center gap-1.5 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5 hover:bg-primary/90"
-              >
-                Get Started <span>→</span>
-              </Link>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <AvailabilityCTA />
