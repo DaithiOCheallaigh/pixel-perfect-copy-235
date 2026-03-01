@@ -22,7 +22,7 @@ const Index = () => {
 
         <div className="relative mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl flex-col items-center justify-center text-center">
           <motion.h1
-            className="mb-6 text-5xl font-black tracking-tighter text-foreground md:text-7xl lg:text-8xl"
+            className="mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl lg:text-8xl"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
