@@ -177,6 +177,10 @@ const ColourSwatches = ({
 
 // ─── Main Page ─────────────────────────────────────────────────
 const StartProject = () => {
+  useEffect(() => {
+    document.title = "Start a Project — Lacuna Digital";
+    return () => { document.title = "Lacuna Digital"; };
+  }, []);
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
