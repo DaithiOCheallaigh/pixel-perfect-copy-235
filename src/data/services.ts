@@ -389,7 +389,7 @@ export const services: Service[] = [
     title: "Social Media Management",
     category: "Marketing",
     intro: "In today's digital landscape, effective social media management is crucial for brands looking to establish a meaningful online presence and connect with their target audience. I offer expert social media management services designed to elevate your brand's digital footprint and drive measurable results.\n\nI partner with KBB Digital to deliver exceptional social media management solutions that combine strategic thinking with creative execution. Together, we produce high-quality still and moving content that authentically tells your brand's story across all relevant platforms.",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/Social-Media-Management.webp?fit=800%2C659&ssl=1",
+    image: "/images/services/Social-Media-Management.webp",
     benefitsTitle: "Benefits of Social Media Management",
     benefits: [
       { title: "Enhanced Brand Visibility", desc: "Consistent, high-quality posting increases your brand's visibility and recognition in crowded digital spaces." },
