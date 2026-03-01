@@ -34,7 +34,7 @@ const tiers: PricingTier[] = [
       "Handover & walkthrough session",
     ],
     cta: "Get Started",
-    ctaHref: "https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02",
+    ctaHref: "/start-project",
   },
   {
     name: "Business",
