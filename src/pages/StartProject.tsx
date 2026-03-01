@@ -175,6 +175,7 @@ const StartProject = () => {
     }
     setBriefLoading(true);
     try {
+      const supabase = await getSupabase();
       const { data, error } = await supabase.functions.invoke("generate-brief", {
         body: { formData: form },
       });
