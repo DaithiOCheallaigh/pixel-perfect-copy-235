@@ -194,6 +194,7 @@ const StartProject = () => {
     if (!validate()) return;
     setSubmitting(true);
     try {
+      const supabase = await getSupabase();
       const { error } = await supabase.functions.invoke("send-consultation", {
         body: { formData: form, brief: form.projectDescription },
       });
