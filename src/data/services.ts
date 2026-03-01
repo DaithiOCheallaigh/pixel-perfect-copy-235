@@ -255,7 +255,7 @@ export const services: Service[] = [
     title: "CMS & Content Platforms",
     category: "Web",
     intro: "A Content Management System (CMS) is a software application that allows users to create, manage, and modify digital content on a website without needing specialized technical knowledge. It provides a user-friendly interface to handle the entire content lifecycle, from creation and publishing to archiving.\n\nIn today's digital landscape, content is king. A CMS enables organizations to efficiently manage their online presence, ensuring that content is consistent, up-to-date, and accessible.",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/CMS_Lacuna.webp?fit=800%2C659&ssl=1",
+    image: "/images/services/CMS_Lacuna.webp",
     benefitsTitle: "Benefits of a CMS",
     benefits: [
       { title: "Simplified Content Creation", desc: "Non-technical staff can create and publish content without knowing HTML or coding." },
