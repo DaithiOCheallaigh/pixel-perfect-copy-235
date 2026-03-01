@@ -118,9 +118,12 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
+      <GlobalErrorListeners />
+      <AppErrorBoundary>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </AppErrorBoundary>
     </TooltipProvider>
   </QueryClientProvider>
 );
