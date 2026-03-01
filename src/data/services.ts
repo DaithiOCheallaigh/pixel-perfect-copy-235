@@ -189,7 +189,7 @@ export const services: Service[] = [
     title: "Branding Guidelines",
     category: "Branding",
     intro: "Branding guidelines (also called brand standards or style guides) are comprehensive documents that outline how your brand elements should be used across all platforms and communications. They ensure consistency, recognition, and trust in your brand presence.",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/BrandingGuidelines.webp?fit=800%2C659&ssl=1",
+    image: "/images/services/BrandingGuidelines.webp",
     processTitle: "Branding Process",
     process: [
       { title: "Discovery Phase", desc: "Researching the market, audience, and competition to understand positioning opportunities." },
