@@ -229,7 +229,24 @@ const WebDesignServices = () => {
       <section id="pricing" className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
-            <SectionLabel>Pricing</SectionLabel>
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+              <SectionLabel>Pricing</SectionLabel>
+              <div className="flex rounded-lg border border-border bg-card p-1">
+                {(["EUR", "USD", "GBP"] as Currency[]).map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCurrency(c)}
+                    className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-all ${
+                      currency === c
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {currencySymbols[c]} {c}
+                  </button>
+                ))}
+              </div>
+            </div>
           </ScrollReveal>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -251,7 +268,10 @@ const WebDesignServices = () => {
                   )}
 
                   <h3 className="text-lg font-bold text-foreground">{tier.name}</h3>
-                  <p className="mt-1 text-2xl font-black tracking-tight text-foreground">{tier.price}</p>
+                  <p className="mt-1 text-2xl font-black tracking-tight text-foreground">
+                    {tier.prefix || ""}{convertPrice(tier.eurPrice, currency)}
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">+ VAT (23%)</p>
 
                   <ul className="mt-6 flex-1 space-y-3">
                     {tier.features.map((f, fi) => (
@@ -276,6 +296,45 @@ const WebDesignServices = () => {
               </ScrollReveal>
             ))}
           </div>
+
+          {/* ── ADDITIONAL SERVICES ────────────────────────────── */}
+          <ScrollReveal>
+            <div className="mt-12">
+              <h3 className="mb-4 text-lg font-bold text-foreground">Additional Services</h3>
+              <div className="overflow-hidden rounded-xl border border-border">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border bg-card">
+                      <th className="px-4 py-3 text-left font-semibold text-foreground">Service</th>
+                      <th className="px-4 py-3 text-right font-semibold text-foreground">Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {addOns.map((a, i) => (
+                      <tr key={i} className="border-b border-border last:border-0">
+                        <td className="px-4 py-3 text-muted-foreground">{a.service}</td>
+                        <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
+                          {formatAddOnCost(a, currency)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* ── NOTES ─────────────────────────────────────────── */}
+          <ScrollReveal>
+            <div className="mt-8 space-y-3">
+              {notes.map((note, i) => (
+                <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <InfoCircle size={14} variant="Bulk" className="mt-0.5 flex-shrink-0 text-muted-foreground/60" />
+                  <span>{note}</span>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
