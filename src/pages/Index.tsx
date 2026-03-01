@@ -133,7 +133,7 @@ const Index = () => {
                     View Project <span>→</span>
                   </span>
                 </div>
-                <div className="overflow-hidden rounded-r-xl md:rounded-r-xl md:rounded-l-none rounded-b-xl md:rounded-b-none md:order-2">
+                <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-r-xl md:rounded-l-none md:order-2">
                   <img
                     src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/09/Pill2.webp?fit=800%2C800&ssl=1"
                     alt="Digital Tipping"
