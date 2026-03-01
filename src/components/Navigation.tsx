@@ -36,7 +36,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               className="rounded-full"
             />
           </div>
-          <span className="ml-3 text-sm font-semibold text-foreground hidden sm:inline">Dave Kelly <span className="text-muted-foreground font-normal">| AI Designer</span></span>
+          <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="text-muted-foreground font-normal">| AI Designer</span></span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
