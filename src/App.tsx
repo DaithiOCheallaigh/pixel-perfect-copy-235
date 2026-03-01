@@ -46,6 +46,7 @@ const AppContent = () => {
         <Route path="/service/:id" element={<ServicePage />} />
         <Route path="/web-design" element={<WebDesignServices />} />
         <Route path="/ai-design-process" element={<AIDesignProcess />} />
+        <Route path="/start-project" element={<StartProject />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
