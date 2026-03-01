@@ -51,7 +51,7 @@ const tiers: PricingTier[] = [
       "3 rounds of revisions per design phase",
     ],
     cta: "Get Started",
-    ctaHref: "https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02",
+    ctaHref: "/start-project",
   },
   {
     name: "Enterprise",
