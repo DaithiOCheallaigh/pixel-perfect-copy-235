@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Plus, X, Sparkles, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
