@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { TickCircle, InfoCircle, ExportSquare } from "iconsax-react";
@@ -7,22 +8,37 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "../components/ui/carousel";
 
 /* ------------------------------------------------------------------ */
+/*  Currency                                                           */
+/* ------------------------------------------------------------------ */
+
+type Currency = "EUR" | "USD" | "GBP";
+
+const currencySymbols: Record<Currency, string> = { EUR: "€", USD: "$", GBP: "£" };
+const currencyRates: Record<Currency, number> = { EUR: 1, USD: 1.08, GBP: 0.86 };
+
+const convertPrice = (eurAmount: number, currency: Currency): string => {
+  const converted = Math.round(eurAmount * currencyRates[currency]);
+  return `${currencySymbols[currency]}${converted.toLocaleString()}`;
+};
+
+/* ------------------------------------------------------------------ */
 /*  Data                                                               */
 /* ------------------------------------------------------------------ */
 
-interface PricingTier {
+interface PricingTierData {
   name: string;
-  price: string;
+  eurPrice: number;
+  prefix?: string;
   popular?: boolean;
   features: string[];
   cta: string;
   ctaHref: string;
 }
 
-const tiers: PricingTier[] = [
+const tiers: PricingTierData[] = [
   {
     name: "Starter",
-    price: "€1,999",
+    eurPrice: 1999,
     features: [
       "Up to 5 pages (Home, About, Services, Blog, Contact)",
       "Custom design to brand guidelines",
@@ -38,12 +54,11 @@ const tiers: PricingTier[] = [
   },
   {
     name: "Business",
-    price: "€3,999",
+    eurPrice: 3999,
     popular: true,
     features: [
       "Everything in Starter, plus:",
       "Up to 10 pages",
-      "CMS integration (client-manageable content)",
       "Blog or news section",
       "Analytics setup (GA / Tag Manager)",
       "Performance & accessibility optimisation",
@@ -55,7 +70,8 @@ const tiers: PricingTier[] = [
   },
   {
     name: "Enterprise",
-    price: "From €7,500",
+    eurPrice: 7500,
+    prefix: "From ",
     features: [
       "Everything in Business, plus:",
       "Unlimited pages",
@@ -73,23 +89,32 @@ const tiers: PricingTier[] = [
 
 interface AddOn {
   service: string;
-  cost: string;
+  eurCost: number | null;
+  suffix?: string;
+  prefix?: string;
+  label?: string;
 }
 
 const addOns: AddOn[] = [
-  { service: "Professional email setup (Google Workspace / M365)", cost: "From €25/mo" },
-  { service: "Additional pages beyond tier limit", cost: "€150 per page" },
-  { service: "Out-of-scope amendments", cost: "€120/hr" },
-  { service: "Monthly maintenance retainer", cost: "From €299/mo" },
-  { service: "Copywriting", cost: "POA" },
-  { service: "Logo & brand identity", cost: "From €799" },
+  { service: "Professional email setup (Google Workspace / M365)", eurCost: 25, suffix: "/mo", prefix: "From " },
+  { service: "Additional pages beyond tier limit", eurCost: 150, suffix: " per page" },
+  { service: "Out-of-scope amendments", eurCost: 120, suffix: "/hr" },
+  { service: "Monthly maintenance retainer", eurCost: 299, suffix: "/mo", prefix: "From " },
+  { service: "Copywriting", eurCost: null, label: "POA" },
+  { service: "Logo & brand identity", eurCost: 799, prefix: "From " },
 ];
+
+const formatAddOnCost = (addOn: AddOn, currency: Currency): string => {
+  if (addOn.label) return addOn.label;
+  if (!addOn.eurCost) return "POA";
+  return `${addOn.prefix || ""}${convertPrice(addOn.eurCost, currency)}${addOn.suffix || ""}`;
+};
 
 const notes = [
   "Hosting and domain registration are the client's responsibility and are not included in any tier.",
   "Professional email (e.g. name@yourbusiness.ie) requires a Google Workspace or Microsoft 365 subscription, billed directly to the client. Setup can be arranged as an add-on.",
   "A 50% deposit is required before work commences. The remaining balance is due on launch.",
-  "All prices are exclusive of VAT.",
+  "All prices are exclusive of VAT (23%).",
 ];
 
 interface RecentProject {
