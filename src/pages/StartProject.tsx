@@ -2,8 +2,12 @@ import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Plus, X, Sparkles, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+
+const getSupabase = async () => {
+  const { supabase } = await import("@/integrations/supabase/client");
+  return supabase;
+};
 
 // ─── Types ────────────────────────────────────────────────────
 interface FormData {
@@ -171,6 +175,7 @@ const StartProject = () => {
     }
     setBriefLoading(true);
     try {
+      const supabase = await getSupabase();
       const { data, error } = await supabase.functions.invoke("generate-brief", {
         body: { formData: form },
       });
@@ -189,6 +194,7 @@ const StartProject = () => {
     if (!validate()) return;
     setSubmitting(true);
     try {
+      const supabase = await getSupabase();
       const { error } = await supabase.functions.invoke("send-consultation", {
         body: { formData: form, brief: form.projectDescription },
       });
