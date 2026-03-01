@@ -137,7 +137,7 @@ export const services: Service[] = [
     title: "Logo Design",
     category: "Branding",
     intro: "Your logo is the face of your business—it's often the first impression potential customers have of your brand. I create distinctive, memorable logos that perfectly capture your brand's essence and help you stand out in today's competitive marketplace.",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/LogoDesign.webp?fit=800%2C659&ssl=1",
+    image: "/images/services/LogoDesign.webp",
     processTitle: "Logo Design Process",
     process: [
       { title: "Discovery", desc: "I begin with an in-depth consultation to understand your business, values, target audience, and vision for your brand." },
@@ -189,7 +189,7 @@ export const services: Service[] = [
     title: "Branding Guidelines",
     category: "Branding",
     intro: "Branding guidelines (also called brand standards or style guides) are comprehensive documents that outline how your brand elements should be used across all platforms and communications. They ensure consistency, recognition, and trust in your brand presence.",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/BrandingGuidelines.webp?fit=800%2C659&ssl=1",
+    image: "/images/services/BrandingGuidelines.webp",
     processTitle: "Branding Process",
     process: [
       { title: "Discovery Phase", desc: "Researching the market, audience, and competition to understand positioning opportunities." },
@@ -255,7 +255,7 @@ export const services: Service[] = [
     title: "CMS & Content Platforms",
     category: "Web",
     intro: "A Content Management System (CMS) is a software application that allows users to create, manage, and modify digital content on a website without needing specialized technical knowledge. It provides a user-friendly interface to handle the entire content lifecycle, from creation and publishing to archiving.\n\nIn today's digital landscape, content is king. A CMS enables organizations to efficiently manage their online presence, ensuring that content is consistent, up-to-date, and accessible.",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/CMS_Lacuna.webp?fit=800%2C659&ssl=1",
+    image: "/images/services/CMS_Lacuna.webp",
     benefitsTitle: "Benefits of a CMS",
     benefits: [
       { title: "Simplified Content Creation", desc: "Non-technical staff can create and publish content without knowing HTML or coding." },
@@ -389,7 +389,7 @@ export const services: Service[] = [
     title: "Social Media Management",
     category: "Marketing",
     intro: "In today's digital landscape, effective social media management is crucial for brands looking to establish a meaningful online presence and connect with their target audience. I offer expert social media management services designed to elevate your brand's digital footprint and drive measurable results.\n\nI partner with KBB Digital to deliver exceptional social media management solutions that combine strategic thinking with creative execution. Together, we produce high-quality still and moving content that authentically tells your brand's story across all relevant platforms.",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/Social-Media-Management.webp?fit=800%2C659&ssl=1",
+    image: "/images/services/Social-Media-Management.webp",
     benefitsTitle: "Benefits of Social Media Management",
     benefits: [
       { title: "Enhanced Brand Visibility", desc: "Consistent, high-quality posting increases your brand's visibility and recognition in crowded digital spaces." },
