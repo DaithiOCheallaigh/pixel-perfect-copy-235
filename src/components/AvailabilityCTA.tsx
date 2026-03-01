@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ScrollReveal from "./ScrollReveal";
 
 const AvailabilityCTA = () => (
@@ -24,14 +25,12 @@ const AvailabilityCTA = () => (
           >
             Book a Call <span className="transition-all">→</span>
           </a>
-          <a
-            href="https://www.linkedin.com/in/davidkelly89/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/start-project"
             className="group inline-flex items-center gap-2 rounded-sm border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary hover:gap-3"
           >
-            LinkedIn <span className="transition-all">↗</span>
-          </a>
+            Enquiry Form <span className="transition-all">→</span>
+          </Link>
           <a
             href="https://lacunadigital.io/wp-content/uploads/2025/08/David-Kelly-CV_Sep25.pdf"
             target="_blank"
