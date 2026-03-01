@@ -137,7 +137,7 @@ export const services: Service[] = [
     title: "Logo Design",
     category: "Branding",
     intro: "Your logo is the face of your business—it's often the first impression potential customers have of your brand. I create distinctive, memorable logos that perfectly capture your brand's essence and help you stand out in today's competitive marketplace.",
-    image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/LogoDesign.webp?fit=800%2C659&ssl=1",
+    image: "/images/services/LogoDesign.webp",
     processTitle: "Logo Design Process",
     process: [
       { title: "Discovery", desc: "I begin with an in-depth consultation to understand your business, values, target audience, and vision for your brand." },
