@@ -138,6 +138,8 @@ const recentProjects: RecentProject[] = [
 
 const WebDesignServices = () => {
   const [currency, setCurrency] = useState<Currency>("EUR");
+
+  return (
     <main className="pt-24">
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="px-6 pt-12 pb-16 md:px-12 lg:px-24">
