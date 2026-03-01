@@ -14,6 +14,7 @@ import ServicePage from "./pages/ServicePage";
 import WebDesignServices from "./pages/WebDesignServices";
 import AIDesignProcess from "./pages/AIDesignProcess";
 import BlogPost from "./pages/BlogPost";
+import StartProject from "./pages/StartProject";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
