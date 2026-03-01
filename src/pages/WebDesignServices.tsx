@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { TickCircle, InfoCircle, ExportSquare } from "iconsax-react";
@@ -7,22 +8,37 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "../components/ui/carousel";
 
 /* ------------------------------------------------------------------ */
+/*  Currency                                                           */
+/* ------------------------------------------------------------------ */
+
+type Currency = "EUR" | "USD" | "GBP";
+
+const currencySymbols: Record<Currency, string> = { EUR: "€", USD: "$", GBP: "£" };
+const currencyRates: Record<Currency, number> = { EUR: 1, USD: 1.08, GBP: 0.86 };
+
+const convertPrice = (eurAmount: number, currency: Currency): string => {
+  const converted = Math.round(eurAmount * currencyRates[currency]);
+  return `${currencySymbols[currency]}${converted.toLocaleString()}`;
+};
+
+/* ------------------------------------------------------------------ */
 /*  Data                                                               */
 /* ------------------------------------------------------------------ */
 
-interface PricingTier {
+interface PricingTierData {
   name: string;
-  price: string;
+  eurPrice: number;
+  prefix?: string;
   popular?: boolean;
   features: string[];
   cta: string;
   ctaHref: string;
 }
 
-const tiers: PricingTier[] = [
+const tiers: PricingTierData[] = [
   {
     name: "Starter",
-    price: "€1,999",
+    eurPrice: 1999,
     features: [
       "Up to 5 pages (Home, About, Services, Blog, Contact)",
       "Custom design to brand guidelines",
@@ -38,12 +54,11 @@ const tiers: PricingTier[] = [
   },
   {
     name: "Business",
-    price: "€3,999",
+    eurPrice: 3999,
     popular: true,
     features: [
       "Everything in Starter, plus:",
       "Up to 10 pages",
-      "CMS integration (client-manageable content)",
       "Blog or news section",
       "Analytics setup (GA / Tag Manager)",
       "Performance & accessibility optimisation",
@@ -55,7 +70,8 @@ const tiers: PricingTier[] = [
   },
   {
     name: "Enterprise",
-    price: "From €7,500",
+    eurPrice: 7500,
+    prefix: "From ",
     features: [
       "Everything in Business, plus:",
       "Unlimited pages",
@@ -73,23 +89,32 @@ const tiers: PricingTier[] = [
 
 interface AddOn {
   service: string;
-  cost: string;
+  eurCost: number | null;
+  suffix?: string;
+  prefix?: string;
+  label?: string;
 }
 
 const addOns: AddOn[] = [
-  { service: "Professional email setup (Google Workspace / M365)", cost: "From €25/mo" },
-  { service: "Additional pages beyond tier limit", cost: "€150 per page" },
-  { service: "Out-of-scope amendments", cost: "€120/hr" },
-  { service: "Monthly maintenance retainer", cost: "From €299/mo" },
-  { service: "Copywriting", cost: "POA" },
-  { service: "Logo & brand identity", cost: "From €799" },
+  { service: "Professional email setup (Google Workspace / M365)", eurCost: 25, suffix: "/mo", prefix: "From " },
+  { service: "Additional pages beyond tier limit", eurCost: 150, suffix: " per page" },
+  { service: "Out-of-scope amendments", eurCost: 120, suffix: "/hr" },
+  { service: "Monthly maintenance retainer", eurCost: 299, suffix: "/mo", prefix: "From " },
+  { service: "Copywriting", eurCost: null, label: "POA" },
+  { service: "Logo & brand identity", eurCost: 799, prefix: "From " },
 ];
+
+const formatAddOnCost = (addOn: AddOn, currency: Currency): string => {
+  if (addOn.label) return addOn.label;
+  if (!addOn.eurCost) return "POA";
+  return `${addOn.prefix || ""}${convertPrice(addOn.eurCost, currency)}${addOn.suffix || ""}`;
+};
 
 const notes = [
   "Hosting and domain registration are the client's responsibility and are not included in any tier.",
   "Professional email (e.g. name@yourbusiness.ie) requires a Google Workspace or Microsoft 365 subscription, billed directly to the client. Setup can be arranged as an add-on.",
   "A 50% deposit is required before work commences. The remaining balance is due on launch.",
-  "All prices are exclusive of VAT.",
+  "All prices are exclusive of VAT (23%).",
 ];
 
 interface RecentProject {
@@ -112,6 +137,8 @@ const recentProjects: RecentProject[] = [
 /* ------------------------------------------------------------------ */
 
 const WebDesignServices = () => {
+  const [currency, setCurrency] = useState<Currency>("EUR");
+
   return (
     <main className="pt-24">
       {/* ── HERO ─────────────────────────────────────────────── */}
@@ -202,7 +229,24 @@ const WebDesignServices = () => {
       <section id="pricing" className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
-            <SectionLabel>Pricing</SectionLabel>
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+              <SectionLabel>Pricing</SectionLabel>
+              <div className="flex rounded-lg border border-border bg-card p-1">
+                {(["EUR", "USD", "GBP"] as Currency[]).map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCurrency(c)}
+                    className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-all ${
+                      currency === c
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {currencySymbols[c]} {c}
+                  </button>
+                ))}
+              </div>
+            </div>
           </ScrollReveal>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -224,7 +268,10 @@ const WebDesignServices = () => {
                   )}
 
                   <h3 className="text-lg font-bold text-foreground">{tier.name}</h3>
-                  <p className="mt-1 text-2xl font-black tracking-tight text-foreground">{tier.price}</p>
+                  <p className="mt-1 text-2xl font-black tracking-tight text-foreground">
+                    {tier.prefix || ""}{convertPrice(tier.eurPrice, currency)}
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">+ VAT (23%)</p>
 
                   <ul className="mt-6 flex-1 space-y-3">
                     {tier.features.map((f, fi) => (
@@ -249,6 +296,45 @@ const WebDesignServices = () => {
               </ScrollReveal>
             ))}
           </div>
+
+          {/* ── ADDITIONAL SERVICES ────────────────────────────── */}
+          <ScrollReveal>
+            <div className="mt-12">
+              <h3 className="mb-4 text-lg font-bold text-foreground">Additional Services</h3>
+              <div className="overflow-hidden rounded-xl border border-border">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border bg-card">
+                      <th className="px-4 py-3 text-left font-semibold text-foreground">Service</th>
+                      <th className="px-4 py-3 text-right font-semibold text-foreground">Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {addOns.map((a, i) => (
+                      <tr key={i} className="border-b border-border last:border-0">
+                        <td className="px-4 py-3 text-muted-foreground">{a.service}</td>
+                        <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
+                          {formatAddOnCost(a, currency)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* ── NOTES ─────────────────────────────────────────── */}
+          <ScrollReveal>
+            <div className="mt-8 space-y-3">
+              {notes.map((note, i) => (
+                <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <InfoCircle size={14} variant="Bulk" className="mt-0.5 flex-shrink-0 text-muted-foreground/60" />
+                  <span>{note}</span>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
