@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Plus, X, Sparkles, ArrowLeft } from "lucide-react";
+import { Check, Plus, X, Sparkles, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -16,16 +16,11 @@ interface FormData {
   projectDescription: string;
   existingBrand: string;
   urgency: string;
-  websiteGoals: string[];
-  targetAudience: string;
-  successDefinition: string;
   competitorUrls: string[];
   budgetRange: string;
   launchDate: string;
   hasDeadline: boolean;
   deadlineDetails: string;
-  fontPreferences: string;
-  brandColours: string[];
 }
 
 const initialFormData: FormData = {
@@ -38,25 +33,19 @@ const initialFormData: FormData = {
   projectDescription: "",
   existingBrand: "",
   urgency: "",
-  websiteGoals: [],
-  targetAudience: "",
-  successDefinition: "",
   competitorUrls: [""],
   budgetRange: "",
   launchDate: "",
   hasDeadline: false,
   deadlineDetails: "",
-  fontPreferences: "",
-  brandColours: [],
 };
+
+const TOTAL_STEPS = 3;
 
 const STEP_LABELS = [
   "About You",
   "Your Project",
-  "Goals & Audience",
   "Budget & Timeline",
-  "Brand Assets",
-  "Generate Your Brief",
 ];
 
 const INDUSTRIES = ["Hospitality", "Beauty & Wellness", "Travel", "E-commerce", "Professional Services", "Other"];
@@ -64,7 +53,6 @@ const SOURCES = ["Google", "Referral", "Social Media", "Portfolio", "Other"];
 const PROJECT_TYPES = ["New Website", "Redesign", "Landing Page", "E-commerce", "Web App", "Brand + Website"];
 const BRAND_OPTIONS = ["Yes", "No", "In progress"];
 const URGENCY_OPTIONS = ["Exploring options", "Ready to start within a month", "ASAP"];
-const GOAL_OPTIONS = ["Generate leads", "Sell products", "Build credibility", "Share content", "Book appointments", "Other"];
 const BUDGET_OPTIONS = [
   { label: "Starter — €1,999", desc: "Perfect for small businesses & landing pages" },
   { label: "Business — €3,999", desc: "Multi-page sites with CMS & animations" },
@@ -118,63 +106,6 @@ const inputClass =
 
 const selectClass = inputClass + " appearance-none";
 
-// ─── Colour Swatch Component ──────────────────────────────────
-const ColourSwatches = ({
-  colours,
-  onChange,
-}: {
-  colours: string[];
-  onChange: (colours: string[]) => void;
-}) => {
-  const [inputVal, setInputVal] = useState("");
-
-  const addColour = () => {
-    const hex = inputVal.trim();
-    if (/^#?[0-9a-fA-F]{3,8}$/.test(hex) && colours.length < 4) {
-      const formatted = hex.startsWith("#") ? hex : `#${hex}`;
-      onChange([...colours, formatted]);
-      setInputVal("");
-    }
-  };
-
-  return (
-    <div className="space-y-3">
-      <div className="flex flex-wrap gap-2">
-        {colours.map((c, i) => (
-          <span key={i} className="inline-flex items-center gap-2 rounded-full border border-[#2a2a2a] bg-[#1e1e1e] px-3 py-1.5 text-xs">
-            <span className="h-4 w-4 rounded-full border border-[#2a2a2a]" style={{ background: c }} />
-            {c}
-            <button type="button" onClick={() => onChange(colours.filter((_, j) => j !== i))} className="text-muted-foreground hover:text-foreground">
-              <X className="h-3 w-3" />
-            </button>
-          </span>
-        ))}
-      </div>
-      {colours.length < 4 && (
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={inputVal}
-            onChange={(e) => setInputVal(e.target.value)}
-            placeholder="#FFD5F8"
-            className={inputClass + " max-w-[160px]"}
-            onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addColour())}
-          />
-          <input
-            type="color"
-            value={inputVal.startsWith("#") ? inputVal : "#ffffff"}
-            onChange={(e) => setInputVal(e.target.value)}
-            className="h-[46px] w-[46px] cursor-pointer rounded-md border border-[#2a2a2a] bg-[#1e1e1e] p-1"
-          />
-          <button type="button" onClick={addColour} className="rounded-md border border-[#2a2a2a] bg-[#1e1e1e] px-3 text-sm text-muted-foreground hover:border-primary/40 hover:text-foreground transition-colors">
-            Add
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
 // ─── Main Page ─────────────────────────────────────────────────
 const StartProject = () => {
   useEffect(() => {
@@ -186,7 +117,6 @@ const StartProject = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [brief, setBrief] = useState("");
   const [briefLoading, setBriefLoading] = useState(false);
-  const [briefEditable, setBriefEditable] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
@@ -203,7 +133,7 @@ const StartProject = () => {
     []
   );
 
-  const toggleArray = (key: "projectTypes" | "websiteGoals", value: string) => {
+  const toggleArray = (key: "projectTypes", value: string) => {
     set(key, form[key].includes(value) ? form[key].filter((v) => v !== value) : [...form[key], value]);
   };
 
@@ -223,11 +153,6 @@ const StartProject = () => {
       if (!form.urgency) errs.urgency = "Required";
     }
     if (step === 2) {
-      if (form.websiteGoals.length === 0) errs.websiteGoals = "Select at least one";
-      if (!form.targetAudience.trim()) errs.targetAudience = "Required";
-      if (!form.successDefinition.trim()) errs.successDefinition = "Required";
-    }
-    if (step === 3) {
       if (!form.budgetRange) errs.budgetRange = "Please select a budget range";
     }
     setErrors(errs);
@@ -235,11 +160,15 @@ const StartProject = () => {
   };
 
   const next = () => {
-    if (validate()) setStep((s) => Math.min(s + 1, 5));
+    if (validate()) setStep((s) => Math.min(s + 1, TOTAL_STEPS - 1));
   };
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
-  const generateBrief = async () => {
+  const enhanceWithAI = async () => {
+    if (!form.projectDescription.trim()) {
+      setErrors((prev) => ({ ...prev, projectDescription: "Write a brief description first" }));
+      return;
+    }
     setBriefLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke("generate-brief", {
@@ -247,19 +176,21 @@ const StartProject = () => {
       });
       if (error) throw error;
       setBrief(data.brief);
+      set("projectDescription", data.brief);
     } catch (e: any) {
       console.error(e);
-      toast({ variant: "destructive", title: "Error", description: "Failed to generate brief. Please try again." });
+      toast({ variant: "destructive", title: "Error", description: "Failed to enhance description. Please try again." });
     } finally {
       setBriefLoading(false);
     }
   };
 
   const submitEnquiry = async () => {
+    if (!validate()) return;
     setSubmitting(true);
     try {
       const { error } = await supabase.functions.invoke("send-consultation", {
-        body: { formData: form, brief },
+        body: { formData: form, brief: form.projectDescription },
       });
       if (error) throw error;
       setSubmitted(true);
@@ -271,7 +202,7 @@ const StartProject = () => {
     }
   };
 
-  const progress = ((step + 1) / 6) * 100;
+  const progress = ((step + 1) / TOTAL_STEPS) * 100;
 
   const stepVariants = {
     initial: { opacity: 0, y: 16 },
@@ -304,6 +235,8 @@ const StartProject = () => {
     );
   }
 
+  const isLastStep = step === TOTAL_STEPS - 1;
+
   return (
     <div className="min-h-screen">
       {/* Top accent border */}
@@ -325,7 +258,7 @@ const StartProject = () => {
         {/* Step label */}
         <div className="mb-12">
           <p className="font-mono-label text-muted-foreground">
-            Step {step + 1} of 6 — {STEP_LABELS[step]}
+            Step {step + 1} of {TOTAL_STEPS} — {STEP_LABELS[step]}
           </p>
         </div>
 
@@ -378,12 +311,26 @@ const StartProject = () => {
                   </div>
                 </Field>
                 <Field label="Briefly describe what you need" required error={errors.projectDescription}>
-                  <textarea
-                    className={inputClass + " min-h-[120px] resize-y"}
-                    placeholder="Tell us about your project…"
-                    value={form.projectDescription}
-                    onChange={(e) => set("projectDescription", e.target.value)}
-                  />
+                  <div className="relative">
+                    <textarea
+                      className={inputClass + " min-h-[120px] resize-y pr-4"}
+                      placeholder="Tell us about your project…"
+                      value={form.projectDescription}
+                      onChange={(e) => set("projectDescription", e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={enhanceWithAI}
+                      disabled={briefLoading}
+                      className="mt-2 inline-flex items-center gap-2 rounded-md border border-primary/30 bg-primary/5 px-4 py-2 text-xs font-medium text-primary transition-all hover:bg-primary/10 hover:border-primary/50 disabled:opacity-50"
+                    >
+                      {briefLoading ? (
+                        <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Enhancing…</>
+                      ) : (
+                        <><Sparkles className="h-3.5 w-3.5" /> Enhance with AI</>
+                      )}
+                    </button>
+                  </div>
                 </Field>
                 <Field label="Do you have an existing brand?" required error={errors.existingBrand}>
                   <div className="flex gap-2">
@@ -398,36 +345,6 @@ const StartProject = () => {
                       <Pill key={o} label={o} selected={form.urgency === o} onClick={() => set("urgency", o)} />
                     ))}
                   </div>
-                </Field>
-              </div>
-            )}
-
-            {/* ── Step 2: Goals & Audience ─────────────── */}
-            {step === 2 && (
-              <div className="space-y-8">
-                <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">Goals & Audience</h1>
-                <Field label="Primary goal of this website?" required error={errors.websiteGoals}>
-                  <div className="flex flex-wrap gap-2">
-                    {GOAL_OPTIONS.map((g) => (
-                      <Pill key={g} label={g} selected={form.websiteGoals.includes(g)} onClick={() => toggleArray("websiteGoals", g)} />
-                    ))}
-                  </div>
-                </Field>
-                <Field label="Who is your target audience?" required error={errors.targetAudience}>
-                  <textarea
-                    className={inputClass + " min-h-[80px] resize-y"}
-                    placeholder="e.g. Women 25–45, interested in wellness"
-                    value={form.targetAudience}
-                    onChange={(e) => set("targetAudience", e.target.value)}
-                  />
-                </Field>
-                <Field label="What does success look like for you?" required error={errors.successDefinition}>
-                  <textarea
-                    className={inputClass + " min-h-[80px] resize-y"}
-                    placeholder="e.g. 50 enquiries per month, online bookings…"
-                    value={form.successDefinition}
-                    onChange={(e) => set("successDefinition", e.target.value)}
-                  />
                 </Field>
                 <Field label="Competitor or inspiration websites">
                   <div className="space-y-2">
@@ -468,8 +385,8 @@ const StartProject = () => {
               </div>
             )}
 
-            {/* ── Step 3: Budget & Timeline ────────────── */}
-            {step === 3 && (
+            {/* ── Step 2: Budget & Timeline ────────────── */}
+            {step === 2 && (
               <div className="space-y-8">
                 <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">Budget & Timeline</h1>
                 <Field label="Budget Range" required error={errors.budgetRange}>
@@ -505,118 +422,37 @@ const StartProject = () => {
                 </div>
               </div>
             )}
-
-            {/* ── Step 4: Brand Assets ─────────────────── */}
-            {step === 4 && (
-              <div className="space-y-8">
-                <div>
-                  <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">Brand Assets</h1>
-                  <p className="mt-2 text-sm text-muted-foreground">Speed things up — share what you have (optional)</p>
-                </div>
-                <Field label="Brand Colours (up to 4)">
-                  <ColourSwatches colours={form.brandColours} onChange={(c) => set("brandColours", c)} />
-                </Field>
-                <Field label="Font Preferences">
-                  <input
-                    className={inputClass}
-                    placeholder="e.g. We use Helvetica Neue for headings"
-                    value={form.fontPreferences}
-                    onChange={(e) => set("fontPreferences", e.target.value)}
-                  />
-                </Field>
-                <p className="text-xs text-muted-foreground">
-                  File uploads (logos, mood boards, brand guidelines) can be shared via email after submission.
-                </p>
-              </div>
-            )}
-
-            {/* ── Step 5: Generate Brief ───────────────── */}
-            {step === 5 && (
-              <div className="space-y-8">
-                <div>
-                  <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">Generate Your Brief</h1>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                    Based on what you've shared, our AI can draft a project brief you can review, edit, and submit alongside your enquiry.
-                  </p>
-                </div>
-
-                {!brief && !briefLoading && (
-                  <button
-                    type="button"
-                    onClick={generateBrief}
-                    className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-4 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-                  >
-                    <Sparkles className="h-4 w-4" /> Generate Brief
-                  </button>
-                )}
-
-                {briefLoading && (
-                  <div className="space-y-3 rounded-lg border border-[#2a2a2a] bg-[#1e1e1e] p-6">
-                    {[...Array(8)].map((_, i) => (
-                      <div key={i} className="h-4 animate-pulse rounded bg-[#2a2a2a]" style={{ width: `${70 + Math.random() * 30}%` }} />
-                    ))}
-                  </div>
-                )}
-
-                {brief && (
-                  <div className="space-y-4">
-                    <textarea
-                      className={`${inputClass} min-h-[360px] resize-y font-mono text-xs leading-relaxed`}
-                      value={brief}
-                      readOnly={!briefEditable}
-                      onChange={(e) => setBrief(e.target.value)}
-                    />
-                    <div className="flex flex-col gap-3 sm:flex-row">
-                      <button
-                        type="button"
-                        onClick={() => setBriefEditable(!briefEditable)}
-                        className="rounded-md border border-[#2a2a2a] px-6 py-3 text-sm font-medium text-foreground transition-all hover:border-primary/40"
-                      >
-                        {briefEditable ? "Lock Brief" : "Edit Brief"}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={submitEnquiry}
-                        disabled={submitting}
-                        className="flex-1 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 disabled:opacity-50"
-                      >
-                        {submitting ? "Sending…" : "Looks good — Submit Enquiry"}
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
           </motion.div>
         </AnimatePresence>
 
         {/* ── Navigation ─────────────────────────────── */}
-        {step < 5 && (
-          <div className="mt-16 flex items-center justify-between">
-            {step > 0 ? (
-              <button type="button" onClick={back} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                ← Back
-              </button>
-            ) : (
-              <div />
-            )}
-            <button
-              type="button"
-              onClick={step === 4 ? () => setStep(5) : next}
-              className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-            >
-              {step === 4 ? "Continue" : "Next →"}
-            </button>
-          </div>
-        )}
-
-        {step === 5 && step > 0 && !brief && (
-          <div className="mt-16">
+        <div className="mt-16 flex items-center justify-between">
+          {step > 0 ? (
             <button type="button" onClick={back} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
               ← Back
             </button>
-          </div>
-        )}
+          ) : (
+            <div />
+          )}
+          {isLastStep ? (
+            <button
+              type="button"
+              onClick={submitEnquiry}
+              disabled={submitting}
+              className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 disabled:opacity-50"
+            >
+              {submitting ? "Sending…" : "Submit Enquiry →"}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={next}
+              className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+            >
+              Next →
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Footer */}
