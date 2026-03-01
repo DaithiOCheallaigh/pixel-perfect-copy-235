@@ -190,11 +190,7 @@ const StartProject = () => {
     }
     setBriefLoading(true);
     try {
-      const supabase = await getSupabase();
-      const { data, error } = await supabase.functions.invoke("generate-brief", {
-        body: { formData: form },
-      });
-      if (error) throw error;
+      const data = await invokeFunction("generate-brief", { formData: form });
       setBrief(data.brief);
       set("projectDescription", data.brief);
     } catch (e: any) {
