@@ -92,14 +92,13 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               {link.label}
             </Link>
           ))}
-          <a
-            href="https://www.linkedin.com/in/davidkelly89/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/start-project"
+            onClick={() => setMobileOpen(false)}
             className="inline-flex items-center gap-2 text-lg font-semibold text-primary"
           >
-            Connect ↗
-          </a>
+            Get Started →
+          </Link>
         </nav>
       </motion.div>
     </motion.header>

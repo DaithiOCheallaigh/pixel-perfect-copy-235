@@ -269,14 +269,12 @@ const WebDesignServices = () => {
               >
                 View Pricing
               </a>
-              <a
-                href="https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/start-project"
                 className="group inline-flex items-center gap-1.5 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5 hover:bg-primary/90"
               >
-                Get in Touch <span>↗</span>
-              </a>
+                Get Started <span>→</span>
+              </Link>
             </div>
           </ScrollReveal>
         </div>
