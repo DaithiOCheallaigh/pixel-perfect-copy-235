@@ -34,7 +34,7 @@ const tiers: PricingTier[] = [
       "Handover & walkthrough session",
     ],
     cta: "Get Started",
-    ctaHref: "https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02",
+    ctaHref: "/start-project",
   },
   {
     name: "Business",
@@ -51,7 +51,7 @@ const tiers: PricingTier[] = [
       "3 rounds of revisions per design phase",
     ],
     cta: "Get Started",
-    ctaHref: "https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02",
+    ctaHref: "/start-project",
   },
   {
     name: "Enterprise",
@@ -66,8 +66,8 @@ const tiers: PricingTier[] = [
       "Priority support during and post-launch",
       "Dedicated project management",
     ],
-    cta: "Get a Quote",
-    ctaHref: "https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02",
+    cta: "Get Started",
+    ctaHref: "/start-project",
   },
 ];
 
@@ -235,10 +235,8 @@ const WebDesignServices = () => {
                     ))}
                   </ul>
 
-                  <a
-                    href={tier.ctaHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={tier.ctaHref}
                     className={`mt-6 inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all hover:gap-2.5 ${
                       tier.popular
                         ? "bg-primary text-primary-foreground hover:bg-primary/90"
@@ -246,7 +244,7 @@ const WebDesignServices = () => {
                     }`}
                   >
                     {tier.cta}
-                  </a>
+                  </Link>
                 </motion.div>
               </ScrollReveal>
             ))}
@@ -269,14 +267,12 @@ const WebDesignServices = () => {
               >
                 View Pricing
               </a>
-              <a
-                href="https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/start-project"
                 className="group inline-flex items-center gap-1.5 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5 hover:bg-primary/90"
               >
-                Get in Touch <span>↗</span>
-              </a>
+                Get Started <span>→</span>
+              </Link>
             </div>
           </ScrollReveal>
         </div>
