@@ -235,10 +235,8 @@ const WebDesignServices = () => {
                     ))}
                   </ul>
 
-                  <a
-                    href={tier.ctaHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={tier.ctaHref}
                     className={`mt-6 inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all hover:gap-2.5 ${
                       tier.popular
                         ? "bg-primary text-primary-foreground hover:bg-primary/90"
@@ -246,7 +244,7 @@ const WebDesignServices = () => {
                     }`}
                   >
                     {tier.cta}
-                  </a>
+                  </Link>
                 </motion.div>
               </ScrollReveal>
             ))}
