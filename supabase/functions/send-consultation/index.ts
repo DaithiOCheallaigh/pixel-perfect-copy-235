@@ -60,7 +60,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: "Lacuna Digital <onboarding@resend.dev>",
-        to: ["info@lacunaconsulting.com"],
+        to: ["davekellydesign@gmail.com"],
         subject: `New Project Enquiry: ${formData.companyName} — ${formData.fullName}`,
         html: htmlBody,
       }),
