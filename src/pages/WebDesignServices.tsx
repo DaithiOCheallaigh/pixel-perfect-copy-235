@@ -66,8 +66,8 @@ const tiers: PricingTier[] = [
       "Priority support during and post-launch",
       "Dedicated project management",
     ],
-    cta: "Get a Quote",
-    ctaHref: "https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02",
+    cta: "Get Started",
+    ctaHref: "/start-project",
   },
 ];
 
