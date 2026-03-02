@@ -9,8 +9,6 @@ import {
   Code,
   Chart,
   Routing,
-  MessageText,
-  Note,
 } from "iconsax-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import AvailabilityCTA from "@/components/AvailabilityCTA";
