@@ -200,32 +200,27 @@ const AIDesignProcess = () => {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-border px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-3xl text-center">
+      <section className="relative border-t border-border px-6 py-24 md:px-12 lg:px-24 overflow-hidden">
+        <GlowingStarsBackgroundCard className="absolute inset-0">
+          <span />
+        </GlowingStarsBackgroundCard>
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
           <ScrollReveal>
-            <div className="mb-6 flex justify-center text-primary">
-              <MessageText size="40" variant="TwoTone" />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
             <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-foreground md:text-5xl">
-              Ready to build something better?
+              AI Systems, Working in Sync
             </h2>
           </ScrollReveal>
-          <ScrollReveal delay={0.15}>
-            <p className="mb-8 text-lg text-muted-foreground">
-              Get in touch to explore how this process can be applied to your product.
+          <ScrollReveal delay={0.1}>
+            <p className="mb-10 text-lg text-muted-foreground">
+              Every tool connected. Every step informed. One unified process.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
-            <a
-              href="https://calendly.com/lacunaconsulting-info/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-sm bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
-            >
-              Book a Call <span className="transition-all">→</span>
-            </a>
+            <img
+              src={aiSystemImg}
+              alt="AI system architecture diagram showing interconnected tools"
+              className="mx-auto w-full max-w-2xl"
+            />
           </ScrollReveal>
         </div>
       </section>
