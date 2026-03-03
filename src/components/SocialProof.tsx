@@ -1,6 +1,13 @@
 import ScrollReveal from "./ScrollReveal";
 import SectionLabel from "./SectionLabel";
 import { ShineBorder } from "./ui/shine-border";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "./ui/carousel";
 
 const testimonials = [
   {
@@ -35,19 +42,25 @@ const SocialProof = () => {
           </div>
         </ScrollReveal>
 
-        <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {testimonials.map((testimonial, i) => (
-            <ScrollReveal key={testimonial.name} delay={i * 0.1}>
-              <div className="relative flex h-full flex-col rounded-xl bg-card p-8">
-                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                <p className="flex-1 text-sm leading-relaxed text-muted-foreground">
-                  "{testimonial.text}"
-                </p>
-                <p className="mt-6 text-sm font-semibold text-foreground">— {testimonial.name}</p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
+        <Carousel opts={{ align: "start", loop: true }} className="mt-8 w-full">
+          <CarouselContent className="-ml-4">
+            {testimonials.map((testimonial) => (
+              <CarouselItem key={testimonial.name} className="pl-4 md:basis-1/3">
+                <div className="relative flex h-full flex-col rounded-xl bg-card p-8">
+                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+                  <p className="flex-1 text-sm leading-relaxed text-muted-foreground">
+                    "{testimonial.text}"
+                  </p>
+                  <p className="mt-6 text-sm font-semibold text-foreground">— {testimonial.name}</p>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="mt-6 flex items-center justify-center gap-2">
+            <CarouselPrevious className="static translate-y-0" />
+            <CarouselNext className="static translate-y-0" />
+          </div>
+        </Carousel>
       </div>
     </section>
   );
