@@ -172,7 +172,7 @@ const About = () => (
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
 
     {/* Product Design Lifecycle Philosophy */}
-    <section className="px-6 py-24 md:px-12 lg:px-24">
+    <section id="philosophy" className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>
           <SectionLabel>Process</SectionLabel>
