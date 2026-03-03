@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
+import { useState } from "react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
@@ -54,6 +55,43 @@ const stats = [
   { value: "1", label: "Unified design system serving all products" },
   { value: "↑", label: "Exponential reduction in concept-to-prototype cycle time" },
 ];
+
+const PrototypeLink = ({ href }: { href: string }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isMobile) {
+      e.preventDefault();
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 2500);
+    }
+  };
+
+  return (
+    <div className="relative mt-auto px-5 pb-5">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleClick}
+        className="inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
+      >
+        View Prototype <span>→</span>
+      </a>
+      {showTooltip && (
+        <motion.div
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          className="absolute bottom-full left-5 mb-2 rounded-lg bg-foreground px-3 py-1.5 text-sm text-background shadow-lg whitespace-nowrap"
+        >
+          Web only I'm afraid 😌
+        </motion.div>
+      )}
+    </div>
+  );
+};
 
 const MarshInternalTooling = () => {
   const project = projects.find((p) => p.id === "marsh-internal-tooling");
@@ -188,21 +226,7 @@ const MarshInternalTooling = () => {
                   </div>
 
                   {/* View Prototype link */}
-                  <div className="mt-auto px-5 pb-5">
-                    {/* Desktop: direct link */}
-                    <a
-                      href={product.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hidden md:inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
-                    >
-                      View Prototype <span>→</span>
-                    </a>
-                    {/* Mobile: informational message */}
-                    <span className="inline-flex md:hidden items-center gap-1 text-sm text-muted-foreground italic">
-                      Desktop only — per client requirements
-                    </span>
-                  </div>
+                  <PrototypeLink href={product.link} />
                 </div>
               </ScrollReveal>
             ))}
