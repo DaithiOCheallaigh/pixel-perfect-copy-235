@@ -5,6 +5,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
+import { CpuArchitecture } from "../components/ui/cpu-architecture";
 
 const products = [
   {
