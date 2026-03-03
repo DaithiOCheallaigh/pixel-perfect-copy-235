@@ -62,7 +62,7 @@ const MarshInternalTooling = () => {
     : null;
 
   return (
-    <main className="pt-24">
+    <main className="pt-24 overflow-x-clip">
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
