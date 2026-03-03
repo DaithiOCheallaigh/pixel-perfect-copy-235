@@ -106,11 +106,8 @@ const MarshInternalTooling = () => {
                 <span className="uppercase tracking-wider">Deliverable:</span>{" "}
                 <span className="text-foreground">3 Products + Design System</span>
               </span>
-              <span>
-                <span className="uppercase tracking-wider">Tools:</span>{" "}
-                <span className="text-foreground">Figma, Claude, Lovable, Storybook</span>
-              </span>
             </div>
+            <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100" />
           </motion.div>
         </div>
       </section>
