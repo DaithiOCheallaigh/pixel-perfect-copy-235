@@ -56,6 +56,43 @@ const stats = [
   { value: "↑", label: "Exponential reduction in concept-to-prototype cycle time" },
 ];
 
+const PrototypeLink = ({ href }: { href: string }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isMobile) {
+      e.preventDefault();
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 2500);
+    }
+  };
+
+  return (
+    <div className="relative mt-auto px-5 pb-5">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleClick}
+        className="inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
+      >
+        View Prototype <span>→</span>
+      </a>
+      {showTooltip && (
+        <motion.div
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          className="absolute bottom-full left-5 mb-2 rounded-lg bg-foreground px-3 py-1.5 text-sm text-background shadow-lg whitespace-nowrap"
+        >
+          Web only I'm afraid 😌
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
 const MarshInternalTooling = () => {
   const project = projects.find((p) => p.id === "marsh-internal-tooling");
   const nextProject = project?.nextProject
