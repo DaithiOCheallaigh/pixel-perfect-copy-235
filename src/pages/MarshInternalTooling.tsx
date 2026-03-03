@@ -108,7 +108,6 @@ const MarshInternalTooling = () => {
               </span>
             </div>
             <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100" />
-            </div>
           </motion.div>
         </div>
       </section>
