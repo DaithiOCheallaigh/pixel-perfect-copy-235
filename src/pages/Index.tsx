@@ -212,7 +212,7 @@ const Index = () => {
           <ScrollReveal delay={0.2}>
             <div className="mt-12 text-center">
               <Link
-                to="/about"
+                to="/about#philosophy"
                 className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
               >
                 Explore My Philosophy <span>→</span>
