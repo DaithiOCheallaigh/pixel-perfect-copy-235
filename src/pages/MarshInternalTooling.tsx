@@ -163,7 +163,7 @@ const MarshInternalTooling = () => {
           <div className="grid gap-8 md:grid-cols-3">
             {products.map((product, i) => (
               <ScrollReveal key={product.num} delay={i * 0.1}>
-                <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
+                <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-200 ease-out md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-primary/5">
                   {/* Numbered label */}
                   <div className="px-5 pt-5">
                     <span className="font-mono-label text-xs text-muted-foreground">
