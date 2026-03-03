@@ -250,6 +250,17 @@ const MarshInternalTooling = () => {
         </div>
       </section>
 
+      {/* AI Architecture Animation */}
+      <section className="px-6 py-8 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <div className="flex justify-center">
+              <CpuArchitecture text="AI" className="max-w-2xl" />
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* 5. APPROACH — HOW I WORKED */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
