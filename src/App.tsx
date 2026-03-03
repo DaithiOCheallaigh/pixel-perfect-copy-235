@@ -15,6 +15,7 @@ import WebDesignServices from "./pages/WebDesignServices";
 import AIDesignProcess from "./pages/AIDesignProcess";
 import BlogPost from "./pages/BlogPost";
 import StartProject from "./pages/StartProject";
+import MarshInternalTooling from "./pages/MarshInternalTooling";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -112,6 +113,7 @@ const AppContent = () => {
         <Route path="/service/:id" element={<ServicePage />} />
         <Route path="/web-design" element={<WebDesignServices />} />
         <Route path="/ai-design-process" element={<AIDesignProcess />} />
+        <Route path="/work/marsh-internal-tooling" element={<MarshInternalTooling />} />
         <Route path="/start-project" element={<StartProject />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
