@@ -24,7 +24,7 @@ const testimonials = [
   },
   {
     name: "Dan Dold",
-    text: "Lacuna Digital was fantastic at helping me design and set up my landing page. They were easy to work with, and their communication was excellent, always putting my needs first. I appreciated their willingness to provide valuable feedback, even if it meant suggesting something different from what I initially wanted. Their expertise has significantly boosted my business. Highly recommend!",
+    text: "Lacuna Digital was fantastic at helping me design and set up my website. They were easy to work with, and their communication was excellent, always putting my needs first. I appreciated their willingness to provide valuable feedback, even if it meant suggesting something different from what I initially wanted. Their expertise has significantly boosted my business. Highly recommend!",
   },
 ];
 
