@@ -189,14 +189,19 @@ const MarshInternalTooling = () => {
 
                   {/* View Prototype link */}
                   <div className="mt-auto px-5 pb-5">
+                    {/* Desktop: direct link */}
                     <a
                       href={product.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
+                      className="hidden md:inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
                     >
                       View Prototype <span>→</span>
                     </a>
+                    {/* Mobile: informational message */}
+                    <span className="inline-flex md:hidden items-center gap-1 text-sm text-muted-foreground italic">
+                      Desktop only — per client requirements
+                    </span>
                   </div>
                 </div>
               </ScrollReveal>
