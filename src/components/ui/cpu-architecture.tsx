@@ -104,12 +104,13 @@ const CpuArchitecture = ({
         )}
         <rect x="85" y="40" width="30" height="20" rx="2" fill="#181818" filter="url(#cpu-light-shadow)" />
         <text
-          x="94"
+          x="100"
           y="52.5"
           fontSize="7"
           fill={animateText ? "url(#cpu-text-gradient)" : "white"}
           fontWeight="600"
           letterSpacing="0.05em"
+          textAnchor="middle"
         >
           {text}
         </text>
@@ -128,23 +129,23 @@ const CpuArchitecture = ({
 
         {/* Pink gradients */}
         <radialGradient id="cpu-pink-grad-1" fx="1">
-          <stop offset="0%" stopColor="#FF69B4" />
-          <stop offset="50%" stopColor="#EC4899" />
+          <stop offset="0%" stopColor="#FFB3F0" />
+          <stop offset="50%" stopColor="#D946BF" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
         <radialGradient id="cpu-pink-grad-2" fx="1">
-          <stop offset="0%" stopColor="#F472B6" />
-          <stop offset="50%" stopColor="#DB2777" />
+          <stop offset="0%" stopColor="#FFB3F0" />
+          <stop offset="50%" stopColor="#C026A3" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
         <radialGradient id="cpu-pink-grad-3" fx="1">
-          <stop offset="0%" stopColor="#FB7185" />
-          <stop offset="50%" stopColor="#E11D48" />
+          <stop offset="0%" stopColor="#F0A0E0" />
+          <stop offset="50%" stopColor="#D946BF" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
         <radialGradient id="cpu-pink-grad-4" fx="1">
-          <stop offset="0%" stopColor="#FDA4AF" />
-          <stop offset="50%" stopColor="#F43F5E" />
+          <stop offset="0%" stopColor="#FFB3F0" />
+          <stop offset="50%" stopColor="#E058D0" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
 
