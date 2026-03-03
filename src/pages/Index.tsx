@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
+import SocialProof from "../components/SocialProof";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
 import { ShaderAnimation } from "../components/ui/shader-animation";
