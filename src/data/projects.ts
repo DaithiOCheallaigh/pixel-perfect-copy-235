@@ -89,6 +89,19 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "marsh-internal-tooling",
+    title: "Marsh Internal Tooling",
+    subtitle: "Three enterprise internal tools designed and shipped simultaneously",
+    workDescription: "Three enterprise tools designed and shipped in parallel — built on a shared component library and an AI-accelerated design process.",
+    tags: ["Product Design", "Design Systems", "AI Workflow"],
+    timeline: "Ongoing",
+    client: "Marsh",
+    pillImage: "",
+    headerImage: "",
+    description: "",
+    nextProject: "ai-reviews",
+  },
+  {
     id: "ai-reviews",
     title: "AI Assisted Reviews",
     subtitle: "Leveraging AI to increase 5-star reviews by 45% on average",
