@@ -110,6 +110,28 @@ const MarshInternalTooling = () => {
         </div>
       </section>
 
+      {/* 2. PROJECT OVERVIEW */}
+      <section className="px-6 py-16 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <SectionLabel>The Brief</SectionLabel>
+            <div className="max-w-3xl space-y-4">
+              <p className="text-[15px] leading-[1.7] text-muted-foreground">
+                Contracted to Marsh via Expleo to design and ship three internal enterprise tools
+                in parallel — a Colleague Profile & Work Queue, a Client Milestones tracker, and
+                a Notifications Hub. Working across all three products simultaneously, the engagement
+                demanded a single, scalable design system to ensure consistency at pace.
+              </p>
+              <p className="text-[15px] leading-[1.7] text-muted-foreground">
+                Rather than treating each product in isolation, I built CORE — a shared component
+                library of tokens, patterns, and UI components designed to serve all three products
+                and scale across Marsh's wider digital estate.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* VIDEO SHOWREEL */}
       <section className="px-6 py-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -125,28 +147,6 @@ const MarshInternalTooling = () => {
                 className="w-full"
                 poster=""
               />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* 2. PROJECT OVERVIEW */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>The Brief</SectionLabel>
-            <div className="max-w-3xl space-y-4">
-              <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                Contracted directly by Marsh to design and ship three internal enterprise tools
-                in parallel — a Colleague Profile & Work Queue, a Client Milestones tracker, and
-                a Notifications Hub. Working across all three products simultaneously, the engagement
-                demanded a single, scalable design system to ensure consistency at pace.
-              </p>
-              <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                Rather than treating each product in isolation, I built CORE — a shared component
-                library of tokens, patterns, and UI components designed to serve all three products
-                and scale across Marsh's wider digital estate.
-              </p>
             </div>
           </ScrollReveal>
         </div>
