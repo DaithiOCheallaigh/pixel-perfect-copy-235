@@ -130,23 +130,23 @@ const CpuArchitecture = ({
 
         {/* Pink gradients */}
         <radialGradient id="cpu-pink-grad-1" fx="1">
-          <stop offset="0%" stopColor="#FF69B4" />
-          <stop offset="50%" stopColor="#EC4899" />
+          <stop offset="0%" stopColor="#FFB3F0" />
+          <stop offset="50%" stopColor="#D946BF" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
         <radialGradient id="cpu-pink-grad-2" fx="1">
-          <stop offset="0%" stopColor="#F472B6" />
-          <stop offset="50%" stopColor="#DB2777" />
+          <stop offset="0%" stopColor="#FFB3F0" />
+          <stop offset="50%" stopColor="#C026A3" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
         <radialGradient id="cpu-pink-grad-3" fx="1">
-          <stop offset="0%" stopColor="#FB7185" />
-          <stop offset="50%" stopColor="#E11D48" />
+          <stop offset="0%" stopColor="#F0A0E0" />
+          <stop offset="50%" stopColor="#D946BF" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
         <radialGradient id="cpu-pink-grad-4" fx="1">
-          <stop offset="0%" stopColor="#FDA4AF" />
-          <stop offset="50%" stopColor="#F43F5E" />
+          <stop offset="0%" stopColor="#FFB3F0" />
+          <stop offset="50%" stopColor="#E058D0" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
 
