@@ -114,7 +114,6 @@ const CpuArchitecture = ({
         >
           {text}
         </text>
-        </text>
       </g>
 
       {/* Masks & Defs */}
