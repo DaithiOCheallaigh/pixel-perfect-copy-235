@@ -178,11 +178,11 @@ const MarshInternalTooling = () => {
                   </div>
 
                   {/* Product image */}
-                  <div className="relative mx-3 mb-3 overflow-hidden rounded-lg border border-border aspect-[16/10]">
+                  <div className="relative mx-3 mb-3 overflow-hidden rounded-lg border border-border aspect-[16/10] max-w-full">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="absolute inset-0 w-full h-full object-cover object-top"
+                      className="absolute inset-0 w-full h-full object-cover object-top block"
                       loading="lazy"
                     />
                   </div>
