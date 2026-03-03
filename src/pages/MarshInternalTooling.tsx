@@ -192,7 +192,7 @@ const MarshInternalTooling = () => {
                   {/* View Prototype link */}
                   <div className="mt-auto px-5 pb-5">
                     <a
-                      href={product.iframeSrc}
+                      href={product.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
