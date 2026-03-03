@@ -32,7 +32,7 @@ const AvailabilityCTA = () => (
             Enquiry Form <span className="transition-all">→</span>
           </Link>
           <a
-            href="https://lacunadigital.io/wp-content/uploads/2025/08/David-Kelly-CV_Sep25.pdf"
+            href="/docs/DavidKelly_CV_2026.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
