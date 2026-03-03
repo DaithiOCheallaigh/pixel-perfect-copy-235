@@ -222,6 +222,16 @@ const AIDesignProcess = () => {
               className="mx-auto w-full max-w-2xl"
             />
           </ScrollReveal>
+          <ScrollReveal delay={0.3}>
+            <a
+              href="https://www.lacunadigital.io/work/marsh-internal-tooling"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-10 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/20"
+            >
+              View a project built using this process →
+            </a>
+          </ScrollReveal>
         </div>
       </section>
 
