@@ -12,6 +12,140 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "2026-new-norm-designers",
+    title: "2026: The New Norm For Designers",
+    date: "March 3, 2026",
+    readTime: "12 min read",
+    image: "/images/blog/2026-new-norm-designers.webp",
+    excerpt: "The year the design process stopped being a process. Engineers spin up coding agents, prototype in hours, and ship before designers finish exploring. Here's what that means.",
+    content: (
+      <>
+        <p className="text-sm text-muted-foreground italic mb-6">Based on Lenny's Podcast interview with Jenny Wen (Head of Design for Claude at Anthropic). <a href="https://www.youtube.com/watch?v=eh8bcBIAAFo&t=1s" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Watch the episode →</a></p>
+
+        <h2>The year the "design process" stopped being a process</h2>
+        <p>For years, many design teams ran on a familiar rhythm: discover, diverge, converge, then hand off a tidy set of mocks to engineering.</p>
+        <p>In 2026, that rhythm is failing in a very specific way.</p>
+        <p>Engineers can now spin up multiple coding agents, prototype in hours, and ship working versions before a designer has finished exploring options. The bottleneck is no longer "can we build it." The bottleneck is "what should exist," "how should it behave," and "how do we keep it coherent while everything moves at machine speed."</p>
+        <p>The result is a new set of challenges designers have to face head-on.</p>
+
+        <h2>Challenge 1: Competing with runtime, not planning</h2>
+        <p>The classic process assumed a world where building was expensive, so planning was cheap insurance.</p>
+        <p>In Jenny Wen's telling, that tradeoff has flipped. When teams can build quickly, discovery and exploration cannot take weeks by default. They have to happen in the flow of execution.</p>
+        <p>Designers now compete with runtime:</p>
+        <ul>
+          <li>Engineers can test ideas in production-like environments.</li>
+          <li>Agents can generate multiple implementations.</li>
+          <li>"Good enough to learn from" arrives faster than "perfect on the canvas."</li>
+        </ul>
+        <p>What this feels like day-to-day:</p>
+        <ul>
+          <li>You start exploring a concept.</li>
+          <li>A version ships.</li>
+          <li>Your job shifts from "design it" to "shape what already exists."</li>
+        </ul>
+        <p>That is disorienting if your identity has been tied to owning the upfront narrative.</p>
+
+        <h2>Challenge 2: Design splits into two modes (and you have to switch constantly)</h2>
+        <p>Jenny describes design work splitting into two distinct modes:</p>
+        <p><strong>Execution support</strong></p>
+        <ul>
+          <li>Pairing with engineers.</li>
+          <li>Reviewing what agents produce.</li>
+          <li>Polishing directly in code.</li>
+          <li>Consulting in real time, not at milestones.</li>
+        </ul>
+        <p><strong>Short-range vision</strong></p>
+        <ul>
+          <li>Creating direction for the next three to six months.</li>
+          <li>Prototyping "where we should go," not writing multi-year decks.</li>
+          <li>Helping teams avoid building seven fast things that do not add up to one good thing.</li>
+        </ul>
+        <p>The challenge is not understanding these modes. The challenge is the context switching.</p>
+        <p>A designer can be in code at 11am cleaning up interactions, then asked at 2pm to define the next quarter's product direction, then pulled into an impromptu critique of something an agent generated ten minutes ago.</p>
+        <p>This is a different cognitive load than the old cadence of "big design phase, then build phase."</p>
+
+        <h2>Challenge 3: Quality becomes a conversation you have in public</h2>
+        <p>In 2026, quality is no longer only about what you ship. It is about what you ship and what you do next.</p>
+        <p>Jenny frames trust as something you build through speed and responsiveness. Shipping a rough "research preview" is not what damages a brand. Shipping something rough and then going silent does.</p>
+        <p>For designers, this creates a new responsibility:</p>
+        <ul>
+          <li>You are designing the product.</li>
+          <li>You are also designing the feedback loop.</li>
+          <li>How users understand what is early.</li>
+          <li>How you acknowledge issues.</li>
+          <li>How visibly you iterate.</li>
+        </ul>
+        <p>In other words, the interface is not just screens. It is the relationship between a team and its users over time.</p>
+
+        <h2>Challenge 4: Your moat (taste) is shrinking, but accountability is not</h2>
+        <p>A quiet anxiety sits underneath a lot of design conversations in 2026: If AI gets better at taste and judgment, what is left?</p>
+        <p>Jenny's take is blunt.</p>
+        <p>AI will likely improve at taste and judgment, and designers may be holding onto "taste" as a moat too tightly. But even if AI proposes the solution, someone still needs to be accountable for what ships, similar to how engineers remain responsible for AI-generated code.</p>
+        <p>This shifts the job:</p>
+        <ul>
+          <li>From "I am the person who knows what good looks like."</li>
+          <li>To "I am the person who can make the call, explain it, and stand behind it."</li>
+        </ul>
+        <p>The challenge is emotional as much as professional. Letting go of "taste as identity" is hard. But accountability, judgment, and tradeoffs are still deeply human work, especially when teams disagree.</p>
+
+        <h2>Challenge 5: Hiring changes, and the ladder gets weird</h2>
+        <p>Most companies default to hiring senior designers with deep experience.</p>
+        <p>Jenny argues that the most overlooked hire right now is the cracked new grad: early-career designers with fast learning curves, blank slates, and no attachment to rituals that may be obsolete.</p>
+        <p>She also describes three archetypes that matter:</p>
+        <ul>
+          <li><strong>Strong generalists</strong> who are "block-shaped," meaning strong across multiple skills.</li>
+          <li><strong>Deep specialists</strong> who are top-tier in one area.</li>
+          <li><strong>Cracked new grads</strong> who adapt faster than teams expect.</li>
+        </ul>
+        <p>The challenge for design leaders is that traditional seniority signals may not map cleanly to this new world. A designer with ten years of mastery in a stable process may struggle. A designer with two years of experience, high agency, and comfort in code may thrive.</p>
+        <p>That can create tension in teams, and it can make career paths feel uncertain.</p>
+
+        <h2>Challenge 6: Chat is staying, but the UI is mutating</h2>
+        <p>Many people expected chat to be a temporary interface.</p>
+        <p>Jenny expects chat to remain because it offers flexibility and can connect many workflows. But she also expects a hybrid future where models generate UI elements on the fly for specific tasks, while chat remains the connective tissue.</p>
+        <p>For designers, the challenge is that "interface design" now includes:</p>
+        <ul>
+          <li>Conversational flows.</li>
+          <li>Generated widgets and dynamic UI.</li>
+          <li>The handoff between freeform chat and structured interaction.</li>
+        </ul>
+        <p>This is not just designing screens. It is designing orchestration.</p>
+
+        <h2>Challenge 7: Managers cannot manage what they do not practice</h2>
+        <p>Jenny's move from design director back to IC work reflects another 2026 reality. When the craft shifts quickly, management without hands-on practice becomes fragile.</p>
+        <p>Many leaders will need some form of rotation back into IC work to:</p>
+        <ul>
+          <li>Understand new tool stacks.</li>
+          <li>Build empathy for the new pace.</li>
+          <li>Learn what "good" looks like when the medium is code, chat, and agents.</li>
+        </ul>
+        <p>At the same time, the idea that managers should only do "high leverage" work is being questioned.</p>
+        <p>Jenny's argument is that so-called low-leverage work can be high leverage when a leader does it:</p>
+        <ul>
+          <li>Dogfooding obsessively.</li>
+          <li>Reproducing bugs.</li>
+          <li>Fixing small issues.</li>
+          <li>Creating a visible culture of care.</li>
+        </ul>
+        <p>The challenge is redefining leadership as participation, not distance.</p>
+
+        <h2>So what does a designer do in 2026?</h2>
+        <p>Designers are still designers. But the center of gravity has moved.</p>
+        <p>The 2026 designer is increasingly:</p>
+        <ul>
+          <li>A partner embedded in execution.</li>
+          <li>A short-range strategist.</li>
+          <li>A quality signal in public.</li>
+          <li>A curator of coherence.</li>
+          <li>An accountable decision-maker.</li>
+        </ul>
+        <p>The hard part is not learning new tools.</p>
+        <p>The hard part is unlearning the belief that design is a phase you complete before the real work begins.</p>
+        <p>In 2026, the real work begins earlier, ships sooner, and never really stops.</p>
+      </>
+    ),
+  },
+  {
     id: "navigating-design-2025",
     title: "Navigating Design in 2025: Challenges and Opportunities in a Transformed Industry",
     date: "October 22, 2025",
