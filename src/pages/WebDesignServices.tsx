@@ -5,6 +5,7 @@ import { TickCircle, InfoCircle, ExportSquare } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
+import SocialProof from "../components/SocialProof";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "../components/ui/carousel";
 
 /* ------------------------------------------------------------------ */
@@ -339,6 +340,8 @@ const WebDesignServices = () => {
       </section>
 
 
+      <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
+      <SocialProof />
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <AvailabilityCTA />
     </main>
