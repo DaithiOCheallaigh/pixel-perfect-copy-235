@@ -5,6 +5,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
+import { CpuArchitecture } from "../components/ui/cpu-architecture";
 
 const products = [
   {
@@ -246,6 +247,17 @@ const MarshInternalTooling = () => {
                 className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
               />
             </a>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* AI Architecture Animation */}
+      <section className="px-6 py-8 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <div className="flex justify-center">
+              <CpuArchitecture text="AI" className="max-w-2xl" />
+            </div>
           </ScrollReveal>
         </div>
       </section>
