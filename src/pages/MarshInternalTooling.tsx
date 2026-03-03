@@ -62,7 +62,7 @@ const MarshInternalTooling = () => {
     : null;
 
   return (
-    <main className="pt-24">
+    <main className="pt-24 overflow-x-clip">
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -162,8 +162,8 @@ const MarshInternalTooling = () => {
           </ScrollReveal>
           <div className="grid gap-8 md:grid-cols-3">
             {products.map((product, i) => (
-              <ScrollReveal key={product.num} delay={i * 0.1}>
-                <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm md:transition-[transform,box-shadow] md:duration-200 md:ease-out md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-primary/5">
+              <ScrollReveal key={product.num} delay={i * 0.1} distance={0}>
+                <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm md:transition-transform md:duration-200 md:ease-out md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-primary/5">
                   {/* Numbered label */}
                   <div className="px-5 pt-5">
                     <span className="font-mono-label text-xs text-muted-foreground">

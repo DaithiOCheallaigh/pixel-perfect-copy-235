@@ -5,11 +5,12 @@ interface ScrollRevealProps {
   children: ReactNode;
   delay?: number;
   className?: string;
+  distance?: number;
 }
 
-const ScrollReveal = ({ children, delay = 0, className = "" }: ScrollRevealProps) => (
+const ScrollReveal = ({ children, delay = 0, className = "", distance = 40 }: ScrollRevealProps) => (
   <motion.div
-    initial={{ opacity: 0, y: 40 }}
+    initial={{ opacity: 0, y: distance }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-80px" }}
     transition={{
