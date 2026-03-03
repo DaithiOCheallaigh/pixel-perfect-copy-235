@@ -11,6 +11,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 @layer base {
   :root {
     /* Lacuna Light Swiss Theme (Default) */

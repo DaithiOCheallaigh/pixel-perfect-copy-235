@@ -62,7 +62,7 @@ const MarshInternalTooling = () => {
     : null;
 
   return (
-    <main className="pt-24 overflow-x-clip">
+    <main className="pt-24 overflow-x-hidden">
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -96,7 +96,7 @@ const MarshInternalTooling = () => {
               Three enterprise internal tools designed and shipped simultaneously —
               powered by an AI-accelerated workflow and a unified component library.
             </p>
-            <img src="/images/work/marsh-logo-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100" />
+            <img src="/images/work/marsh-logo-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" />
             <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
               <span>
                 <span className="uppercase tracking-wider">Role:</span>{" "}
@@ -107,7 +107,7 @@ const MarshInternalTooling = () => {
                 <span className="text-foreground">3 Products + Design System</span>
               </span>
             </div>
-            <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100" />
+            <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100 max-w-full" />
           </motion.div>
         </div>
       </section>
@@ -160,7 +160,7 @@ const MarshInternalTooling = () => {
           <ScrollReveal>
             <SectionLabel>Live Prototypes</SectionLabel>
           </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3 overflow-hidden">
             {products.map((product, i) => (
               <ScrollReveal key={product.num} delay={i * 0.1} distance={0}>
                 <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm md:transition-transform md:duration-200 md:ease-out md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-primary/5">
@@ -178,11 +178,11 @@ const MarshInternalTooling = () => {
                   </div>
 
                   {/* Product image */}
-                  <div className="relative mx-3 mb-3 overflow-hidden rounded-lg border border-border aspect-[16/10]">
+                  <div className="relative mx-3 mb-3 overflow-hidden rounded-lg border border-border aspect-[16/10] max-w-full">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="absolute inset-0 w-full h-full object-cover object-top"
+                      className="absolute inset-0 w-full h-full object-cover object-top block"
                       loading="lazy"
                     />
                   </div>
