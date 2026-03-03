@@ -341,6 +341,8 @@ const WebDesignServices = () => {
 
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
+      <SocialProof />
+      <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <AvailabilityCTA />
     </main>
   );
