@@ -12,19 +12,22 @@ const products = [
     num: "01",
     name: "Colleague Profile",
     description: "Work queue and client onboarding tool for relationship managers.",
-    iframeSrc: "https://precise-ui-wonder.lovable.app/work-item/1001234567",
+    image: "/images/work/marsh-colleague-profile.webp",
+    link: "https://precise-ui-wonder.lovable.app/work-item/1001234567",
   },
   {
     num: "02",
     name: "Client Milestones",
     description: "Milestone tracking and timeline visibility for client engagements.",
-    iframeSrc: "https://figma-to-reality-express.lovable.app/milestones",
+    image: "/images/work/marsh-client-milestones.webp",
+    link: "https://figma-to-reality-express.lovable.app/milestones",
   },
   {
     num: "03",
     name: "Notifications Hub",
     description: "Centralised notification management across applications and channels.",
-    iframeSrc: "https://notify-flow-91.lovable.app/",
+    image: "/images/work/marsh-notifications-hub.webp",
+    link: "https://notify-flow-91.lovable.app/",
   },
 ];
 
