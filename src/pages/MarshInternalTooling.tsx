@@ -110,6 +110,26 @@ const MarshInternalTooling = () => {
         </div>
       </section>
 
+      {/* VIDEO SHOWREEL */}
+      <section className="px-6 py-8 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <div className="overflow-hidden rounded-xl border border-border">
+              <video
+                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/MarshInternalTools.mp4"
+                controls
+                playsInline
+                muted
+                autoPlay
+                loop
+                className="w-full"
+                poster=""
+              />
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* 2. PROJECT OVERVIEW */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
