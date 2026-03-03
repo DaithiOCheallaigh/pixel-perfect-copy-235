@@ -179,23 +179,14 @@ const MarshInternalTooling = () => {
                     <p className="mt-1 text-sm text-muted-foreground">{product.description}</p>
                   </div>
 
-                  {/* Iframe embed — 16:10 zoomed out */}
-                  <div
-                    className="relative mx-3 mb-3 overflow-hidden rounded-lg border border-border"
-                    style={{ paddingBottom: "62.5%" /* 16:10 */ }}
-                  >
-                    <div
-                      className="absolute inset-0 origin-top-left"
-                      style={{ width: "166.67%", height: "166.67%", transform: "scale(0.6)" }}
-                    >
-                      <iframe
-                        src={product.iframeSrc}
-                        title={product.name}
-                        className="h-full w-full border-0"
-                        style={{ pointerEvents: "none" }}
-                        loading="lazy"
-                      />
-                    </div>
+                  {/* Product image */}
+                  <div className="relative mx-3 mb-3 overflow-hidden rounded-lg border border-border">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
 
                   {/* View Prototype link */}
