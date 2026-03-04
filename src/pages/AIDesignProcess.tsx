@@ -17,7 +17,7 @@ import claudeLogo from "@/assets/logos/claude.png";
 import notionLogo from "@/assets/logos/notion.png";
 import lovableLogo from "@/assets/logos/lovable.png";
 import figmaLogo from "@/assets/logos/figma.svg";
-import aiSystemImg from "@/assets/images/ai-system.webp";
+import claudeImg from "@/assets/logos/claude.png";
 
 const steps = [
   {
