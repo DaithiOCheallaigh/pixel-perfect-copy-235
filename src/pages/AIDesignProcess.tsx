@@ -216,7 +216,7 @@ const AIDesignProcess = () => {
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
             <img
-              src={aiSystemImg}
+              src={claudeImg}
               style={{ maxWidth: '50%' }}
               alt="AI system architecture diagram showing interconnected tools"
               className="mx-auto w-full max-w-2xl"
