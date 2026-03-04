@@ -57,8 +57,9 @@ const Index = () => {
             </a>
             <Link
               to="/ai-design-process"
-              className="group inline-flex items-center gap-2 rounded-lg border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary hover:gap-3"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:gap-3"
             >
+              <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} className="opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               AI Design Process <span className="transition-all">→</span>
             </Link>
           </motion.div>
