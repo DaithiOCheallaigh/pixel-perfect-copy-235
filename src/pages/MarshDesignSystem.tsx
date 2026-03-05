@@ -156,9 +156,15 @@ const MarshDesignSystem = () => {
               <iframe
                 src="https://daithiocheallaigh.github.io/MarshDesign2//iframe.html?globals=backgrounds.grid%3A!false&args=&id=prototypes-notifications-hub--default&viewMode=story"
                 title="Notifications Hub Prototype"
-                className="w-full aspect-[16/10] border-0"
+                className="hidden md:block w-full aspect-[16/10] border-0"
                 loading="lazy"
                 allow="clipboard-read; clipboard-write"
+              />
+              <img
+                src="/images/work/marsh-storybook-prototype.png"
+                alt="Notifications Hub Prototype"
+                className="md:hidden w-full"
+                loading="lazy"
               />
             </div>
           </ScrollReveal>
@@ -192,7 +198,13 @@ const MarshDesignSystem = () => {
                   <iframe
                     src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-logo--docs&globals=backgrounds.grid:!false"
                     title="Logo Documentation"
-                    className="w-full aspect-[16/10] border-0"
+                    className="hidden md:block w-full aspect-[16/10] border-0"
+                    loading="lazy"
+                  />
+                  <img
+                    src="/images/work/marsh-storybook-logo.png"
+                    alt="Logo Documentation"
+                    className="md:hidden w-full"
                     loading="lazy"
                   />
                 </div>
@@ -213,7 +225,13 @@ const MarshDesignSystem = () => {
                   <iframe
                     src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-colours--docs&globals=backgrounds.grid:!false"
                     title="Colour Tokens Documentation"
-                    className="w-full aspect-[16/10] border-0"
+                    className="hidden md:block w-full aspect-[16/10] border-0"
+                    loading="lazy"
+                  />
+                  <img
+                    src="/images/work/marsh-storybook-colours.png"
+                    alt="Colour Tokens Documentation"
+                    className="md:hidden w-full"
                     loading="lazy"
                   />
                 </div>
@@ -234,7 +252,13 @@ const MarshDesignSystem = () => {
                   <iframe
                     src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/components-button--docs&globals=backgrounds.grid:!false"
                     title="Button Components Documentation"
-                    className="w-full aspect-[16/10] border-0"
+                    className="hidden md:block w-full aspect-[16/10] border-0"
+                    loading="lazy"
+                  />
+                  <img
+                    src="/images/work/marsh-storybook-prototype.png"
+                    alt="Button Components Documentation"
+                    className="md:hidden w-full"
                     loading="lazy"
                   />
                 </div>
