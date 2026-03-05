@@ -89,6 +89,19 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "marsh-design-system",
+    title: "Marsh Design System Rebrand",
+    subtitle: "Rebranding an enterprise component library with an AI-first workflow",
+    workDescription: "A full rebrand of the CORE design system — 60+ components updated, documented in Storybook, and shipped to GitHub before the official launch.",
+    tags: ["Design Systems", "Brand Implementation", "AI Workflow"],
+    timeline: "2 months",
+    client: "Marsh",
+    pillImage: "/images/work/marsh-design-system.webp",
+    headerImage: "/images/work/marsh-design-system.webp",
+    description: "",
+    nextProject: "marsh-internal-tooling",
+  },
+  {
     id: "marsh-internal-tooling",
     title: "Marsh Internal Tooling",
     subtitle: "Three enterprise internal tools designed and shipped simultaneously",
