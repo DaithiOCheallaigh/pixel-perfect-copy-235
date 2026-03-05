@@ -16,6 +16,7 @@ import AIDesignProcess from "./pages/AIDesignProcess";
 import BlogPost from "./pages/BlogPost";
 import StartProject from "./pages/StartProject";
 import MarshInternalTooling from "./pages/MarshInternalTooling";
+import MarshDesignSystem from "./pages/MarshDesignSystem";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
