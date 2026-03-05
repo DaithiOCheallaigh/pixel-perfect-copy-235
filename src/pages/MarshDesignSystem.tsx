@@ -139,29 +139,120 @@ const MarshDesignSystem = () => {
         </div>
       </section>
 
-      {/* 4. STORYBOOK LINK */}
+      {/* 4. LIVE PROTOTYPE */}
+      <section className="px-6 py-16 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <SectionLabel>Working Prototype</SectionLabel>
+            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
+              A fully interactive prototype of the Notifications Hub, built inside Storybook
+              to validate layout, navigation, and data-density decisions before a single line
+              of production code was written. Stakeholders could click through real flows
+              and leave feedback directly against the living artefact.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div className="overflow-hidden rounded-xl border border-border">
+              <iframe
+                src="https://daithiocheallaigh.github.io/MarshDesign2//iframe.html?globals=backgrounds.grid%3A!false&args=&id=prototypes-notifications-hub--default&viewMode=story"
+                title="Notifications Hub Prototype"
+                className="w-full aspect-[16/10] border-0"
+                loading="lazy"
+                allow="clipboard-read; clipboard-write"
+              />
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* 5. DESIGN SYSTEM EMBEDS */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
             <SectionLabel>Rebranded Component Library</SectionLabel>
             <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              Every component in the CORE library was updated to the new brand — colour tokens,
-              typography scales, border radii, elevation shadows, and icon treatments. The full
-              library was documented in Storybook with interactive variant previews and usage guidelines,
-              then shipped to GitHub as the single source of truth for engineering.
+              Every component in the CORE library was updated to reflect the new brand identity —
+              colour tokens, typography scales, border radii, elevation shadows, and icon treatments.
+              The full library was documented in Storybook with interactive variant previews and
+              usage guidelines, then shipped to GitHub as the single source of truth for engineering.
             </p>
           </ScrollReveal>
 
+          <div className="space-y-12">
+            {/* Logo */}
+            <ScrollReveal delay={0.08}>
+              <div>
+                <h3 className="mb-2 text-lg font-bold text-foreground">Logo</h3>
+                <p className="mb-4 max-w-2xl text-[15px] leading-[1.7] text-muted-foreground">
+                  The cornerstone of the rebrand. The updated Marsh logo was codified as a
+                  sub-atomic token — available in multiple colour variants, with clear-space
+                  rules and minimum-size constraints enforced at the component level.
+                </p>
+                <div className="overflow-hidden rounded-xl border border-border">
+                  <iframe
+                    src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-logo--docs&globals=backgrounds.grid:!false"
+                    title="Logo Documentation"
+                    className="w-full aspect-[16/10] border-0"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Colours */}
+            <ScrollReveal delay={0.08}>
+              <div>
+                <h3 className="mb-2 text-lg font-bold text-foreground">Colour Tokens</h3>
+                <p className="mb-4 max-w-2xl text-[15px] leading-[1.7] text-muted-foreground">
+                  The full colour palette was rebuilt from Marsh's new brand guidelines —
+                  primary, secondary, semantic, and neutral scales translated into
+                  design tokens that propagate across every component automatically.
+                  Each swatch includes contrast ratios and WCAG accessibility grades.
+                </p>
+                <div className="overflow-hidden rounded-xl border border-border">
+                  <iframe
+                    src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-colours--docs&globals=backgrounds.grid:!false"
+                    title="Colour Tokens Documentation"
+                    className="w-full aspect-[16/10] border-0"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Buttons */}
+            <ScrollReveal delay={0.08}>
+              <div>
+                <h3 className="mb-2 text-lg font-bold text-foreground">Button Components</h3>
+                <p className="mb-4 max-w-2xl text-[15px] leading-[1.7] text-muted-foreground">
+                  Buttons are the most frequently used interactive element across all three
+                  Marsh products. The rebranded variants — primary, secondary, ghost, destructive —
+                  were documented with size matrices, icon placement rules, loading states,
+                  and disabled treatments, ensuring pixel-perfect consistency at every touchpoint.
+                </p>
+                <div className="overflow-hidden rounded-xl border border-border">
+                  <iframe
+                    src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/components-button--docs&globals=backgrounds.grid:!false"
+                    title="Button Components Documentation"
+                    className="w-full aspect-[16/10] border-0"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          {/* Storybook external link */}
           <ScrollReveal delay={0.1}>
             <a
-              href="https://daithiocheallaigh.github.io/MarshDesign/?path=/docs/components-button--docs"
+              href="https://daithiocheallaigh.github.io/MarshDesign2/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+              className="group mt-12 flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
             >
               <div>
                 <span className="font-mono-label mb-1 block text-xs text-muted-foreground">
-                  Explore the Rebranded Library
+                  Explore the Full Library
                 </span>
                 <span className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
                   CORE Design System — Storybook Documentation
