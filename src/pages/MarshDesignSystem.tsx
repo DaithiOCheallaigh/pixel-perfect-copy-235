@@ -252,7 +252,13 @@ const MarshDesignSystem = () => {
                   <iframe
                     src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/components-button--docs&globals=backgrounds.grid:!false"
                     title="Button Components Documentation"
-                    className="w-full aspect-[16/10] border-0"
+                    className="hidden md:block w-full aspect-[16/10] border-0"
+                    loading="lazy"
+                  />
+                  <img
+                    src="/images/work/marsh-storybook-prototype.png"
+                    alt="Button Components Documentation"
+                    className="md:hidden w-full"
                     loading="lazy"
                   />
                 </div>
