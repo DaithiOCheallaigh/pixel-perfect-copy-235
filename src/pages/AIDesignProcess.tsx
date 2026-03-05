@@ -222,14 +222,23 @@ const AIDesignProcess = () => {
             />
           </ScrollReveal>
           <ScrollReveal delay={0.3}>
-            <a
-              href="https://www.lacunadigital.io/work/marsh-internal-tooling"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-10 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/20"
-            >
-              View a project built using this process →
-            </a>
+            <p className="mt-10 mb-4 text-sm font-semibold text-foreground">
+              Projects built using this process
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link
+                to="/work/marsh-internal-tooling"
+                className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/20"
+              >
+                Marsh Internal Tooling →
+              </Link>
+              <Link
+                to="/work/marsh-design-system"
+                className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/20"
+              >
+                Marsh Design System Rebrand →
+              </Link>
+            </div>
           </ScrollReveal>
         </div>
       </section>
