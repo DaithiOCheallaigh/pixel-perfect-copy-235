@@ -73,7 +73,7 @@ const MarshDesignSystem = () => {
               translated into a production-ready design system pushed to GitHub before the rebrand launched.
             </p>
             <img
-              src="/images/work/marsh-logo-white.png"
+              src="/images/work/marsh-logo-new-white.png"
               alt="Marsh"
               className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full"
             />
