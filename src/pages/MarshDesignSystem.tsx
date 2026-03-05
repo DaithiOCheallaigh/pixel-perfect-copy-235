@@ -256,7 +256,7 @@ const MarshDesignSystem = () => {
                     loading="lazy"
                   />
                   <img
-                    src="/images/work/marsh-storybook-prototype.png"
+                    src="/images/work/marsh-storybook-buttons.png"
                     alt="Button Components Documentation"
                     className="md:hidden w-full"
                     loading="lazy"
