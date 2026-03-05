@@ -156,9 +156,15 @@ const MarshDesignSystem = () => {
               <iframe
                 src="https://daithiocheallaigh.github.io/MarshDesign2//iframe.html?globals=backgrounds.grid%3A!false&args=&id=prototypes-notifications-hub--default&viewMode=story"
                 title="Notifications Hub Prototype"
-                className="w-full aspect-[16/10] border-0"
+                className="hidden md:block w-full aspect-[16/10] border-0"
                 loading="lazy"
                 allow="clipboard-read; clipboard-write"
+              />
+              <img
+                src="/images/work/marsh-storybook-prototype.png"
+                alt="Notifications Hub Prototype"
+                className="md:hidden w-full"
+                loading="lazy"
               />
             </div>
           </ScrollReveal>
