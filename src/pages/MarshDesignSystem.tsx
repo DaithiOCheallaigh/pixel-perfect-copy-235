@@ -225,7 +225,13 @@ const MarshDesignSystem = () => {
                   <iframe
                     src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-colours--docs&globals=backgrounds.grid:!false"
                     title="Colour Tokens Documentation"
-                    className="w-full aspect-[16/10] border-0"
+                    className="hidden md:block w-full aspect-[16/10] border-0"
+                    loading="lazy"
+                  />
+                  <img
+                    src="/images/work/marsh-storybook-colours.png"
+                    alt="Colour Tokens Documentation"
+                    className="md:hidden w-full"
                     loading="lazy"
                   />
                 </div>
