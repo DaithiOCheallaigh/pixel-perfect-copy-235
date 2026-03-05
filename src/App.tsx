@@ -115,6 +115,7 @@ const AppContent = () => {
         <Route path="/web-design" element={<WebDesignServices />} />
         <Route path="/ai-design-process" element={<AIDesignProcess />} />
         <Route path="/work/marsh-internal-tooling" element={<MarshInternalTooling />} />
+        <Route path="/work/marsh-design-system" element={<MarshDesignSystem />} />
         <Route path="/start-project" element={<StartProject />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
