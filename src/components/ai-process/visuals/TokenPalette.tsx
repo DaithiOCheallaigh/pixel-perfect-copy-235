@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ColorFilter } from "iconsax-react";
+import { Colorfilter } from "iconsax-react";
 
 const tokens = [
   { color: "#F471B5", label: "--primary" },
