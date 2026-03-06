@@ -93,6 +93,13 @@ const Navigation = ({ visible }: { visible: boolean }) => {
             </Link>
           ))}
           <Link
+            to="/ai-design-process"
+            onClick={() => setMobileOpen(false)}
+            className={`text-lg font-semibold transition-colors ${isActive("/ai-design-process") ? "text-primary" : "text-foreground"}`}
+          >
+            AI Process
+          </Link>
+          <Link
             to="/start-project"
             onClick={() => setMobileOpen(false)}
             className="inline-flex items-center gap-2 text-lg font-semibold text-primary"
