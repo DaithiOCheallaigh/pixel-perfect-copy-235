@@ -548,9 +548,10 @@ export const services: Service[] = [
   },
   {
     id: "link-building",
-    title: "Link Building & Authority",
+    title: "Link Building & Authority Services in Dublin",
     category: "SEO",
-    intro: "Link building is the process of acquiring hyperlinks from other websites to your own. These backlinks serve as votes of confidence in your content, signaling to search engines that your site is a trustworthy, authoritative resource.\n\nI develop strategic link building campaigns that focus on quality over quantity, earning links from relevant, authoritative sources that boost your search rankings and drive referral traffic.",
+    intro: "Backlinks remain one of Google's strongest ranking signals. Every quality link pointing to your website is a vote of confidence from another site, telling search engines that your content is valuable, trustworthy, and worth ranking. Without a healthy backlink profile, competing for valuable keywords becomes exponentially harder.\n\nStrategic link building isn't about quantity — it's about earning links from relevant, authoritative sources in your industry. A single link from a respected Irish publication or industry blog is worth more than dozens of low-quality directory listings.\n\nAt Lacuna Digital, I take a strategic, ethical approach to link building that focuses on earning links through genuine value. My process includes backlink profile auditing, competitor link analysis, content-driven outreach, and digital PR strategies that build relationships with relevant publications and industry voices.\n\nEvery link building campaign is tailored to your industry and objectives. I identify realistic link opportunities, create content that naturally attracts backlinks, and conduct targeted outreach that prioritises relevance and authority over volume.\n\nWorking with Irish SMEs, I understand the local link landscape — the Irish publications, directories, and industry associations that carry real authority. My white-hat approach builds sustainable authority that compounds over time.",
+    metaDescription: "Build domain authority with strategic link building. Lacuna Digital earns quality backlinks for Irish businesses through ethical outreach.",
     benefitsTitle: "Why Link Building Matters",
     benefits: [
       { title: "Domain Authority", desc: "Quality backlinks are one of the strongest ranking factors in Google's algorithm." },
