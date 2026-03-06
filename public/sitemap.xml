@@ -40,6 +40,9 @@
   <url><loc>https://lacunadigital.io/service/advanced-prototyping</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://lacunadigital.io/service/development-alignment</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
 
+  <!-- Sitemap page -->
+  <url><loc>https://lacunadigital.io/sitemap</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+
   <!-- Blog posts -->
   <url><loc>https://lacunadigital.io/blog/2026-new-norm-designers</loc><priority>0.7</priority><changefreq>yearly</changefreq></url>
   <url><loc>https://lacunadigital.io/blog/navigating-design-2025</loc><priority>0.6</priority><changefreq>yearly</changefreq></url>
