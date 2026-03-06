@@ -19,9 +19,10 @@ export const services: Service[] = [
   // ── Product ──
   {
     id: "user-interface-design",
-    title: "User Interface Design",
+    title: "User Interface Design Services in Dublin",
     category: "Product",
-    intro: "I craft intuitive, visually compelling user interfaces that transform complex digital products into seamless experiences. My UI design service focuses on creating interfaces that not only look exceptional but fundamentally enhance how users interact with your product.\n\nAs your UI design expert, my approach combines aesthetic excellence with functional precision: User-Centred Design, Collaborative Process, Data-Informed Solutions, and Consistent Design Systems.",
+    intro: "User interface design is the craft of creating the visual layer that people interact with every day — buttons, forms, navigation, layouts, and every pixel in between. Great UI design doesn't just look good; it makes complex systems feel simple and guides users effortlessly toward their goals.\n\nIn a market where first impressions are formed in milliseconds, the quality of your interface directly impacts whether users trust your brand, engage with your product, and ultimately convert. For Irish SMEs competing against larger players, exceptional UI design is a powerful equaliser.\n\nAt Lacuna Digital, I design interfaces that balance aesthetic excellence with functional precision. Every project begins with understanding your users, your brand, and your business objectives. From there, I create wireframes, visual designs, and interactive prototypes — testing and iterating until the interface performs.\n\nMy UI design process covers interface audits, wireframing, visual design, responsive layouts, design systems, and micro-interactions. I work in Figma and deliver comprehensive documentation so your development team can implement with confidence.\n\nWith extensive experience across SaaS, fintech, travel, and enterprise applications in the Irish and international market, I bring a depth of expertise that ensures your interface isn't just visually compelling but strategically sound. You work directly with a senior designer — no account managers, no juniors.",
+    metaDescription: "Expert UI design for web and mobile products. Lacuna Digital creates intuitive, brand-aligned interfaces that drive engagement for Irish SMEs.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Web_Mobile-2.webp?fit=800%2C755&ssl=1",
     servicesTitle: "UI Services",
     services: [
