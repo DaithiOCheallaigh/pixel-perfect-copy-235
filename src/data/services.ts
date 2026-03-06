@@ -623,9 +623,10 @@ export const services: Service[] = [
   },
   {
     id: "advanced-prototyping",
-    title: "Advanced Prototyping",
+    title: "Advanced Figma Prototyping in Dublin",
     category: "System Design",
-    intro: "Advanced prototyping goes beyond basic clickable mockups to create highly interactive, realistic simulations of your product. Using Figma's advanced features, I build prototypes with complex interactions, conditional logic, variables, and animations that closely mirror the final development experience.\n\nThese high-fidelity prototypes are invaluable for usability testing, stakeholder presentations, and development handoff — reducing misunderstandings and accelerating delivery.",
+    intro: "Advanced prototyping goes beyond basic clickable mockups. Using Figma's most powerful features — variables, conditional logic, complex animations, and multi-state components — I create prototypes that closely simulate the final product experience.\n\nThese aren't wireframes with hotspots. They're interactive simulations where data changes between screens, conditional paths respond to user input, and micro-interactions provide realistic feedback. The result is a prototype so convincing that usability test participants often believe they're using a live product.\n\nAt Lacuna Digital, I specialise in pushing Figma prototyping to its limits. My prototypes include multi-step form flows with validation states, dashboard interfaces with interactive data filtering, onboarding sequences with conditional branching, and animated transitions that communicate hierarchy and spatial relationships.\n\nEvery prototype comes with detailed developer handoff documentation — annotated specs that show exactly how each interaction should be built. This eliminates the costly back-and-forth that typically happens when complex designs meet development reality.\n\nWith deep experience in advanced Figma prototyping for Irish and international clients, I bring a level of interactive design expertise that transforms how your team validates and communicates product concepts.",
+    metaDescription: "High-fidelity interactive prototypes with complex logic and animations. Lacuna Digital builds Figma prototypes that feel like real products.",
     benefitsTitle: "Why Advanced Prototyping",
     benefits: [
       { title: "Realistic Testing", desc: "Users interact with a prototype that feels like the real product, yielding more accurate feedback." },
