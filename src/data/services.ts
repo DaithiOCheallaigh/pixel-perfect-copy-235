@@ -260,9 +260,10 @@ export const services: Service[] = [
   // ── Web ──
   {
     id: "cms-content-platforms",
-    title: "CMS & Content Platforms",
+    title: "CMS Design & Management Services in Dublin",
     category: "Web",
-    intro: "A Content Management System (CMS) is a software application that allows users to create, manage, and modify digital content on a website without needing specialized technical knowledge. It provides a user-friendly interface to handle the entire content lifecycle, from creation and publishing to archiving.\n\nIn today's digital landscape, content is king. A CMS enables organizations to efficiently manage their online presence, ensuring that content is consistent, up-to-date, and accessible.",
+    intro: "A content management system gives your team the power to update your website without touching code. Whether it's publishing blog posts, updating product pages, or managing an online store, the right CMS transforms your website from a static brochure into a dynamic business tool.\n\nChoosing the wrong CMS — or implementing the right one poorly — leads to frustration, workarounds, and a website your team avoids updating. The result is stale content that hurts both user experience and search rankings.\n\nAt Lacuna Digital, I help Irish SMEs select, set up, and optimise the right CMS for their needs — whether that's WordPress, Shopify, or a headless solution like Contentful. My approach starts with understanding your content workflows, team capabilities, and growth plans, then recommends and implements a solution that fits.\n\nBeyond setup, I design CMS experiences that your team actually enjoys using. Custom templates ensure brand consistency, structured content types make publishing intuitive, and training ensures your team is confident managing content independently.\n\nWith over a decade of experience implementing CMS solutions for businesses of all sizes across Ireland, I provide the expertise to get your content platform right from the start.",
+    metaDescription: "Expert CMS setup and management for Irish SMEs. Lacuna Digital helps you choose, design, and maintain the right content platform.",
     image: "/images/services/CMS_Lacuna.webp",
     benefitsTitle: "Benefits of a CMS",
     benefits: [
