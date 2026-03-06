@@ -499,9 +499,10 @@ export const services: Service[] = [
   },
   {
     id: "technical-seo",
-    title: "Technical SEO Optimisation",
+    title: "Technical SEO Services in Dublin",
     category: "SEO",
-    intro: "Technical SEO ensures that search engines can effectively crawl, index, and render your website. Without a solid technical foundation, even the best content won't achieve its full ranking potential.\n\nI conduct comprehensive technical SEO audits and implement optimisations that improve site speed, mobile usability, crawlability, and overall search engine visibility.",
+    intro: "Technical SEO is the foundation that determines whether search engines can effectively crawl, index, and rank your website. Without it, even outstanding content won't reach your audience. Technical issues like slow page speeds, broken links, missing structured data, and poor mobile performance silently undermine your search visibility.\n\nMost business owners never see these issues because they're invisible to regular visitors. But search engines notice everything — and they reward sites that get the technical fundamentals right.\n\nAt Lacuna Digital, I conduct comprehensive technical SEO audits that identify every issue affecting your search performance, then prioritise fixes by impact. My approach combines SEO expertise with front-end development knowledge — I don't just find problems, I implement solutions.\n\nAudits cover site speed, mobile usability, crawlability, indexation, structured data, internal linking, Core Web Vitals, and security. Every finding comes with a clear priority rating and actionable fix, whether it's something you can handle or needs development support.\n\nWorking with Irish SMEs, I understand the local search landscape and the specific technical challenges that smaller businesses face. You get enterprise-level technical SEO expertise at a scale and price that makes sense.",
+    metaDescription: "Fix the technical issues holding your site back. Lacuna Digital delivers technical SEO audits and optimisation for Irish businesses.",
     benefitsTitle: "Why Technical SEO Matters",
     benefits: [
       { title: "Improved Crawlability", desc: "Ensure search engines can discover and index all your important pages." },
