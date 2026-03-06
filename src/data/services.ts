@@ -165,9 +165,10 @@ export const services: Service[] = [
   },
   {
     id: "brand-identity",
-    title: "Brand Identity",
+    title: "Brand Identity Design in Dublin",
     category: "Branding",
-    intro: "Brand identity is the collection of visual elements, voice, and values that represent your company to the world. It encompasses everything from your logo, color palette, and typography to your messaging tone and brand personality.\n\nA strong brand identity communicates who you are, what you stand for, and why customers should choose you over competitors.",
+    intro: "Your brand identity is the complete visual and verbal system that communicates who you are, what you stand for, and why you matter. It encompasses your logo, colour palette, typography, imagery, tone of voice, and how all of these elements work together across every touchpoint.\n\nFor SMEs in Dublin and across Ireland, a strong brand identity is the difference between blending in and standing out. It builds trust before a single conversation happens and creates the recognition that turns first-time visitors into repeat customers.\n\nAt Lacuna Digital, I create brand identities through a strategic process that starts with understanding your business, audience, and market position. I don't design logos in isolation — I build complete identity systems that work across digital, print, signage, and social media.\n\nMy process covers discovery, strategy, visual identity creation, and comprehensive brand guidelines. Every client receives a complete brand toolkit including logo variations, colour specifications, typography hierarchy, and usage examples — everything needed for consistent implementation.\n\nWith 15 years of branding and design experience, I've helped businesses across Ireland develop identities that resonate with their audiences and stand the test of time. You get direct access to a senior designer who understands both the creative and strategic sides of brand building.",
+    metaDescription: "Distinctive brand identity design for Irish SMEs. Lacuna Digital creates visual identities that differentiate your business and build lasting recognition.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/BrandIdentity.webp?fit=800%2C598&ssl=1",
     processTitle: "Brand Identity Process",
     process: [
