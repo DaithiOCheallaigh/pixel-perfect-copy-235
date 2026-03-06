@@ -218,57 +218,44 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: "strategic-ux",
-    title: 'Why Your Digital Product Needs More Than Just "Good Design"',
+    title: 'Why Strategic UX Design Matters More Than Making Things "Look Good"',
     date: "October 22, 2025",
-    readTime: "5 min read",
+    readTime: "7 min read",
     image: "/images/blog/strategic-ux.webp",
-    excerpt: 'Great design isn\'t decoration — it\'s problem-solving with pixels. "What problem are we solving?" not "What colours do you like?"',
+    excerpt: "Most SMEs treat design as decoration. Here's why strategic UX design is the difference between a product people use and one they love — and how to tell if you need it.",
     content: (
       <>
-        <p>As a UI/UX designer, I've lost count of how many times I've heard: "We just need it to look good."</p>
-        <p>And while aesthetics matter—nobody wants to use an ugly app—there's a fundamental misunderstanding happening here. Great design isn't decoration. It's problem-solving with pixels.</p>
+        <p>If you're running a small or medium-sized business and considering investing in a digital product — an app, a platform, a customer portal — you've probably had this thought: <em>"We just need it to look professional."</em></p>
+        <p>It's a reasonable instinct. But it's also the single biggest misconception that leads SMEs to waste budget on digital products that underperform. Here's why strategic UX design is what actually moves the needle, and what to look for when hiring a design consultancy.</p>
 
-        <h2>The Real Job of UI/UX Design</h2>
-        <p>When I start a new project, my first question isn't "What colours do you like?" It's "What problem are we solving for your users?"</p>
-        <p>Take a recent project I worked on with TipDirect. The brief wasn't to create a pretty tipping interface. The real challenge was addressing a cultural shift: people don't carry cash anymore. Service workers were losing out on tips, and customers felt awkward about it.</p>
-        <p>The design solution needed to:</p>
+        <h2>What Is Strategic UX Design?</h2>
+        <p>Strategic UX design is the practice of making design decisions based on business goals, user research, and measurable outcomes — not just aesthetics. It's the difference between a designer who asks "What colours do you like?" and one who asks "What's stopping your customers from completing a purchase?"</p>
+        <p>For SMEs, this distinction matters enormously. You don't have the luxury of rebuilding a product six months after launch because users can't figure it out. Every design decision needs to earn its place.</p>
+
+        <h2>The Real Cost of "Good Enough" Design</h2>
+        <p>A product that looks polished but frustrates users will cost you in ways that don't show up immediately:</p>
         <ul>
-          <li>Remove friction from the tipping process</li>
-          <li>Feel trustworthy and legitimate</li>
-          <li>Work seamlessly in real-world service environments</li>
-          <li>Actually increase tips, not just digitize existing behaviour</li>
+          <li><strong>Higher support costs</strong> — confused users generate more tickets, calls, and complaints</li>
+          <li><strong>Lower conversion rates</strong> — even small friction points in a sign-up flow or checkout process compound into significant revenue loss</li>
+          <li><strong>Poor retention</strong> — users who struggle with your product won't come back, and they certainly won't recommend it</li>
+          <li><strong>Expensive rework</strong> — fixing usability problems after development is 10x more costly than addressing them during the design phase</li>
         </ul>
-        <p>The result? A 45% average increase in 5-star reviews. Not because the interface "looked nice," but because it solved a genuine problem for everyone involved.</p>
+        <p>I've seen this pattern repeatedly working with clients in the travel-tech and financial services sectors. One project — a digital tipping platform — saw a 45% increase in 5-star reviews not because we made the interface prettier, but because we removed three unnecessary steps from the core user flow.</p>
 
-        <h2>The Strategy Before the Pixels</h2>
-        <p>Every project begins with understanding your vision—but more importantly, understanding your users' needs. Here's my approach:</p>
-        <p><strong>1. Listen More Than You Design</strong> The best insights come from conversations, not assumptions. What keeps your users up at night? What makes them abandon their cart? Where do they get confused?</p>
-        <p><strong>2. Challenge the Brief</strong> Sometimes what a client thinks they need isn't what will actually move the needle. My job is to push back constructively and explore alternatives that might work better.</p>
-        <p><strong>3. Design for Outcomes, Not Outputs</strong> A beautiful landing page means nothing if it doesn't convert. A slick app is worthless if users can't complete their tasks. I measure success by business results, not just portfolio pieces.</p>
+        <h2>What to Look for in a UX Design Consultancy</h2>
+        <p>If you're an SME evaluating design partners, here are the signals that separate strategic UX consultancies from purely visual ones:</p>
+        <p><strong>They start with questions, not mockups.</strong> A good consultancy will spend the first phase understanding your business model, your users' pain points, and your competitive landscape before opening a design tool. If someone jumps straight to wireframes in the first meeting, that's a red flag.</p>
+        <p><strong>They measure success by outcomes.</strong> Ask how they define project success. If the answer is "deliverables" (wireframes, prototypes, design files), be cautious. You want a partner who talks about conversion rates, task completion, user satisfaction, or support ticket reduction.</p>
+        <p><strong>They challenge the brief.</strong> The best design work often comes from questioning assumptions. A consultancy that simply executes your specifications without pushback isn't adding strategic value — they're an expensive pair of hands.</p>
+        <p><strong>They design for your users, not for awards.</strong> Portfolio pieces that look stunning on Dribbble but lack context about business impact are a warning sign. Look for case studies that explain the problem, the process, and the measurable result.</p>
 
-        <h2>Why Collaboration Beats Perfection</h2>
-        <p>I'm not precious about my designs. In fact, some of my best work has come from collaborative feedback and being willing to pivot.</p>
-        <p>One client recently mentioned they appreciated my willingness to provide "valuable feedback, even if it meant suggesting something different from what they initially wanted." That's because I'm not here to execute your exact specifications—I'm here to help you succeed.</p>
-        <p>Good design is iterative. It's messy. It involves testing, failing, learning, and improving. The designers who can't handle that feedback loop are the ones producing work that looks great in Dribbble but fails in the real world.</p>
+        <h2>Why This Matters More for SMEs Than Enterprises</h2>
+        <p>Large enterprises can absorb the cost of a poorly designed product. They have dedicated support teams, established brand loyalty, and deep pockets for iteration. SMEs don't have that margin for error.</p>
+        <p>When you're competing against larger players, your digital experience is often your primary differentiator. A thoughtfully designed product that solves real user problems will outperform a bigger competitor's generic solution every time. Strategic UX design isn't a luxury for SMEs — it's a competitive necessity.</p>
 
-        <h2>Standing Out in a Competitive Landscape</h2>
-        <p>Today's digital landscape is crowded. Your competitors are probably pretty good too. So how do you differentiate?</p>
-        <p>Not through trendy gradients or the latest micro-interactions (though those have their place). You stand out by deeply understanding your users and solving their problems better than anyone else.</p>
-        <p>Purpose-driven design resonates because it connects with real human needs. It's the difference between a product people use and a product people love.</p>
-
-        <h2>The Bottom Line</h2>
-        <p>If you're looking for someone to "make it pretty," you don't need a UI/UX designer—you need a graphic designer (and that's a perfectly valid need).</p>
-        <p>But if you're looking to:</p>
-        <ul>
-          <li>Increase conversions</li>
-          <li>Improve user satisfaction</li>
-          <li>Reduce support tickets</li>
-          <li>Drive business growth through strategic design</li>
-        </ul>
-        <p>Then you need someone who sees design as a business tool, not an art project.</p>
-        <p>Great design solves problems. Everything else is just decoration.</p>
-        <p className="italic text-muted-foreground mt-8">I am a freelance UI/UX designer focused on creating purpose-driven digital experiences that drive business results. Based in Ireland, I help businesses stand out through strategic design thinking and user-centered solutions.</p>
-        <p className="italic text-muted-foreground">Want to discuss your project? Let's talk about the problems you're trying to solve.</p>
+        <h2>Ready to Invest in Design That Actually Works?</h2>
+        <p>At Lacuna Digital, we specialise in helping Irish SMEs and scaling startups build digital products grounded in strategy, not just aesthetics. From <a href="/service/user-experience-design" className="text-primary hover:underline">user experience design</a> and <a href="/service/user-interface-design" className="text-primary hover:underline">UI design</a> to <a href="/service/design-strategy" className="text-primary hover:underline">design strategy consulting</a>, every engagement starts with understanding your business goals and your users' needs.</p>
+        <p><a href="/start-project" className="text-primary hover:underline font-semibold">Start a conversation about your project →</a></p>
       </>
     ),
   },
