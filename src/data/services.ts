@@ -192,9 +192,10 @@ export const services: Service[] = [
   },
   {
     id: "branding-guidelines",
-    title: "Branding Guidelines",
+    title: "Branding Guidelines Services in Dublin",
     category: "Branding",
-    intro: "Branding guidelines (also called brand standards or style guides) are comprehensive documents that outline how your brand elements should be used across all platforms and communications. They ensure consistency, recognition, and trust in your brand presence.",
+    intro: "Branding guidelines are the rulebook that ensures your brand looks, sounds, and feels consistent wherever it appears. They document everything from logo usage and colour specifications to typography hierarchy, imagery style, and tone of voice — giving anyone who represents your brand clear direction.\n\nFor SMEs, branding guidelines are an investment that pays for itself. They eliminate the costly cycle of correcting off-brand work, speed up content creation, and ensure that new team members, agencies, or freelancers can produce on-brand output from day one.\n\nAt Lacuna Digital, I create branding guidelines that are genuinely useful — not PDF documents that gather dust. My guidelines are comprehensive yet accessible, covering brand strategy, visual identity, voice and tone, digital standards, and practical application examples.\n\nEach guideline document includes precise specifications — RGB, CMYK, HEX, and Pantone colour values; exact font weights and sizes; clear space requirements; and do/don't examples that prevent common misuse. I also provide digital templates that make implementation straightforward.\n\nWith 15 years of experience developing brand standards for organisations ranging from ambitious startups to established enterprises across Ireland, I create guidelines that balance aspiration with practicality — ambitious enough to elevate your brand, practical enough to be used every day.",
+    metaDescription: "Comprehensive brand guidelines for Irish businesses. Lacuna Digital creates practical brand standards that ensure consistency everywhere.",
     image: "/images/services/BrandingGuidelines.webp",
     processTitle: "Branding Process",
     process: [
