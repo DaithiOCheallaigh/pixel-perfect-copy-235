@@ -599,9 +599,10 @@ export const services: Service[] = [
   },
   {
     id: "style-guides",
-    title: "Style Guides",
+    title: "Digital Style Guide Design in Dublin",
     category: "System Design",
-    intro: "Style guides are living documents that define the visual and interaction language of your digital product. They go beyond branding guidelines to cover specific UI patterns, spacing systems, color usage, typography scales, and interaction behaviors.\n\nA comprehensive style guide ensures that anyone working on your product — designers, developers, or content creators — can maintain consistency without constant oversight.",
+    intro: "A digital style guide goes beyond brand guidelines to define the specific visual and interaction language of your product. It covers spacing systems, typography scales, colour usage rules, icon standards, and interaction patterns — the granular details that determine whether your product feels polished or patchwork.\n\nStyle guides are the reference document your design and development teams reach for dozens of times daily. They eliminate debates about padding values, font sizes, and colour choices by providing definitive answers.\n\nAt Lacuna Digital, I create style guides that are practical reference tools, not theoretical documents. Each guide defines your complete design language — grid systems, type scales, colour palettes with accessibility ratios, iconography standards, and interaction patterns — with clear examples and usage rules.\n\nI build interactive, living guides that evolve with your product rather than becoming outdated. Every specification is precise enough for developers to implement accurately and flexible enough to accommodate future growth.\n\nWorking with product teams across Ireland, I bring the systematic design thinking that ensures your product feels cohesive at every scale — whether it's a single web application or a suite of connected tools.",
+    metaDescription: "Living style guides for digital products. Lacuna Digital defines your UI language — spacing, colour, typography — for consistent implementation.",
     benefitsTitle: "Benefits of Style Guides",
     benefits: [
       { title: "Visual Consistency", desc: "Ensure every screen and interaction follows the same visual language." },
