@@ -79,9 +79,10 @@ export const services: Service[] = [
   },
   {
     id: "design-strategy",
-    title: "Design Strategy",
+    title: "Design Strategy Consultant in Dublin",
     category: "Product",
-    intro: "Design strategy is the deliberate planning and intentional approach to solving problems through design. It bridges the gap between business objectives and user needs, creating a framework that guides design decisions across an organisation. Unlike tactical design execution, design strategy focuses on the \"why\" and \"what\" before addressing the \"how,\" ensuring that all design efforts align with long-term goals and vision.",
+    intro: "Design strategy is the deliberate planning that connects your business objectives with user needs. It answers the critical questions — what should we build, who is it for, and why will it succeed — before a single pixel is placed. Without strategy, design is decoration. With it, design becomes a competitive advantage.\n\nFor SMEs in Dublin and across Ireland, investing in design strategy means every euro spent on digital development delivers measurable returns. Rather than redesigning on instinct, you make decisions grounded in user research, market analysis, and clear success metrics.\n\nAt Lacuna Digital, I bring over a decade of strategic design experience working with Irish and international businesses. My approach starts with deep discovery — stakeholder interviews, competitor analysis, and user research — then translates findings into actionable roadmaps with clear milestones and KPIs.\n\nWhat sets my process apart is the integration of AI tools into the strategy workflow. I use AI to rapidly generate and test design concepts, validate hypotheses faster, and explore more solutions in less time. This means you get the rigour of traditional strategic consulting with the speed and efficiency of modern tools.\n\nWhether you need a complete design strategy for a new product or a strategic review of an existing one, I provide the expert guidance that transforms design from a cost centre into a growth driver.",
+    metaDescription: "Strategic design consulting for Irish SMEs. Align your digital products with business goals through research-driven UX strategy from Lacuna Digital.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/SpotifyHeader_Mobile.webp?fit=800%2C825&ssl=1",
     benefitsTitle: "Why Design Strategy Matters",
     benefits: [
