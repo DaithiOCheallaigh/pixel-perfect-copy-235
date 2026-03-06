@@ -18,6 +18,7 @@ import StartProject from "./pages/StartProject";
 import MarshInternalTooling from "./pages/MarshInternalTooling";
 import MarshDesignSystem from "./pages/MarshDesignSystem";
 import NotFound from "./pages/NotFound";
+import Sitemap from "./pages/Sitemap";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
