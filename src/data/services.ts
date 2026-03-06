@@ -647,9 +647,10 @@ export const services: Service[] = [
   },
   {
     id: "development-alignment",
-    title: "Development Alignment",
+    title: "Design-to-Development Alignment Services in Dublin",
     category: "System Design",
-    intro: "Development alignment ensures that the design vision is faithfully translated into code. I bridge the gap between design and development teams through structured handoff processes, design tokens, and ongoing collaboration that eliminates the \"design drift\" that plagues many products.\n\nMy approach ensures that what ships matches what was designed — pixel-perfect implementations that maintain the integrity of the user experience.",
+    intro: "Development alignment is the structured process of ensuring that what designers create is faithfully translated into code. It addresses the persistent challenge every product team faces: the gap between design intent and development output — commonly known as \"design drift.\"\n\nWithout alignment, products gradually diverge from their design vision. Spacing becomes inconsistent, colours shift, interactions feel different from what was specified. Over time, this accumulates into significant design debt that's expensive to resolve.\n\nAt Lacuna Digital, I bridge this gap through design tokens, structured handoff processes, and collaborative workflows. Design tokens translate your visual language — colours, typography, spacing — into variables that both designers and developers reference, creating a shared vocabulary that eliminates ambiguity.\n\nMy alignment process includes creating comprehensive developer documentation, establishing naming conventions that map between Figma and code, conducting design QA reviews during development, and training teams on effective collaboration practices.\n\nHaving worked on both sides of the design-development divide with Irish and international product teams, I understand the challenges from every angle. I don't just hand over files and walk away — I stay involved through implementation to ensure the final product honours the design vision.",
+    metaDescription: "Bridge the gap between design and code. Lacuna Digital ensures pixel-perfect implementation through structured handoff and design tokens.",
     benefitsTitle: "Why Development Alignment Matters",
     benefits: [
       { title: "Pixel-Perfect Implementation", desc: "Designs are implemented exactly as intended, preserving the user experience." },
