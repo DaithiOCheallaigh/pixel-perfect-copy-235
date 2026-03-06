@@ -5,7 +5,7 @@ import {
   SearchNormal1,
   Calendar,
   RowVertical,
-  ColorFilter,
+  Colorfilter,
   Code1,
   ChartSquare,
 } from "iconsax-react";
