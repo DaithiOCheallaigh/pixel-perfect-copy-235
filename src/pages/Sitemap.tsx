@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { services } from "@/data/services";
 import { blogPosts } from "@/data/blogPosts";
+import { projects } from "@/data/projects";
 
 const sectionClass = "mb-10";
 const headingClass = "text-lg font-semibold text-foreground mb-3 border-b border-border pb-2";
@@ -16,12 +17,14 @@ const corePages = [
   { path: "/web-design", label: "Web Design Services" },
   { path: "/ai-design-process", label: "AI Design Process" },
   { path: "/start-project", label: "Start a Project" },
+  { path: "/sitemap", label: "Sitemap" },
 ];
 
-const caseStudies = [
-  { path: "/work/marsh-design-system", label: "Marsh Design System" },
-  { path: "/work/marsh-internal-tooling", label: "Marsh Internal Tooling" },
-];
+// Marsh pages have dedicated routes, others use /case/:id
+const dedicatedRoutes: Record<string, string> = {
+  "marsh-design-system": "/work/marsh-design-system",
+  "marsh-internal-tooling": "/work/marsh-internal-tooling",
+};
 
 const Sitemap = () => {
   useEffect(() => {
@@ -54,9 +57,12 @@ const Sitemap = () => {
         <div className={sectionClass}>
           <h2 className={headingClass}>Case Studies</h2>
           <ul className="space-y-2">
-            {caseStudies.map((p) => (
-              <li key={p.path}><Link to={p.path} className={linkClass}>{p.label}</Link></li>
-            ))}
+            {projects.map((p) => {
+              const path = dedicatedRoutes[p.id] || `/case/${p.id}`;
+              return (
+                <li key={p.id}><Link to={path} className={linkClass}>{p.title}</Link></li>
+              );
+            })}
           </ul>
         </div>
 
