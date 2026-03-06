@@ -104,9 +104,10 @@ export const services: Service[] = [
   },
   {
     id: "prototypes",
-    title: "UI Prototypes",
+    title: "UI Prototyping Services in Dublin",
     category: "Product",
-    intro: "Transform your ideas into interactive experiences with comprehensive UI prototyping services. I bridge the gap between concept and reality, helping you visualise your digital products before development.\n\nHigh-fidelity prototypes enable you to test and refine your product before investing in full development. This approach not only saves valuable time and resources but also ensures your final product delivers an exceptional user experience.",
+    intro: "A prototype is worth a thousand meetings. Interactive UI prototypes transform abstract ideas into tangible, clickable experiences that stakeholders can see, test, and validate before a line of production code is written. This single step can save tens of thousands in wasted development.\n\nHigh-fidelity prototyping is essential for any business investing in a digital product. Whether you're building a customer portal, a mobile app interface, or an internal tool, a prototype lets you test user flows, gather feedback, and refine the experience while changes are still inexpensive to make.\n\nAt Lacuna Digital, I create advanced interactive prototypes in Figma that go far beyond static mockups. My prototypes include realistic interactions, conditional logic, animated transitions, and dynamic content — simulations so realistic that users often mistake them for finished products.\n\nWith over 11 years of experience as a UI/UX designer and Figma specialist, I've built prototypes that have secured funding rounds, guided development teams, and validated product concepts for businesses across Ireland. My process includes flow mapping, interaction design, usability testing, and comprehensive developer handoff documentation.\n\nWorking directly with me means senior-level expertise without agency overhead. You get fast turnaround, clear communication, and a prototype that becomes the single source of truth for your entire product team.",
+    metaDescription: "Interactive Figma prototypes that validate ideas before development. Save time and budget with Lacuna Digital's prototyping services in Dublin.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Flow.gif?fit=622%2C1024&ssl=1",
     servicesTitle: "Prototyping Process",
     services: [
