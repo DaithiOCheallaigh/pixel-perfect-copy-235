@@ -449,9 +449,10 @@ export const services: Service[] = [
   },
   {
     id: "content-marketing",
-    title: "Content Marketing",
+    title: "Content Marketing Services in Dublin",
     category: "Marketing",
-    intro: "Content marketing is the strategic approach to creating and distributing valuable, relevant, and consistent content to attract and retain a clearly defined audience. I help businesses develop content strategies that build authority, drive organic traffic, and nurture customer relationships.\n\nGreat content doesn't just fill pages — it tells your brand story, answers your audience's questions, and positions you as a trusted authority in your industry.",
+    intro: "Content marketing is the long game that compounds. By creating valuable, relevant content that answers your audience's questions and solves their problems, you build organic traffic, establish authority, and nurture prospects through the buying journey — without paying for every click.\n\nFor Irish SMEs, content marketing levels the playing field against larger competitors. A well-executed content strategy can position a small business as the go-to authority in their niche, attracting and converting customers who would otherwise go to bigger brands.\n\nAt Lacuna Digital, I develop content strategies grounded in audience research, keyword data, and competitive analysis. Every piece of content serves a purpose — whether that's ranking for a target keyword, nurturing a specific audience segment, or building backlinks.\n\nMy content marketing process covers audience research, content audits, strategy development, editorial planning, and performance measurement. I combine design thinking with SEO expertise to create content that is both visually engaging and strategically effective.\n\nWorking with Irish SMEs across multiple industries, I create content ecosystems that generate traffic, build authority, and support your broader business goals — turning your website into your most productive sales channel.",
+    metaDescription: "Strategic content marketing for Irish SMEs. Lacuna Digital creates content that builds authority, drives traffic, and converts visitors.",
     benefitsTitle: "Why Content Marketing Matters",
     benefits: [
       { title: "Build Authority", desc: "Position your brand as an industry thought leader through valuable content." },
