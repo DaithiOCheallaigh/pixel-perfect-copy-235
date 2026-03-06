@@ -574,9 +574,10 @@ export const services: Service[] = [
   // ── System Design ──
   {
     id: "component-libraries",
-    title: "Component Libraries",
+    title: "Component Library Design Services in Dublin",
     category: "System Design",
-    intro: "Component libraries are collections of reusable UI elements that ensure consistency, speed up development, and maintain quality across your digital products. I design and document comprehensive component libraries using tools like Figma that serve as the single source of truth for your product's interface.\n\nA well-built component library reduces design debt, accelerates feature delivery, and ensures every screen of your product feels cohesive and polished.",
+    intro: "A component library is a curated collection of reusable UI elements — buttons, forms, cards, navigation patterns — designed and documented to ensure consistency across your entire digital product. It's the single source of truth that keeps designers and developers aligned.\n\nFor growing product teams, a component library eliminates the chaos of ad-hoc design decisions. New features ship faster because they're assembled from tested, documented components rather than designed from scratch every time.\n\nAt Lacuna Digital, I design component libraries using atomic design principles in Figma, creating hierarchical systems from foundational tokens — colours, spacing, typography — through to complex, interactive components. Each component is documented with variants, states, responsive behaviour, and usage guidelines.\n\nMy libraries aren't just pretty catalogues — they're practical tools built for daily use by real product teams. I've created component systems for products used by thousands of users daily, including enterprise applications and SaaS platforms.\n\nBased in Dublin and working with teams across Ireland, I provide the specialised design system expertise that most SMEs can't justify hiring full-time. You get a production-ready library, comprehensive documentation, and training to ensure your team can maintain and extend it independently.",
+    metaDescription: "Scalable UI component libraries built in Figma. Lacuna Digital creates design systems that accelerate development for Irish product teams.",
     benefitsTitle: "Benefits of Component Libraries",
     benefits: [
       { title: "Consistency", desc: "Every instance of a component looks and behaves the same across your entire product." },
