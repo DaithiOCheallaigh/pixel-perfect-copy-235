@@ -231,9 +231,10 @@ export const services: Service[] = [
   },
   {
     id: "creative-direction",
-    title: "Creative Direction",
+    title: "Creative Direction Services in Dublin",
     category: "Branding",
-    intro: "Creative direction is the strategic oversight and vision that guides all visual and conceptual aspects of a brand or project. It encompasses everything from brand identity and design language to content strategy and user experience, ensuring all creative elements work cohesively to communicate the right message to the right audience.",
+    intro: "Creative direction is the strategic oversight that ensures every visual and conceptual element of your brand works together to tell a cohesive story. It's the difference between a collection of nice-looking assets and a brand that feels intentional, distinctive, and unmistakably yours.\n\nFor Irish SMEs, strong creative direction means your website, social media, packaging, and marketing materials all reinforce the same message. It builds the kind of brand consistency that larger companies invest entire departments to achieve.\n\nAt Lacuna Digital, I provide creative direction that is both visionary and practical. My process starts with deep research into your business, audience, and competitive landscape, then builds a creative framework that guides every design decision — from campaign visuals to product interface to pitch deck.\n\nI develop comprehensive creative systems including mood boards, design language definitions, art direction guidelines, and content style frameworks. These aren't abstract documents; they're actionable tools your team uses daily.\n\nWith 15 years guiding creative output for brands across diverse industries, I bring the strategic thinking of a creative director with the hands-on capability of a senior designer. You get vision and execution from a single, experienced partner.",
+    metaDescription: "Strategic creative direction for Irish brands. Lacuna Digital provides the vision and oversight to unify your brand across every touchpoint.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/CreativeDirection.webp?fit=800%2C659&ssl=1",
     processTitle: "Creative Direction Process",
     process: [
