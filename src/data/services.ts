@@ -475,9 +475,10 @@ export const services: Service[] = [
   // ── SEO ──
   {
     id: "keyword-research",
-    title: "Keyword Research & Analysis",
+    title: "Keyword Research & SEO Analysis in Dublin",
     category: "SEO",
-    intro: "Keyword research is the foundation of any successful SEO strategy. I conduct thorough keyword analysis to identify the terms and phrases your target audience is searching for, enabling you to create content that ranks and drives qualified traffic.\n\nMy approach goes beyond simple search volume — I analyse intent, competition, and opportunity to build keyword strategies that deliver real business results.",
+    intro: "Keyword research is the process of identifying the exact words and phrases your potential customers type into Google when searching for what you offer. It's the foundation of every successful SEO and content strategy — without it, you're creating content in the dark.\n\nEffective keyword research goes beyond search volume. It analyses user intent, competition difficulty, and commercial value to identify the opportunities where your investment will deliver the greatest return.\n\nAt Lacuna Digital, I deliver keyword research that goes beyond spreadsheets of search volumes. My analysis maps keywords to user intent — informational, commercial, transactional — so your content strategy targets users at every stage of the buying journey.\n\nEach research engagement includes competitor keyword analysis, content gap identification, keyword clustering by topic, and a prioritised action plan. You receive a clear roadmap showing which keywords to target first, what content to create, and what realistic ranking timelines to expect.\n\nWith deep experience in SEO for Irish SMEs, I understand the nuances of targeting both local and national search terms in the Irish market. My recommendations are practical, prioritised, and tied directly to your business objectives.",
+    metaDescription: "Data-driven keyword research for Irish businesses. Lacuna Digital identifies the search terms that drive qualified traffic and revenue.",
     benefitsTitle: "Why Keyword Research Matters",
     benefits: [
       { title: "Targeted Traffic", desc: "Attract visitors who are actively searching for what you offer." },
