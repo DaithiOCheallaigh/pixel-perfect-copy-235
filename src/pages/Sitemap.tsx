@@ -57,9 +57,12 @@ const Sitemap = () => {
         <div className={sectionClass}>
           <h2 className={headingClass}>Case Studies</h2>
           <ul className="space-y-2">
-            {caseStudies.map((p) => (
-              <li key={p.path}><Link to={p.path} className={linkClass}>{p.label}</Link></li>
-            ))}
+            {projects.map((p) => {
+              const path = dedicatedRoutes[p.id] || `/case/${p.id}`;
+              return (
+                <li key={p.id}><Link to={path} className={linkClass}>{p.title}</Link></li>
+              );
+            })}
           </ul>
         </div>
 
