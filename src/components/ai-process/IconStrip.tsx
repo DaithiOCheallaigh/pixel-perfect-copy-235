@@ -16,7 +16,7 @@ const icons = [
   { icon: SearchNormal1, label: "Discovery", num: "03" },
   { icon: Calendar, label: "Roadmap\n& Gantt", num: "04" },
   { icon: RowVertical, label: "Kanban\nDelivery", num: "05" },
-  { icon: ColorFilter, label: "Design\nSystem", num: "06" },
+  { icon: Colorfilter, label: "Design\nSystem", num: "06" },
   { icon: Code1, label: "Build\n& Deploy", num: "07" },
   { icon: ChartSquare, label: "Analytics\n& Iteration", num: "08" },
 ];

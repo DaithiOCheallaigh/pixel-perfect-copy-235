@@ -31,7 +31,7 @@ const TokenPalette = () => (
     </div>
     <div className="flex justify-center">
       <motion.div animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }}>
-        <ColorFilter size={28} variant="TwoTone" color="#F471B5" />
+        <Colorfilter size={28} variant="TwoTone" color="#F471B5" />
       </motion.div>
     </div>
   </div>

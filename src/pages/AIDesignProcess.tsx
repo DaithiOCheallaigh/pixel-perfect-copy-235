@@ -68,7 +68,7 @@ const steps = [
     eyebrow: "Design Systems",
     heading: "All visual output grounded in a tokenised design system",
     body: "Colours, typography, spacing, and components defined as reusable tokens in Figma. This ensures visual consistency at scale, accelerates handoff, and makes brand evolution effortless as the product grows.",
-    icon: <ColorFilter size={22} variant="TwoTone" color="#F471B5" />,
+    icon: <Colorfilter size={22} variant="TwoTone" color="#F471B5" />,
     visual: <TokenPalette />,
     layout: "B" as const,
   },
