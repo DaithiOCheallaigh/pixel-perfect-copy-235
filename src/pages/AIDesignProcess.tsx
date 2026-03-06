@@ -140,20 +140,26 @@ const AIDesignProcess = () => {
         </div>
       </section>
 
-      {/* Steps */}
+      {/* Steps — bento grid */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
             <SectionLabel>The Process</SectionLabel>
           </ScrollReveal>
-          <div className="mt-16 flex flex-col gap-12">
+          <div className="mt-16 grid gap-4 md:grid-cols-2">
             {steps.map((step, i) => {
-              const isEven = i % 2 === 1;
+              // Alternate which column gets the "tall" card
+              // Row 0: left tall (span 2 rows), right short
+              // Row 1: left short, right tall (span 2 rows)
+              const rowPair = Math.floor(i / 2);
+              const isLeft = i % 2 === 0;
+              const isTall = rowPair % 2 === 0 ? isLeft : !isLeft;
+
               return (
-                <ScrollReveal key={step.num} delay={0.05}>
+                <ScrollReveal key={step.num} delay={i * 0.04}>
                   <div
-                    className={`relative overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-sm md:flex md:items-center md:gap-10 ${
-                      isEven ? "md:flex-row-reverse" : ""
+                    className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/30 md:p-8 ${
+                      isTall ? "md:row-span-2 justify-between" : "justify-between"
                     }`}
                   >
                     {/* Background step number */}
@@ -161,35 +167,28 @@ const AIDesignProcess = () => {
                       {step.num}
                     </span>
 
-                    {/* Icon column */}
-                    <div className="mb-6 flex shrink-0 items-center justify-center md:mb-0 md:w-24">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
-                        {step.icon}
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative flex-1">
-                      <span className="font-mono-label mb-2 block text-primary">
-                        Step {step.num}
-                      </span>
-                      <h3 className="mb-3 text-xl font-extrabold tracking-tight text-foreground md:text-2xl">
-                        {step.heading}
-                      </h3>
-                      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-                        {step.body}
-                      </p>
-                      <span className="inline-block rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold text-primary">
+                    {/* Top: tag + icon */}
+                    <div>
+                      <span className="font-mono-label mb-4 block text-primary">
                         {step.tag}
                       </span>
+                      <h3 className="mb-3 text-lg font-extrabold tracking-tight text-foreground md:text-xl">
+                        {step.heading}
+                      </h3>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        {step.body}
+                      </p>
                     </div>
 
-                    {/* Left accent border */}
-                    <div
-                      className={`absolute top-0 h-full w-1 bg-primary ${
-                        isEven ? "right-0" : "left-0"
-                      }`}
-                    />
+                    {/* Bottom: icon badge */}
+                    <div className="mt-6 flex items-center justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
+                        {step.icon}
+                      </div>
+                      <span className="font-mono-label text-muted-foreground/40 text-xs">
+                        Step {step.num}
+                      </span>
+                    </div>
                   </div>
                 </ScrollReveal>
               );
