@@ -424,9 +424,10 @@ export const services: Service[] = [
   },
   {
     id: "email-marketing",
-    title: "Email Marketing",
+    title: "Email Marketing Campaign Services in Dublin",
     category: "Marketing",
-    intro: "Email marketing remains one of the most effective digital marketing channels, delivering an average ROI of $42 for every $1 spent. I create strategic email campaigns that nurture leads, drive conversions, and build lasting customer relationships.\n\nFrom automated welcome sequences to targeted promotional campaigns, my email marketing services are designed to engage your audience at every stage of the customer journey.",
+    intro: "Email marketing consistently delivers the highest ROI of any digital marketing channel — averaging €42 for every €1 spent. Unlike social media, you own your email list. No algorithm changes, no pay-to-play. Your message lands directly in your audience's inbox.\n\nYet most SMEs either neglect email entirely or send sporadic campaigns with no strategy. The businesses that invest in proper email marketing — segmented lists, automated sequences, compelling design — see transformative results in customer retention and revenue.\n\nAt Lacuna Digital, I design email marketing systems that work for you around the clock. From welcome sequences that onboard new subscribers to re-engagement campaigns that win back dormant customers, every email is designed with purpose.\n\nMy approach combines strategic segmentation, compelling copywriting, and visually engaging design. I set up automated workflows — welcome series, abandoned cart recovery, post-purchase follow-ups — that nurture your audience without ongoing manual effort.\n\nWorking with Irish SMEs, I understand the email preferences and behaviours of Irish consumers. My campaigns respect inbox attention while delivering genuine value, building the trust that turns subscribers into loyal customers.",
+    metaDescription: "High-converting email campaigns for Irish SMEs. Lacuna Digital designs automated email sequences that nurture leads and drive sales.",
     benefitsTitle: "Why Email Marketing Works",
     benefits: [
       { title: "Highest ROI", desc: "Email consistently delivers the highest return on investment of any marketing channel." },
