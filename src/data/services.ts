@@ -523,9 +523,10 @@ export const services: Service[] = [
   },
   {
     id: "local-seo",
-    title: "Local SEO",
+    title: "Local SEO Services in Dublin, Ireland",
     category: "SEO",
-    intro: "Local SEO optimises your online presence to attract more business from relevant local searches. With 46% of all Google searches having local intent, appearing in local search results is critical for businesses serving specific geographic areas.\n\nI help businesses improve their local search visibility through Google Business Profile optimisation, local citation building, and geo-targeted content strategies.",
+    intro: "Nearly half of all Google searches have local intent. When someone searches \"design agency near me\" or \"web designer Dublin,\" local SEO determines whether your business appears in those results. For service-based businesses in Ireland, local search visibility is directly tied to revenue.\n\nLocal SEO encompasses Google Business Profile optimisation, local citation building, review management, and geo-targeted content — the specific signals that tell Google your business is relevant, trustworthy, and located where your customers are searching.\n\nAt Lacuna Digital, I provide comprehensive local SEO services tailored to Irish businesses. My approach starts with optimising your Google Business Profile — ensuring complete, accurate information with strategic keyword placement and compelling descriptions. From there, I build consistent local citations, implement review generation strategies, and create locally relevant content.\n\nI understand the Irish search landscape, including the importance of county-level targeting, local directories that matter, and the search behaviours specific to Irish consumers. My local SEO strategies have helped businesses across Dublin increase their visibility in local search results, driving more calls, website visits, and foot traffic.\n\nFor service-based businesses, local SEO is often the highest-ROI marketing investment you can make. The customers searching locally are ready to buy — you just need to be visible when they look.",
+    metaDescription: "Get found by local customers. Lacuna Digital optimises your business for Google Maps and local search results across Dublin and Ireland.",
     benefitsTitle: "Why Local SEO Matters",
     benefits: [
       { title: "Local Visibility", desc: "Appear in Google's local pack and Maps results for nearby customers." },
