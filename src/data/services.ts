@@ -3,6 +3,7 @@ export interface Service {
   title: string;
   category: string;
   intro: string;
+  metaDescription?: string;
   image?: string;
   processTitle?: string;
   process?: { title: string; desc: string }[];
