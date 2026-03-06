@@ -3,6 +3,7 @@ export interface Service {
   title: string;
   category: string;
   intro: string;
+  metaDescription?: string;
   image?: string;
   processTitle?: string;
   process?: { title: string; desc: string }[];
@@ -18,9 +19,10 @@ export const services: Service[] = [
   // ── Product ──
   {
     id: "user-interface-design",
-    title: "User Interface Design",
+    title: "User Interface Design Services in Dublin",
     category: "Product",
-    intro: "I craft intuitive, visually compelling user interfaces that transform complex digital products into seamless experiences. My UI design service focuses on creating interfaces that not only look exceptional but fundamentally enhance how users interact with your product.\n\nAs your UI design expert, my approach combines aesthetic excellence with functional precision: User-Centred Design, Collaborative Process, Data-Informed Solutions, and Consistent Design Systems.",
+    intro: "User interface design is the craft of creating the visual layer that people interact with every day — buttons, forms, navigation, layouts, and every pixel in between. Great UI design doesn't just look good; it makes complex systems feel simple and guides users effortlessly toward their goals.\n\nIn a market where first impressions are formed in milliseconds, the quality of your interface directly impacts whether users trust your brand, engage with your product, and ultimately convert. For Irish SMEs competing against larger players, exceptional UI design is a powerful equaliser.\n\nAt Lacuna Digital, I design interfaces that balance aesthetic excellence with functional precision. Every project begins with understanding your users, your brand, and your business objectives. From there, I create wireframes, visual designs, and interactive prototypes — testing and iterating until the interface performs.\n\nMy UI design process covers interface audits, wireframing, visual design, responsive layouts, design systems, and micro-interactions. I work in Figma and deliver comprehensive documentation so your development team can implement with confidence.\n\nWith extensive experience across SaaS, fintech, travel, and enterprise applications in the Irish and international market, I bring a depth of expertise that ensures your interface isn't just visually compelling but strategically sound. You work directly with a senior designer — no account managers, no juniors.",
+    metaDescription: "Expert UI design for web and mobile products. Lacuna Digital creates intuitive, brand-aligned interfaces that drive engagement for Irish SMEs.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Web_Mobile-2.webp?fit=800%2C755&ssl=1",
     servicesTitle: "UI Services",
     services: [
@@ -47,9 +49,10 @@ export const services: Service[] = [
   },
   {
     id: "user-experience-design",
-    title: "User Experience Design",
+    title: "User Experience Design Services in Dublin",
     category: "Product",
-    intro: "UX design is the process of enhancing user satisfaction by improving the usability, accessibility, and pleasure provided in the interaction between the user and a product. It encompasses the entire user journey, from first impressions to ongoing engagement.\n\nAs a seasoned UX professional, I bring a human-centred approach to every project, ensuring that the end-user remains at the heart of the design process. My methodology combines research, design thinking, and iterative testing to create experiences that not only meet business objectives but also exceed user expectations.",
+    intro: "User experience design is the discipline of shaping every aspect of how people interact with your digital product — from their first visit to becoming a loyal customer. UX goes beyond visual design to encompass research, information architecture, usability, and the emotional journey of your users.\n\nFor businesses in Ireland, investing in UX design means fewer support tickets, higher conversion rates, and customers who return. A well-designed experience is invisible to the user but unmistakable in your metrics.\n\nAt Lacuna Digital, I bring a human-centred approach to every project. My UX process starts with research — user interviews, analytics review, and competitive analysis — to understand the real problems before designing solutions. I create user personas, journey maps, wireframes, and testable prototypes, validating every decision with real user feedback.\n\nWhat makes my approach different is the integration of data and design. I don't just make things look better; I measure the impact of every design decision. With over a decade of experience in the Dublin tech scene, I've delivered UX solutions across SaaS, fintech, travel, education, and enterprise — consistently driving measurable improvements in engagement and conversion.\n\nYou work directly with a senior UX professional. No layers of management, no templated deliverables. Every engagement is tailored to your specific business challenges and user needs.",
+    metaDescription: "Research-driven UX design for Irish SMEs. Lacuna Digital creates user-centred digital experiences that increase engagement and conversion.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Airline-Passenger-User-Journey-Map.jpg?fit=800%2C237&ssl=1",
     servicesTitle: "UX Services",
     services: [
@@ -76,9 +79,10 @@ export const services: Service[] = [
   },
   {
     id: "design-strategy",
-    title: "Design Strategy",
+    title: "Design Strategy Consultant in Dublin",
     category: "Product",
-    intro: "Design strategy is the deliberate planning and intentional approach to solving problems through design. It bridges the gap between business objectives and user needs, creating a framework that guides design decisions across an organisation. Unlike tactical design execution, design strategy focuses on the \"why\" and \"what\" before addressing the \"how,\" ensuring that all design efforts align with long-term goals and vision.",
+    intro: "Design strategy is the deliberate planning that connects your business objectives with user needs. It answers the critical questions — what should we build, who is it for, and why will it succeed — before a single pixel is placed. Without strategy, design is decoration. With it, design becomes a competitive advantage.\n\nFor SMEs in Dublin and across Ireland, investing in design strategy means every euro spent on digital development delivers measurable returns. Rather than redesigning on instinct, you make decisions grounded in user research, market analysis, and clear success metrics.\n\nAt Lacuna Digital, I bring over a decade of strategic design experience working with Irish and international businesses. My approach starts with deep discovery — stakeholder interviews, competitor analysis, and user research — then translates findings into actionable roadmaps with clear milestones and KPIs.\n\nWhat sets my process apart is the integration of AI tools into the strategy workflow. I use AI to rapidly generate and test design concepts, validate hypotheses faster, and explore more solutions in less time. This means you get the rigour of traditional strategic consulting with the speed and efficiency of modern tools.\n\nWhether you need a complete design strategy for a new product or a strategic review of an existing one, I provide the expert guidance that transforms design from a cost centre into a growth driver.",
+    metaDescription: "Strategic design consulting for Irish SMEs. Align your digital products with business goals through research-driven UX strategy from Lacuna Digital.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/03/SpotifyHeader_Mobile.webp?fit=800%2C825&ssl=1",
     benefitsTitle: "Why Design Strategy Matters",
     benefits: [
@@ -100,9 +104,10 @@ export const services: Service[] = [
   },
   {
     id: "prototypes",
-    title: "UI Prototypes",
+    title: "UI Prototyping Services in Dublin",
     category: "Product",
-    intro: "Transform your ideas into interactive experiences with comprehensive UI prototyping services. I bridge the gap between concept and reality, helping you visualise your digital products before development.\n\nHigh-fidelity prototypes enable you to test and refine your product before investing in full development. This approach not only saves valuable time and resources but also ensures your final product delivers an exceptional user experience.",
+    intro: "A prototype is worth a thousand meetings. Interactive UI prototypes transform abstract ideas into tangible, clickable experiences that stakeholders can see, test, and validate before a line of production code is written. This single step can save tens of thousands in wasted development.\n\nHigh-fidelity prototyping is essential for any business investing in a digital product. Whether you're building a customer portal, a mobile app interface, or an internal tool, a prototype lets you test user flows, gather feedback, and refine the experience while changes are still inexpensive to make.\n\nAt Lacuna Digital, I create advanced interactive prototypes in Figma that go far beyond static mockups. My prototypes include realistic interactions, conditional logic, animated transitions, and dynamic content — simulations so realistic that users often mistake them for finished products.\n\nWith over 11 years of experience as a UI/UX designer and Figma specialist, I've built prototypes that have secured funding rounds, guided development teams, and validated product concepts for businesses across Ireland. My process includes flow mapping, interaction design, usability testing, and comprehensive developer handoff documentation.\n\nWorking directly with me means senior-level expertise without agency overhead. You get fast turnaround, clear communication, and a prototype that becomes the single source of truth for your entire product team.",
+    metaDescription: "Interactive Figma prototypes that validate ideas before development. Save time and budget with Lacuna Digital's prototyping services in Dublin.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Flow.gif?fit=622%2C1024&ssl=1",
     servicesTitle: "Prototyping Process",
     services: [
@@ -160,9 +165,10 @@ export const services: Service[] = [
   },
   {
     id: "brand-identity",
-    title: "Brand Identity",
+    title: "Brand Identity Design in Dublin",
     category: "Branding",
-    intro: "Brand identity is the collection of visual elements, voice, and values that represent your company to the world. It encompasses everything from your logo, color palette, and typography to your messaging tone and brand personality.\n\nA strong brand identity communicates who you are, what you stand for, and why customers should choose you over competitors.",
+    intro: "Your brand identity is the complete visual and verbal system that communicates who you are, what you stand for, and why you matter. It encompasses your logo, colour palette, typography, imagery, tone of voice, and how all of these elements work together across every touchpoint.\n\nFor SMEs in Dublin and across Ireland, a strong brand identity is the difference between blending in and standing out. It builds trust before a single conversation happens and creates the recognition that turns first-time visitors into repeat customers.\n\nAt Lacuna Digital, I create brand identities through a strategic process that starts with understanding your business, audience, and market position. I don't design logos in isolation — I build complete identity systems that work across digital, print, signage, and social media.\n\nMy process covers discovery, strategy, visual identity creation, and comprehensive brand guidelines. Every client receives a complete brand toolkit including logo variations, colour specifications, typography hierarchy, and usage examples — everything needed for consistent implementation.\n\nWith 15 years of branding and design experience, I've helped businesses across Ireland develop identities that resonate with their audiences and stand the test of time. You get direct access to a senior designer who understands both the creative and strategic sides of brand building.",
+    metaDescription: "Distinctive brand identity design for Irish SMEs. Lacuna Digital creates visual identities that differentiate your business and build lasting recognition.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/BrandIdentity.webp?fit=800%2C598&ssl=1",
     processTitle: "Brand Identity Process",
     process: [
@@ -186,9 +192,10 @@ export const services: Service[] = [
   },
   {
     id: "branding-guidelines",
-    title: "Branding Guidelines",
+    title: "Branding Guidelines Services in Dublin",
     category: "Branding",
-    intro: "Branding guidelines (also called brand standards or style guides) are comprehensive documents that outline how your brand elements should be used across all platforms and communications. They ensure consistency, recognition, and trust in your brand presence.",
+    intro: "Branding guidelines are the rulebook that ensures your brand looks, sounds, and feels consistent wherever it appears. They document everything from logo usage and colour specifications to typography hierarchy, imagery style, and tone of voice — giving anyone who represents your brand clear direction.\n\nFor SMEs, branding guidelines are an investment that pays for itself. They eliminate the costly cycle of correcting off-brand work, speed up content creation, and ensure that new team members, agencies, or freelancers can produce on-brand output from day one.\n\nAt Lacuna Digital, I create branding guidelines that are genuinely useful — not PDF documents that gather dust. My guidelines are comprehensive yet accessible, covering brand strategy, visual identity, voice and tone, digital standards, and practical application examples.\n\nEach guideline document includes precise specifications — RGB, CMYK, HEX, and Pantone colour values; exact font weights and sizes; clear space requirements; and do/don't examples that prevent common misuse. I also provide digital templates that make implementation straightforward.\n\nWith 15 years of experience developing brand standards for organisations ranging from ambitious startups to established enterprises across Ireland, I create guidelines that balance aspiration with practicality — ambitious enough to elevate your brand, practical enough to be used every day.",
+    metaDescription: "Comprehensive brand guidelines for Irish businesses. Lacuna Digital creates practical brand standards that ensure consistency everywhere.",
     image: "/images/services/BrandingGuidelines.webp",
     processTitle: "Branding Process",
     process: [
@@ -224,9 +231,10 @@ export const services: Service[] = [
   },
   {
     id: "creative-direction",
-    title: "Creative Direction",
+    title: "Creative Direction Services in Dublin",
     category: "Branding",
-    intro: "Creative direction is the strategic oversight and vision that guides all visual and conceptual aspects of a brand or project. It encompasses everything from brand identity and design language to content strategy and user experience, ensuring all creative elements work cohesively to communicate the right message to the right audience.",
+    intro: "Creative direction is the strategic oversight that ensures every visual and conceptual element of your brand works together to tell a cohesive story. It's the difference between a collection of nice-looking assets and a brand that feels intentional, distinctive, and unmistakably yours.\n\nFor Irish SMEs, strong creative direction means your website, social media, packaging, and marketing materials all reinforce the same message. It builds the kind of brand consistency that larger companies invest entire departments to achieve.\n\nAt Lacuna Digital, I provide creative direction that is both visionary and practical. My process starts with deep research into your business, audience, and competitive landscape, then builds a creative framework that guides every design decision — from campaign visuals to product interface to pitch deck.\n\nI develop comprehensive creative systems including mood boards, design language definitions, art direction guidelines, and content style frameworks. These aren't abstract documents; they're actionable tools your team uses daily.\n\nWith 15 years guiding creative output for brands across diverse industries, I bring the strategic thinking of a creative director with the hands-on capability of a senior designer. You get vision and execution from a single, experienced partner.",
+    metaDescription: "Strategic creative direction for Irish brands. Lacuna Digital provides the vision and oversight to unify your brand across every touchpoint.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/CreativeDirection.webp?fit=800%2C659&ssl=1",
     processTitle: "Creative Direction Process",
     process: [
@@ -252,9 +260,10 @@ export const services: Service[] = [
   // ── Web ──
   {
     id: "cms-content-platforms",
-    title: "CMS & Content Platforms",
+    title: "CMS Design & Management Services in Dublin",
     category: "Web",
-    intro: "A Content Management System (CMS) is a software application that allows users to create, manage, and modify digital content on a website without needing specialized technical knowledge. It provides a user-friendly interface to handle the entire content lifecycle, from creation and publishing to archiving.\n\nIn today's digital landscape, content is king. A CMS enables organizations to efficiently manage their online presence, ensuring that content is consistent, up-to-date, and accessible.",
+    intro: "A content management system gives your team the power to update your website without touching code. Whether it's publishing blog posts, updating product pages, or managing an online store, the right CMS transforms your website from a static brochure into a dynamic business tool.\n\nChoosing the wrong CMS — or implementing the right one poorly — leads to frustration, workarounds, and a website your team avoids updating. The result is stale content that hurts both user experience and search rankings.\n\nAt Lacuna Digital, I help Irish SMEs select, set up, and optimise the right CMS for their needs — whether that's WordPress, Shopify, or a headless solution like Contentful. My approach starts with understanding your content workflows, team capabilities, and growth plans, then recommends and implements a solution that fits.\n\nBeyond setup, I design CMS experiences that your team actually enjoys using. Custom templates ensure brand consistency, structured content types make publishing intuitive, and training ensures your team is confident managing content independently.\n\nWith over a decade of experience implementing CMS solutions for businesses of all sizes across Ireland, I provide the expertise to get your content platform right from the start.",
+    metaDescription: "Expert CMS setup and management for Irish SMEs. Lacuna Digital helps you choose, design, and maintain the right content platform.",
     image: "/images/services/CMS_Lacuna.webp",
     benefitsTitle: "Benefits of a CMS",
     benefits: [
@@ -279,9 +288,10 @@ export const services: Service[] = [
   },
   {
     id: "shopify",
-    title: "Shopify",
+    title: "Shopify & E-Commerce Design in Dublin",
     category: "Web",
-    intro: "Shopify is an all-in-one commerce platform that allows anyone to set up an online store and sell products. Founded in 2006, it has grown to become one of the leading e-commerce solutions globally, powering millions of businesses from small startups to large enterprises.",
+    intro: "Shopify powers millions of online stores worldwide, and for good reason. It's a robust, user-friendly e-commerce platform that handles everything from product management to payment processing. But a Shopify store is only as good as its design and setup.\n\nThe difference between a Shopify store that converts and one that doesn't often comes down to user experience: clear product presentation, intuitive navigation, streamlined checkout, and a design that builds trust with first-time visitors.\n\nAt Lacuna Digital, I design Shopify stores that balance visual appeal with conversion optimisation. Every store I build is mobile-responsive, brand-aligned, and structured to guide shoppers naturally from browsing to purchase.\n\nMy process covers store setup, theme customisation, product page design, checkout optimisation, and app integration. I also provide training so you can manage your store confidently after launch — adding products, running promotions, and fulfilling orders without ongoing support costs.\n\nWith hands-on experience setting up and optimising Shopify stores for Irish businesses across fashion, food, beauty, and professional services, I understand what makes e-commerce work in the Irish market. You get a store that looks premium without the premium agency price tag.",
+    metaDescription: "Professional Shopify store design for Irish businesses. Lacuna Digital creates e-commerce experiences that convert browsers into buyers.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/Shopify-Lacuna.webp?fit=800%2C659&ssl=1",
     benefitsTitle: "Advantages of Using Shopify",
     benefits: [
@@ -306,9 +316,10 @@ export const services: Service[] = [
   },
   {
     id: "ai-front-end-development",
-    title: "AI Front-end Development",
+    title: "AI Front-End Development Services in Dublin",
     category: "Web",
-    intro: "In today's rapidly evolving digital-first landscape, front end development has undergone a significant transformation, moving far beyond the basic implementation of HTML and CSS coding practices. Modern front end development encompasses sophisticated frameworks, responsive design principles, and interactive user experiences that drive business success.\n\nWith the revolutionary emergence of AI-powered development tools like Lovable, organisations across industries are witnessing a fundamental paradigm shift in how they conceptualise, create, implement, and continuously optimise their digital interfaces.",
+    intro: "The way websites and web applications are built has fundamentally changed. AI-powered front-end development uses intelligent tools like Lovable and modern frameworks to generate clean, production-ready code from design specifications — dramatically reducing build times and costs without sacrificing quality.\n\nFor Irish SMEs, this means you can launch a polished, responsive digital product in weeks rather than months. Whether you need a marketing site, a SaaS dashboard, or a customer-facing portal, AI-assisted development delivers results that would traditionally require a full engineering team.\n\nAt Lacuna Digital, I combine over 15 years of product design expertise with cutting-edge AI development tools. This isn't about replacing craftsmanship with automation — it's about using AI to handle the repetitive implementation work so I can focus on what matters: strategy, user experience, and the design details that make your product stand out.\n\nEvery project includes design system integration, responsive layouts across all breakpoints, accessibility compliance, and performance optimisation. You receive a production-ready codebase, not a prototype.\n\nBased in Dublin and working with SMEs across Ireland, I offer a service that larger agencies can't match: senior-level expertise, direct communication, and the speed of AI-assisted delivery at a fraction of traditional development costs.",
+    metaDescription: "Lacuna Digital builds production-ready front-ends using AI-powered tools. Faster delivery, lower cost, exceptional quality for Irish SMEs.",
     image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/08/Lovable-Lacuna.webp?fit=800%2C659&ssl=1",
     benefitsTitle: "Value of Advanced Front End Development",
     benefits: [
@@ -413,9 +424,10 @@ export const services: Service[] = [
   },
   {
     id: "email-marketing",
-    title: "Email Marketing",
+    title: "Email Marketing Campaign Services in Dublin",
     category: "Marketing",
-    intro: "Email marketing remains one of the most effective digital marketing channels, delivering an average ROI of $42 for every $1 spent. I create strategic email campaigns that nurture leads, drive conversions, and build lasting customer relationships.\n\nFrom automated welcome sequences to targeted promotional campaigns, my email marketing services are designed to engage your audience at every stage of the customer journey.",
+    intro: "Email marketing consistently delivers the highest ROI of any digital marketing channel — averaging €42 for every €1 spent. Unlike social media, you own your email list. No algorithm changes, no pay-to-play. Your message lands directly in your audience's inbox.\n\nYet most SMEs either neglect email entirely or send sporadic campaigns with no strategy. The businesses that invest in proper email marketing — segmented lists, automated sequences, compelling design — see transformative results in customer retention and revenue.\n\nAt Lacuna Digital, I design email marketing systems that work for you around the clock. From welcome sequences that onboard new subscribers to re-engagement campaigns that win back dormant customers, every email is designed with purpose.\n\nMy approach combines strategic segmentation, compelling copywriting, and visually engaging design. I set up automated workflows — welcome series, abandoned cart recovery, post-purchase follow-ups — that nurture your audience without ongoing manual effort.\n\nWorking with Irish SMEs, I understand the email preferences and behaviours of Irish consumers. My campaigns respect inbox attention while delivering genuine value, building the trust that turns subscribers into loyal customers.",
+    metaDescription: "High-converting email campaigns for Irish SMEs. Lacuna Digital designs automated email sequences that nurture leads and drive sales.",
     benefitsTitle: "Why Email Marketing Works",
     benefits: [
       { title: "Highest ROI", desc: "Email consistently delivers the highest return on investment of any marketing channel." },
@@ -437,9 +449,10 @@ export const services: Service[] = [
   },
   {
     id: "content-marketing",
-    title: "Content Marketing",
+    title: "Content Marketing Services in Dublin",
     category: "Marketing",
-    intro: "Content marketing is the strategic approach to creating and distributing valuable, relevant, and consistent content to attract and retain a clearly defined audience. I help businesses develop content strategies that build authority, drive organic traffic, and nurture customer relationships.\n\nGreat content doesn't just fill pages — it tells your brand story, answers your audience's questions, and positions you as a trusted authority in your industry.",
+    intro: "Content marketing is the long game that compounds. By creating valuable, relevant content that answers your audience's questions and solves their problems, you build organic traffic, establish authority, and nurture prospects through the buying journey — without paying for every click.\n\nFor Irish SMEs, content marketing levels the playing field against larger competitors. A well-executed content strategy can position a small business as the go-to authority in their niche, attracting and converting customers who would otherwise go to bigger brands.\n\nAt Lacuna Digital, I develop content strategies grounded in audience research, keyword data, and competitive analysis. Every piece of content serves a purpose — whether that's ranking for a target keyword, nurturing a specific audience segment, or building backlinks.\n\nMy content marketing process covers audience research, content audits, strategy development, editorial planning, and performance measurement. I combine design thinking with SEO expertise to create content that is both visually engaging and strategically effective.\n\nWorking with Irish SMEs across multiple industries, I create content ecosystems that generate traffic, build authority, and support your broader business goals — turning your website into your most productive sales channel.",
+    metaDescription: "Strategic content marketing for Irish SMEs. Lacuna Digital creates content that builds authority, drives traffic, and converts visitors.",
     benefitsTitle: "Why Content Marketing Matters",
     benefits: [
       { title: "Build Authority", desc: "Position your brand as an industry thought leader through valuable content." },
@@ -462,9 +475,10 @@ export const services: Service[] = [
   // ── SEO ──
   {
     id: "keyword-research",
-    title: "Keyword Research & Analysis",
+    title: "Keyword Research & SEO Analysis in Dublin",
     category: "SEO",
-    intro: "Keyword research is the foundation of any successful SEO strategy. I conduct thorough keyword analysis to identify the terms and phrases your target audience is searching for, enabling you to create content that ranks and drives qualified traffic.\n\nMy approach goes beyond simple search volume — I analyse intent, competition, and opportunity to build keyword strategies that deliver real business results.",
+    intro: "Keyword research is the process of identifying the exact words and phrases your potential customers type into Google when searching for what you offer. It's the foundation of every successful SEO and content strategy — without it, you're creating content in the dark.\n\nEffective keyword research goes beyond search volume. It analyses user intent, competition difficulty, and commercial value to identify the opportunities where your investment will deliver the greatest return.\n\nAt Lacuna Digital, I deliver keyword research that goes beyond spreadsheets of search volumes. My analysis maps keywords to user intent — informational, commercial, transactional — so your content strategy targets users at every stage of the buying journey.\n\nEach research engagement includes competitor keyword analysis, content gap identification, keyword clustering by topic, and a prioritised action plan. You receive a clear roadmap showing which keywords to target first, what content to create, and what realistic ranking timelines to expect.\n\nWith deep experience in SEO for Irish SMEs, I understand the nuances of targeting both local and national search terms in the Irish market. My recommendations are practical, prioritised, and tied directly to your business objectives.",
+    metaDescription: "Data-driven keyword research for Irish businesses. Lacuna Digital identifies the search terms that drive qualified traffic and revenue.",
     benefitsTitle: "Why Keyword Research Matters",
     benefits: [
       { title: "Targeted Traffic", desc: "Attract visitors who are actively searching for what you offer." },
@@ -485,9 +499,10 @@ export const services: Service[] = [
   },
   {
     id: "technical-seo",
-    title: "Technical SEO Optimisation",
+    title: "Technical SEO Services in Dublin",
     category: "SEO",
-    intro: "Technical SEO ensures that search engines can effectively crawl, index, and render your website. Without a solid technical foundation, even the best content won't achieve its full ranking potential.\n\nI conduct comprehensive technical SEO audits and implement optimisations that improve site speed, mobile usability, crawlability, and overall search engine visibility.",
+    intro: "Technical SEO is the foundation that determines whether search engines can effectively crawl, index, and rank your website. Without it, even outstanding content won't reach your audience. Technical issues like slow page speeds, broken links, missing structured data, and poor mobile performance silently undermine your search visibility.\n\nMost business owners never see these issues because they're invisible to regular visitors. But search engines notice everything — and they reward sites that get the technical fundamentals right.\n\nAt Lacuna Digital, I conduct comprehensive technical SEO audits that identify every issue affecting your search performance, then prioritise fixes by impact. My approach combines SEO expertise with front-end development knowledge — I don't just find problems, I implement solutions.\n\nAudits cover site speed, mobile usability, crawlability, indexation, structured data, internal linking, Core Web Vitals, and security. Every finding comes with a clear priority rating and actionable fix, whether it's something you can handle or needs development support.\n\nWorking with Irish SMEs, I understand the local search landscape and the specific technical challenges that smaller businesses face. You get enterprise-level technical SEO expertise at a scale and price that makes sense.",
+    metaDescription: "Fix the technical issues holding your site back. Lacuna Digital delivers technical SEO audits and optimisation for Irish businesses.",
     benefitsTitle: "Why Technical SEO Matters",
     benefits: [
       { title: "Improved Crawlability", desc: "Ensure search engines can discover and index all your important pages." },
@@ -508,9 +523,10 @@ export const services: Service[] = [
   },
   {
     id: "local-seo",
-    title: "Local SEO",
+    title: "Local SEO Services in Dublin, Ireland",
     category: "SEO",
-    intro: "Local SEO optimises your online presence to attract more business from relevant local searches. With 46% of all Google searches having local intent, appearing in local search results is critical for businesses serving specific geographic areas.\n\nI help businesses improve their local search visibility through Google Business Profile optimisation, local citation building, and geo-targeted content strategies.",
+    intro: "Nearly half of all Google searches have local intent. When someone searches \"design agency near me\" or \"web designer Dublin,\" local SEO determines whether your business appears in those results. For service-based businesses in Ireland, local search visibility is directly tied to revenue.\n\nLocal SEO encompasses Google Business Profile optimisation, local citation building, review management, and geo-targeted content — the specific signals that tell Google your business is relevant, trustworthy, and located where your customers are searching.\n\nAt Lacuna Digital, I provide comprehensive local SEO services tailored to Irish businesses. My approach starts with optimising your Google Business Profile — ensuring complete, accurate information with strategic keyword placement and compelling descriptions. From there, I build consistent local citations, implement review generation strategies, and create locally relevant content.\n\nI understand the Irish search landscape, including the importance of county-level targeting, local directories that matter, and the search behaviours specific to Irish consumers. My local SEO strategies have helped businesses across Dublin increase their visibility in local search results, driving more calls, website visits, and foot traffic.\n\nFor service-based businesses, local SEO is often the highest-ROI marketing investment you can make. The customers searching locally are ready to buy — you just need to be visible when they look.",
+    metaDescription: "Get found by local customers. Lacuna Digital optimises your business for Google Maps and local search results across Dublin and Ireland.",
     benefitsTitle: "Why Local SEO Matters",
     benefits: [
       { title: "Local Visibility", desc: "Appear in Google's local pack and Maps results for nearby customers." },
@@ -532,9 +548,10 @@ export const services: Service[] = [
   },
   {
     id: "link-building",
-    title: "Link Building & Authority",
+    title: "Link Building & Authority Services in Dublin",
     category: "SEO",
-    intro: "Link building is the process of acquiring hyperlinks from other websites to your own. These backlinks serve as votes of confidence in your content, signaling to search engines that your site is a trustworthy, authoritative resource.\n\nI develop strategic link building campaigns that focus on quality over quantity, earning links from relevant, authoritative sources that boost your search rankings and drive referral traffic.",
+    intro: "Backlinks remain one of Google's strongest ranking signals. Every quality link pointing to your website is a vote of confidence from another site, telling search engines that your content is valuable, trustworthy, and worth ranking. Without a healthy backlink profile, competing for valuable keywords becomes exponentially harder.\n\nStrategic link building isn't about quantity — it's about earning links from relevant, authoritative sources in your industry. A single link from a respected Irish publication or industry blog is worth more than dozens of low-quality directory listings.\n\nAt Lacuna Digital, I take a strategic, ethical approach to link building that focuses on earning links through genuine value. My process includes backlink profile auditing, competitor link analysis, content-driven outreach, and digital PR strategies that build relationships with relevant publications and industry voices.\n\nEvery link building campaign is tailored to your industry and objectives. I identify realistic link opportunities, create content that naturally attracts backlinks, and conduct targeted outreach that prioritises relevance and authority over volume.\n\nWorking with Irish SMEs, I understand the local link landscape — the Irish publications, directories, and industry associations that carry real authority. My white-hat approach builds sustainable authority that compounds over time.",
+    metaDescription: "Build domain authority with strategic link building. Lacuna Digital earns quality backlinks for Irish businesses through ethical outreach.",
     benefitsTitle: "Why Link Building Matters",
     benefits: [
       { title: "Domain Authority", desc: "Quality backlinks are one of the strongest ranking factors in Google's algorithm." },
@@ -557,9 +574,10 @@ export const services: Service[] = [
   // ── System Design ──
   {
     id: "component-libraries",
-    title: "Component Libraries",
+    title: "Component Library Design Services in Dublin",
     category: "System Design",
-    intro: "Component libraries are collections of reusable UI elements that ensure consistency, speed up development, and maintain quality across your digital products. I design and document comprehensive component libraries using tools like Figma that serve as the single source of truth for your product's interface.\n\nA well-built component library reduces design debt, accelerates feature delivery, and ensures every screen of your product feels cohesive and polished.",
+    intro: "A component library is a curated collection of reusable UI elements — buttons, forms, cards, navigation patterns — designed and documented to ensure consistency across your entire digital product. It's the single source of truth that keeps designers and developers aligned.\n\nFor growing product teams, a component library eliminates the chaos of ad-hoc design decisions. New features ship faster because they're assembled from tested, documented components rather than designed from scratch every time.\n\nAt Lacuna Digital, I design component libraries using atomic design principles in Figma, creating hierarchical systems from foundational tokens — colours, spacing, typography — through to complex, interactive components. Each component is documented with variants, states, responsive behaviour, and usage guidelines.\n\nMy libraries aren't just pretty catalogues — they're practical tools built for daily use by real product teams. I've created component systems for products used by thousands of users daily, including enterprise applications and SaaS platforms.\n\nBased in Dublin and working with teams across Ireland, I provide the specialised design system expertise that most SMEs can't justify hiring full-time. You get a production-ready library, comprehensive documentation, and training to ensure your team can maintain and extend it independently.",
+    metaDescription: "Scalable UI component libraries built in Figma. Lacuna Digital creates design systems that accelerate development for Irish product teams.",
     benefitsTitle: "Benefits of Component Libraries",
     benefits: [
       { title: "Consistency", desc: "Every instance of a component looks and behaves the same across your entire product." },
@@ -581,9 +599,10 @@ export const services: Service[] = [
   },
   {
     id: "style-guides",
-    title: "Style Guides",
+    title: "Digital Style Guide Design in Dublin",
     category: "System Design",
-    intro: "Style guides are living documents that define the visual and interaction language of your digital product. They go beyond branding guidelines to cover specific UI patterns, spacing systems, color usage, typography scales, and interaction behaviors.\n\nA comprehensive style guide ensures that anyone working on your product — designers, developers, or content creators — can maintain consistency without constant oversight.",
+    intro: "A digital style guide goes beyond brand guidelines to define the specific visual and interaction language of your product. It covers spacing systems, typography scales, colour usage rules, icon standards, and interaction patterns — the granular details that determine whether your product feels polished or patchwork.\n\nStyle guides are the reference document your design and development teams reach for dozens of times daily. They eliminate debates about padding values, font sizes, and colour choices by providing definitive answers.\n\nAt Lacuna Digital, I create style guides that are practical reference tools, not theoretical documents. Each guide defines your complete design language — grid systems, type scales, colour palettes with accessibility ratios, iconography standards, and interaction patterns — with clear examples and usage rules.\n\nI build interactive, living guides that evolve with your product rather than becoming outdated. Every specification is precise enough for developers to implement accurately and flexible enough to accommodate future growth.\n\nWorking with product teams across Ireland, I bring the systematic design thinking that ensures your product feels cohesive at every scale — whether it's a single web application or a suite of connected tools.",
+    metaDescription: "Living style guides for digital products. Lacuna Digital defines your UI language — spacing, colour, typography — for consistent implementation.",
     benefitsTitle: "Benefits of Style Guides",
     benefits: [
       { title: "Visual Consistency", desc: "Ensure every screen and interaction follows the same visual language." },
@@ -604,9 +623,10 @@ export const services: Service[] = [
   },
   {
     id: "advanced-prototyping",
-    title: "Advanced Prototyping",
+    title: "Advanced Figma Prototyping in Dublin",
     category: "System Design",
-    intro: "Advanced prototyping goes beyond basic clickable mockups to create highly interactive, realistic simulations of your product. Using Figma's advanced features, I build prototypes with complex interactions, conditional logic, variables, and animations that closely mirror the final development experience.\n\nThese high-fidelity prototypes are invaluable for usability testing, stakeholder presentations, and development handoff — reducing misunderstandings and accelerating delivery.",
+    intro: "Advanced prototyping goes beyond basic clickable mockups. Using Figma's most powerful features — variables, conditional logic, complex animations, and multi-state components — I create prototypes that closely simulate the final product experience.\n\nThese aren't wireframes with hotspots. They're interactive simulations where data changes between screens, conditional paths respond to user input, and micro-interactions provide realistic feedback. The result is a prototype so convincing that usability test participants often believe they're using a live product.\n\nAt Lacuna Digital, I specialise in pushing Figma prototyping to its limits. My prototypes include multi-step form flows with validation states, dashboard interfaces with interactive data filtering, onboarding sequences with conditional branching, and animated transitions that communicate hierarchy and spatial relationships.\n\nEvery prototype comes with detailed developer handoff documentation — annotated specs that show exactly how each interaction should be built. This eliminates the costly back-and-forth that typically happens when complex designs meet development reality.\n\nWith deep experience in advanced Figma prototyping for Irish and international clients, I bring a level of interactive design expertise that transforms how your team validates and communicates product concepts.",
+    metaDescription: "High-fidelity interactive prototypes with complex logic and animations. Lacuna Digital builds Figma prototypes that feel like real products.",
     benefitsTitle: "Why Advanced Prototyping",
     benefits: [
       { title: "Realistic Testing", desc: "Users interact with a prototype that feels like the real product, yielding more accurate feedback." },
@@ -627,9 +647,10 @@ export const services: Service[] = [
   },
   {
     id: "development-alignment",
-    title: "Development Alignment",
+    title: "Design-to-Development Alignment Services in Dublin",
     category: "System Design",
-    intro: "Development alignment ensures that the design vision is faithfully translated into code. I bridge the gap between design and development teams through structured handoff processes, design tokens, and ongoing collaboration that eliminates the \"design drift\" that plagues many products.\n\nMy approach ensures that what ships matches what was designed — pixel-perfect implementations that maintain the integrity of the user experience.",
+    intro: "Development alignment is the structured process of ensuring that what designers create is faithfully translated into code. It addresses the persistent challenge every product team faces: the gap between design intent and development output — commonly known as \"design drift.\"\n\nWithout alignment, products gradually diverge from their design vision. Spacing becomes inconsistent, colours shift, interactions feel different from what was specified. Over time, this accumulates into significant design debt that's expensive to resolve.\n\nAt Lacuna Digital, I bridge this gap through design tokens, structured handoff processes, and collaborative workflows. Design tokens translate your visual language — colours, typography, spacing — into variables that both designers and developers reference, creating a shared vocabulary that eliminates ambiguity.\n\nMy alignment process includes creating comprehensive developer documentation, establishing naming conventions that map between Figma and code, conducting design QA reviews during development, and training teams on effective collaboration practices.\n\nHaving worked on both sides of the design-development divide with Irish and international product teams, I understand the challenges from every angle. I don't just hand over files and walk away — I stay involved through implementation to ensure the final product honours the design vision.",
+    metaDescription: "Bridge the gap between design and code. Lacuna Digital ensures pixel-perfect implementation through structured handoff and design tokens.",
     benefitsTitle: "Why Development Alignment Matters",
     benefits: [
       { title: "Pixel-Perfect Implementation", desc: "Designs are implemented exactly as intended, preserving the user experience." },

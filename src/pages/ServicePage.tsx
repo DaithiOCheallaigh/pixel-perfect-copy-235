@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
@@ -9,6 +10,26 @@ import avatarImg from "@/assets/avatar.jpeg";
 const ServicePage = () => {
   const { id } = useParams<{ id: string }>();
   const service = getServiceById(id || "");
+
+  useEffect(() => {
+    if (service) {
+      document.title = `${service.title} | Lacuna Digital`;
+      const existingMeta = document.querySelector('meta[name="description"]');
+      if (service.metaDescription) {
+        if (existingMeta) {
+          existingMeta.setAttribute("content", service.metaDescription);
+        } else {
+          const meta = document.createElement("meta");
+          meta.name = "description";
+          meta.content = service.metaDescription;
+          document.head.appendChild(meta);
+        }
+      }
+    }
+    return () => {
+      document.title = "Lacuna Digital";
+    };
+  }, [service]);
 
   if (!service) {
     return (
