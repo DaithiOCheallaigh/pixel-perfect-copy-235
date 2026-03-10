@@ -291,6 +291,64 @@ const MarshDesignSystem = () => {
         </div>
       </section>
 
+      {/* BRAND UI SHOWCASE */}
+      <section className="px-6 py-16 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <SectionLabel>Brand UI Showcase</SectionLabel>
+            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
+              A standalone splash page I built to demonstrate how the new Marsh brand identity
+              translates into real UI — applying the rebranded tokens, typography, and visual
+              language beyond the component library into a cohesive, designed experience.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div className="overflow-hidden rounded-xl border border-border">
+              <iframe
+                src="https://marsh-clarity-code.lovable.app"
+                title="Marsh Brand UI Showcase"
+                className="hidden md:block w-full aspect-[16/10] border-0"
+                loading="lazy"
+                allow="clipboard-read; clipboard-write"
+              />
+              <a
+                href="https://marsh-clarity-code.lovable.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="md:hidden block"
+              >
+                <div className="flex items-center justify-center bg-muted/50 p-12 text-center">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Tap to view the Brand UI Showcase →
+                  </span>
+                </div>
+              </a>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.15}>
+            <a
+              href="https://marsh-clarity-code.lovable.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-6 flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+            >
+              <div>
+                <span className="font-mono-label mb-1 block text-xs text-muted-foreground">
+                  View Live
+                </span>
+                <span className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+                  Marsh Brand UI — Splash Page
+                </span>
+              </div>
+              <ArrowRight
+                size={24}
+                className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
+              />
+            </a>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* 5. APPROACH */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
