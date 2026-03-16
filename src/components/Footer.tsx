@@ -13,7 +13,12 @@ const Footer = () => (
           { label: "Web Design", to: "/web-design" },
           { label: "AI Integration", to: "/ai-integration" },
           { label: "About", to: "/about" },
-        ].map((link) => (
+        ]
+          .filter(
+            (link) =>
+              link.label !== "Web Design" && link.label !== "AI Integration"
+          )
+          .map((link) => (
           <Link
             key={link.to}
             to={link.to}
