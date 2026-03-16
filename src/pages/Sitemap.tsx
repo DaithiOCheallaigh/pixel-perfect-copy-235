@@ -16,6 +16,7 @@ const corePages = [
   { path: "/blog", label: "Blog" },
   { path: "/web-design", label: "Web Design Services" },
   { path: "/ai-design-process", label: "AI Design Process" },
+  { path: "/ai-integration", label: "AI Integration for SMEs" },
   { path: "/start-project", label: "Start a Project" },
   { path: "/sitemap", label: "Sitemap" },
 ];

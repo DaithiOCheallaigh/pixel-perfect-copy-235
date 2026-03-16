@@ -340,6 +340,25 @@ const WebDesignServices = () => {
         </div>
       </section>
 
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-xl border border-border bg-card p-8 md:p-10">
+          <ScrollReveal>
+            <SectionLabel>Next Step</SectionLabel>
+            <h2 className="max-w-3xl text-3xl font-black tracking-tight text-foreground md:text-4xl">
+              Looking beyond your website?
+            </h2>
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
+              A great digital presence is only part of the picture. Once your site is working for you, the next step is making your entire business work smarter. Our AI Integration service helps SMEs identify where time and margin are being lost — and builds custom tools to recover them.
+            </p>
+            <Link
+              to="/ai-integration"
+              className="mt-6 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              Explore AI Integration →
+            </Link>
+          </ScrollReveal>
+        </div>
+      </section>
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <SocialProof />

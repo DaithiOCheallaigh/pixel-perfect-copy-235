@@ -13,6 +13,7 @@ import CaseStudy from "./pages/CaseStudy";
 import ServicePage from "./pages/ServicePage";
 import WebDesignServices from "./pages/WebDesignServices";
 import AIDesignProcess from "./pages/AIDesignProcess";
+import AIIntegration from "./pages/AIIntegration";
 import BlogPost from "./pages/BlogPost";
 import StartProject from "./pages/StartProject";
 import MarshInternalTooling from "./pages/MarshInternalTooling";
@@ -115,6 +116,7 @@ const AppContent = () => {
         <Route path="/service/:id" element={<ServicePage />} />
         <Route path="/web-design" element={<WebDesignServices />} />
         <Route path="/ai-design-process" element={<AIDesignProcess />} />
+        <Route path="/ai-integration" element={<AIIntegration />} />
         <Route path="/work/marsh-internal-tooling" element={<MarshInternalTooling />} />
         <Route path="/work/marsh-design-system" element={<MarshDesignSystem />} />
         <Route path="/start-project" element={<StartProject />} />
