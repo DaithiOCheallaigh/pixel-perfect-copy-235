@@ -12,17 +12,17 @@ const benefits = [
   {
     icon: Clock3,
     title: "Recover lost hours",
-    body: "Automate the repetitive work that fills your team's week — data entry, reporting, scheduling, follow-ups. Those hours go back to your people, and back to your customers.",
+    body: "I help you automate the repetitive work that fills your team's week — data entry, reporting, scheduling, follow-ups. Those hours go back to your people, and back to your customers.",
   },
   {
     icon: TrendingUp,
     title: "Protect your margin",
-    body: "Manual processes carry hidden costs — errors, delays, duplicated effort. Tighter, smarter workflows mean fewer mistakes and less money left on the table.",
+    body: "Manual processes carry hidden costs — errors, delays, duplicated effort. I design tighter, smarter workflows so fewer mistakes happen and less money is left on the table.",
   },
   {
     icon: Users,
     title: "Scale without overextending",
-    body: "Serve more customers without a proportional increase in headcount or workload. AI tools let your team do more with what they already have.",
+    body: "I build AI tools that help your team serve more customers without a proportional increase in headcount or workload.",
   },
 ];
 
@@ -30,22 +30,22 @@ const phases = [
   {
     number: "01",
     title: "Discovery & Audit",
-    body: "We come into your business (in person or remotely) and map how your team actually works. We look at what's taking time, what's manual, what's duplicated, and where the friction is. You get a plain-English AI Opportunity Report — a prioritised breakdown of where AI can have the most impact, with estimated time and cost savings.",
+    body: "I come into your business (in person or remotely) and map how your team actually works. I look at what's taking time, what's manual, what's duplicated, and where the friction is. You get a plain-English AI Opportunity Report — a prioritised breakdown of where AI can have the most impact, with estimated time and cost savings.",
   },
   {
     number: "02",
     title: "Strategy & Roadmap",
-    body: "We translate the audit findings into a clear, phased plan. What to fix first. What to buy versus what to build. Where quick wins are and where the bigger structural changes live. We also assess your eligibility for LEO funding at this stage — many Irish businesses qualify for grants that can offset a significant portion of the cost.",
+    body: "I translate the audit findings into a clear, phased plan. What to fix first. What to buy versus what to build. Where quick wins are and where the bigger structural changes live. I also assess your eligibility for LEO funding at this stage — many Irish businesses qualify for grants that can offset a significant portion of the cost.",
   },
   {
     number: "03",
     title: "Build & Integrate",
-    body: "We build exactly what your business needs — not a generic off-the-shelf tool retrofitted to your workflow. Every solution is designed with your staff in mind from day one, because tools only deliver value when people actually use them. Delivery is iterative — you see working results early and often, not at the end of a long engagement.",
+    body: "I build exactly what your business needs — not a generic off-the-shelf tool retrofitted to your workflow. Every solution is designed with your staff in mind from day one, because tools only deliver value when people actually use them. Delivery is iterative — you see working results early and often, not at the end of a long engagement.",
   },
   {
     number: "04",
     title: "Ongoing Optimisation",
-    body: "Once your first integrations are live, the retainer keeps everything running, refined, and growing. Monthly check-ins, performance reviews, and the ability to layer in new use cases as your business evolves. Your AI stack grows with you.",
+    body: "Once your first integrations are live, the retainer keeps everything running, refined, and growing. I use monthly check-ins and performance reviews to keep improving what is already in place, while layering in new use cases as your business evolves. Your AI stack grows with you.",
   },
 ];
 
@@ -55,7 +55,7 @@ const pricing = [
     price: "From €750",
     label: "One-off",
     description:
-      "The starting point. We map your workflows, identify AI opportunities, and deliver a prioritised report with estimated impact. Can be taken as a standalone or credited against your retainer.",
+      "The starting point. I map your workflows, identify AI opportunities, and deliver a prioritised report with estimated impact. This can be taken as a standalone piece of work or credited against your retainer.",
     cta: "Get Started",
     featured: false,
     badge: null,
@@ -65,7 +65,7 @@ const pricing = [
     price: "€500 / month",
     label: "Ongoing",
     description:
-      "Covers ongoing build, integration, monthly strategy call, support, and iteration. New use cases added as your needs grow. Cancel with notice — no long lock-ins.",
+      "This covers ongoing build, integration, a monthly strategy call, support, and iteration. New use cases can be added as your needs grow. Cancel with notice — no long lock-ins.",
     cta: "Book a Call",
     featured: true,
     badge: "Tax deductible",
@@ -75,7 +75,7 @@ const pricing = [
     price: "Pre-agreed fixed fee",
     label: "Project-based",
     description:
-      "For complex integrations or where your business has specific tools that must be connected. We scope the work fully before anything begins — you get a fixed price, agreed in writing, before a single line of code is written.",
+      "For complex integrations or where your business has specific tools that must be connected, I scope the work fully before anything begins. You get a fixed price, agreed in writing, before a single line of code is written.",
     cta: "Discuss Your Project",
     featured: false,
     badge: null,
@@ -86,32 +86,32 @@ const useCases = [
   {
     sector: "Hospitality / Food & Beverage",
     title: "Automated supplier invoice processing",
-    body: "Instead of manually matching invoices to orders across email, WhatsApp, and PDFs — a single system captures, categorises, and flags exceptions automatically.",
+    body: "Instead of manually matching invoices to orders across email, WhatsApp, and PDFs, I can create a single system that captures, categorises, and flags exceptions automatically.",
   },
   {
     sector: "Professional Services",
     title: "Client onboarding without the admin",
-    body: "Proposal generation, contract sending, onboarding checklists, and CRM updates — triggered automatically when a deal closes, with no manual handoff.",
+    body: "I can automate proposal generation, contract sending, onboarding checklists, and CRM updates so everything is triggered when a deal closes, with no manual handoff.",
   },
   {
     sector: "Retail / eCommerce",
     title: "Inventory and reorder intelligence",
-    body: "Instead of weekly manual stock checks, a live dashboard flags low stock and generates reorder recommendations based on sales velocity.",
+    body: "Instead of relying on weekly manual stock checks, I can build a live dashboard that flags low stock and generates reorder recommendations based on sales velocity.",
   },
   {
     sector: "Healthcare / Wellness",
     title: "Appointment and follow-up automation",
-    body: "Booking confirmations, reminders, post-appointment follow-ups, and review requests — all handled automatically, with a human tone.",
+    body: "I can automate booking confirmations, reminders, post-appointment follow-ups, and review requests — while keeping the tone human.",
   },
   {
     sector: "Construction / Trade",
     title: "Quote and job documentation",
-    body: "Job scoping, quote generation, materials lists, and site documentation — built from templates that learn your pricing and your language over time.",
+    body: "I can streamline job scoping, quote generation, materials lists, and site documentation using templates that learn your pricing and your language over time.",
   },
   {
     sector: "Any Business",
     title: "Reporting that writes itself",
-    body: "Weekly performance summaries, KPI dashboards, and management reports generated automatically from your existing data — no spreadsheet wrangling required.",
+    body: "I can generate weekly performance summaries, KPI dashboards, and management reports automatically from your existing data — with no spreadsheet wrangling required.",
   },
 ];
 
@@ -126,32 +126,32 @@ const faqs = [
   {
     question: "Do I need to have a specific tool or platform already in place?",
     answer:
-      "No. We start from where you are. If you have existing tools you want to keep, we'll work with them. If you're starting fresh, we'll recommend the right stack for your needs and budget. Either way, there are no assumptions and no surprises.",
+      "No. I start from where you are. If you have existing tools you want to keep, I'll work with them. If you're starting fresh, I'll recommend the right stack for your needs and budget. Either way, there are no assumptions and no surprises.",
   },
   {
     question: "What size of business is this suitable for?",
     answer:
-      "We work with SMEs — typically businesses with between 3 and 50 staff. You don't need a dedicated IT team or an existing tech infrastructure. In fact, some of the highest-impact integrations come from businesses that have relied on manual processes for years and are ready to change that.",
+      "I work with SMEs — typically businesses with between 3 and 50 staff. You don't need a dedicated IT team or an existing tech infrastructure. In fact, some of the highest-impact integrations come from businesses that have relied on manual processes for years and are ready to change that.",
   },
   {
     question: "How long before we see results?",
     answer:
-      "The Discovery Audit takes 1–2 weeks. From there, most businesses see their first working integration within 4–6 weeks. Quick wins — automations that save hours immediately — are typically live within the first month.",
+      "The Discovery Audit usually takes 1–2 weeks. From there, most businesses see their first working integration within 4–6 weeks. Quick wins — automations that save hours immediately — are typically live within the first month.",
   },
   {
     question: "Can I cancel the retainer?",
     answer:
-      "Yes. We ask for 30 days' notice. We don't believe in locking businesses into agreements that no longer serve them. If the engagement isn't delivering value, we want to know — and fix it, not trap you.",
+      "Yes. I ask for 30 days' notice. I don't believe in locking businesses into agreements that no longer serve them. If the engagement isn't delivering value, I'd rather know and fix it than trap you in a contract.",
   },
   {
     question: "What if our integration is more complex than a standard retainer covers?",
     answer:
-      "For anything beyond the scope of the monthly retainer — particularly complex builds or integrations with existing enterprise tools — we scope the work fully and agree a fixed fee in writing before anything begins. You'll always know the cost before we start.",
+      "For anything beyond the scope of the monthly retainer — particularly complex builds or integrations with existing enterprise tools — I scope the work fully and agree a fixed fee in writing before anything begins. You'll always know the cost before I start.",
   },
   {
     question: "Is the retainer fee tax deductible?",
     answer:
-      "In most cases, yes — as a business expense for an Irish SME. We'd always recommend confirming with your accountant, but for the vast majority of clients this cost is fully deductible.",
+      "In most cases, yes — as a business expense for an Irish SME. I'd always recommend confirming with your accountant, but for the vast majority of clients this cost is fully deductible.",
   },
 ];
 
@@ -233,7 +233,7 @@ const AIIntegration = () => {
               running leaner.
             </h1>
             <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-              We go inside your business, find where time and money are quietly slipping away, and build AI tools to get them back — so you can serve more customers, better.
+              I go inside your business, find where time and money are quietly slipping away, and build AI tools to get them back — so you can serve more customers, better.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <a
@@ -309,7 +309,7 @@ const AIIntegration = () => {
               <p>
                 When manual work fills your team&apos;s time, your capacity to grow is capped. You can&apos;t serve more customers without burning people out or hiring before you&apos;re ready. Margins get squeezed. Customer experience suffers at the edges.
               </p>
-              <p>AI integration, done properly, breaks that ceiling.</p>
+              <p>I use AI integration to help break that ceiling.</p>
             </div>
           </ScrollReveal>
         </div>
@@ -372,7 +372,7 @@ const AIIntegration = () => {
               Transparent pricing. No hidden costs. Ever.
             </h2>
             <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
-              We believe you should always know exactly what you&apos;re committing to before any work begins. That&apos;s why every engagement is scoped and agreed upfront — whether you&apos;re on a monthly retainer or a fixed-fee project.
+              I believe you should always know exactly what you&apos;re committing to before any work begins. That&apos;s why every engagement is scoped and agreed upfront — whether you&apos;re on a monthly retainer or a fixed-fee project.
             </p>
           </ScrollReveal>
           <div className="mt-10 grid gap-4 lg:grid-cols-3">
@@ -418,7 +418,7 @@ const AIIntegration = () => {
             <aside className="rounded-2xl border border-primary/20 bg-primary/5 p-6 md:p-8">
               <h3 className="text-xl font-bold text-foreground">You may not need to pay full price.</h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
-                Many Irish SMEs qualify for Local Enterprise Office (LEO) funding that can significantly offset the cost of AI integration. We&apos;ll assess your eligibility as part of the engagement and help you through the application process — including the Trading Online Voucher (up to €2,500) and other relevant schemes.
+                Many Irish SMEs qualify for Local Enterprise Office (LEO) funding that can significantly offset the cost of AI integration. I&apos;ll assess your eligibility as part of the engagement and help you through the application process — including the Trading Online Voucher (up to €2,500) and other relevant schemes.
               </p>
               <a
                 href="https://www.localenterprise.ie"
@@ -441,7 +441,7 @@ const AIIntegration = () => {
               AI that works for how your business actually operates.
             </h2>
             <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
-              Every business is different. Here are some of the workflow problems we commonly help SMEs solve.
+              Every business is different. Here are some of the workflow problems I commonly help SMEs solve.
             </p>
           </ScrollReveal>
           <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -467,16 +467,16 @@ const AIIntegration = () => {
             </h2>
             <div className="mt-8 space-y-5 text-sm leading-relaxed text-muted-foreground md:text-base">
               <p>
-                Most AI consultants come at this from one direction — either pure technology or pure strategy. Lacuna Digital sits at the intersection of both.
+                Most AI consultants come at this from one direction — either pure technology or pure strategy. I sit at the intersection of both.
               </p>
               <p>
-                Dave Kelly is a Senior UI/UX Designer and end-to-end software developer with over a decade of experience building digital products and services for businesses at every stage of growth. He&apos;s worked inside large enterprises and built his own products from scratch — which means he understands both the complexity of real systems and the pragmatism that running a business demands.
+                I&apos;m Dave Kelly, a Senior UI/UX Designer and end-to-end software developer with over a decade of experience building digital products and services for businesses at every stage of growth. I&apos;ve worked inside large enterprises and built my own products from scratch — which means I understand both the complexity of real systems and the pragmatism that running a business demands.
               </p>
               <p>
-                What that means for you: the tools we build are designed to be used. Not just functional, but intuitive. Built around how your team actually works, not how a developer imagined they might.
+                What that means for you: the tools I build are designed to be used. Not just functional, but intuitive. Built around how your team actually works, not how a developer imagined they might.
               </p>
               <p>
-                No subcontractors. No offshore builds handed off without context. Everything is designed, built, and delivered by the same person who audited your business and understood your needs.
+                No subcontractors. No offshore builds handed off without context. Everything is designed, built, and delivered by me — the same person who audits your business and understands your needs.
               </p>
             </div>
           </ScrollReveal>
@@ -526,7 +526,7 @@ const AIIntegration = () => {
               Ready to find out where your business is losing time?
             </h2>
             <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
-              Start with a Discovery Call — a free 30-minute conversation where we&apos;ll talk through your current workflows, what&apos;s frustrating your team, and whether AI integration is the right move for you right now. No pitch, no pressure.
+              Start with a Discovery Call — a free 30-minute conversation where I&apos;ll talk through your current workflows, what&apos;s frustrating your team, and whether AI integration is the right move for you right now. No pitch, no pressure.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <a
@@ -540,8 +540,8 @@ const AIIntegration = () => {
               </a>
               <p className="text-sm text-muted-foreground">
                 Prefer email?{" "}
-                <a href="mailto:hello@lacunadigital.io" className="font-semibold text-foreground transition-colors hover:text-primary">
-                  hello@lacunadigital.io
+                <a href="mailto:info@lacunaconsulting.com" className="font-semibold text-foreground transition-colors hover:text-primary">
+                  info@lacunaconsulting.com
                 </a>
               </p>
             </div>
