@@ -128,7 +128,7 @@ export const projects: Project[] = [
     pillImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1",
     headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AI_Header-1.webp?fit=4107%2C2089&ssl=1",
     mobileImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/MobileAI.webp?fit=800%2C764&ssl=1",
-    toolsImage: "/images/work/ai-reviews-tools.webp",
+    toolsImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Tools-1.webp?fit=800%2C115&ssl=1",
     toolsUsedImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Group-2.webp?fit=800%2C752&ssl=1",
     liveLink: "https://tip.direct/platform-admin/",
     challengeImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Group-4.webp?fit=800%2C800&ssl=1",
