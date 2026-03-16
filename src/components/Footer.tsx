@@ -11,6 +11,7 @@ const Footer = () => (
           { label: "My Work", to: "/work" },
           { label: "Skill Set", to: "/skills" },
           { label: "Web Design", to: "/web-design" },
+          { label: "AI Integration", to: "/ai-integration" },
           { label: "About", to: "/about" },
         ].map((link) => (
           <Link
