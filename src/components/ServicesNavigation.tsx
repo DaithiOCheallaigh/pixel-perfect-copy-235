@@ -53,14 +53,12 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
             </Link>
           ))}
           <ThemeToggle />
-          <a
-            href="https://www.lacunadigital.io"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/start-project"
             className="group inline-flex items-center gap-1.5 rounded-sm bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5"
           >
-            Learn more about Dave <span>→</span>
-          </a>
+            Get Started <span>→</span>
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3 md:hidden">
