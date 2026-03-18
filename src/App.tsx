@@ -129,7 +129,7 @@ const MainLayout = () => (
 
 const AppContent = () => {
   const location = useLocation();
-  const isServicesRoute = location.pathname === "/services";
+  const isServicesRoute = ["/services", "/web-design", "/ai-integration"].includes(location.pathname);
 
   return (
     <>
