@@ -93,15 +93,13 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
               {link.label}
             </Link>
           ))}
-          <a
-            href="https://www.lacunadigital.io"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/start-project"
             onClick={() => setMobileOpen(false)}
             className="inline-flex items-center gap-2 text-lg font-semibold text-primary"
           >
-            Learn more about Dave →
-          </a>
+            Get Started →
+          </Link>
         </nav>
       </motion.div>
     </motion.header>

@@ -137,6 +137,8 @@ const AppContent = () => {
       {isServicesRoute ? (
         <Routes>
           <Route path="/services" element={<Services />} />
+          <Route path="/web-design" element={<WebDesignServices />} />
+          <Route path="/ai-integration" element={<AIIntegration />} />
         </Routes>
       ) : (
         <MainLayout />
