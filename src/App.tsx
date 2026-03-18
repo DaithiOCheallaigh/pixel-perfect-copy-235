@@ -20,6 +20,7 @@ import MarshInternalTooling from "./pages/MarshInternalTooling";
 import MarshDesignSystem from "./pages/MarshDesignSystem";
 import NotFound from "./pages/NotFound";
 import Sitemap from "./pages/Sitemap";
+import Services from "./pages/Services";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
@@ -100,30 +101,46 @@ const ScrollToTop = () => {
   return null;
 };
 
+const MainLayout = () => (
+  <>
+    <Navigation visible={true} />
+    <ScrollToTop />
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/work" element={<Work />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/skills" element={<Skills />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:id" element={<BlogPost />} />
+      <Route path="/case/:id" element={<CaseStudy />} />
+      <Route path="/service/:id" element={<ServicePage />} />
+      <Route path="/web-design" element={<WebDesignServices />} />
+      <Route path="/ai-design-process" element={<AIDesignProcess />} />
+      <Route path="/ai-integration" element={<AIIntegration />} />
+      <Route path="/work/marsh-internal-tooling" element={<MarshInternalTooling />} />
+      <Route path="/work/marsh-design-system" element={<MarshDesignSystem />} />
+      <Route path="/start-project" element={<StartProject />} />
+      <Route path="/sitemap" element={<Sitemap />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+    <Footer />
+  </>
+);
+
 const AppContent = () => {
+  const location = useLocation();
+  const isServicesRoute = location.pathname === "/services";
+
   return (
     <>
-      <Navigation visible={true} />
       <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/work" element={<Work />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/skills" element={<Skills />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
-        <Route path="/case/:id" element={<CaseStudy />} />
-        <Route path="/service/:id" element={<ServicePage />} />
-        <Route path="/web-design" element={<WebDesignServices />} />
-        <Route path="/ai-design-process" element={<AIDesignProcess />} />
-        <Route path="/ai-integration" element={<AIIntegration />} />
-        <Route path="/work/marsh-internal-tooling" element={<MarshInternalTooling />} />
-        <Route path="/work/marsh-design-system" element={<MarshDesignSystem />} />
-        <Route path="/start-project" element={<StartProject />} />
-        <Route path="/sitemap" element={<Sitemap />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Footer />
+      {isServicesRoute ? (
+        <Routes>
+          <Route path="/services" element={<Services />} />
+        </Routes>
+      ) : (
+        <MainLayout />
+      )}
     </>
   );
 };
