@@ -53,14 +53,12 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
             </Link>
           ))}
           <ThemeToggle />
-          <a
-            href="https://www.lacunadigital.io"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/start-project"
             className="group inline-flex items-center gap-1.5 rounded-sm bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5"
           >
-            Learn more about Dave <span>→</span>
-          </a>
+            Get Started <span>→</span>
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3 md:hidden">
@@ -95,15 +93,13 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
               {link.label}
             </Link>
           ))}
-          <a
-            href="https://www.lacunadigital.io"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/start-project"
             onClick={() => setMobileOpen(false)}
             className="inline-flex items-center gap-2 text-lg font-semibold text-primary"
           >
-            Learn more about Dave →
-          </a>
+            Get Started →
+          </Link>
         </nav>
       </motion.div>
     </motion.header>

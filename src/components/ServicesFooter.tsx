@@ -22,7 +22,7 @@ const ServicesFooter = () => (
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
         >
-          Main Site ↗
+          Learn more about Dave ↗
         </a>
         <a
           href="https://www.linkedin.com/in/davidkelly89/"

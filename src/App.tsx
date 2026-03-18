@@ -129,7 +129,8 @@ const MainLayout = () => (
 
 const AppContent = () => {
   const location = useLocation();
-  const isServicesRoute = location.pathname === "/services";
+  const servicesRoutes = ["/services", "/web-design", "/ai-integration"];
+  const isServicesRoute = servicesRoutes.includes(location.pathname);
 
   return (
     <>
@@ -137,6 +138,8 @@ const AppContent = () => {
       {isServicesRoute ? (
         <Routes>
           <Route path="/services" element={<Services />} />
+          <Route path="/web-design" element={<WebDesignServices />} />
+          <Route path="/ai-integration" element={<AIIntegration />} />
         </Routes>
       ) : (
         <MainLayout />
