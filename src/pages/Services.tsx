@@ -210,8 +210,9 @@ const Services = () => {
       <ServicesNavigation visible={true} />
 
       {/* Hero */}
-      <section className="relative flex min-h-[90vh] items-center px-6 pt-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-16 md:px-12 lg:px-24">
+        <DottedSurface className="pointer-events-none opacity-40" />
+        <div className="relative z-10 mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
