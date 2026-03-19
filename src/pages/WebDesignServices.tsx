@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import { TickCircle, InfoCircle, ExportSquare } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
@@ -151,6 +152,10 @@ const WebDesignServices = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
+            <Link to="/services" className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-primary">
+              <ArrowLeft size={16} />
+              Back to Services
+            </Link>
             <span className="font-mono-label text-primary">Services</span>
             <h1 className="mt-3 text-4xl font-black tracking-tighter text-foreground md:text-6xl">
               Web Design &amp; Development
