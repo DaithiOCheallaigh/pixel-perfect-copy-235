@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap, Palette, Clock, DollarSign, Brain, Sparkles } from "lucide-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
+import { ShineBorder } from "@/components/ui/shine-border";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
@@ -264,8 +265,9 @@ const Services = () => {
               <ScrollReveal key={card.title} delay={i * 0.1}>
                 <Link
                   to={card.link}
-                  className="group flex h-full flex-col rounded-xl border border-border bg-card p-8 transition-colors hover:border-primary/50"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card p-8 transition-colors hover:border-primary/50"
                 >
+                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                   <card.icon className="h-8 w-8 text-primary" />
                   <h3 className="mt-4 text-xl font-bold">{card.title}</h3>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
