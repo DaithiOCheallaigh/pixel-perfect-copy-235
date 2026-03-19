@@ -1,9 +1,10 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SectionLabel from "@/components/SectionLabel";
 import ScrollReveal from "@/components/ScrollReveal";
-import { ArrowRight, Clock3, TrendingUp, Users, ArrowDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock3, TrendingUp, Users, ArrowDown } from "lucide-react";
 
 const bookingHref = "https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02";
 const canonicalUrl = "https://lacunadigital.io/ai-integration";
