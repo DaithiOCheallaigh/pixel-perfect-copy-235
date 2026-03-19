@@ -145,17 +145,17 @@ const WebDesignServices = () => {
   return (
     <main className="pt-24">
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="px-6 pt-12 pb-16 md:px-12 lg:px-24">
+      <section className="px-6 pt-4 pb-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-4xl">
+          <Link to="/services" className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary">
+            <ArrowLeft size={14} />
+            Back to Services
+          </Link>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Link to="/services" className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-primary">
-              <ArrowLeft size={16} />
-              Back to Services
-            </Link>
             <span className="font-mono-label text-primary">Services</span>
             <h1 className="mt-3 text-4xl font-black tracking-tighter text-foreground md:text-6xl">
               Web Design &amp; Development
