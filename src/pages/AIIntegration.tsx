@@ -201,6 +201,10 @@ const AIIntegration = () => {
   return (
     <main className="bg-background pt-24 text-foreground">
       <section className="relative overflow-hidden px-6 pb-16 pt-12 md:px-12 lg:px-24 lg:pb-24">
+        <Link to="/services" className="relative z-10 mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-primary">
+          <ArrowLeft size={16} />
+          Back to Services
+        </Link>
         <div className="absolute inset-0 opacity-60">
           <div className="absolute inset-x-0 top-0 h-px bg-border" />
           <div className="grid-background absolute inset-0" />
