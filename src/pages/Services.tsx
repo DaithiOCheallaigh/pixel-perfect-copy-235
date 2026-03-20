@@ -311,6 +311,45 @@ const Services = () => {
         </div>
       </section>
 
+      {/* Tools */}
+      <section className="px-6 py-24 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-7xl">
+          <ScrollReveal>
+            <SectionLabel>Tools</SectionLabel>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+              Tools to help you succeed
+            </h2>
+            <p className="mt-4 max-w-2xl text-muted-foreground">
+              Practical tools I build and set up for your business — so you never miss a lead and always stay one step ahead.
+            </p>
+          </ScrollReveal>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <ScrollReveal>
+              <CardSpotlight className="flex h-full flex-col rounded-xl border-border bg-card">
+                <img
+                  src={whatsappLogo}
+                  alt="WhatsApp"
+                  className="h-12 w-12 rounded-lg"
+                />
+                <h3 className="mt-5 text-xl font-bold text-foreground">
+                  WhatsApp AI Bot
+                </h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  Never miss a lead again. I set up an intelligent WhatsApp bot that automatically responds to enquiries when you're busy — qualifying leads, answering FAQs, and capturing contact details 24/7.
+                </p>
+                <Link
+                  to="/start-project"
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all hover:gap-2.5"
+                >
+                  Find out more <ArrowRight className="h-4 w-4" />
+                </Link>
+              </CardSpotlight>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* Social Proof */}
       <SocialProof />
 
