@@ -126,14 +126,15 @@ const DotMatrix: React.FC<DotMatrixProps> = ({
             float frequency = 5.0;
             float show_offset = random(st2);
             float rand = random(st2 * floor((u_time / frequency) + show_offset + frequency) + 1.0);
+            float googly_rand = random(st2);
+            float googly_alpha = opacity;
+
             opacity *= u_opacities[int(googly_rand * 10.0)];
             opacity *= 1.0 - step(u_dot_size / u_total_size, fract(st.x / u_total_size));
             opacity *= 1.0 - step(u_dot_size / u_total_size, fract(st.y / u_total_size));
 
             vec3 color = u_colors[int(googly_rand * 6.0)];
-
-            float googly_rand = random(st2);
-            float googly_alpha = opacity;
+            googly_alpha = opacity;
 
             ${shader}
 
