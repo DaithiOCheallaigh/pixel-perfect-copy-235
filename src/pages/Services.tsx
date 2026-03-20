@@ -4,11 +4,13 @@ import { motion } from "framer-motion";
 import { ArrowRight, Zap, Palette, Clock, DollarSign, Brain, Sparkles } from "lucide-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { ShineBorder } from "@/components/ui/shine-border";
+import { CardSpotlight } from "@/components/ui/card-spotlight";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
 import ServicesNavigation from "@/components/ServicesNavigation";
 import ServicesFooter from "@/components/ServicesFooter";
+import whatsappLogo from "@/assets/images/whatsapp-logo.webp";
 
 /* ------------------------------------------------------------------ */
 /*  Currency                                                           */
