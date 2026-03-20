@@ -45,7 +45,7 @@ export const CardSpotlight = ({
       {...props}
     >
       <motion.div
-        className="pointer-events-none absolute z-0 -inset-px rounded-md opacity-0 transition duration-300 group-hover/spotlight:opacity-100"
+        className="pointer-events-none absolute z-0 -inset-px rounded-md opacity-0 transition duration-300 group-hover/spotlight:opacity-40"
         style={{
           backgroundColor: color,
           maskImage: useMotionTemplate`
@@ -69,7 +69,7 @@ export const CardSpotlight = ({
           />
         )}
       </motion.div>
-      {children}
+      <div className="relative z-10">{children}</div>
     </div>
   );
 };
