@@ -21,6 +21,9 @@ import MarshDesignSystem from "./pages/MarshDesignSystem";
 import NotFound from "./pages/NotFound";
 import Sitemap from "./pages/Sitemap";
 import Services from "./pages/Services";
+import ShowcasePage from "./pages/ShowcasePage";
+import ShowcaseAdmin from "./pages/ShowcaseAdmin";
+import ShowcaseNotFound from "./components/showcase/ShowcaseNotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
@@ -132,10 +135,18 @@ const AppContent = () => {
   const servicesRoutes = ["/services", "/web-design", "/ai-integration"];
   const isServicesRoute = servicesRoutes.includes(location.pathname);
 
+  const showcaseRoutes = location.pathname.startsWith("/showcase");
+
   return (
     <>
       <ScrollToTop />
-      {isServicesRoute ? (
+      {showcaseRoutes ? (
+        <Routes>
+          <Route path="/showcase/admin" element={<ShowcaseAdmin />} />
+          <Route path="/showcase/:slug" element={<ShowcasePage />} />
+          <Route path="/showcase" element={<ShowcaseNotFound />} />
+        </Routes>
+      ) : isServicesRoute ? (
         <Routes>
           <Route path="/services" element={<Services />} />
           <Route path="/web-design" element={<WebDesignServices />} />

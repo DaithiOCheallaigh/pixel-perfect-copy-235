@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import ShowcaseInterestBar from "@/components/showcase/ShowcaseInterestBar";
 import ShowcaseInterestModal from "@/components/showcase/ShowcaseInterestModal";
 import ShowcaseNotFound from "@/components/showcase/ShowcaseNotFound";
-import PageLoader from "@/components/PageLoader";
+import { Loader2 } from "lucide-react";
 
 interface ShowcaseEntry {
   id: string;
@@ -80,7 +80,11 @@ const ShowcasePage = () => {
     };
   }, [entry]);
 
-  if (loading) return <PageLoader />;
+  if (loading) return (
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+    </div>
+  );
   if (notFound) return <ShowcaseNotFound />;
   if (!entry) return null;
 
