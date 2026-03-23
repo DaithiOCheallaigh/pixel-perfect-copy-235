@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import ShowcaseInterestBar from "@/components/showcase/ShowcaseInterestBar";
 import ShowcaseInterestModal from "@/components/showcase/ShowcaseInterestModal";
 import ShowcaseNotFound from "@/components/showcase/ShowcaseNotFound";
 import { Loader2 } from "lucide-react";
+
+// Registry of showcase mockup components by slug
+const MOCKUP_REGISTRY: Record<string, React.LazyExoticComponent<React.ComponentType>> = {
+  "niall-keady": lazy(() => import("@/components/showcase/mockups/NiallKeadyShowcase")),
+};
 
 interface ShowcaseEntry {
   id: string;
@@ -105,12 +110,23 @@ const ShowcasePage = () => {
     setTimeout(() => setSubmitted(false), 4000);
   };
 
+  const MockupComponent = slug ? MOCKUP_REGISTRY[slug] : null;
+
   return (
     <div className="min-h-screen bg-background pb-24">
-      {/* Showcase mockup content will be rendered here per-business */}
-      <div className="flex items-center justify-center min-h-[60vh] text-muted-foreground">
-        <p className="text-lg">Showcase content for <strong>{entry.business_name}</strong></p>
-      </div>
+      {MockupComponent ? (
+        <Suspense fallback={
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          </div>
+        }>
+          <MockupComponent />
+        </Suspense>
+      ) : (
+        <div className="flex items-center justify-center min-h-[60vh] text-muted-foreground">
+          <p className="text-lg">Showcase content for <strong>{entry.business_name}</strong></p>
+        </div>
+      )}
 
       {/* Lacuna badge */}
       <a
