@@ -14,16 +14,95 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      pending_leads: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          payload: Json
+          retried: boolean
+          showcase_entry_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          payload: Json
+          retried?: boolean
+          showcase_entry_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          payload?: Json
+          retried?: boolean
+          showcase_entry_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pending_leads_showcase_entry_id_fkey"
+            columns: ["showcase_entry_id"]
+            isOneToOne: false
+            referencedRelation: "showcase_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      showcase_entries: {
+        Row: {
+          business_name: string
+          business_type: string
+          contact_email: string
+          created_at: string
+          id: string
+          slug: string
+          status: Database["public"]["Enums"]["showcase_status"]
+        }
+        Insert: {
+          business_name: string
+          business_type?: string
+          contact_email?: string
+          created_at?: string
+          id?: string
+          slug: string
+          status?: Database["public"]["Enums"]["showcase_status"]
+        }
+        Update: {
+          business_name?: string
+          business_type?: string
+          contact_email?: string
+          created_at?: string
+          id?: string
+          slug?: string
+          status?: Database["public"]["Enums"]["showcase_status"]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      insert_pending_lead: {
+        Args: { p_entry_id: string; p_error: string; p_payload: Json }
+        Returns: undefined
+      }
+      update_showcase_status: {
+        Args: {
+          p_new_status: Database["public"]["Enums"]["showcase_status"]
+          p_slug: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      showcase_status:
+        | "draft"
+        | "sent"
+        | "viewed"
+        | "interested"
+        | "not_interested"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +229,14 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      showcase_status: [
+        "draft",
+        "sent",
+        "viewed",
+        "interested",
+        "not_interested",
+      ],
+    },
   },
 } as const
