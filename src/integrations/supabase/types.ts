@@ -84,7 +84,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      insert_pending_lead: {
+        Args: { p_entry_id: string; p_error: string; p_payload: Json }
+        Returns: undefined
+      }
+      update_showcase_status: {
+        Args: {
+          p_new_status: Database["public"]["Enums"]["showcase_status"]
+          p_slug: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       showcase_status:
