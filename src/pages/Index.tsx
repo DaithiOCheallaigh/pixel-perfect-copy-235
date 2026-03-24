@@ -77,34 +77,33 @@ const Index = () => {
 
           {/* Featured project cards — side by side image + text like old site */}
           <div className="space-y-8">
-            {/* AI Reviews — image left, text right */}
+            {/* Marsh Design System — image left, text right */}
             <ScrollReveal>
               <Link
-                to="/case/ai-reviews"
+                to="/work/marsh-design-system"
                 className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
               >
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
                   <img
-                    src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1"
-                    alt="AI Assisted Reviews"
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+                    src="/images/work/marsh-design-system.webp"
+                    alt="Marsh Design System Rebrand"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     loading="lazy"
                   />
                 </div>
                 <div className="flex flex-col justify-center p-8 md:p-12">
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
-                    Leveraging AI to increase 5-star reviews by 45% on average
+                    Rebranding an enterprise component library with an AI-first workflow
                   </h3>
-                   <div className="mb-8 flex flex-wrap gap-2">
-                     {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
-                       <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
+                  <div className="mb-8 flex flex-wrap gap-2">
+                    {["Design Systems", "Brand Implementation", "AI Workflow"].map((tag) => (
+                      <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
                     ))}
                   </div>
-                  <blockquote className="mb-4 text-sm italic text-muted-foreground">
-                    "Leveraging the power of AI & expanding our product to attract a new type of user could only have been possible with Dave on our team"
-                  </blockquote>
-                  <p className="text-sm font-semibold text-foreground">Andrew Kelly <span className="font-normal text-muted-foreground">- CTO, TipDirect</span></p>
+                  <p className="text-sm text-muted-foreground">
+                    A full rebrand of the CORE design system — 60+ components updated, documented in Storybook, and shipped to GitHub before the official launch.
+                  </p>
                   <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
                     View Project <span>→</span>
                   </span>
@@ -112,24 +111,24 @@ const Index = () => {
               </Link>
             </ScrollReveal>
 
-            {/* Digital Tipping — text left, image right */}
+            {/* Marsh Internal Tooling — text left, image right */}
             <ScrollReveal delay={0.1}>
               <Link
-                to="/case/digital-tipping"
+                to="/work/marsh-internal-tooling"
                 className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
               >
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="flex flex-col justify-center p-8 md:order-1 md:p-12">
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
-                    Enabling tour guides to receive an average tip of $25 through digital tipping
+                    Three enterprise internal tools designed and shipped simultaneously
                   </h3>
-                   <div className="mb-8 flex flex-wrap gap-2">
-                     {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
-                       <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
+                  <div className="mb-8 flex flex-wrap gap-2">
+                    {["Product Design", "Design Systems", "AI Workflow"].map((tag) => (
+                      <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
                     ))}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Increasingly, people are not carrying cash with them in person. We worked with TripAdmit to pivot their entire business in a new direction by creating a brand centered around digital tipping, TipDirect.
+                    Three enterprise tools designed and shipped in parallel — built on a shared component library and an AI-accelerated design process.
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
                     View Project <span>→</span>
@@ -137,8 +136,8 @@ const Index = () => {
                 </div>
                 <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-r-xl md:rounded-l-none md:order-2">
                   <img
-                    src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/09/Pill2.webp?fit=800%2C800&ssl=1"
-                    alt="Digital Tipping"
+                    src="/images/work/marsh-core.webp"
+                    alt="Marsh Internal Tooling"
                     className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     loading="lazy"
                   />
