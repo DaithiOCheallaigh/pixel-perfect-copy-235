@@ -188,7 +188,7 @@ const Index = () => {
               {
                 num: "03",
                 title: "Implementation",
-                image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/01/Implmentation.webp?fit=300%2C158&ssl=1",
+                image: "/images/legacy/2025/01/Implmentation.webp",
                 text: "I believe in creating purpose-driven designs that resonate with target audiences. Each project is carefully crafted to ensure maximum impact and meaningful connections with users.",
               },
             ].map((step, i) => (
