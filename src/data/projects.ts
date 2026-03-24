@@ -182,8 +182,8 @@ export const projects: Project[] = [
     whatIWorkedOn: ["UI Design", "UX Strategy", "User Interviews", "Marketing", "Growth Strategy", "Feature Analysis"],
     images: [
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/AIReview_Steps.webp", alt: "AI Review Steps", wide: true },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/02/NFC.webp?fit=800%2C741&ssl=1", alt: "NFC tap" },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/02/Create.webp?fit=800%2C741&ssl=1", alt: "Create review" },
+     { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Review.png", alt: "NFC tap" },
+     { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Review.png", alt: "Create review" },
       { src: "/images/legacy/2025/02/Review.webp", alt: "Review output" },
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Group%204.webp", alt: "Group overview" },
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Mixpanel_Report.webp", alt: "Mixpanel analytics report", wide: true },
@@ -468,7 +468,7 @@ export const projects: Project[] = [
     ],
     images: [
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Screenshot%202025-11-04%20at%2016.38.09.png", alt: "Information architecture", wide: true },
-      { src: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/11/Group-21.webp?fit=3615%2C1259&ssl=1", alt: "App overview", wide: true },
+      { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Group%2021.webp", alt: "App overview", wide: true },
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Pill5.webp", alt: "Payment Links" },
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Pill3.webp", alt: "Tipping Groups" },
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Pill1.webp", alt: "Tiered Plans" },
@@ -523,7 +523,7 @@ export const projects: Project[] = [
     client: "TripAdmit",
     clientLogo: "/logos/tripadmit.svg",
     pillImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/AirlineWhitelabel.webp",
-    headerImage: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/Whitelabel_Header.webp?fit=4107%2C2358&ssl=1",
+    headerImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/AirlineWhitelabel.webp",
     mobileImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/MobileWhitelabel.webp",
     toolsImage: "/images/whitelabel-tools.png",
     // liveLink removed - old site shows "Not Active"
