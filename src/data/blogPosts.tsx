@@ -1,4 +1,13 @@
 import React from "react";
+import {
+  SpringVsEasing,
+  InterruptibleDemo,
+  DraggableCard,
+  StaggeredGrid,
+  ProgressiveResistance,
+  LayoutAnimationDemo,
+  ReducedMotionDemo,
+} from "../components/blog/FluidUIDemos";
 
 export interface BlogPost {
   id: string;
@@ -11,6 +20,126 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: "8-principles-fluid-interfaces",
+    title: "8 Principles for Crafting Fluid Interfaces",
+    date: "March 20, 2026",
+    readTime: "13 min read",
+    image: "/images/blog/fluid-interfaces.webp",
+    excerpt:
+      "There's a quality that separates the interfaces we tolerate from the ones we love. It's not colour palettes or type scales. The quality is fluidity — the feeling that an interface has physical weight.",
+    content: (
+      <>
+        <p>
+          There's a quality that separates the interfaces we tolerate from the ones we love. It isn't colour palettes or type scales — those are table stakes. The quality is <strong>fluidity</strong>. The feeling that an interface has physical weight. That elements respond like real objects. That the gap between your intention and the screen has collapsed to nothing.
+        </p>
+        <p>
+          Fluid interfaces don't display state changes — they animate through them. Building them requires a specific way of thinking that sits at the intersection of physics, interaction design, and engineering craft.
+        </p>
+        <p>
+          These are the 8 principles I keep coming back to. Each one is a lens you can hold up to any interface and ask: does this feel alive, or does it feel like a slideshow?
+        </p>
+
+        <h2>1. Motion Should Be Physics-Based, Not Time-Based</h2>
+        <p>
+          The default approach to animation on the web is time-based. Pick a duration, pick an easing curve, done. The problem is that a 300ms <code>ease-in-out</code> feels identical whether an element is travelling 4 pixels or 400. That uniformity is what makes it feel mechanical.
+        </p>
+        <p>
+          Physics-based motion uses spring dynamics instead. Stiffness, damping, and mass determine how an element moves. A spring animation has no set duration — it resolves when the energy dissipates. Nudge an element gently and it settles quickly. Fling it hard and it overshoots, oscillates, then comes to rest.
+        </p>
+        <p>
+          Stiffness between 200 and 400 produces responsive, snappy motion for most UI elements. Damping of 20–30 gives a natural settle without excessive wobble. Drop the mass below 1.0 for lightweight elements like toggles. Increase it above 1.0 for substantial elements like modals and sheets.
+        </p>
+        <SpringVsEasing />
+
+        <h2>2. Every Animation Must Be Interruptible</h2>
+        <p>
+          Imagine tapping a button to open a panel. The panel starts sliding up. Halfway through, you realise you tapped the wrong thing and tap close. What happens next determines whether the interface feels responsive or sluggish.
+        </p>
+        <p>
+          In a non-interruptible system, the panel finishes opening, then starts closing. That's a full second of the interface doing something you didn't ask for. In an interruptible system, the panel reverses instantly from its current position, inheriting its velocity in the opposite direction.
+        </p>
+        <p>
+          This is arguably the single most important factor in perceived responsiveness. A 400ms animation you can interrupt feels faster than a 200ms animation that locks out input. Spring animations are inherently interruptible — you change the target and the spring recalculates from its current state.
+        </p>
+        <InterruptibleDemo />
+
+        <h2>3. Direct Manipulation Over Indirect Control</h2>
+        <p>
+          There's a fundamental difference between tapping a close button to dismiss a sheet and swiping the sheet down to dismiss it. Both achieve the same outcome, but the swipe creates a sense of physical agency that the button can't. The user isn't telling the interface what to do — they're doing it themselves.
+        </p>
+        <p>
+          Direct manipulation means letting users drag, swipe, pinch, and reorder elements rather than relying on buttons and toggles alone. During the gesture, the element should track the pointer at 1:1. If the user's finger moves 40 pixels, the element moves 40 pixels. Zero latency. Zero interpretation.
+        </p>
+        <p>
+          The key is the release behaviour. On pointer release, capture the velocity of the gesture. A fast swipe should dismiss. A slow release near the origin should snap back. The velocity at the moment of release bridges the gesture into the animation.
+        </p>
+        <DraggableCard />
+
+        <h2>4. Animate Layout Changes, Don't Teleport</h2>
+        <p>
+          When an element is removed from a list, the items below should slide up to fill the gap — not teleport. When a new section expands, its siblings should ease aside to make room. Layout changes that happen instantly break the user's spatial model without explanation.
+        </p>
+        <p>
+          The challenge is that DOM layout is synchronous. Add or remove an element and the browser recalculates positions in a single frame. Animating through these changes requires recording positions before the change, applying it, then animating from old to new — the FLIP technique.
+        </p>
+        <p>
+          Keep layout animation durations between 200 and 350ms. Shorter and the motion feels jumpy. Longer and the interface feels sluggish. Spring physics with moderate stiffness (250–350) gives a natural settle.
+        </p>
+        <LayoutAnimationDemo />
+
+        <h2>5. Apply Progressive Resistance at Boundaries</h2>
+        <p>
+          Pull down on a scrolled-to-top iOS screen and you get the rubber-band effect. The content follows your finger, but at a diminishing rate. Pull a little and it tracks closely. Pull further and the resistance increases. Release and it snaps back. This progressive resistance communicates a boundary without blocking the gesture.
+        </p>
+        <p>
+          A hard stop feels like hitting a wall. Unrestricted overflow feels broken. Progressive resistance threads the needle — you've reached the edge, and the interface acknowledges your gesture, but there's nothing further in this direction.
+        </p>
+        <p>
+          Apply this anywhere the user's gesture meets a boundary. Scroll containers at their limits. Draggable elements at their constraints. Pull-to-refresh. Bottom sheets at min and max height.
+        </p>
+        <ProgressiveResistance />
+
+        <h2>6. Choreograph Sequences, Don't Reveal Everything at Once</h2>
+        <p>
+          When a dashboard loads, should all 12 cards appear simultaneously? Or should they cascade in, each arriving 60ms after the last? The simultaneous approach reads as a blob — a wall of content appearing at once. The staggered approach gives each element a moment of attention, creates rhythm, and communicates craft.
+        </p>
+        <p>
+          A stagger delay of 40–80ms per element hits the sweet spot. Cap the total sequence at roughly 600ms. For lists longer than 8–10 visible items, stagger only the initially visible elements and render the rest instantly.
+        </p>
+        <StaggeredGrid />
+
+        <h2>7. Respect the User's Motion Preferences</h2>
+        <p>
+          Every principle above is subordinate to this one. If a user has enabled <code>prefers-reduced-motion</code>, they've made a deliberate choice — often because motion on screen causes them physical discomfort.
+        </p>
+        <p>
+          Honouring this preference doesn't mean stripping the interface bare. It means replacing spatial animations (translation, scale, rotation) with non-spatial transitions (opacity, colour) that communicate the same state changes without triggering discomfort. A card that normally slides in from the right can fade in instead.
+        </p>
+        <p>
+          The standard to hold yourself to: enable <code>prefers-reduced-motion</code> on your development machine and navigate your entire interface. It should feel complete, usable, and intentional. Quieter, but not broken.
+        </p>
+        <ReducedMotionDemo />
+
+        <h2>8. Motion Is Not Decoration — It's Communication</h2>
+        <p>
+          The most common mistake designers make with motion is treating it as polish — something you sprinkle on top after the "real" design work is done. But motion isn't decoration. It's information architecture expressed through time.
+        </p>
+        <p>
+          A well-timed entrance animation tells the user "this element just arrived." A shared-element transition says "this is the same thing, in a new context." A spring overshoot communicates weight and momentum. A staggered sequence creates hierarchy. Each of these is carrying semantic meaning.
+        </p>
+        <p>
+          When you're sketching a new interaction, ask: can this be directly manipulated? When you're wiring up a state change, ask: what happens if the user triggers another change mid-animation? When you're building a list, ask: what do the siblings do when an item is removed?
+        </p>
+        <p>
+          The gap between a good interface and a fluid one isn't talent. It's attention. Noticing that a transition feels dead because it starts from zero velocity. Catching a layout jump that happens in a single frame. Testing with reduced motion enabled and realising a flow doesn't make sense without spatial context.
+        </p>
+        <p>
+          Fluid interfaces reward that attention. They're the ones users reach for instinctively, navigate without thinking, and describe as <em>feeling right</em> without being able to explain why.
+        </p>
+      </>
+    ),
+  },
   {
     id: "2026-new-norm-designers",
     title: "2026: The New Norm For Designers",
