@@ -73,7 +73,7 @@ const MarshDesignSystem = () => {
               translated into a production-ready design system pushed to GitHub before the rebrand launched.
             </p>
             <img
-              src="/images/work/marsh-logo-new-white.png"
+              src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-logo-new-white.png"
               alt="Marsh"
               className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full"
             />
@@ -130,7 +130,7 @@ const MarshDesignSystem = () => {
           <ScrollReveal>
             <div className="overflow-hidden rounded-xl border border-border">
               <img
-                src="/images/work/marsh-design-system.webp"
+                src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-design-system.webp"
                 alt="Marsh Design System — Notifications Hub Dashboard"
                 className="w-full"
               />
@@ -161,7 +161,7 @@ const MarshDesignSystem = () => {
                 allow="clipboard-read; clipboard-write"
               />
               <img
-                src="/images/work/marsh-storybook-prototype.png"
+                src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-storybook-prototype.png"
                 alt="Notifications Hub Prototype"
                 className="md:hidden w-full"
                 loading="lazy"
@@ -202,7 +202,7 @@ const MarshDesignSystem = () => {
                     loading="lazy"
                   />
                   <img
-                    src="/images/work/marsh-storybook-logo.png"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-storybook-logo.png"
                     alt="Logo Documentation"
                     className="md:hidden w-full"
                     loading="lazy"
@@ -229,7 +229,7 @@ const MarshDesignSystem = () => {
                     loading="lazy"
                   />
                   <img
-                    src="/images/work/marsh-storybook-colours.png"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-storybook-colours.png"
                     alt="Colour Tokens Documentation"
                     className="md:hidden w-full"
                     loading="lazy"
@@ -256,7 +256,7 @@ const MarshDesignSystem = () => {
                     loading="lazy"
                   />
                   <img
-                    src="/images/work/marsh-storybook-buttons.png"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-storybook-buttons.png"
                     alt="Button Components Documentation"
                     className="md:hidden w-full"
                     loading="lazy"

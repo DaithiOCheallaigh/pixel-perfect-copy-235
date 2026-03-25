@@ -13,21 +13,21 @@ const products = [
     num: "01",
     name: "Colleague Profile",
     description: "Work queue and client onboarding tool for relationship managers.",
-    image: "/images/work/marsh-colleague-profile.webp",
+    image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-colleague-profile.webp",
     link: "https://precise-ui-wonder.lovable.app/work-item/1001234567",
   },
   {
     num: "02",
     name: "Client Milestones",
     description: "Milestone tracking and timeline visibility for client engagements.",
-    image: "/images/work/marsh-client-milestones.webp",
+    image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-client-milestones.webp",
     link: "https://figma-to-reality-express.lovable.app/milestones",
   },
   {
     num: "03",
     name: "Notifications Hub",
     description: "Centralised notification management across applications and channels.",
-    image: "/images/work/marsh-storybook-buttons.png",
+    image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-storybook-buttons.png",
     link: "https://notify-flow-91.lovable.app/",
   },
 ];
@@ -134,7 +134,7 @@ const MarshInternalTooling = () => {
               Three enterprise internal tools designed and shipped simultaneously —
               powered by an AI-accelerated workflow and a unified component library.
             </p>
-            <img src="/images/work/marsh-logo-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" />
+            <img src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-logo-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" />
             <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
               <span>
                 <span className="uppercase tracking-wider">Role:</span>{" "}
@@ -145,7 +145,7 @@ const MarshInternalTooling = () => {
                 <span className="text-foreground">3 Products + Design System</span>
               </span>
             </div>
-            <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100 max-w-full" />
+            <img src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100 max-w-full" />
           </motion.div>
         </div>
       </section>
@@ -178,7 +178,7 @@ const MarshInternalTooling = () => {
           <ScrollReveal>
             <div className="overflow-hidden rounded-xl border border-border">
               <video
-                src="/images/work/marsh-core.webp"
+                src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-core.webp"
                 controls
                 playsInline
                 muted
