@@ -135,13 +135,11 @@ const Index = () => {
                   </span>
                 </div>
                 <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-r-xl md:rounded-l-none md:order-2">
-                  <video
+                  <img
                     src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-core.webp"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+                    alt="Marsh Internal Tooling preview"
                     className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    loading="lazy"
                   />
                 </div>
               </Link>

@@ -177,15 +177,11 @@ const MarshInternalTooling = () => {
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
             <div className="overflow-hidden rounded-xl border border-border">
-              <video
+              <img
                 src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-core.webp"
-                controls
-                playsInline
-                muted
-                autoPlay
-                loop
+                alt="Marsh Internal Tooling showreel"
                 className="w-full"
-                poster=""
+                loading="lazy"
               />
             </div>
           </ScrollReveal>
