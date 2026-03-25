@@ -127,12 +127,12 @@ interface RecentProject {
 }
 
 const recentProjects: RecentProject[] = [
-  { name: "Nicholas Moody Kitchens", descriptor: "Bespoke kitchen design studio based in Cork", url: "https://nicholasmoodykitchens.com", image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/nicholas-moody-kitchens.png" },
-  { name: "Savvy Kitchens", descriptor: "Contemporary kitchen design and project showcase", url: "https://savvykitchens.ie", image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/savvy-kitchens.png" },
-  { name: "Appliance Showcase", descriptor: "SEO optimised subdomain site", url: "https://appliances.savvykitchens.ie/", image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/appliance-showcase.png" },
-  { name: "Glimmers Mental Health Services", descriptor: "Mental health therapy practice led by Dr. Claire Mc Grotty, PhD, LCPC", url: "https://glimmersmhs.com", image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/glimmers-mhs.png" },
-  { name: "Ease Dental", descriptor: "State-of-the-art dental clinic in Dublin 12", url: "https://easedental.ie", image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/ease-dental.png" },
-  { name: "KBB Digital", descriptor: "Interior design photography & digital marketing studio", url: "https://www.kbbdigital.ie/", image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/kbb-digital.png" },
+  { name: "Nicholas Moody Kitchens", descriptor: "Bespoke kitchen design studio based in Cork", url: "https://nicholasmoodykitchens.com", image: "/images/work/nicholas-moody-kitchens.png" },
+  { name: "Savvy Kitchens", descriptor: "Contemporary kitchen design and project showcase", url: "https://savvykitchens.ie", image: "/images/work/savvy-kitchens.png" },
+  { name: "Appliance Showcase", descriptor: "SEO optimised subdomain site", url: "https://appliances.savvykitchens.ie/", image: "/images/work/appliance-showcase.png" },
+  { name: "Glimmers Mental Health Services", descriptor: "Mental health therapy practice led by Dr. Claire Mc Grotty, PhD, LCPC", url: "https://glimmersmhs.com", image: "/images/work/glimmers-mhs.png" },
+  { name: "Ease Dental", descriptor: "State-of-the-art dental clinic in Dublin 12", url: "https://easedental.ie", image: "/images/work/ease-dental.png" },
+  { name: "KBB Digital", descriptor: "Interior design photography & digital marketing studio", url: "https://www.kbbdigital.ie/", image: "/images/work/kbb-digital.png" },
 ];
 
 /* ------------------------------------------------------------------ */
