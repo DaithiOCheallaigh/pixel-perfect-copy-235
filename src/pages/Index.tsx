@@ -86,7 +86,7 @@ const Index = () => {
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
                   <img
-                    src="/images/work/marsh-design-system.webp"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Component%20Library%20Preview.webp"
                     alt="Marsh Design System Rebrand"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     loading="lazy"

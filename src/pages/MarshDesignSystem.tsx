@@ -130,7 +130,7 @@ const MarshDesignSystem = () => {
           <ScrollReveal>
             <div className="overflow-hidden rounded-xl border border-border">
               <img
-                src="/images/work/marsh-design-system.webp"
+                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Component%20Library%20Preview.webp"
                 alt="Marsh Design System — Notifications Hub Dashboard"
                 className="w-full"
               />
@@ -161,7 +161,7 @@ const MarshDesignSystem = () => {
                 allow="clipboard-read; clipboard-write"
               />
               <img
-                src="/images/work/marsh-storybook-prototype.png"
+                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/App_Dashboard_FTU.png"
                 alt="Notifications Hub Prototype"
                 className="md:hidden w-full"
                 loading="lazy"
@@ -202,7 +202,7 @@ const MarshDesignSystem = () => {
                     loading="lazy"
                   />
                   <img
-                    src="/images/work/marsh-storybook-logo.png"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/App_Subscription_Pro%20Plus.png"
                     alt="Logo Documentation"
                     className="md:hidden w-full"
                     loading="lazy"
@@ -229,7 +229,7 @@ const MarshDesignSystem = () => {
                     loading="lazy"
                   />
                   <img
-                    src="/images/work/marsh-storybook-colours.png"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/App_Reports.png"
                     alt="Colour Tokens Documentation"
                     className="md:hidden w-full"
                     loading="lazy"
@@ -256,7 +256,7 @@ const MarshDesignSystem = () => {
                     loading="lazy"
                   />
                   <img
-                    src="/images/work/marsh-storybook-buttons.png"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/App_Dashboard_With%20Group_Teams4.png"
                     alt="Button Components Documentation"
                     className="md:hidden w-full"
                     loading="lazy"
