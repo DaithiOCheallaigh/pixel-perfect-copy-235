@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
@@ -74,56 +75,92 @@ const BlogPost = () => {
 
   return (
     <main className="pt-24">
-      <article className="px-6 py-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-3xl">
-          <ScrollReveal>
+      <article className="px-6 md:px-12 lg:px-24">
+        {/* ─── Header ─── */}
+        <div className="mx-auto max-w-3xl pb-8 pt-12">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
             <Link
               to="/blog"
-              className="mb-8 inline-flex items-center gap-2 font-mono-label text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="mb-10 inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
             >
-              <ArrowLeft size={14} />
-              Back to Blog
+              <ArrowLeft size={12} />
+              Back to Writing
             </Link>
+          </motion.div>
 
-            <SectionLabel>Insights</SectionLabel>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="mb-6 flex items-center gap-3">
+              <span className="rounded-full bg-primary/10 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-primary">
+                Design
+              </span>
+              <span className="rounded-full bg-primary/10 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-primary">
+                Engineering
+              </span>
+            </div>
 
-            <h1 className="mb-4 text-3xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">
+            <h1 className="mb-6 text-3xl font-black tracking-tighter text-foreground md:text-5xl lg:text-[3.5rem] lg:leading-[1.08]">
               {post.title}
             </h1>
 
-            <p className="font-mono-label mb-10 text-muted-foreground">
-              {post.date} · {post.readTime}
+            <p className="font-mono text-sm text-muted-foreground">
+              First published: {post.date} · {post.readTime}
             </p>
-          </ScrollReveal>
+          </motion.div>
+        </div>
 
-          <ScrollReveal delay={0.1}>
-            <div className="mb-12 overflow-hidden rounded-xl">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full object-cover"
-              />
-            </div>
-          </ScrollReveal>
+        {/* ─── Hero Image ─── */}
+        <motion.div
+          className="mx-auto max-w-4xl pb-16"
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="overflow-hidden rounded-2xl">
+            <img
+              src={post.image}
+              alt={post.title}
+              className="w-full object-cover"
+            />
+          </div>
+        </motion.div>
 
-          <ScrollReveal delay={0.15}>
+        {/* ─── Intro lede (wider) ─── */}
+        <div className="mx-auto max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          >
             <div className="blog-content space-y-6">
               {post.content}
             </div>
-          </ScrollReveal>
+          </motion.div>
         </div>
       </article>
 
-      {/* Next / Previous Article Navigation */}
-      <nav className="border-t border-border px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto grid max-w-3xl gap-6 md:grid-cols-2">
+      {/* ─── Separator ─── */}
+      <div className="mx-auto my-16 max-w-3xl px-6">
+        <hr className="border-border" />
+      </div>
+
+      {/* ─── Next / Previous Article Navigation ─── */}
+      <nav className="px-6 pb-16 md:px-12 lg:px-24">
+        <div className="mx-auto grid max-w-3xl gap-4 md:grid-cols-2">
           {prevPost ? (
             <Link
               to={`/blog/${prevPost.id}`}
-              className="group flex flex-col gap-2 rounded-xl bg-card p-6 transition-colors hover:bg-accent/50"
+              className="group flex flex-col gap-2 rounded-2xl border border-border bg-card/50 p-6 transition-all hover:border-primary/30 hover:bg-card"
             >
-              <span className="flex items-center gap-2 font-mono-label text-xs text-muted-foreground">
-                <ArrowLeft size={12} />
+              <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                <ArrowLeft size={10} />
                 Previous Article
               </span>
               <span className="text-sm font-bold text-foreground transition-colors group-hover:text-primary">
@@ -137,11 +174,11 @@ const BlogPost = () => {
           {nextPost ? (
             <Link
               to={`/blog/${nextPost.id}`}
-              className="group flex flex-col items-end gap-2 rounded-xl bg-card p-6 text-right transition-colors hover:bg-accent/50"
+              className="group flex flex-col items-end gap-2 rounded-2xl border border-border bg-card/50 p-6 text-right transition-all hover:border-primary/30 hover:bg-card"
             >
-              <span className="flex items-center gap-2 font-mono-label text-xs text-muted-foreground">
+              <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                 Next Article
-                <ArrowRight size={12} />
+                <ArrowRight size={10} />
               </span>
               <span className="text-sm font-bold text-foreground transition-colors group-hover:text-primary">
                 {nextPost.title}
