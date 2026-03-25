@@ -13,21 +13,21 @@ const products = [
     num: "01",
     name: "Colleague Profile",
     description: "Work queue and client onboarding tool for relationship managers.",
-    image: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/App_Add%20Resource%20to%20Team%20%5BJoin%20Resource%5D_Teams4.png",
+    image: "/images/work/marsh-colleague-profile.webp",
     link: "https://precise-ui-wonder.lovable.app/work-item/1001234567",
   },
   {
     num: "02",
     name: "Client Milestones",
     description: "Milestone tracking and timeline visibility for client engagements.",
-    image: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Screenshot%202025-11-04%20at%2016.36.53.png",
+    image: "/images/work/marsh-client-milestones.webp",
     link: "https://figma-to-reality-express.lovable.app/milestones",
   },
   {
     num: "03",
     name: "Notifications Hub",
     description: "Centralised notification management across applications and channels.",
-    image: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/App_Dashboard_With%20Group_Teams4.png",
+    image: "/images/work/marsh-storybook-buttons.png",
     link: "https://notify-flow-91.lovable.app/",
   },
 ];
@@ -145,7 +145,7 @@ const MarshInternalTooling = () => {
                 <span className="text-foreground">3 Products + Design System</span>
               </span>
             </div>
-            <img src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/Tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100 max-w-full" />
+            <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100 max-w-full" />
           </motion.div>
         </div>
       </section>
@@ -178,7 +178,7 @@ const MarshInternalTooling = () => {
           <ScrollReveal>
             <div className="overflow-hidden rounded-xl border border-border">
               <video
-                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/MarshInternalTools.mp4"
+                src="/images/work/marsh-core.webp"
                 controls
                 playsInline
                 muted
