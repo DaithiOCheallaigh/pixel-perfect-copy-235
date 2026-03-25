@@ -86,7 +86,7 @@ const Index = () => {
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
                   <img
-                    src="/images/work/marsh-design-system.webp"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-design-system.webp"
                     alt="Marsh Design System Rebrand"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     loading="lazy"
@@ -135,13 +135,11 @@ const Index = () => {
                   </span>
                 </div>
                 <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-r-xl md:rounded-l-none md:order-2">
-                  <video
-                    src="/images/work/marsh-core.webp"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+                  <img
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/marsh-core.webp"
+                    alt="Marsh Internal Tooling preview"
                     className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    loading="lazy"
                   />
                 </div>
               </Link>
@@ -178,19 +176,19 @@ const Index = () => {
               {
                 num: "01",
                 title: "Discovery",
-                image: "/images/work/admin-ux-initial.webp",
+                image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/admin-ux-initial.webp",
                 text: "Every project begins with understanding your vision. I take pride in exploring creative possibilities that not only bring ideas to life but also drive business growth.",
               },
               {
                 num: "02",
                 title: "Selection",
-                image: "/images/work/admin-gantt.webp",
+                image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/admin-gantt.webp",
                 text: "I focus on developing solutions that stand out in today's competitive landscape. My approach combines strategic thinking with cutting-edge design practices.",
               },
               {
                 num: "03",
                 title: "Implementation",
-                image: "/images/work/admin-devhandoff.webp",
+                image: "https://raw.githubusercontent.com/DaithiOCheallaigh/pixel-perfect-copy-235/main/public/images/work/admin-devhandoff.webp",
                 text: "I believe in creating purpose-driven designs that resonate with target audiences. Each project is carefully crafted to ensure maximum impact and meaningful connections with users.",
               },
             ].map((step, i) => (
