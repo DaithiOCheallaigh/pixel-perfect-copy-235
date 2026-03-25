@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
     title: "8 Principles for Crafting Fluid Interfaces",
     date: "March 20, 2026",
     readTime: "13 min read",
-    image: "/images/blog/fluid-interfaces.webp",
+    image: "/images/blog/fluid-interfaces.jpg",
     excerpt:
       "There's a quality that separates the interfaces we tolerate from the ones we love. It's not colour palettes or type scales. The quality is fluidity — the feeling that an interface has physical weight.",
     content: (
