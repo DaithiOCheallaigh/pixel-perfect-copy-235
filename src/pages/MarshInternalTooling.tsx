@@ -178,12 +178,11 @@ const MarshInternalTooling = () => {
           <ScrollReveal>
             <div className="overflow-hidden rounded-xl border border-border">
               <video
-                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/MarshInternalTools.mp4"
-                controls
-                playsInline
-                muted
+                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Internatl%20Tooling/MarshInternalTools.mp4"
                 autoPlay
+                muted
                 loop
+                playsInline
                 className="w-full"
                 poster=""
               />
