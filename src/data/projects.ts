@@ -109,7 +109,7 @@ export const projects: Project[] = [
     tags: ["Product Design", "Design Systems", "AI Workflow"],
     timeline: "Ongoing",
     client: "Marsh",
-    pillImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Internatl%20Tooling/MarshInternalTools.mp4",
+    pillImage: "https://www.lacunadigital.io/images/work/marsh-core.webp",
     headerImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Internatl%20Tooling/MarshInternalTools.mp4",
     description: "",
     nextProject: "ai-reviews",
