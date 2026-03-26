@@ -139,7 +139,7 @@ const CaseStudy = () => {
           }
           </div>
           <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <img src={project.id === "digital-tipping" ? project.headerImage : "/images/whitelabel-hero.png"} alt={project.title} className="w-full object-cover" />
+            <img src={project.headerImage} alt={project.title} className="w-full object-cover" />
           </motion.div>
         </section>
       }
@@ -709,7 +709,7 @@ const CaseStudy = () => {
                     )}
                         </div>
                         <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src="/images/work/spotify-tipping-flow.png" alt="Spotify tipping flow" className="w-full object-contain" loading="lazy" />
+                          <img src={project.images?.find(img => img.alt === "Tipping flow desktop")?.src || ""} alt="Spotify tipping flow" className="w-full object-contain" loading="lazy" />
                         </div>
                       </div> :
 
