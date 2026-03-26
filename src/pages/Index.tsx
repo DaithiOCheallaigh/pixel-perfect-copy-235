@@ -86,7 +86,7 @@ const Index = () => {
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
                   <img
-                    src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/05/AIPill-2.webp?fit=800%2C741&ssl=1"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Ai%20Assisted%20Reviews/AIPill-2.webp"
                     alt="AI Assisted Reviews"
                     className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
                     loading="lazy"
@@ -137,7 +137,7 @@ const Index = () => {
                 </div>
                 <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-r-xl md:rounded-l-none md:order-2">
                   <img
-                    src="https://i0.wp.com/lacunadigital.io/wp-content/uploads/2024/09/Pill2.webp?fit=800%2C800&ssl=1"
+                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Digital%20Tipping/Tipping%20Profile.webp"
                     alt="Digital Tipping"
                     className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     loading="lazy"

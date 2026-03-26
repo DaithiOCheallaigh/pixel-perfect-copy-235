@@ -134,7 +134,7 @@ const MarshInternalTooling = () => {
               Three enterprise internal tools designed and shipped simultaneously —
               powered by an AI-accelerated workflow and a unified component library.
             </p>
-            <img src="/images/work/marsh-logo-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" />
+            <img src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Design%20System%20Rebrand/MarshLogo_NewWhite.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" />
             <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
               <span>
                 <span className="uppercase tracking-wider">Role:</span>{" "}
@@ -178,12 +178,11 @@ const MarshInternalTooling = () => {
           <ScrollReveal>
             <div className="overflow-hidden rounded-xl border border-border">
               <video
-                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/MarshInternalTools.mp4"
-                controls
-                playsInline
-                muted
+                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Internatl%20Tooling/MarshInternalTools.mp4"
                 autoPlay
+                muted
                 loop
+                playsInline
                 className="w-full"
                 poster=""
               />
