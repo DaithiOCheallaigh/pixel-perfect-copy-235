@@ -586,7 +586,7 @@ const CaseStudy = () => {
                     <SectionLabel>Improving the Product</SectionLabel>
                     <div className="grid gap-12 md:grid-cols-2 items-start">
                       <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src="/images/whitelabel-ux-report-cover.png" alt="White Label UX & Consumer Psychology Report" className="w-full object-cover" loading="lazy" />
+                        <img src="/images/work/app-pill6.webp" alt="White Label UX & Consumer Psychology Report" className="w-full object-cover" loading="lazy" />
                       </div>
                       <div>
                         <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground mb-6" dangerouslySetInnerHTML={{
