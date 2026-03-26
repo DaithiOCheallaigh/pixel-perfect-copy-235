@@ -1,5 +1,4 @@
-import tipdirectLogo from "@/assets/logos/tipdirect.svg";
-import tipdirectLogoWhite from "@/assets/logos/tipdirect-white.png";
+// Project data
 
 export interface Project {
   id: string;
