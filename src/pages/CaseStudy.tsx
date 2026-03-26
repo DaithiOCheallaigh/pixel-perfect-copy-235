@@ -709,7 +709,7 @@ const CaseStudy = () => {
                     )}
                         </div>
                         <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Spotify%20Tipping%20Integration%20/spotify-tipping-flow.png" alt="Spotify tipping flow" className="w-full object-contain" loading="lazy" />
+                          <img src="/images/work/spotify-tipping-flow.png" alt="Spotify tipping flow" className="w-full object-contain" loading="lazy" />
                         </div>
                       </div> :
 
