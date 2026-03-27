@@ -283,9 +283,10 @@ const AIIntegration = () => {
                     <div className="h-10 rounded-full border border-border bg-background/80" />
                     <motion.div
                       className="absolute inset-y-2 left-2 rounded-full bg-primary/20"
-                      initial={{ width: "18%" }}
-                      animate={{ width: index % 2 === 0 ? ["18%", "72%", "18%"] : ["22%", "58%", "22%"] }}
-                      transition={{ duration: 5 + index, repeat: Infinity, ease: "easeInOut" }}
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ delay: index * 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ right: "8px" }}
                     />
                     <span className="absolute inset-y-0 left-5 flex items-center text-xs font-medium text-foreground">
                       {item}
