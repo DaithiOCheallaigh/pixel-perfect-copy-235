@@ -84,7 +84,7 @@ const aiPricing = [
       "AI Opportunity Report",
       "Prioritised recommendations",
       "Estimated time & cost savings",
-      "Can be credited against retainer",
+      
     ],
     cta: "Get Started",
     ctaHref: "/start-project",

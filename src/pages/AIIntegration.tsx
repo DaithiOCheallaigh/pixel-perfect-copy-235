@@ -56,7 +56,7 @@ const pricing = [
     price: "Free",
     label: "One-off",
     description:
-      "The starting point. I map your workflows, identify AI opportunities, and deliver a prioritised report with estimated impact. This can be taken as a standalone piece of work or credited against your retainer.",
+      "The starting point. I map your workflows, identify AI opportunities, and deliver a prioritised report with estimated impact.",
     cta: "Get Started",
     featured: false,
     badge: null,
