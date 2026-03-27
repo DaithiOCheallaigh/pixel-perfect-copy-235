@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Zap, Palette, Clock, DollarSign, Brain, Sparkles } from "lucide-react";
+import { ArrowRight, Zap, Clock, DollarSign, Sparkles } from "lucide-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
