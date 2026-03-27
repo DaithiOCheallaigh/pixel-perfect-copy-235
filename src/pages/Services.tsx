@@ -426,7 +426,9 @@ const Services = () => {
               const priceDisplay =
                 "customPrice" in tier && (tier as any).customPrice
                   ? (tier as any).customPrice
-                  : `${tier.prefix || ""}${convertPrice(tier.eurPrice, currency)}${(tier as any).suffix || ""}`;
+                  : tier.eurPrice === 0
+                    ? "Free"
+                    : `${tier.prefix || ""}${convertPrice(tier.eurPrice, currency)}${(tier as any).suffix || ""}`;
 
               return (
                 <div
