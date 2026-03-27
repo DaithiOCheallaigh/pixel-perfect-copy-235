@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Zap, Palette, Clock, DollarSign, Brain, Sparkles } from "lucide-react";
+import { ArrowRight, Zap, Clock, DollarSign, Sparkles } from "lucide-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
@@ -11,6 +11,8 @@ import SocialProof from "@/components/SocialProof";
 import ServicesNavigation from "@/components/ServicesNavigation";
 import ServicesFooter from "@/components/ServicesFooter";
 import whatsappLogo from "@/assets/images/whatsapp-logo.webp";
+import aiServiceImg from "@/assets/images/ai-service.png";
+import webdesignServiceImg from "@/assets/images/webdesign-service.png";
 
 /* ------------------------------------------------------------------ */
 /*  Currency                                                           */
@@ -36,14 +38,14 @@ const serviceCards = [
     description:
       "I audit your workflows and build custom AI solutions that eliminate repetitive tasks, reduce errors, and free your team to focus on what actually moves the needle.",
     link: "/ai-integration",
-    icon: Brain,
+    image: aiServiceImg,
   },
   {
     title: "Web Design & Development",
     description:
       "Professional, fast-loading websites designed for conversion — fully deployed, SEO-ready, and built to make your business look as good online as it is in person.",
     link: "/web-design",
-    icon: Palette,
+    image: webdesignServiceImg,
   },
 ];
 
@@ -270,7 +272,9 @@ const Services = () => {
                   className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card p-8 transition-colors hover:border-primary/50"
                 >
                   <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                  <card.icon className="h-8 w-8 text-primary" />
+                  <div className="aspect-[4/3] w-full overflow-hidden rounded-lg mb-2">
+                    <img src={card.image} alt={card.title} className="h-full w-full object-cover" />
+                  </div>
                   <h3 className="mt-4 text-xl font-bold">{card.title}</h3>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
                     {card.description}
