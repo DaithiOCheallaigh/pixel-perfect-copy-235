@@ -76,8 +76,8 @@ const differentiators = [
 const aiPricing = [
   {
     name: "Discovery Audit",
-    eurPrice: 750,
-    prefix: "From ",
+    eurPrice: 0,
+    prefix: "",
     label: "One-off",
     features: [
       "Full workflow audit & mapping",

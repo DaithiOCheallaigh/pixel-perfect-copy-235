@@ -53,7 +53,7 @@ const phases = [
 const pricing = [
   {
     title: "Discovery Audit",
-    price: "From €750",
+    price: "Free",
     label: "One-off",
     description:
       "The starting point. I map your workflows, identify AI opportunities, and deliver a prioritised report with estimated impact. This can be taken as a standalone piece of work or credited against your retainer.",
