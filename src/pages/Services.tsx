@@ -242,12 +242,6 @@ const Services = () => {
               >
                 Book a Discovery Call <ArrowRight className="h-4 w-4" />
               </Link>
-              <button
-                onClick={scrollToServices}
-                className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
-              >
-                See How It Works
-              </button>
             </div>
           </motion.div>
         </div>
