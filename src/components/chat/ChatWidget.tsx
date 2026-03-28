@@ -11,21 +11,37 @@ const ChatWidget = () => {
 
   // Hide external WhatsApp widget on services routes where ChatWidget is shown
   useEffect(() => {
+    const style = document.createElement("style");
+    style.id = "hide-wa-widget";
+    style.textContent = `
+      script[src*="whatsapp"] + *, 
+      [data-client="lacuna"] ~ *,
+      iframe[src*="whatsapp"],
+      div[style*="position: fixed"][style*="bottom"][style*="right"]:not([class]) {
+        display: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Also directly hide any elements the script creates
     const hideWhatsApp = () => {
-      const waWidget = document.querySelector('[data-client="lacuna"]') as HTMLElement | null;
-      const waIframe = document.getElementById('whatsapp-widget-iframe') as HTMLElement | null;
-      const waElements = document.querySelectorAll('[id*="whatsapp"], [class*="whatsapp-widget"]');
-      [waWidget, waIframe, ...Array.from(waElements)].forEach((el) => {
-        if (el && el instanceof HTMLElement) el.style.display = "none";
+      document.querySelectorAll('body > div:not(#root)').forEach((el) => {
+        const htmlEl = el as HTMLElement;
+        const style = window.getComputedStyle(htmlEl);
+        if (style.position === 'fixed' && style.bottom !== 'auto' && style.right !== 'auto') {
+          htmlEl.style.display = 'none';
+        }
       });
     };
     hideWhatsApp();
     const interval = setInterval(hideWhatsApp, 500);
+
     return () => {
       clearInterval(interval);
-      const waElements = document.querySelectorAll('[id*="whatsapp"], [class*="whatsapp-widget"]');
-      waElements.forEach((el) => {
-        if (el instanceof HTMLElement) el.style.display = "";
+      document.getElementById("hide-wa-widget")?.remove();
+      document.querySelectorAll('body > div:not(#root)').forEach((el) => {
+        const htmlEl = el as HTMLElement;
+        htmlEl.style.display = '';
       });
     };
   }, []);
