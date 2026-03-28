@@ -25,6 +25,11 @@ import ShowcasePage from "./pages/ShowcasePage";
 import ShowcaseAdmin from "./pages/ShowcaseAdmin";
 import ShowcaseNotFound from "./components/showcase/ShowcaseNotFound";
 import IndustryLanding from "./pages/IndustryLanding";
+import GetStarted from "./pages/GetStarted";
+import ToolsIndex from "./pages/ToolsIndex";
+import WhatsAppScriptGenerator from "./pages/WhatsAppScriptGenerator";
+import Refer from "./pages/Refer";
+import { ChatWidget } from "./components/OnboardingChat";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
@@ -133,8 +138,11 @@ const MainLayout = () => (
 
 const AppContent = () => {
   const location = useLocation();
-  const servicesRoutes = ["/services", "/web-design", "/ai-integration"];
-  const isServicesRoute = servicesRoutes.includes(location.pathname) || location.pathname.startsWith("/services/");
+  const servicesRoutes = ["/services", "/web-design", "/ai-integration", "/get-started", "/refer"];
+  const isServicesRoute =
+    servicesRoutes.includes(location.pathname) ||
+    location.pathname.startsWith("/services/") ||
+    location.pathname.startsWith("/tools");
 
   const showcaseRoutes = location.pathname.startsWith("/showcase");
 
@@ -148,12 +156,19 @@ const AppContent = () => {
           <Route path="/showcase" element={<ShowcaseNotFound />} />
         </Routes>
       ) : isServicesRoute ? (
-        <Routes>
-          <Route path="/services" element={<Services />} />
-          <Route path="/services/:slug" element={<IndustryLanding />} />
-          <Route path="/web-design" element={<WebDesignServices />} />
-          <Route path="/ai-integration" element={<AIIntegration />} />
-        </Routes>
+        <>
+          <Routes>
+            <Route path="/services" element={<Services />} />
+            <Route path="/services/:slug" element={<IndustryLanding />} />
+            <Route path="/web-design" element={<WebDesignServices />} />
+            <Route path="/ai-integration" element={<AIIntegration />} />
+            <Route path="/get-started" element={<GetStarted />} />
+            <Route path="/tools" element={<ToolsIndex />} />
+            <Route path="/tools/whatsapp-script-generator" element={<WhatsAppScriptGenerator />} />
+            <Route path="/refer" element={<Refer />} />
+          </Routes>
+          <ChatWidget />
+        </>
       ) : (
         <MainLayout />
       )}
