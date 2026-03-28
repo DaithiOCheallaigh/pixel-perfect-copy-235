@@ -24,6 +24,7 @@ import Services from "./pages/Services";
 import ShowcasePage from "./pages/ShowcasePage";
 import ShowcaseAdmin from "./pages/ShowcaseAdmin";
 import ShowcaseNotFound from "./components/showcase/ShowcaseNotFound";
+import IndustryLanding from "./pages/IndustryLanding";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
@@ -133,7 +134,7 @@ const MainLayout = () => (
 const AppContent = () => {
   const location = useLocation();
   const servicesRoutes = ["/services", "/web-design", "/ai-integration"];
-  const isServicesRoute = servicesRoutes.includes(location.pathname);
+  const isServicesRoute = servicesRoutes.includes(location.pathname) || location.pathname.startsWith("/services/");
 
   const showcaseRoutes = location.pathname.startsWith("/showcase");
 
@@ -149,6 +150,7 @@ const AppContent = () => {
       ) : isServicesRoute ? (
         <Routes>
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:slug" element={<IndustryLanding />} />
           <Route path="/web-design" element={<WebDesignServices />} />
           <Route path="/ai-integration" element={<AIIntegration />} />
         </Routes>
