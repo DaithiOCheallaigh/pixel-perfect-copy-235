@@ -29,7 +29,7 @@ import GetStarted from "./pages/GetStarted";
 import ToolsIndex from "./pages/ToolsIndex";
 import WhatsAppScriptGenerator from "./pages/WhatsAppScriptGenerator";
 import Refer from "./pages/Refer";
-import { ChatWidget } from "./components/OnboardingChat";
+import ChatWidget from "./components/chat/ChatWidget";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
