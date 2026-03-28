@@ -134,7 +134,7 @@ const MainLayout = () => (
 const AppContent = () => {
   const location = useLocation();
   const servicesRoutes = ["/services", "/web-design", "/ai-integration"];
-  const isServicesRoute = servicesRoutes.includes(location.pathname);
+  const isServicesRoute = servicesRoutes.includes(location.pathname) || location.pathname.startsWith("/services/");
 
   const showcaseRoutes = location.pathname.startsWith("/showcase");
 
