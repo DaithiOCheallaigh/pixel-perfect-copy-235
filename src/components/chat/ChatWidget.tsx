@@ -9,6 +9,27 @@ const ChatWidget = () => {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
 
+  // Hide external WhatsApp widget on services routes where ChatWidget is shown
+  useEffect(() => {
+    const hideWhatsApp = () => {
+      const waWidget = document.querySelector('[data-client="lacuna"]') as HTMLElement | null;
+      const waIframe = document.getElementById('whatsapp-widget-iframe') as HTMLElement | null;
+      const waElements = document.querySelectorAll('[id*="whatsapp"], [class*="whatsapp-widget"]');
+      [waWidget, waIframe, ...Array.from(waElements)].forEach((el) => {
+        if (el && el instanceof HTMLElement) el.style.display = "none";
+      });
+    };
+    hideWhatsApp();
+    const interval = setInterval(hideWhatsApp, 500);
+    return () => {
+      clearInterval(interval);
+      const waElements = document.querySelectorAll('[id*="whatsapp"], [class*="whatsapp-widget"]');
+      waElements.forEach((el) => {
+        if (el instanceof HTMLElement) el.style.display = "";
+      });
+    };
+  }, []);
+
   // Lock body scroll on mobile when chat is open
   useEffect(() => {
     if (open && isMobile) {

@@ -340,22 +340,25 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 px-5 py-3">
+      <div className="border-b border-white/10 px-5 py-3">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-xs font-bold text-primary">
             LD
           </div>
           <div>
             <p className="text-sm font-semibold text-white">Chat with Dave's AI</p>
-            <p className="text-[11px] text-white/40">Usually replies instantly</p>
+            <div className="flex items-center gap-2">
+              <p className="text-[11px] text-white/40">Usually replies instantly</p>
+              <span className="text-[11px] text-white/20">·</span>
+              <button
+                onClick={handleReset}
+                className="text-[11px] text-white/30 transition-colors hover:text-white/60"
+              >
+                Start over
+              </button>
+            </div>
           </div>
         </div>
-        <button
-          onClick={handleReset}
-          className="text-[11px] text-white/30 transition-colors hover:text-white/60"
-        >
-          Start over
-        </button>
       </div>
 
       {/* Progress bar */}
