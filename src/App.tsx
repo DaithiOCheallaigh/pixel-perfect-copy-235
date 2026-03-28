@@ -24,6 +24,7 @@ import Services from "./pages/Services";
 import ShowcasePage from "./pages/ShowcasePage";
 import ShowcaseAdmin from "./pages/ShowcaseAdmin";
 import ShowcaseNotFound from "./components/showcase/ShowcaseNotFound";
+import IndustryLanding from "./pages/IndustryLanding";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
