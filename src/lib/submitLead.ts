@@ -20,7 +20,7 @@ export interface LeadPayload {
   estimatedValue?: number;
 }
 
-const LEAD_MANAGER_URL = "https://lacuna-lead-manager.vercel.app/api/leads";
+const LEAD_MANAGER_URL = "https://lacuna-lead-manager.vercel.app/leads";
 
 export async function submitLead(payload: LeadPayload): Promise<{ success: boolean; error?: string }> {
   try {
