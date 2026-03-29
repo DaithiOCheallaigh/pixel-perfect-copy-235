@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { ArrowRight, Check, X } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -57,84 +57,125 @@ const convertPrice = (eurAmount: number, currency: Currency): string => {
 /*  Services data                                                      */
 /* ------------------------------------------------------------------ */
 
-const visibilityServices = [
+interface ServiceItem {
+  id: string;
+  icon: any;
+  title: string;
+  desc: string;
+  price: string;
+  priceValue: number; // for summary calculation
+  link: string;
+  category: "visibility" | "efficiency";
+}
+
+const allServices: ServiceItem[] = [
   {
+    id: "website",
     icon: Monitor,
     title: "Website Creation",
     desc: "Fast, conversion-focused websites that make your business look the part.",
     price: "From free (microsite) to €375",
+    priceValue: 375,
     link: "/web-design",
+    category: "visibility",
   },
   {
+    id: "domain-email",
     icon: Sms,
     title: "Domain & Custom Email",
     desc: "A professional email address and domain that builds instant trust.",
     price: "From €150 setup",
+    priceValue: 150,
     link: "/start-project",
+    category: "visibility",
   },
   {
+    id: "social-media",
     icon: Instagram,
     title: "Social Media Setup",
     desc: "I set up your channels, create your content strategy, and keep them active.",
     price: "From €200 setup",
+    priceValue: 200,
     link: "/start-project",
+    category: "visibility",
   },
   {
+    id: "local-seo",
     icon: Location,
     title: "Local SEO & Google",
     desc: "Get found on Google Maps and in local searches — where your customers are looking.",
     price: "Strategy free",
+    priceValue: 0,
     link: "/start-project",
+    category: "visibility",
   },
   {
+    id: "platform-onboarding",
     icon: ShoppingCart,
     title: "Platform Onboarding",
     desc: "I get you registered and set up on the platforms your customers already use.",
     price: "From €200",
+    priceValue: 200,
     link: "/start-project",
+    category: "visibility",
   },
-];
-
-const efficiencyServices = [
   {
+    id: "chatbots",
     icon: MessageText,
     title: "AI-Powered Chatbots",
     desc: "An always-on assistant that qualifies leads, answers FAQs, and books appointments — 24/7.",
     price: "From free integration",
+    priceValue: 0,
     link: "/ai-integration",
+    category: "efficiency",
   },
   {
+    id: "reservations",
     icon: Calendar1,
     title: "Reservation Systems",
     desc: "Ditch the phone bookings. I set up a reservation system that works while you sleep.",
     price: "€200 setup",
+    priceValue: 200,
     link: "/start-project",
+    category: "efficiency",
   },
   {
+    id: "crm",
     icon: People,
     title: "CRM Setup & Integration",
     desc: "Know your customers, track every interaction, and never drop a lead.",
     price: "Free strategy",
+    priceValue: 0,
     link: "/start-project",
+    category: "efficiency",
   },
   {
+    id: "whatsapp",
     icon: Whatsapp,
     title: "WhatsApp Business",
     desc: "Turn WhatsApp into a professional, automated business tool.",
     price: "Free registration",
+    priceValue: 0,
     link: "/start-project",
+    category: "efficiency",
   },
   {
+    id: "ai-assistant",
     icon: Cpu,
     title: "AI Personal Assistant",
     desc: "An AI employee for your business — handling emails, scheduling, follow-ups, and more.",
     price: "€100/month",
+    priceValue: 100,
     link: "/ai-integration",
+    category: "efficiency",
   },
 ];
 
+const visibilityServices = allServices.filter((s) => s.category === "visibility");
+const efficiencyServices = allServices.filter((s) => s.category === "efficiency");
+
 /* ------------------------------------------------------------------ */
-/*  Industry packages                                                  */
+/*  Industry packages (updated pricing)                                */
 /* ------------------------------------------------------------------ */
 
 const industryPackages = [
@@ -144,9 +185,9 @@ const industryPackages = [
     items: [
       { name: "WhatsApp Business Profile", price: "FREE" },
       { name: "Microsite", price: "FREE" },
-      { name: "Deliveroo Registration & Setup", price: "€200" },
+      { name: "Deliveroo Registration & Setup", price: "€350" },
     ],
-    total: "€200 to get online and taking orders",
+    total: "€350 to get online and taking orders",
     link: "/services/food-hospitality",
   },
   {
@@ -155,10 +196,10 @@ const industryPackages = [
     items: [
       { name: "Domain Registration", price: "Variable" },
       { name: "Microsite", price: "FREE" },
-      { name: "Online Reservation System", price: "€85" },
+      { name: "Online Reservation System", price: "€300" },
       { name: "WhatsApp Business Profile", price: "FREE" },
     ],
-    total: "From €85 fully operational",
+    total: "From €300 fully operational",
     link: "/services/beauty-wellness",
   },
   {
@@ -167,11 +208,11 @@ const industryPackages = [
     items: [
       { name: "Domain & Setup", price: "Variable" },
       { name: "Microsite", price: "FREE" },
-      { name: "Stripe Integration", price: "€250" },
+      { name: "Stripe Integration", price: "€450" },
       { name: "WhatsApp Business", price: "FREE" },
-      { name: "Prototype/MVP", price: "From €2,000" },
+      { name: "Prototype/MVP", price: "From €3,500" },
     ],
-    total: "Launch-ready from €250",
+    total: "Launch-ready from €450",
     link: "/services/startup-bootstrap",
   },
 ];
@@ -365,26 +406,23 @@ const differentiators = [
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Animated Service Card                                              */
+/*  Selectable Service Card                                            */
 /* ------------------------------------------------------------------ */
 
-const ServiceCard = ({
-  icon: Icon,
-  title,
-  desc,
-  price,
-  link,
+const SelectableServiceCard = ({
+  service,
+  selected,
+  onToggle,
   index,
 }: {
-  icon: any;
-  title: string;
-  desc: string;
-  price: string;
-  link: string;
+  service: ServiceItem;
+  selected: boolean;
+  onToggle: () => void;
   index: number;
 }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const Icon = service.icon;
 
   return (
     <motion.div
@@ -394,19 +432,121 @@ const ServiceCard = ({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
     >
-      <Link
-        to={link}
-        className="group relative flex h-full flex-col rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.25)]"
+      <button
+        type="button"
+        onClick={onToggle}
+        className={`group relative flex h-full w-full flex-col rounded-xl border p-6 text-left transition-all ${
+          selected
+            ? "border-primary bg-primary/5 shadow-[0_0_24px_-4px_hsl(var(--primary)/0.3)]"
+            : "border-border bg-card hover:border-primary/30 hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.15)]"
+        }`}
       >
+        {/* Checkmark indicator */}
+        <div
+          className={`absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full transition-all ${
+            selected
+              ? "bg-primary text-primary-foreground"
+              : "border border-border bg-card"
+          }`}
+        >
+          {selected && <Check className="h-3 w-3" />}
+        </div>
+
         <Icon variant="TwoTone" className="h-7 w-7 text-primary" />
-        <h3 className="mt-4 text-base font-bold">{title}</h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{desc}</p>
-        <p className="mt-4 text-xs font-semibold text-primary">{price}</p>
-        <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
-          Learn more <ArrowRight className="h-3 w-3" />
-        </span>
-      </Link>
+        <h3 className="mt-4 text-base font-bold">{service.title}</h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+        <div className="mt-4 flex items-center justify-between">
+          <p className="text-xs font-semibold text-primary">{service.price}</p>
+          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+            AI-assisted
+          </span>
+        </div>
+      </button>
     </motion.div>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/*  Package Summary Panel                                              */
+/* ------------------------------------------------------------------ */
+
+const PackageSummary = ({
+  selectedServices,
+  onRemove,
+}: {
+  selectedServices: ServiceItem[];
+  onRemove: (id: string) => void;
+}) => {
+  const hasSelections = selectedServices.length > 0;
+  const totalEstimate = selectedServices.reduce((sum, s) => sum + s.priceValue, 0);
+
+  return (
+    <div className="rounded-xl border border-border bg-card p-6">
+      <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+        Your Package
+      </h3>
+
+      {!hasSelections ? (
+        <div className="mt-6 flex flex-col items-center py-8 text-center">
+          <Setting2 variant="TwoTone" className="h-10 w-10 text-muted-foreground/40" />
+          <p className="mt-4 text-sm text-muted-foreground">
+            Select the services your business needs
+          </p>
+        </div>
+      ) : (
+        <>
+          <ul className="mt-4 space-y-2">
+            <AnimatePresence mode="popLayout">
+              {selectedServices.map((s) => (
+                <motion.li
+                  key={s.id}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-center justify-between gap-2 overflow-hidden"
+                >
+                  <div className="flex items-center gap-2">
+                    <Check className="h-3.5 w-3.5 shrink-0 text-primary" />
+                    <span className="text-sm text-foreground">{s.title}</span>
+                  </div>
+                  <button
+                    onClick={() => onRemove(s.id)}
+                    className="shrink-0 rounded p-0.5 text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </motion.li>
+              ))}
+            </AnimatePresence>
+          </ul>
+
+          <div className="mt-6 border-t border-border pt-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Estimated from</span>
+              <span className="text-lg font-bold text-foreground">
+                {totalEstimate === 0 ? "Free" : `€${totalEstimate.toLocaleString()}`}
+              </span>
+            </div>
+            <p className="mt-1 text-[10px] text-muted-foreground">
+              Final price scoped after discovery call
+            </p>
+          </div>
+        </>
+      )}
+
+      <Link
+        to="/start-project"
+        className={`mt-6 flex w-full items-center justify-center gap-2 rounded-sm px-5 py-3 text-sm font-semibold transition-all ${
+          hasSelections
+            ? "bg-primary text-primary-foreground hover:gap-3"
+            : "border border-border text-muted-foreground"
+        }`}
+      >
+        {hasSelections ? "Get Your Custom Quote" : "Get Started"}
+        <ArrowRight className="h-4 w-4" />
+      </Link>
+    </div>
   );
 };
 
@@ -417,7 +557,27 @@ const ServiceCard = ({
 const Services = () => {
   const [activeCategory, setActiveCategory] = useState<PricingCategory>("ai");
   const [currency, setCurrency] = useState<Currency>("EUR");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const isMobile = useIsMobile();
+
+  const toggleService = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const removeService = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  };
+
+  const selectedServices = allServices.filter((s) => selectedIds.has(s.id));
 
   useEffect(() => {
     document.title = "Services — Lacuna Digital";
@@ -429,6 +589,45 @@ const Services = () => {
       );
     }
   }, []);
+
+  const renderServiceGrid = (services: ServiceItem[]) => {
+    if (isMobile) {
+      return (
+        <Carousel opts={{ align: "start", loop: true }} className="w-full">
+          <CarouselContent className="-ml-4">
+            {services.map((s, i) => (
+              <CarouselItem key={s.id} className="pl-4 basis-[85%] h-auto">
+                <SelectableServiceCard
+                  service={s}
+                  selected={selectedIds.has(s.id)}
+                  onToggle={() => toggleService(s.id)}
+                  index={i}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="mt-4 flex items-center justify-center gap-2">
+            <CarouselPrevious className="static translate-y-0" />
+            <CarouselNext className="static translate-y-0" />
+          </div>
+        </Carousel>
+      );
+    }
+
+    return (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {services.map((s, i) => (
+          <SelectableServiceCard
+            key={s.id}
+            service={s}
+            selected={selectedIds.has(s.id)}
+            onToggle={() => toggleService(s.id)}
+            index={i}
+          />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -459,7 +658,7 @@ const Services = () => {
                 href="#services"
                 className="group inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
               >
-                See what I do <ArrowRight className="h-4 w-4" />
+                Build your package <ArrowRight className="h-4 w-4" />
               </a>
               <Link
                 to="/start-project"
@@ -475,7 +674,6 @@ const Services = () => {
       {/* ── Two Pillars ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto grid max-w-7xl gap-0 md:grid-cols-2">
-          {/* Visibility */}
           <ScrollReveal>
             <div className="flex flex-col border-b border-border pb-12 md:border-b-0 md:border-r md:pb-0 md:pr-12">
               <Global variant="TwoTone" className="h-10 w-10 text-primary" />
@@ -486,7 +684,6 @@ const Services = () => {
             </div>
           </ScrollReveal>
 
-          {/* Efficiency */}
           <ScrollReveal delay={0.15}>
             <div className="flex flex-col pt-12 md:pl-12 md:pt-0">
               <Setting2 variant="TwoTone" className="h-10 w-10 text-primary" />
@@ -499,72 +696,52 @@ const Services = () => {
         </div>
       </section>
 
-      {/* ── Services Grid ── */}
+      {/* ── Build Your Custom Package ── */}
       <section id="services" className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
-            <SectionLabel>Services</SectionLabel>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">What I do</h2>
+            <SectionLabel>Build Your Package</SectionLabel>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+              Build your tailored system
+            </h2>
             <p className="mt-4 max-w-2xl text-muted-foreground">
-              Everything a small business needs to get found online and run smarter — from websites and SEO to AI chatbots and automated workflows.
+              Every business is different. Select the services you need and I'll use AI to scope, build, and automate a setup that saves you real time and money — no bloat, no guesswork.
             </p>
           </ScrollReveal>
 
-          {/* Visibility */}
-          <div className="mt-10">
-            <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">VISIBILITY</p>
-            {isMobile ? (
-              <Carousel opts={{ align: "start", loop: true }} className="w-full">
-                <CarouselContent className="-ml-4">
-                  {visibilityServices.map((s, i) => (
-                    <CarouselItem key={s.title} className="pl-4 basis-[85%] h-auto">
-                      <ServiceCard {...s} index={i} />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="mt-4 flex items-center justify-center gap-2">
-                  <CarouselPrevious className="static translate-y-0" />
-                  <CarouselNext className="static translate-y-0" />
-                </div>
-              </Carousel>
-            ) : (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                {visibilityServices.map((s, i) => (
-                  <ServiceCard key={s.title} {...s} index={i} />
-                ))}
+          <div className="mt-12 flex flex-col gap-8 lg:flex-row">
+            {/* Service cards */}
+            <div className="flex-1 min-w-0">
+              {/* Visibility */}
+              <div>
+                <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">VISIBILITY</p>
+                {renderServiceGrid(visibilityServices)}
               </div>
-            )}
-          </div>
 
-          {/* Efficiency */}
-          <div className="mt-12">
-            <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">EFFICIENCY</p>
-            {isMobile ? (
-              <Carousel opts={{ align: "start", loop: true }} className="w-full">
-                <CarouselContent className="-ml-4">
-                  {efficiencyServices.map((s, i) => (
-                    <CarouselItem key={s.title} className="pl-4 basis-[85%] h-auto">
-                      <ServiceCard {...s} index={i} />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="mt-4 flex items-center justify-center gap-2">
-                  <CarouselPrevious className="static translate-y-0" />
-                  <CarouselNext className="static translate-y-0" />
-                </div>
-              </Carousel>
-            ) : (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                {efficiencyServices.map((s, i) => (
-                  <ServiceCard key={s.title} {...s} index={i} />
-                ))}
+              {/* Efficiency */}
+              <div className="mt-12">
+                <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">EFFICIENCY</p>
+                {renderServiceGrid(efficiencyServices)}
               </div>
-            )}
+            </div>
+
+            {/* Summary panel */}
+            <div className="w-full lg:w-80 lg:shrink-0">
+              <div className="lg:sticky lg:top-24">
+                <PackageSummary
+                  selectedServices={selectedServices}
+                  onRemove={removeService}
+                />
+                <p className="mt-3 text-center text-[10px] text-muted-foreground">
+                  Scoped and delivered with AI — faster than traditional agencies
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Industry Combo Deals ── */}
+      {/* ── Ready-Made Packages ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
@@ -573,7 +750,7 @@ const Services = () => {
               Ready-made packages by industry
             </h2>
             <p className="mt-4 max-w-2xl text-muted-foreground">
-              I've pre-scoped the most common needs by sector — so you can get started faster.
+              Pre-scoped bundles built for your sector — delivered faster using AI-assisted workflows.
             </p>
           </ScrollReveal>
 
@@ -582,7 +759,12 @@ const Services = () => {
               <ScrollReveal key={pkg.title} delay={i * 0.1}>
                 <div className="relative flex h-full flex-col rounded-xl border border-border bg-card p-8">
                   <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                  <span className="text-3xl">{pkg.emoji}</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">{pkg.emoji}</span>
+                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+                      AI-assisted build
+                    </span>
+                  </div>
                   <h3 className="mt-4 text-lg font-bold">{pkg.title}</h3>
                   <ul className="mt-6 flex-1 space-y-3">
                     {pkg.items.map((item) => (
