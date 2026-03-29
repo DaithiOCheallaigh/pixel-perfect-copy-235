@@ -542,6 +542,14 @@ const Services = () => {
 
   const selectedServices = allServices.filter((s) => selectedIds.has(s.id));
 
+  // Broadcast selection changes to ChatWidget
+  useEffect(() => {
+    const detail = selectedServices.length > 0
+      ? selectedServices.map(s => ({ id: s.id, title: s.title, price: s.price, priceValue: s.priceValue }))
+      : null;
+    window.dispatchEvent(new CustomEvent("service-selection-change", { detail }));
+  }, [selectedIds]);
+
   useEffect(() => {
     document.title = "Services — Lacuna Digital";
     const meta = document.querySelector('meta[name="description"]');
@@ -777,39 +785,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* ── Floating package bar ── */}
-      <AnimatePresence>
-        {selectedServices.length > 0 && (
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ type: "spring", damping: 25, stiffness: 350 }}
-            className="fixed bottom-20 left-1/2 z-[150] -translate-x-1/2"
-          >
-            <button
-              onClick={() => {
-                const packageData = selectedServices.map(s => ({ id: s.id, title: s.title, price: s.price, priceValue: s.priceValue }));
-                sessionStorage.setItem("lacuna-package-selections", JSON.stringify(packageData));
-                window.dispatchEvent(new CustomEvent("open-chat-with-package"));
-              }}
-              className="flex items-center gap-3 rounded-full border border-primary/30 bg-[#0a0a0b]/95 px-6 py-3 shadow-2xl shadow-primary/20 backdrop-blur-xl transition-all hover:border-primary/50 hover:shadow-primary/30"
-            >
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                {selectedServices.length}
-              </div>
-              <span className="text-sm font-semibold text-foreground">
-                {selectedServices.length} {selectedServices.length === 1 ? "service" : "services"} selected
-              </span>
-              <span className="text-sm text-primary">→</span>
-              <span className="text-sm font-semibold text-primary">
-                Start my free consultation
-              </span>
-              <ArrowRight className="h-4 w-4 text-primary" />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* ── Ready-Made Packages ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
