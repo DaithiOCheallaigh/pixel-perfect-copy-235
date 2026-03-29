@@ -745,14 +745,6 @@ const Services = () => {
             ]}
           />
 
-          <div className="flex justify-center mt-4">
-            <a
-              href="#services"
-              className="group inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
-            >
-              Build your package <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
         </div>
       </section>
 
