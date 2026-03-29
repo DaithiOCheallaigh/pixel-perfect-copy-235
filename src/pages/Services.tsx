@@ -3,6 +3,14 @@ import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
   Global,
   Setting2,
   Monitor,
