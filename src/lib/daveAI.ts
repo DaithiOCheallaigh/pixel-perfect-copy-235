@@ -59,48 +59,8 @@ export async function callDaveAI(messages: Message[]): Promise<string> {
   }
 }
 
-export async function submitLead(
-  collectedData: ChatState["collectedData"],
-  recommendation: string
-) {
-  // Extract services from recommendation if present
-  const servicesMatch = recommendation.match(/Custom package: (.+?) \(/);
-  const selectedServices = servicesMatch ? servicesMatch[1] : "";
-  const callTime = collectedData.phone || "Not specified";
-
-  const notes = [
-    selectedServices ? `Services of interest: ${selectedServices}.` : "",
-    `Preferred call time: ${callTime}.`,
-    collectedData.businessType ? `Business type: ${collectedData.businessType}` : "",
-    collectedData.challenge ? `Main challenge: ${collectedData.challenge}` : "",
-    `Recommended package: ${recommendation}`,
-    collectedData.hasWebsite
-      ? `Website: ${collectedData.websiteUrl}`
-      : "",
-    "Captured via services page chatbot.",
-  ].filter(Boolean).join(" ");
-
-  try {
-    await fetch("https://lacuna-lead-manager.vercel.app/api/leads", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: collectedData.name || "Unknown",
-        contactFirstName: collectedData.name?.split(" ")[0] || "",
-        contactLastName: collectedData.name?.split(" ").slice(1).join(" ") || "",
-        contactEmail: collectedData.email || "",
-        contactPhone: collectedData.phone || null,
-        website: collectedData.websiteUrl || "",
-        source: "website_chatbot",
-        status: "New",
-        priority: "medium",
-        notes,
-      }),
-    });
-  } catch (e) {
-    console.error("Lead submission failed:", e);
-  }
-}
+// submitLead is now in @/lib/submitLead.ts — re-export for backward compat
+export { submitLead } from "@/lib/submitLead";
 
 export function generateId(): string {
   return Math.random().toString(36).slice(2, 10);
