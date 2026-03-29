@@ -389,6 +389,7 @@ const ServiceCard = ({
   return (
     <motion.div
       ref={ref}
+      className="h-full"
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
@@ -516,7 +517,7 @@ const Services = () => {
               <Carousel opts={{ align: "start", loop: true }} className="w-full">
                 <CarouselContent className="-ml-4">
                   {visibilityServices.map((s, i) => (
-                    <CarouselItem key={s.title} className="pl-4 basis-[85%]">
+                    <CarouselItem key={s.title} className="pl-4 basis-[85%] h-auto">
                       <ServiceCard {...s} index={i} />
                     </CarouselItem>
                   ))}
@@ -542,7 +543,7 @@ const Services = () => {
               <Carousel opts={{ align: "start", loop: true }} className="w-full">
                 <CarouselContent className="-ml-4">
                   {efficiencyServices.map((s, i) => (
-                    <CarouselItem key={s.title} className="pl-4 basis-[85%]">
+                    <CarouselItem key={s.title} className="pl-4 basis-[85%] h-auto">
                       <ServiceCard {...s} index={i} />
                     </CarouselItem>
                   ))}
