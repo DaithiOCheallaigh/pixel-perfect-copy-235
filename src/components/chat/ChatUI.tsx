@@ -507,7 +507,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
               onClick={handleSend}
               className="shrink-0 rounded-xl bg-primary p-2.5 text-primary-foreground transition-colors hover:bg-primary/80"
             >
-              <Send variant="TwoTone" className="h-4 w-4" />
+              <Send variant="Bold" className="h-4 w-4" />
             </button>
           </div>
         </div>
