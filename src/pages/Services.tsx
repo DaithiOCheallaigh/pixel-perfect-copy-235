@@ -509,7 +509,7 @@ const SelectableServiceCard = ({
 
         <div className="mt-4 flex items-center justify-between">
           <p className="text-xs font-semibold text-primary">{service.price}</p>
-          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+          <span className="shrink-0 whitespace-nowrap rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
             AI-assisted
           </span>
         </div>
