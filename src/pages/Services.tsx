@@ -30,6 +30,7 @@ import {
   Clock,
   Receipt1,
   Timer1,
+  TickCircle,
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { ShineBorder } from "@/components/ui/shine-border";
@@ -59,13 +60,15 @@ const convertPrice = (eurAmount: number, currency: Currency): string => {
 
 interface ServiceItem {
   id: string;
-  icon: any;
+  icon: React.ComponentType<{ variant?: string; className?: string }>;
   title: string;
   desc: string;
   price: string;
-  priceValue: number; // for summary calculation
+  priceValue: number;
   link: string;
   category: "visibility" | "efficiency";
+  featured?: boolean;
+  expandedDetail?: string;
 }
 
 const allServices: ServiceItem[] = [
@@ -118,6 +121,18 @@ const allServices: ServiceItem[] = [
     priceValue: 200,
     link: "/start-project",
     category: "visibility",
+  },
+  {
+    id: "ai-audit",
+    icon: Cpu,
+    title: "Bespoke AI Audit",
+    desc: "I'll map how your business currently operates — tools, workflows, gaps — then either build bespoke software to fix it or optimise what you already have.",
+    price: "From free strategy call",
+    priceValue: 0,
+    link: "/start-project",
+    category: "efficiency",
+    featured: true,
+    expandedDetail: "Every business runs differently. Before I build anything, I spend time understanding how yours actually works — what tools you're using (or avoiding), where time is being lost, and what a realistic fix looks like. Sometimes that's a custom tool. Sometimes it's a smarter way to use something you already have. Either way, you get a clear picture first, with no obligation to build anything.",
   },
   {
     id: "chatbots",
