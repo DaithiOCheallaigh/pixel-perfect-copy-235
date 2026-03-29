@@ -699,7 +699,6 @@ const Services = () => {
           >
             <button
               onClick={() => {
-                // Store selected services and dispatch event to open chat
                 const packageData = selectedServices.map(s => ({ id: s.id, title: s.title, price: s.price, priceValue: s.priceValue }));
                 sessionStorage.setItem("lacuna-package-selections", JSON.stringify(packageData));
                 window.dispatchEvent(new CustomEvent("open-chat-with-package"));
@@ -710,7 +709,11 @@ const Services = () => {
                 {selectedServices.length}
               </div>
               <span className="text-sm font-semibold text-foreground">
-                Get Your Custom Quote
+                {selectedServices.length} {selectedServices.length === 1 ? "service" : "services"} selected
+              </span>
+              <span className="text-sm text-primary">→</span>
+              <span className="text-sm font-semibold text-primary">
+                Start my free consultation
               </span>
               <ArrowRight className="h-4 w-4 text-primary" />
             </button>

@@ -147,33 +147,54 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
       const selections = loadPackageSelections();
       if (!selections || selections.length === 0) return;
 
-      // Clear any existing chat and start the package flow
-      const totalEstimate = selections.reduce((sum, s) => sum + s.priceValue, 0);
-      const serviceList = selections.map((s) => s.title).join(", ");
-      const priceText = totalEstimate === 0 ? "free" : `from €${totalEstimate.toLocaleString()}`;
+      const serviceNames = selections.map((s) => s.title);
+      const hasAudit = serviceNames.includes("Bespoke AI Audit");
 
-      const packageMessage: Message = {
+      // Inject user message with selected services
+      const userMessage: Message = {
         id: generateId(),
-        role: "bot",
-        content: `Great choices! 🎯 You're building a tailored package with:\n\n${selections
-          .map((s) => `✅ ${s.title} — ${s.price}`)
-          .join("\n")}\n\nEstimated ${priceText}. I'd love to set up a no-cost, no-commitment exploration call so Dave can scope this properly for you.\n\nWhat's your name?`,
+        role: "user",
+        content: `Hi! I'm interested in the following services for my business:\n\n${serviceNames.map((n) => `- ${n}`).join("\n")}\n\nCan you help me figure out what's right for me and book a call?`,
         timestamp: new Date(),
       };
 
+      const totalEstimate = selections.reduce((sum, s) => sum + s.priceValue, 0);
+      const serviceList = serviceNames.join(", ");
+      const priceText = totalEstimate === 0 ? "free" : `from €${totalEstimate.toLocaleString()}`;
+
+      // Store audit context for system prompt
+      if (hasAudit) {
+        sessionStorage.setItem("lacuna-audit-context", "true");
+      }
+
       setState({
-        messages: [packageMessage],
+        messages: [userMessage],
         stage: "collecting",
         collectedData: {
           recommendation: `Custom package: ${serviceList} (${priceText})`,
         },
-        isTyping: false,
+        isTyping: true,
         inputValue: "",
         inputMode: "text",
         collectField: "name",
       });
 
-      // Clear the package selections so it doesn't re-trigger
+      // Simulate bot acknowledging selections then asking for name
+      setTimeout(() => {
+        const acknowledgement = hasAudit
+          ? `Great choices! 🎯 I can see you're interested in ${serviceNames.length === 1 ? serviceNames[0] : serviceList}. The Bespoke AI Audit is a brilliant starting point — Dave will map out exactly how your business runs and where AI can make the biggest impact.\n\nLet's arrange a no-cost, no-commitment exploration call so Dave can scope this properly for you. What's your name?`
+          : `Great choices! 🎯 You've selected ${serviceNames.length === 1 ? serviceNames[0] : serviceList}${totalEstimate > 0 ? ` (estimated ${priceText})` : ""}. These are a popular combination.\n\nLet's arrange a no-cost, no-commitment exploration call so Dave can scope this properly for you. What's your name?`;
+
+        setState((prev) => ({
+          ...prev,
+          messages: [
+            ...prev.messages,
+            { id: generateId(), role: "bot", content: acknowledgement, timestamp: new Date() },
+          ],
+          isTyping: false,
+        }));
+      }, 1200);
+
       sessionStorage.removeItem(PACKAGE_KEY);
     };
 
