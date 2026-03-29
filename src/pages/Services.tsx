@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Globe, MessageCircle, Calendar, Search, Bot, Zap } from "lucide-react";
+import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import {
   Carousel,
   CarouselContent,
@@ -655,6 +656,106 @@ const Services = () => {
               </p>
             </div>
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── Orbital System ── */}
+      <section className="relative px-6 py-16 md:px-12 lg:px-24 overflow-hidden" style={{ maxHeight: "80vh" }}>
+        <div className="mx-auto max-w-7xl">
+          <ScrollReveal>
+            <div className="text-center mb-8">
+              <SectionLabel>How It Works</SectionLabel>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+                Every service connects
+              </h2>
+              <p className="mt-4 mx-auto max-w-2xl text-muted-foreground">
+                Most businesses patch tools together and hope for the best. I use AI to build you a system where everything works together — from your first online presence to a fully automated operation.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <RadialOrbitalTimeline
+            timelineData={[
+              {
+                id: 1,
+                title: "Website",
+                date: "Foundation",
+                content: "Your digital home base. A fast, conversion-focused website that makes your business look credible and gets people to act.",
+                category: "Visibility",
+                icon: Globe,
+                relatedIds: [2, 4],
+                status: "completed" as const,
+                energy: 95,
+              },
+              {
+                id: 2,
+                title: "WhatsApp Business",
+                date: "Communication",
+                content: "Turn WhatsApp into a professional, automated business tool. Respond instantly, qualify leads, and never miss an enquiry.",
+                category: "Efficiency",
+                icon: MessageCircle,
+                relatedIds: [1, 5],
+                status: "completed" as const,
+                energy: 80,
+              },
+              {
+                id: 3,
+                title: "Reservations",
+                date: "Automation",
+                content: "Ditch the phone bookings. An online reservation system that works while you sleep and plugs into everything else.",
+                category: "Efficiency",
+                icon: Calendar,
+                relatedIds: [2, 5],
+                status: "in-progress" as const,
+                energy: 70,
+              },
+              {
+                id: 4,
+                title: "Local SEO",
+                date: "Visibility",
+                content: "Get found on Google Maps and local search. I make sure customers searching for what you do can actually find you.",
+                category: "Visibility",
+                icon: Search,
+                relatedIds: [1],
+                status: "completed" as const,
+                energy: 85,
+              },
+              {
+                id: 5,
+                title: "AI Assistant",
+                date: "Intelligence",
+                content: "An AI employee for your business — handling FAQs, booking queries, and follow-ups around the clock so you don't have to.",
+                category: "Efficiency",
+                icon: Bot,
+                relatedIds: [2, 3],
+                status: "in-progress" as const,
+                energy: 90,
+              },
+              {
+                id: 6,
+                title: "CRM & Leads",
+                date: "Growth",
+                content: "Know your customers, track every interaction, and never lose a lead. The connective tissue that ties the whole system together.",
+                category: "Efficiency",
+                icon: Zap,
+                relatedIds: [1, 2, 5],
+                status: "pending" as const,
+                energy: 75,
+              },
+            ]}
+          />
+
+          <p className="text-center text-sm text-muted-foreground mt-4">
+            Click any node to explore how the services connect
+          </p>
+          <div className="flex justify-center mt-4">
+            <a
+              href="#services"
+              className="group inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
+            >
+              Build your package <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
         </div>
       </section>
 
