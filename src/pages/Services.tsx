@@ -512,25 +512,53 @@ const Services = () => {
           {/* Visibility */}
           <div className="mt-10">
             <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">VISIBILITY</p>
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 sm:overflow-x-visible sm:pb-0 lg:grid-cols-3 xl:grid-cols-5">
-              {visibilityServices.map((s, i) => (
-                <div key={s.title} className="min-w-[280px] shrink-0 sm:min-w-0 sm:shrink">
-                  <ServiceCard {...s} index={i} />
+            {isMobile ? (
+              <Carousel opts={{ align: "start", loop: true }} className="w-full">
+                <CarouselContent className="-ml-4">
+                  {visibilityServices.map((s, i) => (
+                    <CarouselItem key={s.title} className="pl-4 basis-[85%]">
+                      <ServiceCard {...s} index={i} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  <CarouselPrevious className="static translate-y-0" />
+                  <CarouselNext className="static translate-y-0" />
                 </div>
-              ))}
-            </div>
+              </Carousel>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                {visibilityServices.map((s, i) => (
+                  <ServiceCard key={s.title} {...s} index={i} />
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Efficiency */}
           <div className="mt-12">
             <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">EFFICIENCY</p>
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 sm:overflow-x-visible sm:pb-0 lg:grid-cols-3 xl:grid-cols-5">
-              {efficiencyServices.map((s, i) => (
-                <div key={s.title} className="min-w-[280px] shrink-0 sm:min-w-0 sm:shrink">
-                  <ServiceCard {...s} index={i} />
+            {isMobile ? (
+              <Carousel opts={{ align: "start", loop: true }} className="w-full">
+                <CarouselContent className="-ml-4">
+                  {efficiencyServices.map((s, i) => (
+                    <CarouselItem key={s.title} className="pl-4 basis-[85%]">
+                      <ServiceCard {...s} index={i} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  <CarouselPrevious className="static translate-y-0" />
+                  <CarouselNext className="static translate-y-0" />
                 </div>
-              ))}
-            </div>
+              </Carousel>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                {efficiencyServices.map((s, i) => (
+                  <ServiceCard key={s.title} {...s} index={i} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
