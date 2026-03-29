@@ -181,6 +181,7 @@ const AppContent = () => {
             <Route path="/tools/review-link" element={<ReviewLink />} />
             <Route path="/tools/caption-generator" element={<CaptionGenerator />} />
             <Route path="/refer" element={<Refer />} />
+            <Route path="/tools/*" element={<ToolsIndex />} />
           </Routes>
           <ChatWidget />
         </>
