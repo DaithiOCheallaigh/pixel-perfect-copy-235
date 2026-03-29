@@ -159,6 +159,14 @@ html, body {
 }
 
 @layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   .font-mono-label {
     font-family: 'DM Mono', monospace;
     font-weight: 400;
