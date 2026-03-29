@@ -13,6 +13,7 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
     { label: "Services", to: "/services" },
     { label: "Web Design", to: "/web-design" },
     { label: "AI Integration", to: "/ai-integration" },
+    { label: "Free Tools", to: "/tools" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
