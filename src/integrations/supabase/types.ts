@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      bio_pages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          links: Json
+          name: string
+          slug: string
+          tagline: string
+          theme: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          id?: string
+          links?: Json
+          name: string
+          slug: string
+          tagline?: string
+          theme?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          links?: Json
+          name?: string
+          slug?: string
+          tagline?: string
+          theme?: string
+        }
+        Relationships: []
+      }
       pending_leads: {
         Row: {
           created_at: string
@@ -76,6 +109,33 @@ export type Database = {
           id?: string
           slug?: string
           status?: Database["public"]["Enums"]["showcase_status"]
+        }
+        Relationships: []
+      }
+      tool_leads: {
+        Row: {
+          business_type: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          tool_used: string
+        }
+        Insert: {
+          business_type?: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          tool_used: string
+        }
+        Update: {
+          business_type?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          tool_used?: string
         }
         Relationships: []
       }

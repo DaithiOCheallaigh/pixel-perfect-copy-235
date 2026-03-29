@@ -28,6 +28,11 @@ import IndustryLanding from "./pages/IndustryLanding";
 import GetStarted from "./pages/GetStarted";
 import ToolsIndex from "./pages/ToolsIndex";
 import WhatsAppScriptGenerator from "./pages/WhatsAppScriptGenerator";
+import WhatsAppScripts from "./pages/tools/WhatsAppScripts";
+import LinkInBio from "./pages/tools/LinkInBio";
+import ReviewLink from "./pages/tools/ReviewLink";
+import CaptionGenerator from "./pages/tools/CaptionGenerator";
+import BioPage from "./pages/tools/BioPage";
 import Refer from "./pages/Refer";
 import ChatWidget from "./components/chat/ChatWidget";
 import Navigation from "./components/Navigation";
@@ -144,12 +149,18 @@ const AppContent = () => {
     location.pathname.startsWith("/services/") ||
     location.pathname.startsWith("/tools");
 
+  const bioRoutes = location.pathname.startsWith("/bio");
+
   const showcaseRoutes = location.pathname.startsWith("/showcase");
 
   return (
     <>
       <ScrollToTop />
-      {showcaseRoutes ? (
+      {bioRoutes ? (
+        <Routes>
+          <Route path="/bio/:slug" element={<BioPage />} />
+        </Routes>
+      ) : showcaseRoutes ? (
         <Routes>
           <Route path="/showcase/admin" element={<ShowcaseAdmin />} />
           <Route path="/showcase/:slug" element={<ShowcasePage />} />
@@ -164,7 +175,11 @@ const AppContent = () => {
             <Route path="/ai-integration" element={<AIIntegration />} />
             <Route path="/get-started" element={<GetStarted />} />
             <Route path="/tools" element={<ToolsIndex />} />
+            <Route path="/tools/whatsapp-scripts" element={<WhatsAppScripts />} />
             <Route path="/tools/whatsapp-script-generator" element={<WhatsAppScriptGenerator />} />
+            <Route path="/tools/link-in-bio" element={<LinkInBio />} />
+            <Route path="/tools/review-link" element={<ReviewLink />} />
+            <Route path="/tools/caption-generator" element={<CaptionGenerator />} />
             <Route path="/refer" element={<Refer />} />
           </Routes>
           <ChatWidget />
