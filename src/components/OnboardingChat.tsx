@@ -150,17 +150,19 @@ const OnboardingChatCore = ({ onClose }: { onClose?: () => void }) => {
 
     setSubmitting(true);
     try {
-      await fetch("https://lacuna-lead-manager.vercel.app/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          phone: phone.trim() || "Not provided",
-          website: hasWebsite ? websiteUrl.trim() : "none",
-          source: "AI Chat Widget",
-          status: "New",
-          notes: `Business: ${selectedBusiness}. Challenge: ${selectedChallenge}. Recommended: ${recommendation?.packageName || "Discovery Call"}. Price: ${recommendation?.price || "TBC"}.`,
-        }),
+      const { submitLead } = await import("@/lib/submitLead");
+      submitLead({
+        name: name.trim(),
+        contactFirstName: name.trim().split(" ")[0],
+        contactLastName: name.trim().split(" ").slice(1).join(" "),
+        contactEmail: email.trim(),
+        contactPhone: phone.trim() || "",
+        website: hasWebsite ? websiteUrl.trim() : "",
+        source: "website_chatbot",
+        status: "new",
+        priority: "medium",
+        currency: "EUR",
+        notes: `Services of interest: ${recommendation?.packageName || "Not specified"}. Preferred call time: Not specified. Business: ${selectedBusiness}. Challenge: ${selectedChallenge}. Price: ${recommendation?.price || "TBC"}. Captured via onboarding chat widget.`,
       });
     } catch {
       // Silently continue — lead capture is best-effort

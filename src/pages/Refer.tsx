@@ -51,17 +51,17 @@ const Refer = () => {
 
     setSubmitting(true);
     try {
-      await fetch("https://lacuna-lead-manager.vercel.app/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          phone: "Not provided",
-          website: "N/A",
-          source: "Referral Programme",
-          status: "New",
-          notes: `Existing client requesting referral link. Email: ${email.trim()}`,
-        }),
+      const { submitLead } = await import("@/lib/submitLead");
+      submitLead({
+        name: name.trim(),
+        contactFirstName: name.trim().split(" ")[0],
+        contactLastName: name.trim().split(" ").slice(1).join(" "),
+        contactEmail: email.trim(),
+        source: "email_form",
+        status: "new",
+        priority: "low",
+        currency: "EUR",
+        notes: `Existing client requesting referral link. Captured via referral page.`,
       });
     } catch {
       // Best-effort

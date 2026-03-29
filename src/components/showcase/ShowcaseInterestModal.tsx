@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { Loader2 } from "lucide-react";
 
 interface Entry {
@@ -49,29 +50,30 @@ const ShowcaseInterestModal = ({ open, onOpenChange, entry, onSuccess }: Props) 
       p_new_status: "interested",
     });
 
-    const payload = {
-      name: name.trim(),
-      company: entry.business_name,
-      email: email.trim(),
-      phone: phone.trim() || null,
-      source: "Showcase",
-      notes: `Responded to /showcase/${entry.slug}. Type: ${entry.business_type}.`,
+    const leadPayload = {
+      name: entry.business_name || name.trim(),
+      contactFirstName: name.trim().split(" ")[0],
+      contactLastName: name.trim().split(" ").slice(1).join(" "),
+      contactEmail: email.trim(),
+      contactPhone: phone.trim() || "",
+      source: "email_form" as const,
+      status: "new" as const,
+      priority: "medium" as const,
+      currency: "EUR" as const,
+      notes: `Services of interest: Showcase mockup. Responded to /showcase/${entry.slug}. Business type: ${entry.business_type}. Captured via showcase interest modal.`,
     };
 
     try {
-      const res = await fetch("https://lacuna-lead-manager.vercel.app/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error(`API returned ${res.status}`);
-    } catch (err: any) {
+      const { submitLead } = await import("@/lib/submitLead");
+      const result = await submitLead(leadPayload);
+      if (!result.success) throw new Error(result.error || "API error");
+    } catch (err: unknown) {
       // Fallback: save to pending_leads
+      const errorMsg = err instanceof Error ? err.message : "Unknown error";
       await supabase.rpc("insert_pending_lead", {
         p_entry_id: entry.id,
-        p_payload: payload,
-        p_error: err?.message || "Unknown error",
+        p_payload: leadPayload as Json,
+        p_error: errorMsg,
       });
     }
 
