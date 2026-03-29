@@ -416,6 +416,7 @@ const ServiceCard = ({
 const Services = () => {
   const [activeCategory, setActiveCategory] = useState<PricingCategory>("ai");
   const [currency, setCurrency] = useState<Currency>("EUR");
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     document.title = "Services — Lacuna Digital";
