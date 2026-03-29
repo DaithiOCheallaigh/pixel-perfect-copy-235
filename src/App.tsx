@@ -149,6 +149,8 @@ const AppContent = () => {
     location.pathname.startsWith("/services/") ||
     location.pathname.startsWith("/tools");
 
+  const bioRoutes = location.pathname.startsWith("/bio");
+
   const showcaseRoutes = location.pathname.startsWith("/showcase");
 
   return (
