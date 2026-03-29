@@ -133,7 +133,6 @@ const allServices: ServiceItem[] = [
     link: "/start-project",
     category: "efficiency",
     featured: false,
-    expandedDetail: "Every business runs differently. Before I build anything, I spend time understanding how yours actually works — what tools you're using (or avoiding), where time is being lost, and what a realistic fix looks like. Sometimes that's a custom tool. Sometimes it's a smarter way to use something you already have. Either way, you get a clear picture first, with no obligation to build anything.",
   },
   {
     id: "chatbots",
