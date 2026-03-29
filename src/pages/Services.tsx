@@ -709,37 +709,52 @@ const Services = () => {
             </p>
           </ScrollReveal>
 
-          <div className="mt-12 flex flex-col gap-8 lg:flex-row">
-            {/* Service cards */}
-            <div className="flex-1 min-w-0">
-              {/* Visibility */}
-              <div>
-                <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">VISIBILITY</p>
-                {renderServiceGrid(visibilityServices)}
-              </div>
-
-              {/* Efficiency */}
-              <div className="mt-12">
-                <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">EFFICIENCY</p>
-                {renderServiceGrid(efficiencyServices)}
-              </div>
+          <div className="mt-12">
+            {/* Visibility */}
+            <div>
+              <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">VISIBILITY</p>
+              {renderServiceGrid(visibilityServices)}
             </div>
 
-            {/* Summary panel */}
-            <div className="w-full lg:w-80 lg:shrink-0">
-              <div className="lg:sticky lg:top-24">
-                <PackageSummary
-                  selectedServices={selectedServices}
-                  onRemove={removeService}
-                />
-                <p className="mt-3 text-center text-[10px] text-muted-foreground">
-                  Scoped and delivered with AI — faster than traditional agencies
-                </p>
-              </div>
+            {/* Efficiency */}
+            <div className="mt-12">
+              <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">EFFICIENCY</p>
+              {renderServiceGrid(efficiencyServices)}
             </div>
           </div>
         </div>
       </section>
+
+      {/* ── Floating package bar ── */}
+      <AnimatePresence>
+        {selectedServices.length > 0 && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 350 }}
+            className="fixed bottom-20 left-1/2 z-[150] -translate-x-1/2"
+          >
+            <button
+              onClick={() => {
+                // Store selected services and dispatch event to open chat
+                const packageData = selectedServices.map(s => ({ id: s.id, title: s.title, price: s.price, priceValue: s.priceValue }));
+                sessionStorage.setItem("lacuna-package-selections", JSON.stringify(packageData));
+                window.dispatchEvent(new CustomEvent("open-chat-with-package"));
+              }}
+              className="flex items-center gap-3 rounded-full border border-primary/30 bg-[#0a0a0b]/95 px-6 py-3 shadow-2xl shadow-primary/20 backdrop-blur-xl transition-all hover:border-primary/50 hover:shadow-primary/30"
+            >
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                {selectedServices.length}
+              </div>
+              <span className="text-sm font-semibold text-foreground">
+                Get Your Custom Quote
+              </span>
+              <ArrowRight className="h-4 w-4 text-primary" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Ready-Made Packages ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">

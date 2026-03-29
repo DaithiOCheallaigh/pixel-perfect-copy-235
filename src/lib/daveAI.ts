@@ -24,7 +24,7 @@ export interface ChatState {
   isTyping: boolean;
   inputValue: string;
   inputMode: "chips" | "text";
-  collectField?: "name" | "email" | "phone" | "website-ask" | "website-url";
+  collectField?: "name" | "email" | "phone" | "website-ask" | "website-url" | "call-time";
 }
 
 export async function callDaveAI(messages: Message[]): Promise<string> {
