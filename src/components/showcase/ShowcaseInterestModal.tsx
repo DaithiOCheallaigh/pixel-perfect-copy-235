@@ -71,7 +71,7 @@ const ShowcaseInterestModal = ({ open, onOpenChange, entry, onSuccess }: Props) 
       const errorMsg = err instanceof Error ? err.message : "Unknown error";
       await supabase.rpc("insert_pending_lead", {
         p_entry_id: entry.id,
-        p_payload: leadPayload as unknown as Json,
+        p_payload: leadPayload as unknown as Record<string, unknown>,
         p_error: errorMsg,
       });
     }

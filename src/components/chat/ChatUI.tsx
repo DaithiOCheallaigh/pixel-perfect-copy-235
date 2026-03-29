@@ -381,7 +381,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
       const displayName = state.collectedData.name?.split(" ")[0] || "";
       addMessage(
         "bot",
-        `Perfect, ${firstName}! ✅ I've passed your details to Dave. He'll reach out to arrange your exploration call — no cost, no commitment.\n\nIn the meantime, would you like a free WhatsApp Business script for your business? Takes 2 minutes.`,
+        `Perfect, ${displayName}! ✅ I've passed your details to Dave. He'll reach out to arrange your exploration call — no cost, no commitment.\n\nIn the meantime, would you like a free WhatsApp Business script for your business? Takes 2 minutes.`,
         FINAL_CHIPS
       );
       setState((prev) => ({
