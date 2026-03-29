@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send } from "iconsax-react";
+import { Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import MessageBubble from "./MessageBubble";
 import TypingIndicator from "./TypingIndicator";
@@ -38,6 +39,7 @@ const REACTION_CHIPS = ["✅ That sounds good", "🤔 Tell me more"];
 const FINAL_CHIPS = ["👍 Yes, get my script", "👋 No thanks, I'm good"];
 
 const SESSION_KEY = "lacuna-chat-state";
+const PACKAGE_KEY = "lacuna-package-selections";
 
 const INTRO_MESSAGE: Message = {
   id: "intro",
@@ -85,6 +87,23 @@ function saveSession(state: ChatState) {
   } catch {}
 }
 
+interface PackageSelection {
+  id: string;
+  title: string;
+  price: string;
+  priceValue: number;
+}
+
+function loadPackageSelections(): PackageSelection[] | null {
+  try {
+    const raw = sessionStorage.getItem(PACKAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /*  ChatUI                                                             */
 /* ------------------------------------------------------------------ */
@@ -122,6 +141,46 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
     }
   }, [state.messages, state.isTyping]);
 
+  // Listen for package selection events
+  useEffect(() => {
+    const handlePackageEvent = () => {
+      const selections = loadPackageSelections();
+      if (!selections || selections.length === 0) return;
+
+      // Clear any existing chat and start the package flow
+      const totalEstimate = selections.reduce((sum, s) => sum + s.priceValue, 0);
+      const serviceList = selections.map((s) => s.title).join(", ");
+      const priceText = totalEstimate === 0 ? "free" : `from €${totalEstimate.toLocaleString()}`;
+
+      const packageMessage: Message = {
+        id: generateId(),
+        role: "bot",
+        content: `Great choices! 🎯 You're building a tailored package with:\n\n${selections
+          .map((s) => `✅ ${s.title} — ${s.price}`)
+          .join("\n")}\n\nEstimated ${priceText}. I'd love to set up a no-cost, no-commitment exploration call so Dave can scope this properly for you.\n\nWhat's your name?`,
+        timestamp: new Date(),
+      };
+
+      setState({
+        messages: [packageMessage],
+        stage: "collecting",
+        collectedData: {
+          recommendation: `Custom package: ${serviceList} (${priceText})`,
+        },
+        isTyping: false,
+        inputValue: "",
+        inputMode: "text",
+        collectField: "name",
+      });
+
+      // Clear the package selections so it doesn't re-trigger
+      sessionStorage.removeItem(PACKAGE_KEY);
+    };
+
+    window.addEventListener("open-chat-with-package", handlePackageEvent);
+    return () => window.removeEventListener("open-chat-with-package", handlePackageEvent);
+  }, []);
+
   const addMessage = useCallback(
     (role: "bot" | "user", content: string, chips?: string[]) => {
       setState((prev) => ({
@@ -153,8 +212,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
   /* ── Handle chip selection ── */
   const handleChipSelect = async (chip: string) => {
     if (state.stage === "intro" || state.stage === "business-type") {
-      // Business type selected
-      const bizType = chip.replace(/^[^\s]+\s/, ""); // strip emoji
+      const bizType = chip.replace(/^[^\s]+\s/, "");
       setState((prev) => ({
         ...prev,
         stage: "business-type",
@@ -194,7 +252,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
         await showTypingThenRespond(chip, async () => {
           addMessage(
             "bot",
-            "Great! I just need a couple of details so Dave can reach out to you. What's your name?"
+            "Great! Let's arrange a no-cost, no-commitment exploration call so Dave can scope this for you. What's your name?"
           );
           setState((prev) => ({
             ...prev,
@@ -204,7 +262,6 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
           }));
         });
       } else {
-        // Tell me more
         await showTypingThenRespond(chip, async () => {
           const allMsgs = [
             ...state.messages,
@@ -242,7 +299,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
         isTyping: true,
       }));
       await new Promise((r) => setTimeout(r, 800));
-      addMessage("bot", "And your email address?");
+      addMessage("bot", `Nice to meet you, ${val.split(" ")[0]}! What's the best email to reach you on?`);
       setState((prev) => ({
         ...prev,
         isTyping: false,
@@ -259,31 +316,28 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
       await new Promise((r) => setTimeout(r, 800));
       addMessage(
         "bot",
-        "Finally, do you have a phone number Dave can reach you on? (optional — type it or hit Skip)"
+        "And when's a good time for Dave to arrange your exploration call? E.g. 'Tuesday afternoon' or 'anytime this week'"
       );
       setState((prev) => ({
         ...prev,
         isTyping: false,
-        collectField: "phone",
+        collectField: "call-time",
       }));
-    } else if (field === "phone") {
-      const isSkip = val.toLowerCase() === "skip";
-      if (!isSkip) {
-        addMessage("user", val);
-        setState((prev) => ({
-          ...prev,
-          collectedData: { ...prev.collectedData, phone: val },
-        }));
-      } else {
-        addMessage("user", "Skip");
-      }
-      setState((prev) => ({ ...prev, inputValue: "", isTyping: true }));
-      // Submit lead
+    } else if (field === "call-time") {
+      addMessage("user", val);
+      setState((prev) => ({
+        ...prev,
+        inputValue: "",
+        collectedData: { ...prev.collectedData, phone: val },
+        isTyping: true,
+      }));
+
+      // Submit lead with call time in the notes
       const data = {
         ...state.collectedData,
         name: state.collectedData.name,
         email: state.collectedData.email,
-        phone: isSkip ? undefined : val,
+        phone: val, // repurposed as preferred call time
       };
       submitLead(data, state.collectedData.recommendation || "Discovery Call");
 
@@ -291,7 +345,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
       const firstName = state.collectedData.name?.split(" ")[0] || "";
       addMessage(
         "bot",
-        `Perfect, ${firstName}! ✅ I've passed your details over to Dave. He'll be in touch within 24 hours.\n\nIn the meantime, would you like a free WhatsApp Business script for your business? It takes 2 minutes and you can use it straight away.`,
+        `Perfect, ${firstName}! ✅ I've passed your details to Dave. He'll reach out to arrange your exploration call — no cost, no commitment.\n\nIn the meantime, would you like a free WhatsApp Business script for your business? Takes 2 minutes.`,
         FINAL_CHIPS
       );
       setState((prev) => ({
@@ -313,6 +367,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
 
   const handleReset = () => {
     sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(PACKAGE_KEY);
     setState({
       messages: [INTRO_MESSAGE],
       stage: "intro",
@@ -329,7 +384,6 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
     for (let i = state.messages.length - 1; i >= 0; i--) {
       const m = state.messages[i];
       if (m.role === "bot" && m.chips?.length) {
-        // Check if there's a user message after this
         const hasUserAfter = state.messages.slice(i + 1).some((x) => x.role === "user");
         if (!hasUserAfter) return m;
       }
@@ -392,7 +446,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
         )}
       </div>
 
-      {/* Text input (only in collecting stage) */}
+      {/* Text input (collecting stage) */}
       {state.inputMode === "text" && state.stage === "collecting" && (
         <div className="border-t border-white/10 px-4 py-3">
           <div className="flex gap-2">
@@ -408,7 +462,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
                   ? "Type your name..."
                   : state.collectField === "email"
                     ? "your@email.com"
-                    : "Phone number or type 'skip'..."
+                    : "E.g. Tuesday afternoon, anytime this week..."
               }
               className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-primary/50"
               autoFocus

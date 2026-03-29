@@ -9,6 +9,13 @@ const ChatWidget = () => {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
 
+  // Listen for package builder event to auto-open chat
+  useEffect(() => {
+    const handleOpenWithPackage = () => setOpen(true);
+    window.addEventListener("open-chat-with-package", handleOpenWithPackage);
+    return () => window.removeEventListener("open-chat-with-package", handleOpenWithPackage);
+  }, []);
+
   // Hide external WhatsApp widget on services routes where ChatWidget is shown
   useEffect(() => {
     const style = document.createElement("style");

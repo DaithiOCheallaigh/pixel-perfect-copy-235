@@ -24,7 +24,7 @@ export interface ChatState {
   isTyping: boolean;
   inputValue: string;
   inputMode: "chips" | "text";
-  collectField?: "name" | "email" | "phone" | "website-ask" | "website-url";
+  collectField?: "name" | "email" | "phone" | "website-ask" | "website-url" | "call-time";
 }
 
 export async function callDaveAI(messages: Message[]): Promise<string> {
@@ -70,8 +70,11 @@ export async function submitLead(
     collectedData.hasWebsite
       ? `Website: ${collectedData.websiteUrl}`
       : "No existing website",
+    collectedData.phone && !collectedData.phone.match(/^\+?\d/)
+      ? `Preferred call time: ${collectedData.phone}`
+      : "",
     "Source: AI Onboarding Chat",
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 
   try {
     await fetch("https://lacuna-lead-manager.vercel.app/api/leads", {
