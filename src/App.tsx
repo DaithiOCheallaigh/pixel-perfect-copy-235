@@ -156,7 +156,11 @@ const AppContent = () => {
   return (
     <>
       <ScrollToTop />
-      {showcaseRoutes ? (
+      {bioRoutes ? (
+        <Routes>
+          <Route path="/bio/:slug" element={<BioPage />} />
+        </Routes>
+      ) : showcaseRoutes ? (
         <Routes>
           <Route path="/showcase/admin" element={<ShowcaseAdmin />} />
           <Route path="/showcase/:slug" element={<ShowcasePage />} />
@@ -171,7 +175,11 @@ const AppContent = () => {
             <Route path="/ai-integration" element={<AIIntegration />} />
             <Route path="/get-started" element={<GetStarted />} />
             <Route path="/tools" element={<ToolsIndex />} />
+            <Route path="/tools/whatsapp-scripts" element={<WhatsAppScripts />} />
             <Route path="/tools/whatsapp-script-generator" element={<WhatsAppScriptGenerator />} />
+            <Route path="/tools/link-in-bio" element={<LinkInBio />} />
+            <Route path="/tools/review-link" element={<ReviewLink />} />
+            <Route path="/tools/caption-generator" element={<CaptionGenerator />} />
             <Route path="/refer" element={<Refer />} />
           </Routes>
           <ChatWidget />
