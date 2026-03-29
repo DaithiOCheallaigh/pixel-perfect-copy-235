@@ -134,17 +134,18 @@ const WhatsAppScriptGenerator = () => {
 
     setLeadSubmitting(true);
     try {
-      await fetch("https://lacuna-lead-manager.vercel.app/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: leadName.trim(),
-          phone: leadPhone.trim() || "Not provided",
-          website: "N/A",
-          source: "WhatsApp Script Generator",
-          status: "New",
-          notes: `Requested free WhatsApp setup. Business: ${businessName}, Type: ${businessType}`,
-        }),
+      const { submitLead } = await import("@/lib/submitLead");
+      submitLead({
+        name: leadName.trim(),
+        contactFirstName: leadName.trim().split(" ")[0],
+        contactLastName: leadName.trim().split(" ").slice(1).join(" "),
+        contactEmail: leadEmail.trim(),
+        contactPhone: leadPhone.trim() || "",
+        source: "email_form",
+        status: "new",
+        priority: "medium",
+        currency: "EUR",
+        notes: `Services of interest: WhatsApp Business Setup. Preferred call time: Not specified. Business: ${businessName}, Type: ${businessType}. Captured via WhatsApp script generator.`,
       });
     } catch {
       // Best-effort
