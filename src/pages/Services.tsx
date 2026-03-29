@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, Globe, MessageCircle, Calendar, Search, Bot, Zap } from "lucide-react";
+import { ArrowRight, Globe, MessageCircle, Calendar, Search, Bot, Users } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import {
   Carousel,
@@ -660,7 +660,7 @@ const Services = () => {
       </section>
 
       {/* ── Orbital System ── */}
-      <section className="relative px-6 py-16 md:px-12 lg:px-24 overflow-hidden" style={{ maxHeight: "80vh" }}>
+      <section className="relative px-6 py-16 md:px-12 lg:px-24 overflow-hidden">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
             <div className="text-center mb-8">
@@ -737,7 +737,7 @@ const Services = () => {
                 date: "Growth",
                 content: "Know your customers, track every interaction, and never lose a lead. The connective tissue that ties the whole system together.",
                 category: "Efficiency",
-                icon: Zap,
+                icon: Users,
                 relatedIds: [1, 2, 5],
                 status: "pending" as const,
                 energy: 75,
@@ -745,9 +745,6 @@ const Services = () => {
             ]}
           />
 
-          <p className="text-center text-sm text-muted-foreground mt-4">
-            Click any node to explore how the services connect
-          </p>
           <div className="flex justify-center mt-4">
             <a
               href="#services"
