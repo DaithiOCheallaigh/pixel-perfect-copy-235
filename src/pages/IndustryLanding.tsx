@@ -291,14 +291,14 @@ const IndustryLanding = () => {
 
           <div className="relative mt-12">
             {/* Vertical line */}
-            <div className="absolute left-[19px] top-0 hidden h-full w-px bg-border md:block" />
+            <div className="absolute left-[19px] top-0 -z-0 hidden h-full w-px bg-border md:block" />
 
             <div className="space-y-8">
               {data.timeline.map((step, i) => (
                 <ScrollReveal key={i} delay={i * 0.1}>
                   <div className="flex gap-6">
                     <div className="flex flex-col items-center">
-                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-xs font-bold ${
+                      <div className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-xs font-bold ${
                         step.week === "Live"
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-border bg-card text-foreground"
