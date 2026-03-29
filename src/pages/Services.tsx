@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -30,6 +30,7 @@ import {
   Clock,
   Receipt1,
   Timer1,
+  TickCircle,
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { ShineBorder } from "@/components/ui/shine-border";
@@ -59,13 +60,15 @@ const convertPrice = (eurAmount: number, currency: Currency): string => {
 
 interface ServiceItem {
   id: string;
-  icon: any;
+  icon: React.ComponentType<{ variant?: string; className?: string }>;
   title: string;
   desc: string;
   price: string;
-  priceValue: number; // for summary calculation
+  priceValue: number;
   link: string;
   category: "visibility" | "efficiency";
+  featured?: boolean;
+  expandedDetail?: string;
 }
 
 const allServices: ServiceItem[] = [
@@ -118,6 +121,18 @@ const allServices: ServiceItem[] = [
     priceValue: 200,
     link: "/start-project",
     category: "visibility",
+  },
+  {
+    id: "ai-audit",
+    icon: Cpu,
+    title: "Bespoke AI Audit",
+    desc: "I'll map how your business currently operates — tools, workflows, gaps — then either build bespoke software to fix it or optimise what you already have.",
+    price: "From free strategy call",
+    priceValue: 0,
+    link: "/start-project",
+    category: "efficiency",
+    featured: true,
+    expandedDetail: "Every business runs differently. Before I build anything, I spend time understanding how yours actually works — what tools you're using (or avoiding), where time is being lost, and what a realistic fix looks like. Sometimes that's a custom tool. Sometimes it's a smarter way to use something you already have. Either way, you get a clear picture first, with no obligation to build anything.",
   },
   {
     id: "chatbots",
@@ -423,6 +438,7 @@ const SelectableServiceCard = ({
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const Icon = service.icon;
+  const [showDetail, setShowDetail] = useState(false);
 
   return (
     <motion.div
@@ -437,24 +453,59 @@ const SelectableServiceCard = ({
         onClick={onToggle}
         className={`group relative flex h-full w-full flex-col rounded-xl border p-6 text-left transition-all ${
           selected
-            ? "border-primary bg-primary/5 shadow-[0_0_24px_-4px_hsl(var(--primary)/0.3)]"
-            : "border-border bg-card hover:border-primary/30 hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.15)]"
+            ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+            : service.featured
+              ? "border-primary/40 bg-card hover:border-primary/60 hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.2)]"
+              : "border-border bg-card hover:border-primary/30 hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.15)]"
         }`}
       >
+        {/* Featured badge */}
+        {service.featured && (
+          <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">
+            Start here
+          </span>
+        )}
+
         {/* Checkmark indicator */}
-        <div
-          className={`absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full transition-all ${
-            selected
-              ? "bg-primary text-primary-foreground"
-              : "border border-border bg-card"
-          }`}
-        >
-          {selected && <Check className="h-3 w-3" />}
+        <div className="absolute right-3 top-3">
+          <TickCircle
+            variant={selected ? "Bulk" : "TwoTone"}
+            className={`h-6 w-6 transition-all ${
+              selected ? "text-primary" : "text-border"
+            }`}
+          />
         </div>
 
-        <Icon variant="TwoTone" className="h-7 w-7 text-primary" />
+        <Icon variant="TwoTone" className={`h-7 w-7 text-primary ${service.featured ? "mt-4" : ""}`} />
         <h3 className="mt-4 text-base font-bold">{service.title}</h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+
+        {/* Expanded detail on hover/click for featured card */}
+        {service.expandedDetail && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setShowDetail(!showDetail); }}
+              className="mt-2 text-xs font-medium text-primary hover:underline"
+            >
+              {showDetail ? "Show less" : "Learn more"}
+            </button>
+            <AnimatePresence>
+              {showDetail && (
+                <motion.p
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden text-xs leading-relaxed text-muted-foreground"
+                >
+                  {service.expandedDetail}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </>
+        )}
+
         <div className="mt-4 flex items-center justify-between">
           <p className="text-xs font-semibold text-primary">{service.price}</p>
           <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
@@ -648,7 +699,6 @@ const Services = () => {
           >
             <button
               onClick={() => {
-                // Store selected services and dispatch event to open chat
                 const packageData = selectedServices.map(s => ({ id: s.id, title: s.title, price: s.price, priceValue: s.priceValue }));
                 sessionStorage.setItem("lacuna-package-selections", JSON.stringify(packageData));
                 window.dispatchEvent(new CustomEvent("open-chat-with-package"));
@@ -659,7 +709,11 @@ const Services = () => {
                 {selectedServices.length}
               </div>
               <span className="text-sm font-semibold text-foreground">
-                Get Your Custom Quote
+                {selectedServices.length} {selectedServices.length === 1 ? "service" : "services"} selected
+              </span>
+              <span className="text-sm text-primary">→</span>
+              <span className="text-sm font-semibold text-primary">
+                Start my free consultation
               </span>
               <ArrowRight className="h-4 w-4 text-primary" />
             </button>

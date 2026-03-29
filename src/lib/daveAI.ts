@@ -63,32 +63,36 @@ export async function submitLead(
   collectedData: ChatState["collectedData"],
   recommendation: string
 ) {
+  // Extract services from recommendation if present
+  const servicesMatch = recommendation.match(/Custom package: (.+?) \(/);
+  const selectedServices = servicesMatch ? servicesMatch[1] : "";
+  const callTime = collectedData.phone || "Not specified";
+
   const notes = [
-    `Business type: ${collectedData.businessType || "Not specified"}`,
-    `Main challenge: ${collectedData.challenge || "Not specified"}`,
+    selectedServices ? `Services of interest: ${selectedServices}.` : "",
+    `Preferred call time: ${callTime}.`,
+    collectedData.businessType ? `Business type: ${collectedData.businessType}` : "",
+    collectedData.challenge ? `Main challenge: ${collectedData.challenge}` : "",
     `Recommended package: ${recommendation}`,
     collectedData.hasWebsite
       ? `Website: ${collectedData.websiteUrl}`
-      : "No existing website",
-    collectedData.phone && !collectedData.phone.match(/^\+?\d/)
-      ? `Preferred call time: ${collectedData.phone}`
       : "",
-    "Source: AI Onboarding Chat",
-  ].filter(Boolean).join("\n");
+    "Captured via services page chatbot.",
+  ].filter(Boolean).join(" ");
 
   try {
     await fetch("https://lacuna-lead-manager.vercel.app/api/leads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: collectedData.name || "",
+        name: collectedData.name || "Unknown",
         contactFirstName: collectedData.name?.split(" ")[0] || "",
-        contactLastName: collectedData.name?.split(" ").slice(1).join(" ") || null,
+        contactLastName: collectedData.name?.split(" ").slice(1).join(" ") || "",
         contactEmail: collectedData.email || "",
         contactPhone: collectedData.phone || null,
-        website: collectedData.websiteUrl || null,
-        source: "AI Chat Widget",
-        status: "new",
+        website: collectedData.websiteUrl || "",
+        source: "website_chatbot",
+        status: "New",
         priority: "medium",
         notes,
       }),
