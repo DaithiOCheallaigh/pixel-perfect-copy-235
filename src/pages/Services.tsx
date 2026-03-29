@@ -487,13 +487,6 @@ const Services = () => {
     });
   };
 
-  const removeService = (id: string) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      next.delete(id);
-      return next;
-    });
-  };
 
   const selectedServices = allServices.filter((s) => selectedIds.has(s.id));
 
