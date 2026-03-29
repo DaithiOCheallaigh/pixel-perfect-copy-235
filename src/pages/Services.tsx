@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -438,6 +438,7 @@ const SelectableServiceCard = ({
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const Icon = service.icon;
+  const [showDetail, setShowDetail] = useState(false);
 
   return (
     <motion.div
@@ -452,24 +453,59 @@ const SelectableServiceCard = ({
         onClick={onToggle}
         className={`group relative flex h-full w-full flex-col rounded-xl border p-6 text-left transition-all ${
           selected
-            ? "border-primary bg-primary/5 shadow-[0_0_24px_-4px_hsl(var(--primary)/0.3)]"
-            : "border-border bg-card hover:border-primary/30 hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.15)]"
+            ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+            : service.featured
+              ? "border-primary/40 bg-card hover:border-primary/60 hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.2)]"
+              : "border-border bg-card hover:border-primary/30 hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.15)]"
         }`}
       >
+        {/* Featured badge */}
+        {service.featured && (
+          <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">
+            Start here
+          </span>
+        )}
+
         {/* Checkmark indicator */}
-        <div
-          className={`absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full transition-all ${
-            selected
-              ? "bg-primary text-primary-foreground"
-              : "border border-border bg-card"
-          }`}
-        >
-          {selected && <Check className="h-3 w-3" />}
+        <div className="absolute right-3 top-3">
+          <TickCircle
+            variant={selected ? "Bulk" : "TwoTone"}
+            className={`h-6 w-6 transition-all ${
+              selected ? "text-primary" : "text-border"
+            }`}
+          />
         </div>
 
-        <Icon variant="TwoTone" className="h-7 w-7 text-primary" />
+        <Icon variant="TwoTone" className={`h-7 w-7 text-primary ${service.featured ? "mt-4" : ""}`} />
         <h3 className="mt-4 text-base font-bold">{service.title}</h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+
+        {/* Expanded detail on hover/click for featured card */}
+        {service.expandedDetail && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setShowDetail(!showDetail); }}
+              className="mt-2 text-xs font-medium text-primary hover:underline"
+            >
+              {showDetail ? "Show less" : "Learn more"}
+            </button>
+            <AnimatePresence>
+              {showDetail && (
+                <motion.p
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden text-xs leading-relaxed text-muted-foreground"
+                >
+                  {service.expandedDetail}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </>
+        )}
+
         <div className="mt-4 flex items-center justify-between">
           <p className="text-xs font-semibold text-primary">{service.price}</p>
           <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
