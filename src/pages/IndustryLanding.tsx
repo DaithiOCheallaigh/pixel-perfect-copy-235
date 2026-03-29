@@ -321,21 +321,6 @@ const IndustryLanding = () => {
         </div>
       </section>
 
-      {/* ── Testimonial ── */}
-      <section className="px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl">
-          <ScrollReveal>
-            <div className="rounded-xl border border-border bg-card p-8 md:p-12">
-              <p className="text-lg italic leading-relaxed text-foreground md:text-xl">
-                "{data.testimonial}"
-              </p>
-              <p className="mt-6 text-sm font-medium text-muted-foreground">
-                {data.testimonialAuthor}
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
 
       {/* ── CTA Strip ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
