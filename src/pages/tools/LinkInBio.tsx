@@ -7,7 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ToolLayout from "@/components/tools/ToolLayout";
-import EmailGate from "@/components/tools/EmailGate";
 import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
 
 const emojis = ["🚀", "💼", "🎨", "☕", "🌿", "⚡", "🎯", "💡"];
@@ -27,7 +26,9 @@ const LinkInBio = () => {
   const [theme, setTheme] = useState("dark");
   const [published, setPublished] = useState(false);
   const [slug, setSlug] = useState("");
-  const [publishing, setPublishing] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const addLink = () => { if (links.length < 6) setLinks([...links, { label: "", url: "" }]); };
   const removeLink = (i: number) => setLinks(links.filter((_, idx) => idx !== i));
@@ -40,17 +41,29 @@ const LinkInBio = () => {
   const selectedTheme = themes.find((t) => t.value === theme) || themes[0];
   const validLinks = links.filter((l) => l.label.trim() && l.url.trim());
 
-  const handlePublish = async (email: string, userName: string) => {
-    setPublishing(true);
+  const handlePublish = async () => {
+    if (!name.trim()) { toast({ title: "Please enter a name for your page", variant: "destructive" }); return; }
+    if (!userName.trim() || !email.trim()) { toast({ title: "Please enter your name and email to publish", variant: "destructive" }); return; }
+    if (validLinks.length === 0) { toast({ title: "Add at least one link", variant: "destructive" }); return; }
+
+    setSubmitting(true);
     const generatedSlug = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || `user-${Date.now()}`;
     try {
+      // Save lead
+      await supabase.from("tool_leads" as any).insert({
+        name: userName.trim(),
+        email: email.trim(),
+        tool_used: "link-in-bio",
+        business_type: "",
+      });
+      // Save bio page
       const { error } = await supabase.from("bio_pages" as any).insert({
         slug: generatedSlug,
         name: name.trim(),
         tagline: tagline.trim(),
         links: validLinks,
         theme,
-        email,
+        email: email.trim(),
       });
       if (error) throw error;
       setSlug(generatedSlug);
@@ -58,7 +71,7 @@ const LinkInBio = () => {
     } catch {
       toast({ title: "Failed to publish — please try again", variant: "destructive" });
     } finally {
-      setPublishing(false);
+      setSubmitting(false);
     }
   };
 
@@ -139,20 +152,17 @@ const LinkInBio = () => {
         </div>
       </div>
 
-      {/* Gate / publish */}
+      {/* Publish gate */}
       {!published ? (
-        <div className="mt-8">
-          <EmailGate
-            toolUsed="link-in-bio"
-            businessType=""
-            ctaLabel={publishing ? "Publishing…" : "Publish your page →"}
-            onUnlock={() => {
-              // EmailGate submits the lead, now publish the bio page
-              // We need the email from the gate — re-trigger with a wrapper
-            }}
-          />
-          {/* Override: custom inline publish gate */}
-          <PublishGate name={name} onPublish={handlePublish} publishing={publishing} />
+        <div className="mt-8 rounded-xl border border-border bg-card p-6">
+          <p className="mb-4 text-sm font-semibold text-foreground">Enter your details to publish and get a shareable link</p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Input placeholder="Your name" value={userName} onChange={(e) => setUserName(e.target.value)} className="flex-1" />
+            <Input placeholder="Your email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex-1" />
+            <Button onClick={handlePublish} disabled={submitting} className="shrink-0 whitespace-nowrap">
+              {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Publish your page →"}
+            </Button>
+          </div>
         </div>
       ) : (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-8 space-y-4">
@@ -175,48 +185,6 @@ const LinkInBio = () => {
         </motion.div>
       )}
     </ToolLayout>
-  );
-};
-
-/* Custom publish gate that captures email AND publishes */
-const PublishGate = ({ name, onPublish, publishing }: { name: string; onPublish: (email: string, name: string) => void; publishing: boolean }) => {
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleSubmit = async () => {
-    if (!userName.trim() || !email.trim()) {
-      toast({ title: "Please enter your name and email to publish", variant: "destructive" });
-      return;
-    }
-    setSubmitting(true);
-    try {
-      // Save lead
-      await supabase.from("tool_leads" as any).insert({
-        name: userName.trim(),
-        email: email.trim(),
-        tool_used: "link-in-bio",
-        business_type: "",
-      });
-      await onPublish(email.trim(), userName.trim());
-    } catch {
-      toast({ title: "Something went wrong", variant: "destructive" });
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="rounded-xl border border-border bg-card p-6 -mt-[1px]" style={{ marginTop: "-1px", borderTop: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
-      <p className="mb-4 text-sm font-semibold text-foreground">Enter your details to publish and get a shareable link</p>
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Input placeholder="Your name" value={userName} onChange={(e) => setUserName(e.target.value)} className="flex-1" />
-        <Input placeholder="Your email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex-1" />
-        <Button onClick={handleSubmit} disabled={submitting || publishing} className="shrink-0 whitespace-nowrap">
-          {submitting || publishing ? <Loader2 className="h-4 w-4 animate-spin" /> : "Publish your page →"}
-        </Button>
-      </div>
-    </div>
   );
 };
 
