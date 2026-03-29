@@ -503,9 +503,11 @@ const Services = () => {
           {/* Visibility */}
           <div className="mt-10">
             <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">VISIBILITY</p>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 sm:overflow-x-visible sm:pb-0 lg:grid-cols-3 xl:grid-cols-5">
               {visibilityServices.map((s, i) => (
-                <ServiceCard key={s.title} {...s} index={i} />
+                <div key={s.title} className="min-w-[280px] shrink-0 sm:min-w-0 sm:shrink">
+                  <ServiceCard {...s} index={i} />
+                </div>
               ))}
             </div>
           </div>
@@ -513,9 +515,11 @@ const Services = () => {
           {/* Efficiency */}
           <div className="mt-12">
             <p className="mb-4 font-mono-label text-xs tracking-wider text-muted-foreground">EFFICIENCY</p>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 sm:overflow-x-visible sm:pb-0 lg:grid-cols-3 xl:grid-cols-5">
               {efficiencyServices.map((s, i) => (
-                <ServiceCard key={s.title} {...s} index={i} />
+                <div key={s.title} className="min-w-[280px] shrink-0 sm:min-w-0 sm:shrink">
+                  <ServiceCard {...s} index={i} />
+                </div>
               ))}
             </div>
           </div>
