@@ -142,10 +142,65 @@ const DCWoodworksShowcase = () => {
       <style>{`
         .dc-showcase img { cursor: crosshair; }
         .dc-showcase *::selection { background: ${BRONZE}44; color: ${WARM_WHITE}; }
-        @media (min-width: 768px) {
-          .dc-parallax { background-attachment: fixed; }
-        }
       `}</style>
+
+      {/* ===== SLIDE-OUT MENU ===== */}
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-50"
+              style={{ background: "rgba(0,0,0,0.6)" }}
+              onClick={() => setMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed top-0 right-0 z-50 h-full w-[320px] flex flex-col justify-between"
+              style={{ background: BG_ALT, borderLeft: `1px solid ${WARM_WHITE}0d` }}
+            >
+              <div>
+                <div className="flex justify-end p-8">
+                  <button onClick={() => setMenuOpen(false)} className="hover:opacity-70 transition-opacity" style={{ color: WARM_WHITE }}>
+                    <X size={24} strokeWidth={1} />
+                  </button>
+                </div>
+                <nav className="flex flex-col gap-8 px-12 pt-8">
+                  {[
+                    { label: "Our Work", href: "#work" },
+                    { label: "About", href: "#about" },
+                    { label: "Contact", href: "#contact" },
+                  ].map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 300, color: WARM_WHITE, textDecoration: "none", letterSpacing: "0.03em" }}
+                      className="hover:opacity-70 transition-opacity"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+              <div className="px-12 pb-12">
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: WARM_WHITE, opacity: 0.4 }}>
+                  Baconstown, Enfield, Co. Meath
+                </p>
+                <a href="tel:+353469500127" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: BRONZE, textDecoration: "none", marginTop: 4, display: "block" }}>
+                  (046) 950 0127
+                </a>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* ===== 1. HERO ===== */}
       <section className="relative w-full h-screen overflow-hidden">
