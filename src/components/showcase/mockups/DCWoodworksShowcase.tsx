@@ -3,6 +3,16 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ChevronDown, Instagram, X } from "lucide-react";
 import dcLogo from "@/assets/images/showcase/dc-woodworks-logo.png";
 
+// Hide external WhatsApp widget on this page
+const useHideWhatsApp = () => {
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.textContent = `#whatsapp-widget-iframe, [id*="whatsapp"], .wa-chat-box, [class*="whatsapp"] { display: none !important; }`;
+    document.head.appendChild(style);
+    return () => { style.remove(); };
+  }, []);
+};
+
 
 // --- IMAGES ---
 const HERO = "https://dcwoodworks.ie/wp-content/uploads/2026/03/1E9A6509_HDR-2-1024x683.webp";
@@ -126,6 +136,7 @@ const FeaturedProject = ({
 
 // --- MAIN COMPONENT ---
 const DCWoodworksShowcase = () => {
+  useHideWhatsApp();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 

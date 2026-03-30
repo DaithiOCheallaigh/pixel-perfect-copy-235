@@ -114,7 +114,7 @@ const ShowcasePage = () => {
   const MockupComponent = slug ? MOCKUP_REGISTRY[slug] : null;
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className={`min-h-screen bg-background ${slug !== "dc-woodworks" ? "pb-24" : ""}`}>
       {MockupComponent ? (
         <Suspense fallback={
           <div className="flex items-center justify-center min-h-[60vh]">
@@ -129,24 +129,28 @@ const ShowcasePage = () => {
         </div>
       )}
 
-      {/* Lacuna badge */}
-      <a
-        href="https://lacunadigital.io"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-20 left-4 z-40 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 px-3 py-1.5 text-[11px] text-muted-foreground/70 hover:text-foreground transition-colors shadow-sm"
-      >
-        Preview by <span className="font-medium">Lacuna Digital</span>
-      </a>
+      {slug !== "dc-woodworks" && (
+        <>
+          {/* Lacuna badge */}
+          <a
+            href="https://lacunadigital.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-20 left-4 z-40 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 px-3 py-1.5 text-[11px] text-muted-foreground/70 hover:text-foreground transition-colors shadow-sm"
+          >
+            Preview by <span className="font-medium">Lacuna Digital</span>
+          </a>
 
-      <ShowcaseInterestBar
-        businessName={entry.business_name}
-        declined={declined}
-        submitted={submitted}
-        submittedName={submittedName}
-        onInterested={handleInterested}
-        onDecline={handleDecline}
-      />
+          <ShowcaseInterestBar
+            businessName={entry.business_name}
+            declined={declined}
+            submitted={submitted}
+            submittedName={submittedName}
+            onInterested={handleInterested}
+            onDecline={handleDecline}
+          />
+        </>
+      )}
 
       <ShowcaseInterestModal
         open={modalOpen}
