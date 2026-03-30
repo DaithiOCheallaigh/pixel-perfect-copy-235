@@ -275,7 +275,7 @@ const DCWoodworksShowcase = () => {
             transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 300, color: WARM_WHITE, opacity: 0.85, marginTop: "1em" }}
           >
-            DC Woodworks — Meath & Dublin
+            Meath & Dublin
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
