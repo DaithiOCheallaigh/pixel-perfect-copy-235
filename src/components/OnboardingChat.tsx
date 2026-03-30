@@ -153,16 +153,11 @@ const OnboardingChatCore = ({ onClose }: { onClose?: () => void }) => {
       const { submitLead } = await import("@/lib/submitLead");
       submitLead({
         name: name.trim(),
-        contactFirstName: name.trim().split(" ")[0],
-        contactLastName: name.trim().split(" ").slice(1).join(" "),
-        contactEmail: email.trim(),
-        contactPhone: phone.trim() || "",
-        website: hasWebsite ? websiteUrl.trim() : "",
-        source: "website_chatbot",
-        status: "new",
-        priority: "medium",
-        currency: "EUR",
-        notes: `Services of interest: ${recommendation?.packageName || "Not specified"}. Preferred call time: Not specified. Business: ${selectedBusiness}. Challenge: ${selectedChallenge}. Price: ${recommendation?.price || "TBC"}. Captured via onboarding chat widget.`,
+        email: email.trim(),
+        phone: phone.trim() || undefined,
+        website: hasWebsite ? websiteUrl.trim() : undefined,
+        service: recommendation?.packageName || "Not specified",
+        message: `Business: ${selectedBusiness}. Challenge: ${selectedChallenge}. Price: ${recommendation?.price || "TBC"}. Captured via onboarding chat widget.`,
       });
     } catch {
       // Silently continue — lead capture is best-effort
