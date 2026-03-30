@@ -360,8 +360,6 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
       // Submit lead
       const servicesMatch = (state.collectedData.recommendation || "").match(/Custom package: (.+?) \(/);
       const selectedServices = servicesMatch ? servicesMatch[1] : "Not specified";
-      const firstName = state.collectedData.name?.split(" ")[0] || "";
-      const lastName = state.collectedData.name?.split(" ").slice(1).join(" ") || "";
 
       submitLead({
         name: state.collectedData.name || "Website enquiry",
