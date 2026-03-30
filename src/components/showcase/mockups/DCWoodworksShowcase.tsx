@@ -43,11 +43,10 @@ const imgReveal = {
   visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: EASE as unknown as [number, number, number, number] } },
 };
 
-// --- BLUR-UP IMAGE ---
-const BlurImage = ({
+// --- REVEAL IMAGE (no blur) ---
+const RevealImage = ({
   src, alt, className = "", style = {},
 }: { src: string; alt: string; className?: string; style?: React.CSSProperties }) => {
-  const [loaded, setLoaded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "200px" });
 
@@ -64,9 +63,7 @@ const BlurImage = ({
         src={src}
         alt={alt}
         loading="lazy"
-        onLoad={() => setLoaded(true)}
-        className="w-full h-full object-cover transition-[filter] duration-700"
-        style={{ filter: loaded ? "blur(0)" : "blur(12px)", transform: "scale(1.01)" }}
+        className="w-full h-full object-cover"
       />
     </motion.div>
   );
@@ -98,7 +95,7 @@ const FeaturedProject = ({
 }: { imageSrc: string; eyebrow: string; headline: string; body: string; imageLeft?: boolean }) => (
   <Section className={`flex flex-col ${imageLeft ? "md:flex-row" : "md:flex-row-reverse"} w-full min-h-[70vh]`}>
     <div className={`${imageLeft ? "md:w-[60%]" : "md:w-[40%]"} w-full`}>
-      <BlurImage src={imageSrc} alt={headline} className="w-full h-full min-h-[50vh] md:min-h-[70vh]" style={{ display: "block" }} />
+      <RevealImage src={imageSrc} alt={headline} className="w-full h-full min-h-[50vh] md:min-h-[70vh]" style={{ display: "block" }} />
     </div>
     <div
       className={`${imageLeft ? "md:w-[40%]" : "md:w-[60%]"} w-full flex items-center`}
@@ -204,19 +201,20 @@ const DCWoodworksShowcase = () => {
 
       {/* ===== 1. HERO ===== */}
       <section className="relative w-full h-screen overflow-hidden">
-        <BlurImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
+        <RevealImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
 
         {/* Floating nav */}
         <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 md:px-12 py-6">
-          <img src={dcLogo} alt="DC Woodworks" className="h-10 md:h-12 w-auto brightness-0 invert" />
+          <img src={dcLogo} alt="DC Woodworks" className="h-10 md:h-12 w-auto" style={{ filter: "brightness(0) invert(1)" }} />
           <button
             onClick={() => setMenuOpen(true)}
-            className="flex flex-col gap-[6px] group p-2 hover:opacity-70 transition-opacity"
+            className="flex flex-col gap-[5px] p-2 hover:opacity-70 transition-opacity"
             aria-label="Open menu"
           >
-            <span className="block w-7 h-[1px] transition-all duration-300" style={{ background: WARM_WHITE }} />
-            <span className="block w-5 h-[1px] transition-all duration-300 group-hover:w-7 ml-auto" style={{ background: WARM_WHITE }} />
+            <span className="block w-6 h-[1.5px]" style={{ background: WARM_WHITE }} />
+            <span className="block w-6 h-[1.5px]" style={{ background: WARM_WHITE }} />
+            <span className="block w-6 h-[1.5px]" style={{ background: WARM_WHITE }} />
           </button>
         </div>
 
@@ -277,7 +275,7 @@ const DCWoodworksShowcase = () => {
 
       {/* ===== 4. FULL-SCREEN BREAK ===== */}
       <section className="w-full relative" style={{ height: "80vh" }}>
-        <BlurImage src={BREAK_1} alt="DC Woodworks kitchen detail" className="w-full h-full" />
+        <RevealImage src={BREAK_1} alt="DC Woodworks kitchen detail" className="w-full h-full" />
       </section>
 
       {/* ===== 5. BLACK & OAK ===== */}
@@ -293,7 +291,7 @@ const DCWoodworksShowcase = () => {
       <Section className="flex flex-col md:flex-row w-full">
         {TRIPTYCH.map((src, i) => (
           <div key={i} className="w-full md:w-1/3" style={{ aspectRatio: "3/4" }}>
-            <BlurImage src={src} alt={`DC Woodworks detail ${i + 1}`} className="w-full h-full" />
+            <RevealImage src={src} alt={`DC Woodworks detail ${i + 1}`} className="w-full h-full" />
           </div>
         ))}
       </Section>
@@ -309,7 +307,7 @@ const DCWoodworksShowcase = () => {
 
       {/* ===== 8. FULL-SCREEN BREAK 2 ===== */}
       <section className="w-full relative" style={{ height: "80vh" }}>
-        <BlurImage src={BREAK_2} alt="DC Woodworks kitchen detail" className="w-full h-full" />
+        <RevealImage src={BREAK_2} alt="DC Woodworks kitchen detail" className="w-full h-full" />
       </section>
 
       {/* ===== 9. MORE WORK GRID ===== */}
