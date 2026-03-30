@@ -78,9 +78,9 @@ const ShowcaseInterestBar = ({
                 </Button>
                 <Button
                   onClick={onDecline}
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
-                  className="text-foreground/70 hover:text-foreground"
+                  className="text-foreground/70 border-foreground/30 hover:bg-foreground/10 hover:text-foreground"
                 >
                   Not for us
                 </Button>
