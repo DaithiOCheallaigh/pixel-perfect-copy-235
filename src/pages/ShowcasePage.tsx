@@ -114,7 +114,7 @@ const ShowcasePage = () => {
   const MockupComponent = slug ? MOCKUP_REGISTRY[slug] : null;
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className={`min-h-screen bg-background ${slug !== "dc-woodworks" ? "pb-24" : ""}`}>
       {MockupComponent ? (
         <Suspense fallback={
           <div className="flex items-center justify-center min-h-[60vh]">
