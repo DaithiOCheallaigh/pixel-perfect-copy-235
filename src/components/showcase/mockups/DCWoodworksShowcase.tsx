@@ -306,10 +306,6 @@ const DCWoodworksShowcase = () => {
         imageLeft
       />
 
-      {/* ===== 8. FULL-SCREEN BREAK 2 ===== */}
-      <section className="w-full relative" style={{ height: "80vh" }}>
-        <RevealImage src={BREAK_2} alt="DC Woodworks kitchen detail" className="w-full h-full" />
-      </section>
 
       {/* ===== 9. MORE WORK GRID ===== */}
       <Section className="px-6 md:px-12 py-28 md:py-40" style={{ background: BG_ALT }}>
