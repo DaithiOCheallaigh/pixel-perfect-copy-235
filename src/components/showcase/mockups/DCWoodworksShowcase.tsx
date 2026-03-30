@@ -68,8 +68,6 @@ const RevealImage = ({
     </motion.div>
   );
 };
-  );
-};
 
 // --- SECTION WRAPPER ---
 const Section = ({ children, className = "", style = {}, id }: { children: React.ReactNode; className?: string; style?: React.CSSProperties; id?: string }) => {
