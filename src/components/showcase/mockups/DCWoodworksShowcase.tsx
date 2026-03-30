@@ -43,11 +43,10 @@ const imgReveal = {
   visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: EASE as unknown as [number, number, number, number] } },
 };
 
-// --- BLUR-UP IMAGE ---
-const BlurImage = ({
+// --- REVEAL IMAGE (no blur) ---
+const RevealImage = ({
   src, alt, className = "", style = {},
 }: { src: string; alt: string; className?: string; style?: React.CSSProperties }) => {
-  const [loaded, setLoaded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "200px" });
 
@@ -64,11 +63,11 @@ const BlurImage = ({
         src={src}
         alt={alt}
         loading="lazy"
-        onLoad={() => setLoaded(true)}
-        className="w-full h-full object-cover transition-[filter] duration-700"
-        style={{ filter: loaded ? "blur(0)" : "blur(12px)", transform: "scale(1.01)" }}
+        className="w-full h-full object-cover"
       />
     </motion.div>
+  );
+};
   );
 };
 
