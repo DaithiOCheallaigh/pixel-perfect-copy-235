@@ -54,14 +54,8 @@ const Refer = () => {
       const { submitLead } = await import("@/lib/submitLead");
       submitLead({
         name: name.trim(),
-        contactFirstName: name.trim().split(" ")[0],
-        contactLastName: name.trim().split(" ").slice(1).join(" "),
-        contactEmail: email.trim(),
-        source: "email_form",
-        status: "new",
-        priority: "low",
-        currency: "EUR",
-        notes: `Existing client requesting referral link. Captured via referral page.`,
+        email: email.trim(),
+        message: `Existing client requesting referral link. Captured via referral page.`,
       });
     } catch {
       // Best-effort

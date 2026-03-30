@@ -360,21 +360,13 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
       // Submit lead
       const servicesMatch = (state.collectedData.recommendation || "").match(/Custom package: (.+?) \(/);
       const selectedServices = servicesMatch ? servicesMatch[1] : "Not specified";
-      const firstName = state.collectedData.name?.split(" ")[0] || "";
-      const lastName = state.collectedData.name?.split(" ").slice(1).join(" ") || "";
 
       submitLead({
         name: state.collectedData.name || "Website enquiry",
-        contactFirstName: firstName,
-        contactLastName: lastName,
-        contactEmail: state.collectedData.email || "",
-        contactPhone: "",
-        website: state.collectedData.websiteUrl || "",
-        source: "website_chatbot",
-        status: "new",
-        priority: "medium",
-        currency: "EUR",
-        notes: `Services of interest: ${selectedServices}. Preferred call time: ${val}. ${state.collectedData.businessType ? `Business type: ${state.collectedData.businessType}.` : ""} ${state.collectedData.challenge ? `Main challenge: ${state.collectedData.challenge}.` : ""} Captured via services page chatbot.`.replace(/\s+/g, " ").trim(),
+        email: state.collectedData.email || "",
+        website: state.collectedData.websiteUrl || undefined,
+        service: selectedServices,
+        message: `Preferred call time: ${val}. ${state.collectedData.businessType ? `Business type: ${state.collectedData.businessType}.` : ""} ${state.collectedData.challenge ? `Main challenge: ${state.collectedData.challenge}.` : ""} Captured via services page chatbot.`.replace(/\s+/g, " ").trim(),
       });
 
       await new Promise((r) => setTimeout(r, 1000));

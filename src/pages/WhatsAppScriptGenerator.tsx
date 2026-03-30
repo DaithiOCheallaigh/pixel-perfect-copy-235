@@ -137,15 +137,11 @@ const WhatsAppScriptGenerator = () => {
       const { submitLead } = await import("@/lib/submitLead");
       submitLead({
         name: leadName.trim(),
-        contactFirstName: leadName.trim().split(" ")[0],
-        contactLastName: leadName.trim().split(" ").slice(1).join(" "),
-        contactEmail: leadEmail.trim(),
-        contactPhone: leadPhone.trim() || "",
-        source: "email_form",
-        status: "new",
-        priority: "medium",
-        currency: "EUR",
-        notes: `Services of interest: WhatsApp Business Setup. Preferred call time: Not specified. Business: ${businessName}, Type: ${businessType}. Captured via WhatsApp script generator.`,
+        email: leadEmail.trim(),
+        phone: leadPhone.trim() || undefined,
+        company: businessName,
+        service: "WhatsApp Business Setup",
+        message: `Business type: ${businessType}. Captured via WhatsApp script generator.`,
       });
     } catch {
       // Best-effort

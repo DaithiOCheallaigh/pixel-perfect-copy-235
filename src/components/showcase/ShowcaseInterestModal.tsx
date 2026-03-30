@@ -51,16 +51,12 @@ const ShowcaseInterestModal = ({ open, onOpenChange, entry, onSuccess }: Props) 
     });
 
     const leadPayload = {
-      name: entry.business_name || name.trim(),
-      contactFirstName: name.trim().split(" ")[0],
-      contactLastName: name.trim().split(" ").slice(1).join(" "),
-      contactEmail: email.trim(),
-      contactPhone: phone.trim() || "",
-      source: "email_form" as const,
-      status: "new" as const,
-      priority: "medium" as const,
-      currency: "EUR" as const,
-      notes: `Services of interest: Showcase mockup. Responded to /showcase/${entry.slug}. Business type: ${entry.business_type}. Captured via showcase interest modal.`,
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim() || undefined,
+      company: entry.business_name,
+      service: "Showcase mockup",
+      message: `Responded to /showcase/${entry.slug}. Business type: ${entry.business_type}. Captured via showcase interest modal.`,
     };
 
     try {
