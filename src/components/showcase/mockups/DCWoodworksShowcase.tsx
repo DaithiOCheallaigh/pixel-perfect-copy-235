@@ -230,6 +230,7 @@ const DCWoodworksShowcase = () => {
 
       <section className="relative w-full h-screen overflow-hidden">
         <RevealImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
+        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.15)" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
 
         {/* Hero logo — above headline */}
