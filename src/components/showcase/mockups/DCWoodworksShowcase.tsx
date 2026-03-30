@@ -232,15 +232,15 @@ const DCWoodworksShowcase = () => {
         <RevealImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
 
-        {/* Hero logo — centered, animated, large */}
-        <div className="absolute inset-0 flex items-center justify-center z-10">
+        {/* Hero logo — above headline */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none" style={{ paddingBottom: "18vh" }}>
           <motion.img
             src={dcLogo}
             alt="DC Woodworks"
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-[220px] md:w-[320px] lg:w-[400px] h-auto"
+            className="w-[160px] md:w-[220px] lg:w-[260px] h-auto"
             style={{ filter: "brightness(0) invert(1)" }}
           />
         </div>
