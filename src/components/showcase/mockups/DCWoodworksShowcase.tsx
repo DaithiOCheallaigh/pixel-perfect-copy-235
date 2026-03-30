@@ -208,7 +208,26 @@ const DCWoodworksShowcase = () => {
         )}
       </AnimatePresence>
 
-      {/* ===== 1. HERO ===== */}
+      {/* ===== FIXED SCROLL HEADER ===== */}
+      <motion.div
+        initial={false}
+        animate={{ y: scrolled ? 0 : -80, opacity: scrolled ? 1 : 0 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-6 md:px-12 py-4"
+        style={{ background: `linear-gradient(to bottom, ${BG}ee, ${BG}aa 70%, transparent)`, backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
+      >
+        <img src={dcLogo} alt="DC Woodworks" className="h-8 md:h-10 w-auto" style={{ filter: "brightness(0) invert(1)" }} />
+        <button
+          onClick={() => setMenuOpen(true)}
+          className="flex flex-col gap-[5px] p-2 hover:opacity-70 transition-opacity"
+          aria-label="Open menu"
+        >
+          <span className="block w-6 h-[1.5px]" style={{ background: WARM_WHITE }} />
+          <span className="block w-6 h-[1.5px]" style={{ background: WARM_WHITE }} />
+          <span className="block w-6 h-[1.5px]" style={{ background: WARM_WHITE }} />
+        </button>
+      </motion.div>
+
       <section className="relative w-full h-screen overflow-hidden">
         <RevealImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
