@@ -30,14 +30,16 @@ const WARM_WHITE = "#f5f0eb";
 const BRONZE = "#c9a96e";
 
 // --- ANIMATION VARIANTS ---
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE as unknown as [number, number, number, number] } },
 };
 
 const imgReveal = {
   hidden: { opacity: 0, scale: 1.03 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } },
+  visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: EASE as unknown as [number, number, number, number] } },
 };
 
 // --- BLUR-UP IMAGE ---
