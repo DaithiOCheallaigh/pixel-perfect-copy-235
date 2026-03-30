@@ -3,6 +3,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ChevronDown, Instagram, X } from "lucide-react";
 import dcLogo from "@/assets/images/showcase/dc-woodworks-logo.png";
 
+
 // --- IMAGES ---
 const HERO = "https://dcwoodworks.ie/wp-content/uploads/2026/03/1E9A6509_HDR-2-1024x683.webp";
 const CERISE = "https://dcwoodworks.ie/wp-content/uploads/2026/03/1E9A6464_HDR-scaled.webp";
