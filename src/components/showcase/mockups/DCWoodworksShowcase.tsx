@@ -309,10 +309,7 @@ const DCWoodworksShowcase = () => {
 
       {/* ===== 8. FULL-SCREEN BREAK 2 ===== */}
       <section className="w-full relative" style={{ height: "80vh" }}>
-        <div
-          className="dc-parallax w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: `url(${BREAK_2})` }}
-        />
+        <BlurImage src={BREAK_2} alt="DC Woodworks kitchen detail" className="w-full h-full" />
       </section>
 
       {/* ===== 9. MORE WORK GRID ===== */}
