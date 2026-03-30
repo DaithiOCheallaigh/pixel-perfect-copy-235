@@ -1,26 +1,15 @@
-export type LeadSource =
-  | "website_chatbot"
-  | "whatsapp_inbound"
-  | "missed_call_reply"
-  | "email_form"
-  | "manual";
-
 export interface LeadPayload {
   name: string;
+  email?: string;
+  phone?: string;
+  company?: string;
   website?: string;
-  contactFirstName?: string;
-  contactLastName?: string;
-  contactEmail?: string;
-  contactPhone?: string;
-  source: LeadSource;
-  status: "new";
-  priority: "low" | "medium" | "high";
-  currency: "EUR";
-  notes?: string;
-  estimatedValue?: number;
+  service?: string;
+  budget?: string;
+  message?: string;
 }
 
-const LEAD_MANAGER_URL = "https://lacuna-lead-manager.vercel.app/leads";
+const LEAD_MANAGER_URL = "https://lacuna-lead-manager.vercel.app/api/public/leads";
 
 export async function submitLead(payload: LeadPayload): Promise<{ success: boolean; error?: string }> {
   try {
