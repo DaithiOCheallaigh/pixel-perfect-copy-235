@@ -136,6 +136,7 @@ const FeaturedProject = ({
 
 // --- MAIN COMPONENT ---
 const DCWoodworksShowcase = () => {
+  useHideWhatsApp();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
