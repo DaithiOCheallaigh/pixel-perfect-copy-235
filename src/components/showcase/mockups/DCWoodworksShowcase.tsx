@@ -214,7 +214,7 @@ const DCWoodworksShowcase = () => {
         animate={{ y: scrolled ? 0 : -80, opacity: scrolled ? 1 : 0 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-6 md:px-12 py-4"
-        style={{ background: `linear-gradient(to bottom, ${BG}ee, ${BG}aa 70%, transparent)`, backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
+        style={{ background: `linear-gradient(to bottom, ${BG}f5, ${BG}cc 60%, transparent)` }}
       >
         <img src={dcLogo} alt="DC Woodworks" className="h-8 md:h-10 w-auto" style={{ filter: "brightness(0) invert(1)" }} />
         <button
