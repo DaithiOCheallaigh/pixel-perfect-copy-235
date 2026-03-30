@@ -214,7 +214,7 @@ const DCWoodworksShowcase = () => {
         animate={{ y: scrolled ? 0 : -80, opacity: scrolled ? 1 : 0 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-6 md:px-12 py-4"
-        style={{ background: `linear-gradient(to bottom, ${BG}ee, ${BG}aa 70%, transparent)`, backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
+        style={{ background: `linear-gradient(to bottom, ${BG}f5, ${BG}cc 60%, transparent)` }}
       >
         <img src={dcLogo} alt="DC Woodworks" className="h-8 md:h-10 w-auto" style={{ filter: "brightness(0) invert(1)" }} />
         <button
@@ -232,15 +232,15 @@ const DCWoodworksShowcase = () => {
         <RevealImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
 
-        {/* Hero logo — centered, animated, large */}
-        <div className="absolute inset-0 flex items-center justify-center z-10">
+        {/* Hero logo — above headline */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none" style={{ paddingBottom: "18vh" }}>
           <motion.img
             src={dcLogo}
             alt="DC Woodworks"
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-[220px] md:w-[320px] lg:w-[400px] h-auto"
+            className="w-[160px] md:w-[220px] lg:w-[260px] h-auto"
             style={{ filter: "brightness(0) invert(1)" }}
           />
         </div>
