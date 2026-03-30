@@ -208,13 +208,16 @@ const DCWoodworksShowcase = () => {
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
 
         {/* Floating nav */}
-        <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 md:px-12 py-8">
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", color: WARM_WHITE }}>
-            DC Woodworks
-          </span>
-          <a href="#contact" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 400, letterSpacing: "0.1em", color: WARM_WHITE, textDecoration: "none" }} className="hover:opacity-70 transition-opacity">
-            Contact
-          </a>
+        <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 md:px-12 py-6">
+          <img src={dcLogo} alt="DC Woodworks" className="h-10 md:h-12 w-auto brightness-0 invert" />
+          <button
+            onClick={() => setMenuOpen(true)}
+            className="flex flex-col gap-[6px] group p-2 hover:opacity-70 transition-opacity"
+            aria-label="Open menu"
+          >
+            <span className="block w-7 h-[1px] transition-all duration-300" style={{ background: WARM_WHITE }} />
+            <span className="block w-5 h-[1px] transition-all duration-300 group-hover:w-7 ml-auto" style={{ background: WARM_WHITE }} />
+          </button>
         </div>
 
         {/* Hero text */}
