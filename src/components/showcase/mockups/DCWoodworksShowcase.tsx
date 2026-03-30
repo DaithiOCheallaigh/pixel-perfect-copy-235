@@ -1,448 +1,329 @@
-import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, ChevronRight, Star } from "lucide-react";
-import { useEffect } from "react";
-import dcLogo from "@/assets/images/showcase/dc-woodworks-logo.png";
+import { useEffect, useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { ChevronDown, Instagram } from "lucide-react";
 
-// ── Real site images from dcwoodworks.ie ──
-const WP = "https://dcwoodworks.ie/wp-content/uploads/2022/02";
-const heroImg = `${WP}/Kitchen-View.jpg`;
-const traditionalImg = `${WP}/traditional.jpg`;
-const contemporaryImg = `${WP}/contemporary.jpg`;
-const handlelessImg = `${WP}/handle-less.jpg`;
-const kitchenImg = `${WP}/Kitchen-1.jpg`;
-const sinkImg = `${WP}/Sink-View.jpg`;
-const kitchen2Img = `${WP}/Kitchen-2.jpg`;
-const kitchen3Img = `${WP}/Kitchen-3.jpg`;
-const wardrobeImg = `${WP}/Cartoon-Wardrobe.jpg`;
-const furnitureImg = `${WP}/new-collection-furniture-img.jpg`;
-const cartonHouseImg = `${WP}/1.-Carton-House.jpg`;
-const sinkWorktopImg = `${WP}/Sink-Worktop.jpg`;
+// --- IMAGES ---
+const HERO = "https://dcwoodworks.ie/wp-content/uploads/2026/03/1E9A6509_HDR-2-1024x683.webp";
+const CERISE = "https://dcwoodworks.ie/wp-content/uploads/2026/03/1E9A6464_HDR-scaled.webp";
+const BREAK_1 = "https://dcwoodworks.ie/wp-content/uploads/2025/10/1E9A5737_HDR-1024x683.webp";
+const BLACK_OAK = "https://dcwoodworks.ie/wp-content/uploads/2025/10/1E9A5822_HDR-1024x683.webp";
+const TRIPTYCH = [
+  "https://dcwoodworks.ie/wp-content/uploads/2026/03/1E9A6674_HDR-683x1024.webp",
+  "https://dcwoodworks.ie/wp-content/uploads/2025/10/1E9A5907-683x1024.webp",
+  "https://dcwoodworks.ie/wp-content/uploads/2025/08/DC_Brian_Queeny0A6621_HDR-683x1024.webp",
+];
+const TEAL = "https://dcwoodworks.ie/wp-content/uploads/2025/08/DC_Brian_Queeny0A6525_HDR-1024x683.webp";
+const BREAK_2 = "https://dcwoodworks.ie/wp-content/uploads/2025/08/DC_Brian_Queeny0A6685-1024x683.webp";
+const GRID_PROJECTS = [
+  { src: "https://dcwoodworks.ie/wp-content/uploads/2025/08/DC_Avril_Mulligan9A9390_HDR-1024x683.webp", name: "Traditional Elegance" },
+  { src: "https://dcwoodworks.ie/wp-content/uploads/2025/08/DC_Kathryn_De0A6354_HDR-1024x683.webp", name: "Timeless Shaker Kitchen" },
+  { src: "https://dcwoodworks.ie/wp-content/uploads/2025/08/DC_Michelle_Wallace_4394-1024x683.webp", name: "Contemporary Minimalism" },
+  { src: "https://dcwoodworks.ie/wp-content/uploads/2025/07/DC_Kitchen1-1024x674.webp", name: "Modern Charcoal & Marble" },
+  { src: "https://dcwoodworks.ie/wp-content/uploads/2026/03/1E9A6559_HDR-1024x683.webp", name: "Cerise — Detail" },
+  { src: "https://dcwoodworks.ie/wp-content/uploads/2025/10/1E9A5807_HDR-1024x683.webp", name: "Black & Oak — Island" },
+];
 
-// ── Warm Luxury Palette ──
-const cream = "#FAF7F2";
-const warmWhite = "#F3EDE4";
-const warmGrey = "#E8E0D4";
-const darkText = "#1A1A18";
-const bodyText = "#4A4740";
-const mutedText = "#8A857C";
-const accent = "#8B7355"; // warm bronze
-const accentDark = "#6B5840";
-const borderCol = "#E0D8CC";
+// --- COLORS ---
+const BG = "#0e0e0e";
+const BG_ALT = "#111111";
+const WARM_WHITE = "#f5f0eb";
+const BRONZE = "#c9a96e";
 
-// ── Slow, luxurious animations ──
-const slow = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 1, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
-  }),
+// --- ANIMATION VARIANTS ---
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE as unknown as [number, number, number, number] } },
 };
 
-const collections = [
-  { title: "Traditional", desc: "Classic shaker profiles, hand-painted finishes, and timeless detailing crafted for warmth and character.", img: traditionalImg },
-  { title: "Contemporary", desc: "Clean lines, bold colours, and modern functionality designed for today's living spaces.", img: contemporaryImg },
-  { title: "Handle-less", desc: "Sleek, minimal profiles with integrated handles for a seamless, refined aesthetic.", img: handlelessImg },
-];
+const imgReveal = {
+  hidden: { opacity: 0, scale: 1.03 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: EASE as unknown as [number, number, number, number] } },
+};
 
-const gallery = [
-  { img: kitchenImg, title: "Bespoke Kitchen" },
-  { img: sinkImg, title: "Stone Worktops" },
-  { img: cartonHouseImg, title: "Carton House" },
-  { img: kitchen2Img, title: "Shaker Detail" },
-  { img: kitchen3Img, title: "Custom Joinery" },
-  { img: wardrobeImg, title: "Walk-in Wardrobes" },
-  { img: sinkWorktopImg, title: "Sink & Worktop" },
-  { img: furnitureImg, title: "Bespoke Furniture" },
-];
+// --- BLUR-UP IMAGE ---
+const BlurImage = ({
+  src, alt, className = "", style = {},
+}: { src: string; alt: string; className?: string; style?: React.CSSProperties }) => {
+  const [loaded, setLoaded] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "200px" });
 
-const reviews = [
-  { quote: "DC Woodworks transformed our kitchen beyond our expectations. The craftsmanship and attention to detail is second to none.", name: "Sarah M.", location: "Dublin" },
-  { quote: "From design to installation, the whole process was seamless. We couldn't be happier with our new handle-less kitchen.", name: "James & Claire O'B.", location: "Meath" },
-];
+  return (
+    <motion.div
+      ref={ref}
+      variants={imgReveal}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      className={className}
+      style={{ overflow: "hidden", ...style }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onLoad={() => setLoaded(true)}
+        className="w-full h-full object-cover transition-[filter] duration-700"
+        style={{ filter: loaded ? "blur(0)" : "blur(12px)", transform: "scale(1.01)" }}
+      />
+    </motion.div>
+  );
+};
 
+// --- SECTION WRAPPER ---
+const Section = ({ children, className = "", style = {}, id }: { children: React.ReactNode; className?: string; style?: React.CSSProperties; id?: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <motion.section
+      ref={ref}
+      id={id}
+      variants={fadeUp}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      className={className}
+      style={style}
+    >
+      {children}
+    </motion.section>
+  );
+};
+
+// --- FEATURED PROJECT ---
+const FeaturedProject = ({
+  imageSrc, eyebrow, headline, body, imageLeft = true,
+}: { imageSrc: string; eyebrow: string; headline: string; body: string; imageLeft?: boolean }) => (
+  <Section className={`flex flex-col ${imageLeft ? "md:flex-row" : "md:flex-row-reverse"} w-full min-h-[70vh]`}>
+    <div className={`${imageLeft ? "md:w-[60%]" : "md:w-[40%]"} w-full`}>
+      <BlurImage src={imageSrc} alt={headline} className="w-full h-full min-h-[50vh] md:min-h-[70vh]" style={{ display: "block" }} />
+    </div>
+    <div
+      className={`${imageLeft ? "md:w-[40%]" : "md:w-[60%]"} w-full flex items-center`}
+      style={{ background: BG_ALT }}
+    >
+      <div className="px-8 py-16 md:px-16 lg:px-20 max-w-xl">
+        <p style={{ color: BRONZE, fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 400, marginBottom: 28 }}>
+          {eyebrow}
+        </p>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 300, color: WARM_WHITE, lineHeight: 1.15, marginBottom: 28 }}>
+          {headline}
+        </h2>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 300, color: WARM_WHITE, opacity: 0.8, lineHeight: 1.9, marginBottom: 32 }}>
+          {body}
+        </p>
+        <a
+          href="#contact"
+          style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 400, color: BRONZE, textDecoration: "none", letterSpacing: "0.05em" }}
+          className="hover:opacity-75 transition-opacity"
+        >
+          View Full Project →
+        </a>
+      </div>
+    </div>
+  </Section>
+);
+
+// --- MAIN COMPONENT ---
 const DCWoodworksShowcase = () => {
   useEffect(() => {
     const link = document.createElement("link");
-    link.href = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap";
+    link.href = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=DM+Sans:wght@300;400&display=swap";
     link.rel = "stylesheet";
     document.head.appendChild(link);
     return () => { document.head.removeChild(link); };
   }, []);
 
-  const serif = "'Cormorant Garamond', Georgia, serif";
-  const sans = "system-ui, -apple-system, 'Segoe UI', sans-serif";
-
   return (
-    <div style={{ background: cream, color: darkText, fontFamily: sans }} className="min-h-screen">
-      {/* ── Nav ── */}
-      <nav
-        className="fixed top-0 left-0 right-0 z-30 backdrop-blur-xl border-b"
-        style={{ background: `${cream}ee`, borderColor: borderCol }}
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-          <img src={dcLogo} alt="DC Woodworks" className="h-12 object-contain" />
-          <div className="hidden md:flex items-center gap-10 text-[11px] tracking-[0.25em] uppercase" style={{ color: mutedText, fontWeight: 400 }}>
-            <a href="#about" className="hover:text-black transition-colors duration-500">About</a>
-            <a href="#collections" className="hover:text-black transition-colors duration-500">Kitchens</a>
-            <a href="#gallery" className="hover:text-black transition-colors duration-500">Gallery</a>
-            <a href="#contact" className="hover:text-black transition-colors duration-500">Contact</a>
-          </div>
-          <a
-            href="tel:0469500127"
-            className="flex items-center gap-2 px-5 py-2.5 text-[11px] tracking-[0.15em] uppercase transition-all duration-500"
-            style={{ background: darkText, color: cream, fontWeight: 400 }}
-          >
-            <Phone className="w-3.5 h-3.5" strokeWidth={1.2} />
-            Book a Call
+    <div style={{ background: BG, color: WARM_WHITE, cursor: "default" }} className="dc-showcase">
+      <style>{`
+        .dc-showcase img { cursor: crosshair; }
+        .dc-showcase *::selection { background: ${BRONZE}44; color: ${WARM_WHITE}; }
+        @media (min-width: 768px) {
+          .dc-parallax { background-attachment: fixed; }
+        }
+      `}</style>
+
+      {/* ===== 1. HERO ===== */}
+      <section className="relative w-full h-screen overflow-hidden">
+        <BlurImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
+
+        {/* Floating nav */}
+        <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 md:px-12 py-8">
+          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", color: WARM_WHITE }}>
+            DC Woodworks
+          </span>
+          <a href="#contact" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 400, letterSpacing: "0.1em", color: WARM_WHITE, textDecoration: "none" }} className="hover:opacity-70 transition-opacity">
+            Contact
           </a>
         </div>
-      </nav>
 
-      {/* ── Hero — Full Screen ── */}
-      <section className="relative h-screen min-h-[700px]">
-        <motion.img
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          src={heroImg}
-          alt="DC Woodworks luxury kitchen"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(250,247,242,0.92) 0%, rgba(250,247,242,0.7) 45%, rgba(250,247,242,0.1) 100%)" }} />
-        <div className="absolute inset-0 flex items-center">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-            <motion.div
-              variants={slow} initial="hidden" animate="visible" custom={0}
-              className="w-16 h-[1px] mb-8"
-              style={{ background: accent }}
-            />
-            <motion.p
-              variants={slow} initial="hidden" animate="visible" custom={1}
-              className="text-[11px] tracking-[0.4em] uppercase mb-6"
-              style={{ color: accent, fontWeight: 400 }}
-            >
-              Award-Winning Kitchens &amp; Interiors
-            </motion.p>
-            <motion.h1
-              variants={slow} initial="hidden" animate="visible" custom={2}
-              className="text-5xl md:text-7xl lg:text-[5.5rem] leading-[1] tracking-[-0.02em] max-w-2xl"
-              style={{ fontFamily: serif, fontWeight: 300 }}
-            >
-              Crafted in
-              <br />
-              <span className="italic" style={{ color: accent }}>Ireland</span>
-            </motion.h1>
-            <motion.p
-              variants={slow} initial="hidden" animate="visible" custom={3}
-              className="mt-6 text-base md:text-lg max-w-md leading-relaxed tracking-wide"
-              style={{ color: bodyText, fontWeight: 300 }}
-            >
-              Ireland's premier kitchen suppliers, designers &amp; interiors experts.
-              Designed &amp; crafted in Meath — just 30 minutes from Dublin.
-            </motion.p>
-            <motion.div
-              variants={slow} initial="hidden" animate="visible" custom={4}
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-500"
-                style={{ background: darkText, color: cream, fontWeight: 400 }}
-              >
-                Book a Consultation
-                <ChevronRight className="w-4 h-4" strokeWidth={1.2} />
-              </a>
-              <a
-                href="#collections"
-                className="inline-flex items-center gap-3 border px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-500 hover:bg-black/5"
-                style={{ borderColor: borderCol, color: darkText, fontWeight: 400 }}
-              >
-                View Collections
-              </a>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── About ── */}
-      <section id="about" className="py-28 md:py-40" style={{ background: warmWhite }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <div className="w-12 h-[1px] mb-8" style={{ background: accent }} />
-              <p className="text-[11px] tracking-[0.4em] uppercase mb-6" style={{ color: accent, fontWeight: 400 }}>
-                About DC Woodworks
-              </p>
-              <h2 className="text-3xl md:text-5xl leading-tight tracking-[-0.01em] mb-8" style={{ fontFamily: serif, fontWeight: 300 }}>
-                Where tradition meets
-                <br />
-                <span className="italic">modern craft</span>
-              </h2>
-              <p className="leading-[1.9] mb-5 text-[15px]" style={{ color: bodyText, fontWeight: 300 }}>
-                Based in Baconstown, Co. Meath, DC Woodworks are Ireland's premier kitchen suppliers,
-                designers and interiors experts. We design and craft our kitchens in Ireland using
-                premium quality locally sourced materials.
-              </p>
-              <p className="leading-[1.9] text-[15px]" style={{ color: bodyText, fontWeight: 300 }}>
-                From traditional shaker kitchens to sleek handle-less designs, we bring quality
-                craftsmanship and attention to detail to every project — building the perfect
-                custom kitchens for our customers in Meath, Dublin and across Ireland.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-              className="relative"
-            >
-              <img
-                src={kitchen2Img}
-                alt="DC Woodworks craftsmanship"
-                className="w-full aspect-[4/5] object-cover"
-                loading="lazy"
-              />
-              <div className="absolute -bottom-6 -left-6 p-8 border" style={{ background: cream, borderColor: borderCol }}>
-                <p className="text-4xl" style={{ fontFamily: serif, fontWeight: 300, color: accent }}>20+</p>
-                <p className="text-[11px] tracking-[0.2em] uppercase mt-1" style={{ color: mutedText, fontWeight: 400 }}>Years Experience</p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Collections ── */}
-      <section id="collections" className="py-28 md:py-40" style={{ background: cream }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-20">
-            <div className="w-12 h-[1px] mx-auto mb-8" style={{ background: accent }} />
-            <p className="text-[11px] tracking-[0.4em] uppercase mb-6" style={{ color: accent, fontWeight: 400 }}>
-              Kitchen Collections
-            </p>
-            <h2 className="text-3xl md:text-5xl" style={{ fontFamily: serif, fontWeight: 300 }}>
-              Find Your <span className="italic">Style</span>
-            </h2>
-          </div>
-          <div className="grid lg:grid-cols-3 gap-6">
-            {collections.map((c, i) => (
-              <motion.div
-                key={c.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2, duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="group"
-              >
-                <div className="aspect-[3/4] overflow-hidden mb-6">
-                  <img
-                    src={c.img}
-                    alt={c.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
-                    loading="lazy"
-                  />
-                </div>
-                <h3 className="text-2xl mb-2" style={{ fontFamily: serif, fontWeight: 400 }}>{c.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: bodyText, fontWeight: 300 }}>
-                  {c.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Full Width Image Break with Quote ── */}
-      <section className="relative h-[60vh] min-h-[450px] overflow-hidden">
-        <motion.div
-          initial={{ scale: 1.08 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 2.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="absolute inset-0"
-        >
-          <img
-            src={furnitureImg}
-            alt="DC Woodworks craftsmanship detail"
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </motion.div>
-        <div className="absolute inset-0 flex items-center justify-center" style={{ background: "rgba(26,26,24,0.55)" }}>
-          <motion.blockquote
+        {/* Hero text */}
+        <div className="absolute inset-0 flex flex-col items-center justify-end pb-20 md:pb-28 px-6 z-10 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 6vw, 72px)", fontWeight: 300, letterSpacing: "0.05em", lineHeight: 1.1, color: WARM_WHITE, maxWidth: 800 }}
+          >
+            Bespoke Kitchens, Crafted in Ireland
+          </motion.h1>
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-center max-w-2xl px-6"
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 300, color: WARM_WHITE, opacity: 0.85, marginTop: "1em" }}
           >
-            <p className="text-2xl md:text-4xl italic leading-snug text-white" style={{ fontFamily: serif, fontWeight: 300 }}>
-              "Quality is never an accident; it is always the result of intelligent effort"
-            </p>
-            <p className="text-[11px] tracking-[0.3em] uppercase mt-6" style={{ color: warmGrey, fontWeight: 400 }}>
-              John Ruskin
-            </p>
-          </motion.blockquote>
-        </div>
-      </section>
-
-      {/* ── Gallery ── */}
-      <section id="gallery" className="py-28 md:py-40" style={{ background: warmWhite }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-20">
-            <div className="w-12 h-[1px] mx-auto mb-8" style={{ background: accent }} />
-            <p className="text-[11px] tracking-[0.4em] uppercase mb-6" style={{ color: accent, fontWeight: 400 }}>
-              Portfolio
-            </p>
-            <h2 className="text-3xl md:text-5xl" style={{ fontFamily: serif, fontWeight: 300 }}>
-              Recent <span className="italic">Projects</span>
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {gallery.map((p, i) => (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="group relative aspect-square overflow-hidden"
-              >
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2s] ease-out"
-                  loading="lazy"
-                />
-                <div
-                  className="absolute inset-0 flex items-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  style={{ background: "linear-gradient(to top, rgba(26,26,24,0.7), transparent 60%)" }}
-                >
-                  <p className="text-sm text-white tracking-wide" style={{ fontFamily: serif, fontWeight: 400 }}>{p.title}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Showroom Banner ── */}
-      <section className="border-y" style={{ borderColor: borderCol, background: cream }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-20 flex flex-col md:flex-row items-center justify-between gap-8">
+            DC Woodworks — Meath & Dublin
+          </motion.p>
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="mt-8"
           >
-            <h3 className="text-2xl md:text-3xl mb-3" style={{ fontFamily: serif, fontWeight: 300 }}>
-              Visit Our <span className="italic">Showroom</span>
-            </h3>
-            <p className="text-sm" style={{ color: bodyText, fontWeight: 300 }}>
-              Baconstown, Enfield, Co. Meath — Mon–Fri 9:30am–5:30pm. Saturday by appointment.
-            </p>
+            <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}>
+              <ChevronDown size={24} strokeWidth={1} color={WARM_WHITE} style={{ opacity: 0.6 }} />
+            </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ===== 2. BRAND STATEMENT ===== */}
+      <Section className="flex items-center justify-center px-6 py-28 md:py-40" style={{ background: BG_ALT }}>
+        <div className="max-w-[700px] text-center">
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", color: BRONZE, marginBottom: 32 }}>
+            About DC Woodworks
+          </p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 300, color: WARM_WHITE, lineHeight: 1.2, marginBottom: 28 }}>
+            Every kitchen is a portrait of the people who live in it.
+          </h2>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 300, color: WARM_WHITE, opacity: 0.8, lineHeight: 1.9 }}>
+            DC Woodworks are Ireland's premier bespoke kitchen makers. Based in Baconstown, Co. Meath, we design and hand-craft every kitchen from scratch — working closely with each client to understand how they live, what they love, and what a kitchen means to their home.
+          </p>
+        </div>
+      </Section>
+
+      {/* ===== 3. CERISE KITCHEN ===== */}
+      <FeaturedProject
+        imageSrc={CERISE}
+        eyebrow="Featured Project — 2026"
+        headline="The Cerise Kitchen"
+        body="A show-stopping bespoke kitchen built around a fearless use of colour. Rich cerise cabinetry in a traditional shaker frame, aged brass hardware, Calacatta quartz worktops, and a contrasting oxblood island — all beneath a skylight that floods the space with light."
+        imageLeft
+      />
+
+      {/* ===== 4. FULL-SCREEN BREAK ===== */}
+      <section className="w-full relative" style={{ height: "80vh" }}>
+        <div
+          className="dc-parallax w-full h-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${BREAK_1})` }}
+        />
+      </section>
+
+      {/* ===== 5. BLACK & OAK ===== */}
+      <FeaturedProject
+        imageSrc={BLACK_OAK}
+        eyebrow="Featured Project — 2025"
+        headline="Timeless Sophistication in Black & Oak"
+        body="Bold black cabinetry with bespoke raised panel moulding, contrasted by limed oak accents and a marble backsplash. A kitchen that commands attention while remaining deeply liveable — a balance only achieved through exceptional craftsmanship."
+        imageLeft={false}
+      />
+
+      {/* ===== 6. THREE-UP ROW ===== */}
+      <Section className="flex flex-col md:flex-row w-full">
+        {TRIPTYCH.map((src, i) => (
+          <div key={i} className="w-full md:w-1/3" style={{ aspectRatio: "3/4" }}>
+            <BlurImage src={src} alt={`DC Woodworks detail ${i + 1}`} className="w-full h-full" />
+          </div>
+        ))}
+      </Section>
+
+      {/* ===== 7. DEEP TEAL ===== */}
+      <FeaturedProject
+        imageSrc={TEAL}
+        eyebrow="Featured Project — 2025"
+        headline="Deep Teal Elegance"
+        body="Deep teal hand-painted shaker cabinetry, gleaming brass fittings, and a marble-effect quartz island. A velvet-upholstered peninsula adds a layer of warmth — this is a kitchen designed for living and entertaining in equal measure."
+        imageLeft
+      />
+
+      {/* ===== 8. FULL-SCREEN BREAK 2 ===== */}
+      <section className="w-full relative" style={{ height: "80vh" }}>
+        <div
+          className="dc-parallax w-full h-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${BREAK_2})` }}
+        />
+      </section>
+
+      {/* ===== 9. MORE WORK GRID ===== */}
+      <Section className="px-6 md:px-12 py-28 md:py-40" style={{ background: BG_ALT }}>
+        <h2 className="text-center mb-16" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 300, color: WARM_WHITE }}>
+          More Work
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-1 max-w-[1400px] mx-auto">
+          {GRID_PROJECTS.map((p, i) => (
+            <div key={i} className="relative group overflow-hidden cursor-crosshair" style={{ aspectRatio: "3/2" }}>
+              <img
+                src={p.src}
+                alt={p.name}
+                loading="lazy"
+                className="w-full h-full object-cover transition-all duration-500 group-hover:opacity-75 group-hover:scale-[1.02]"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 400, fontStyle: "italic", color: WARM_WHITE, letterSpacing: "0.02em" }}>
+                  {p.name}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ===== 10. CONTACT CTA ===== */}
+      <Section id="contact" className="flex flex-col items-center justify-center text-center px-6" style={{ background: BG, paddingTop: 120, paddingBottom: 120 }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 300, color: WARM_WHITE, lineHeight: 1.15, maxWidth: 700, marginBottom: 20 }}>
+          Your kitchen. Your vision. Our craft.
+        </h2>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 300, color: WARM_WHITE, opacity: 0.75, marginBottom: 48 }}>
+          Based in Co. Meath — serving Dublin and across Ireland.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center gap-4">
           <a
-            href="#contact"
-            className="flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-500 whitespace-nowrap"
-            style={{ background: darkText, color: cream, fontWeight: 400 }}
+            href="mailto:info@dcwoodworks.ie?subject=Consultation%20Request"
+            className="group/cta relative inline-block transition-all duration-300"
+            style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 400, letterSpacing: "0.1em", textTransform: "uppercase",
+              color: WARM_WHITE, border: `1px solid ${WARM_WHITE}`, padding: "14px 32px", textDecoration: "none",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = BRONZE; e.currentTarget.style.borderColor = BRONZE; e.currentTarget.style.color = BG; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = WARM_WHITE; e.currentTarget.style.color = WARM_WHITE; }}
           >
-            <MapPin className="w-4 h-4" strokeWidth={1.2} />
-            Get Directions
+            Schedule a Consultation
+          </a>
+          <a
+            href="tel:+353469500127"
+            style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 400, letterSpacing: "0.1em", textTransform: "uppercase", color: WARM_WHITE, textDecoration: "none", padding: "14px 16px" }}
+            className="hover:opacity-70 transition-opacity"
+          >
+            Call us: (046) 950 0127
           </a>
         </div>
-      </section>
+      </Section>
 
-      {/* ── Reviews ── */}
-      <section className="py-28 md:py-40" style={{ background: warmWhite }}>
-        <div className="max-w-5xl mx-auto px-6 lg:px-12 text-center">
-          <div className="w-12 h-[1px] mx-auto mb-8" style={{ background: accent }} />
-          <p className="text-[11px] tracking-[0.4em] uppercase mb-6" style={{ color: accent, fontWeight: 400 }}>
-            Testimonials
-          </p>
-          <h2 className="text-3xl md:text-5xl mb-16" style={{ fontFamily: serif, fontWeight: 300 }}>
-            What Our Clients <span className="italic">Say</span>
-          </h2>
-          <div className="grid md:grid-cols-2 gap-16">
-            {reviews.map((r, i) => (
-              <motion.div
-                key={r.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2, duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="text-left"
-              >
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} className="w-3.5 h-3.5 fill-current" style={{ color: accent }} />
-                  ))}
-                </div>
-                <p className="text-lg italic leading-relaxed mb-8" style={{ fontFamily: serif, color: bodyText, fontWeight: 300 }}>
-                  "{r.quote}"
-                </p>
-                <div className="w-8 h-[1px] mb-4" style={{ background: borderCol }} />
-                <p className="text-sm tracking-wide" style={{ fontWeight: 400 }}>{r.name}</p>
-                <p className="text-[11px] tracking-[0.15em] uppercase mt-1" style={{ color: mutedText, fontWeight: 400 }}>{r.location}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Contact ── */}
-      <section id="contact" className="py-28 md:py-40" style={{ background: cream }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-20">
-            <div className="w-12 h-[1px] mx-auto mb-8" style={{ background: accent }} />
-            <p className="text-[11px] tracking-[0.4em] uppercase mb-6" style={{ color: accent, fontWeight: 400 }}>
-              Contact
-            </p>
-            <h2 className="text-3xl md:text-5xl" style={{ fontFamily: serif, fontWeight: 300 }}>
-              Get in <span className="italic">Touch</span>
-            </h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ background: borderCol }}>
-            {[
-              { icon: MapPin, title: "Showroom", detail: "Baconstown, Enfield", sub: "Co. Meath, A83 HC80" },
-              { icon: Clock, title: "Opening Hours", detail: "Mon–Fri 9:30am–5:30pm", sub: "Sat by appointment" },
-              { icon: Phone, title: "Phone", detail: "(046) 950 0127", sub: "Tap to call", href: "tel:0469500127" },
-              { icon: Mail, title: "Email", detail: "info@dcwoodworks.ie", sub: "Get in touch", href: "mailto:info@dcwoodworks.ie" },
-            ].map((item, i) => (
-              <motion.a
-                key={item.title}
-                href={item.href || "#"}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="p-10 text-center block transition-colors duration-500 hover:bg-black/[0.02]"
-                style={{ background: warmWhite }}
-              >
-                <item.icon className="w-5 h-5 mx-auto mb-5" style={{ color: accent }} strokeWidth={1.2} />
-                <h3 className="text-sm tracking-[0.1em] uppercase mb-3" style={{ fontWeight: 400 }}>{item.title}</h3>
-                <p className="text-sm" style={{ fontWeight: 300 }}>{item.detail}</p>
-                <p className="text-[11px] mt-1" style={{ color: mutedText, fontWeight: 400 }}>{item.sub}</p>
-              </motion.a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Footer ── */}
-      <footer className="border-t py-12" style={{ borderColor: borderCol, background: cream }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <img src={dcLogo} alt="DC Woodworks" className="h-10 object-contain opacity-50" />
-          <p className="text-[11px] tracking-[0.15em]" style={{ color: mutedText, fontWeight: 400 }}>
-            &copy; {new Date().getFullYear()} DC Woodworks. All Rights Reserved.
-          </p>
-        </div>
+      {/* ===== 11. FOOTER ===== */}
+      <footer className="flex flex-col md:flex-row items-center justify-between px-6 md:px-12 py-8" style={{ background: BG, borderTop: `1px solid ${WARM_WHITE}11` }}>
+        <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 300, color: WARM_WHITE, opacity: 0.5 }}>
+          © 2026 DC Woodworks
+        </span>
+        <span className="mt-2 md:mt-0" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 300, color: WARM_WHITE, opacity: 0.5 }}>
+          Baconstown, Enfield, Co. Meath · info@dcwoodworks.ie
+        </span>
+        <a href="https://www.instagram.com/dcwoodworks_/" target="_blank" rel="noopener noreferrer" className="mt-2 md:mt-0 hover:opacity-70 transition-opacity" style={{ color: WARM_WHITE, opacity: 0.5 }}>
+          <Instagram size={18} strokeWidth={1.5} />
+        </a>
       </footer>
     </div>
   );
