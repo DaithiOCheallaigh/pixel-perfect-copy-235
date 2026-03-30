@@ -213,9 +213,21 @@ const DCWoodworksShowcase = () => {
         <RevealImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
 
-        {/* Floating nav */}
-        <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 md:px-12 py-6">
-          <img src={dcLogo} alt="DC Woodworks" className="h-10 md:h-12 w-auto" style={{ filter: "brightness(0) invert(1)" }} />
+        {/* Hero logo — centered, animated, large */}
+        <div className="absolute inset-0 flex items-center justify-center z-10">
+          <motion.img
+            src={dcLogo}
+            alt="DC Woodworks"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="w-[220px] md:w-[320px] lg:w-[400px] h-auto"
+            style={{ filter: "brightness(0) invert(1)" }}
+          />
+        </div>
+
+        {/* Hero hamburger (top-right, no header bar) */}
+        <div className="absolute top-0 right-0 z-20 px-6 md:px-12 py-6">
           <button
             onClick={() => setMenuOpen(true)}
             className="flex flex-col gap-[5px] p-2 hover:opacity-70 transition-opacity"
