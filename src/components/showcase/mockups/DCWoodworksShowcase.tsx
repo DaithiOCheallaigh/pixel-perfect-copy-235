@@ -95,7 +95,7 @@ const FeaturedProject = ({
 }: { imageSrc: string; eyebrow: string; headline: string; body: string; imageLeft?: boolean }) => (
   <Section className={`flex flex-col ${imageLeft ? "md:flex-row" : "md:flex-row-reverse"} w-full min-h-[70vh]`}>
     <div className={`${imageLeft ? "md:w-[60%]" : "md:w-[40%]"} w-full`}>
-      <BlurImage src={imageSrc} alt={headline} className="w-full h-full min-h-[50vh] md:min-h-[70vh]" style={{ display: "block" }} />
+      <RevealImage src={imageSrc} alt={headline} className="w-full h-full min-h-[50vh] md:min-h-[70vh]" style={{ display: "block" }} />
     </div>
     <div
       className={`${imageLeft ? "md:w-[40%]" : "md:w-[60%]"} w-full flex items-center`}
@@ -201,7 +201,7 @@ const DCWoodworksShowcase = () => {
 
       {/* ===== 1. HERO ===== */}
       <section className="relative w-full h-screen overflow-hidden">
-        <BlurImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
+        <RevealImage src={HERO} alt="DC Woodworks bespoke kitchen" className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%)" }} />
 
         {/* Floating nav */}
@@ -275,7 +275,7 @@ const DCWoodworksShowcase = () => {
 
       {/* ===== 4. FULL-SCREEN BREAK ===== */}
       <section className="w-full relative" style={{ height: "80vh" }}>
-        <BlurImage src={BREAK_1} alt="DC Woodworks kitchen detail" className="w-full h-full" />
+        <RevealImage src={BREAK_1} alt="DC Woodworks kitchen detail" className="w-full h-full" />
       </section>
 
       {/* ===== 5. BLACK & OAK ===== */}
@@ -291,7 +291,7 @@ const DCWoodworksShowcase = () => {
       <Section className="flex flex-col md:flex-row w-full">
         {TRIPTYCH.map((src, i) => (
           <div key={i} className="w-full md:w-1/3" style={{ aspectRatio: "3/4" }}>
-            <BlurImage src={src} alt={`DC Woodworks detail ${i + 1}`} className="w-full h-full" />
+            <RevealImage src={src} alt={`DC Woodworks detail ${i + 1}`} className="w-full h-full" />
           </div>
         ))}
       </Section>
@@ -307,7 +307,7 @@ const DCWoodworksShowcase = () => {
 
       {/* ===== 8. FULL-SCREEN BREAK 2 ===== */}
       <section className="w-full relative" style={{ height: "80vh" }}>
-        <BlurImage src={BREAK_2} alt="DC Woodworks kitchen detail" className="w-full h-full" />
+        <RevealImage src={BREAK_2} alt="DC Woodworks kitchen detail" className="w-full h-full" />
       </section>
 
       {/* ===== 9. MORE WORK GRID ===== */}
