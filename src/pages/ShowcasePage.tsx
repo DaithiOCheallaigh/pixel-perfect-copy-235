@@ -9,6 +9,7 @@ import { Loader2 } from "lucide-react";
 // Registry of showcase mockup components by slug
 const MOCKUP_REGISTRY: Record<string, React.LazyExoticComponent<React.ComponentType>> = {
   "niall-keady": lazy(() => import("@/components/showcase/mockups/NiallKeadyShowcase")),
+  "dc-woodworks": lazy(() => import("@/components/showcase/mockups/DCWoodworksShowcase")),
 };
 
 interface ShowcaseEntry {
