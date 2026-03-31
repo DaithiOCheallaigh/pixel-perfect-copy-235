@@ -255,6 +255,7 @@ const aiPricing = [
   {
     name: "Monthly Retainer",
     eurPrice: 500,
+    prefix: "From ",
     suffix: " / month",
     label: "Ongoing",
     features: [
