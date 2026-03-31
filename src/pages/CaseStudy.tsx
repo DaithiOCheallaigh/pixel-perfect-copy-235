@@ -434,13 +434,14 @@ const CaseStudy = () => {
                     </div>
                     {/* Exploration images (e.g. Spotify) */}
                     {project.id === "spotify" && project.images &&
-                <div className="grid gap-4 md:grid-cols-2 mb-6">
-                        {project.images.filter((img) => ["Spotify integration concept", "Placement options"].includes(img.alt)).map((img, i) =>
-                  <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                            <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
-                          </div>
-                  )}
-                      </div>
+                (() => {
+                      const explorationImg = project.images.find((img) => img.alt === "Spotify integration concept");
+                      return explorationImg ? (
+                        <div className="mb-6 overflow-hidden rounded-xl shadow-md">
+                          <img src={explorationImg.src} alt={explorationImg.alt} className="w-full object-cover" loading="lazy" />
+                        </div>
+                      ) : null;
+                    })()
                 }
                     {project.explorationVideo &&
                 <div className="overflow-hidden rounded-xl shadow-md">
