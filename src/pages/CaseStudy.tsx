@@ -167,6 +167,13 @@ const CaseStudy = () => {
             <Link to="/work" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">← Back to Work</Link>
           </motion.div>
 
+          {/* Full-width header image for tipdirect-app */}
+          {project.id === "tipdirect-app" && project.headerImage &&
+          <motion.div className="mb-8 overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.7 }}>
+              <img src={project.headerImage} alt={project.title} className="w-full object-cover" />
+            </motion.div>
+          }
+
           {/* Hero subtitle for pages like website-tipdirect, tipdirect-app, booking-app */}
           {project.heroSubtitle &&
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.6 }}>
@@ -176,7 +183,7 @@ const CaseStudy = () => {
           }
 
           <motion.div
-            className="grid gap-12 md:grid-cols-[1.2fr_1fr] items-start"
+            className={`grid gap-12 items-start ${project.id === "tipdirect-app" ? '' : 'md:grid-cols-[1.2fr_1fr]'}`}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
@@ -230,8 +237,8 @@ const CaseStudy = () => {
               }
             </div>
 
-            {/* Right: stacked mobile mockups */}
-            {project.mobileImage &&
+            {/* Right: stacked mobile mockups (hidden for tipdirect-app) */}
+            {project.mobileImage && project.id !== "tipdirect-app" &&
             <div className="flex flex-col items-center gap-4">
                 <div className="relative">
                   <img
