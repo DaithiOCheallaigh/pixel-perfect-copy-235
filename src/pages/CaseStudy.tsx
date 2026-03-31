@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
@@ -5,6 +6,27 @@ import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { SEO } from "../components/SEO";
+
+const EngagementCarousel = ({ images }: { images: { src: string; alt: string }[] }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  return (
+    <div className="md:hidden">
+      <div className="overflow-hidden rounded-xl shadow-md">
+        <img src={images[activeIndex].src} alt={images[activeIndex].alt} className="w-full object-cover" loading="lazy" />
+      </div>
+      <div className="flex items-center justify-center gap-3 mt-4">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            className={`h-2.5 rounded-full transition-all ${i === activeIndex ? 'w-8 bg-primary' : 'w-2.5 bg-muted-foreground/30'}`}
+            aria-label={`View image ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boolean;}[];}) => {
   const elements: JSX.Element[] = [];
@@ -796,10 +818,26 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Considerations for Enhancing User Engagement</SectionLabel>
                     {/* TipDirect App: App visual paired with engagement section */}
-                    {project.id === "tipdirect-app" && findImage("App overview") &&
-                  <div className="mb-8 overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("App overview")!.src} alt="TipDirect App" className="w-full object-cover" loading="lazy" />
-                      </div>
+                    {project.id === "tipdirect-app" && (() => {
+                      const engagementImages = [
+                        { src: "/images/Resources.webp", alt: "TipDirect Resources" },
+                        { src: "/images/Tech.webp", alt: "TipDirect Tech" },
+                      ];
+                      return (
+                        <div className="mb-8">
+                          {/* Desktop: side by side */}
+                          <div className="hidden md:grid md:grid-cols-2 gap-4">
+                            {engagementImages.map((img, i) => (
+                              <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                              </div>
+                            ))}
+                          </div>
+                          {/* Mobile: carousel */}
+                          <EngagementCarousel images={engagementImages} />
+                        </div>
+                      );
+                    })()
                   }
                     <div className="grid gap-4 md:grid-cols-2">
                       {project.engagementConsiderations.map((item, i) =>
