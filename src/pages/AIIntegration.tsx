@@ -63,7 +63,7 @@ const pricing = [
   },
   {
     title: "Monthly Retainer",
-    price: "€500 / month",
+    price: "From €500 / month",
     label: "Ongoing",
     description:
       "This covers ongoing build, integration, a monthly strategy call, support, and iteration. New use cases can be added as your needs grow. Cancel with notice — no long lock-ins.",
