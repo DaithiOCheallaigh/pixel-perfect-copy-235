@@ -32,6 +32,12 @@ const BlogPost = () => {
 
   return (
     <main className="pt-24">
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        image={`https://www.lacunadigital.io${post.image}`}
+        url={`/blog/${post.id}`}
+      />
       <article className="px-6 md:px-12 lg:px-24">
         {/* ─── Header ─── */}
         <div className="mx-auto max-w-3xl pb-8 pt-12">
