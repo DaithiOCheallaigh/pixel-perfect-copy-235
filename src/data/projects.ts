@@ -62,6 +62,7 @@ export interface Project {
   uatLaunch?: string;
   uatLaunchOutcomes?: string;
   heroSubtitle?: string;
+  youtubeEmbed?: string;
   newSkills?: string;
   componentFocused?: string;
   initialApproach?: string;
