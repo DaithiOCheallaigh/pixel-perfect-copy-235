@@ -6,6 +6,7 @@ import { ShineBorder } from "../components/ui/shine-border";
 import { SearchNormal1, Calendar, Bezier, TaskSquare, Code1, Chart2 } from "iconsax-react";
 import { type ReactNode } from "react";
 import avatarImg from "@/assets/avatar.jpeg";
+import { SEO } from "../components/SEO";
 
 const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: string[] }[] = [
   {
