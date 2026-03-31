@@ -7,6 +7,27 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { SEO } from "../components/SEO";
 
+const EngagementCarousel = ({ images }: { images: { src: string; alt: string }[] }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  return (
+    <div className="md:hidden">
+      <div className="overflow-hidden rounded-xl shadow-md">
+        <img src={images[activeIndex].src} alt={images[activeIndex].alt} className="w-full object-cover" loading="lazy" />
+      </div>
+      <div className="flex items-center justify-center gap-3 mt-4">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            className={`h-2.5 rounded-full transition-all ${i === activeIndex ? 'w-8 bg-primary' : 'w-2.5 bg-muted-foreground/30'}`}
+            aria-label={`View image ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boolean;}[];}) => {
   const elements: JSX.Element[] = [];
   let nonWideBuffer: typeof images = [];
