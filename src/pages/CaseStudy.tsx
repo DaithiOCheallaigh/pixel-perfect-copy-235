@@ -4,6 +4,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
+import { SEO } from "../components/SEO";
 
 const ImageGallery = ({ images }: {images: {src: string;alt: string;wide?: boolean;}[];}) => {
   const elements: JSX.Element[] = [];

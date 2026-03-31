@@ -253,6 +253,7 @@ const StartProject = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Start a Project" description="Ready to build something? Tell me about your project and let's get started." url="/start-project" />
       {/* Top accent border */}
       <div className="h-[2px] w-full bg-gradient-to-r from-[#8b4513] via-[#a0522d] to-[#8b4513]" />
 
