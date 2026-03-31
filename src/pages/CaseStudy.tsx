@@ -192,7 +192,7 @@ const CaseStudy = () => {
           {/* Full-width header image for tipdirect-app and spotify */}
           {(project.id === "tipdirect-app" || project.id === "spotify") && project.headerImage &&
           <motion.div className="mb-8 overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.7 }}>
-              <img src={project.id === "spotify" ? "/images/spotify-tipping-flow.png" : project.headerImage} alt={project.title} className="w-full object-cover" />
+              <img src={project.id === "spotify" ? "/images/SpotifyHeader_Web-4.webp" : project.headerImage} alt={project.title} className="w-full object-cover" />
             </motion.div>
           }
 
