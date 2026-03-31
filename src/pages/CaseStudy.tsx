@@ -1439,7 +1439,7 @@ const CaseStudy = () => {
                     </div>
                   </div>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src={findImage("Tour guides")!.src} alt="Tour guides" className="w-full object-cover" loading="lazy" />
+                    <img src="/images/TipDirect_App.webp" alt="TipDirect App" className="w-full object-cover" loading="lazy" />
                   </div>
                 </div>
               :
