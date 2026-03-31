@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, Lock } from "lucide-react";
+import { Copy, Check, Lock, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,7 +8,6 @@ import { toast } from "@/hooks/use-toast";
 import ToolLayout from "@/components/tools/ToolLayout";
 import EmailGate from "@/components/tools/EmailGate";
 import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
-import { Loader2 } from "lucide-react";
 
 interface Scripts {
   welcome: string;
@@ -33,6 +32,7 @@ const businessTypes = ["Restaurant", "Salon", "Retail", "Service Business", "Oth
 const WhatsAppScripts = () => {
   const [businessName, setBusinessName] = useState("");
   const [businessType, setBusinessType] = useState("");
+  const [takesBookings, setTakesBookings] = useState<"Yes" | "No" | "">("");
   const [faq1, setFaq1] = useState("");
   const [faq2, setFaq2] = useState("");
   const [faq3, setFaq3] = useState("");
@@ -61,7 +61,7 @@ const WhatsAppScripts = () => {
             ownerName: businessName.trim(),
             hours: "9am-6pm",
             offering: businessType,
-            takesBookings: true,
+            takesBookings: takesBookings === "Yes",
             bookingContact: "",
             faq1: faq1.trim(),
             faq2: faq2.trim(),
@@ -78,6 +78,16 @@ const WhatsAppScripts = () => {
       setGenerating(false);
     }
   };
+
+  const fullScriptText = scripts
+    ? [
+        `GREETING:\n${scripts.welcome}`,
+        scripts.faqs.length > 0
+          ? `\nFAQ REPLIES:\n${scripts.faqs.map((f) => `Q: ${f.question}\nA: ${f.answer}`).join("\n\n")}`
+          : "",
+        `\nOUT-OF-HOURS:\n${scripts.away}`,
+      ].join("\n")
+    : "";
 
   return (
     <ToolLayout
@@ -96,6 +106,27 @@ const WhatsAppScripts = () => {
                 {businessTypes.map((t) => (<SelectItem key={t} value={t}>{t}</SelectItem>))}
               </SelectContent>
             </Select>
+
+            {/* Bookings toggle */}
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-muted-foreground">Do you take bookings?</p>
+              <div className="flex gap-2">
+                {(["Yes", "No"] as const).map((opt) => (
+                  <button
+                    key={opt}
+                    onClick={() => setTakesBookings(opt)}
+                    className={`rounded-full px-5 py-1.5 text-sm font-medium transition-colors ${
+                      takesBookings === opt
+                        ? "bg-primary text-primary-foreground"
+                        : "border border-border bg-card text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <p className="text-sm font-medium text-muted-foreground">Top FAQs your customers ask (optional)</p>
             <Input placeholder="FAQ 1, e.g. What are your opening hours?" value={faq1} onChange={(e) => setFaq1(e.target.value)} />
             <Input placeholder="FAQ 2" value={faq2} onChange={(e) => setFaq2(e.target.value)} />
@@ -106,8 +137,16 @@ const WhatsAppScripts = () => {
           </motion.div>
         ) : (
           <motion.div key="results" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-            {/* Free preview: greeting */}
-            <div className="rounded-xl border border-border bg-card p-5">
+            {/* Loading state */}
+            {generating && (
+              <div className="flex items-center gap-3 rounded-xl bg-[hsl(134,40%,94%)] p-5 shadow-sm">
+                <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                <p className="text-sm font-medium text-foreground">Generating your script…</p>
+              </div>
+            )}
+
+            {/* WhatsApp chat-bubble style: Greeting */}
+            <div className="rounded-2xl rounded-tl-sm bg-[hsl(134,40%,90%)] p-5 shadow-sm dark:bg-[hsl(134,20%,20%)]">
               <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Greeting Message</p>
               <div className="flex items-start gap-3">
                 <p className="flex-1 whitespace-pre-wrap text-sm text-foreground">{scripts.welcome}</p>
@@ -118,8 +157,7 @@ const WhatsAppScripts = () => {
             {/* Gated content */}
             {!unlocked ? (
               <div className="space-y-4">
-                {/* Blurred previews */}
-                <div className="relative overflow-hidden rounded-xl border border-border bg-card p-5">
+                <div className="relative overflow-hidden rounded-2xl rounded-tl-sm bg-[hsl(134,40%,90%)] p-5 shadow-sm dark:bg-[hsl(134,20%,20%)]">
                   <div className="pointer-events-none select-none blur-sm">
                     <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">FAQ Responses</p>
                     <p className="text-sm text-muted-foreground">Your personalised FAQ auto-replies will appear here…</p>
@@ -128,7 +166,7 @@ const WhatsAppScripts = () => {
                     <Lock className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </div>
-                <div className="relative overflow-hidden rounded-xl border border-border bg-card p-5">
+                <div className="relative overflow-hidden rounded-2xl rounded-tl-sm bg-[hsl(134,40%,90%)] p-5 shadow-sm dark:bg-[hsl(134,20%,20%)]">
                   <div className="pointer-events-none select-none blur-sm">
                     <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Out-of-Hours Reply</p>
                     <p className="text-sm text-muted-foreground">Your after-hours auto-reply will appear here…</p>
@@ -142,7 +180,7 @@ const WhatsAppScripts = () => {
             ) : (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
                 {scripts.faqs.length > 0 && (
-                  <div className="rounded-xl border border-border bg-card p-5">
+                  <div className="rounded-2xl rounded-tl-sm bg-[hsl(134,40%,90%)] p-5 shadow-sm dark:bg-[hsl(134,20%,20%)]">
                     <p className="mb-3 text-xs font-bold uppercase tracking-wider text-primary">FAQ Responses</p>
                     <div className="space-y-4">
                       {scripts.faqs.map((faq, i) => (
@@ -157,17 +195,34 @@ const WhatsAppScripts = () => {
                     </div>
                   </div>
                 )}
-                <div className="rounded-xl border border-border bg-card p-5">
+                <div className="rounded-2xl rounded-tl-sm bg-[hsl(134,40%,90%)] p-5 shadow-sm dark:bg-[hsl(134,20%,20%)]">
                   <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Out-of-Hours Reply</p>
                   <div className="flex items-start gap-3">
                     <p className="flex-1 whitespace-pre-wrap text-sm text-foreground">{scripts.away}</p>
                     <CopyBtn text={scripts.away} />
                   </div>
                 </div>
+
+                {/* Copy full script button */}
+                <div className="flex justify-center">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      navigator.clipboard.writeText(fullScriptText);
+                      toast({ title: "Copied!", description: "Full script copied to clipboard" });
+                    }}
+                  >
+                    <Copy className="mr-2 h-4 w-4" /> Copy Full Script
+                  </Button>
+                </div>
+
+                {/* CTA */}
                 <ServiceUpsellCard
-                  title="Want the full WhatsApp Business system set up for you?"
-                  description="Free registration, professional setup — I'll handle everything so you can focus on running your business."
-                  linkTo="/services#whatsapp"
+                  title="Want this set up live on WhatsApp today?"
+                  description="I'll configure your WhatsApp Business account, upload these messages, and test the whole flow — free."
+                  linkTo="https://calendly.com/lacunadigital/30min"
+                  linkLabel="Book a free setup call →"
+                  external
                 />
               </motion.div>
             )}

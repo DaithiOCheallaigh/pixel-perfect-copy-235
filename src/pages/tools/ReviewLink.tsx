@@ -23,12 +23,7 @@ const ReviewLink = () => {
       return;
     }
     setGenerating(true);
-    // Manual fallback: construct a Google search review link
     const query = encodeURIComponent(`${businessName.trim()} ${city.trim()}`);
-    const link = `https://www.google.com/search?q=${query}&hl=en#lrd=`;
-    // More useful: direct search link that leads to the review flow
-    const directLink = `https://search.google.com/local/writereview?placeid=manual_lookup_required`;
-    // Since we don't have Places API, use a search-based approach
     const searchReviewLink = `https://www.google.com/maps/search/${query}`;
     setReviewLink(searchReviewLink);
     setGenerating(false);
@@ -37,6 +32,7 @@ const ReviewLink = () => {
   const handleCopy = () => {
     navigator.clipboard.writeText(reviewLink);
     setCopied(true);
+    toast({ title: "Copied!", description: "Review link copied to clipboard" });
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -79,21 +75,21 @@ const ReviewLink = () => {
         </motion.div>
       ) : (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-          {/* Review link — always visible */}
+          {/* Review link output box */}
           <div className="rounded-xl border border-border bg-card p-5">
             <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Your Review Link</p>
             <div className="flex items-center gap-3">
-              <code className="flex-1 overflow-hidden text-ellipsis rounded-lg bg-muted px-3 py-2 text-sm text-foreground">{reviewLink}</code>
+              <code className="flex-1 overflow-hidden text-ellipsis rounded-lg bg-muted px-3 py-2 font-mono text-sm text-foreground">{reviewLink}</code>
               <button
                 onClick={handleCopy}
-                className="shrink-0 rounded-md border border-border p-2 text-muted-foreground transition-colors hover:text-primary"
+                className="shrink-0 rounded-md border border-border px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
               >
-                {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                {copied ? <Check className="h-4 w-4 text-green-500" /> : <><Copy className="mr-1 inline h-4 w-4" /> Copy Link</>}
               </button>
             </div>
           </div>
 
-          {/* QR code — gated */}
+          {/* QR code section */}
           {!unlocked ? (
             <div className="space-y-4">
               <div className="relative overflow-hidden rounded-xl border border-border bg-card p-5">
@@ -115,14 +111,18 @@ const ReviewLink = () => {
                 <div className="flex flex-col items-center gap-4">
                   <QRCodeSVG id="review-qr" value={reviewLink} size={200} bgColor="transparent" fgColor="hsl(310, 60%, 50%)" />
                   <Button variant="outline" onClick={handleDownloadQR}>
-                    <Download className="mr-2 h-4 w-4" /> Download QR Code
+                    <Download className="mr-2 h-4 w-4" /> Download QR as PNG
                   </Button>
                 </div>
               </div>
+
+              {/* CTA */}
               <ServiceUpsellCard
-                title="Want to show up higher in local search?"
-                description="I offer a free Local SEO strategy session — let's get your business found by the right customers."
-                linkTo="/services#seo"
+                title="Want a verified direct review link + a printed QR card for your counter?"
+                description="I'll set up your verified Google Place ID link and design a branded QR card you can print and display."
+                linkTo="https://calendly.com/lacunadigital/30min"
+                linkLabel="Get in touch →"
+                external
               />
             </motion.div>
           )}
