@@ -807,7 +807,7 @@ const CaseStudy = () => {
               {project.id === "tipdirect-app" && findImage("Information architecture") &&
             <ScrollReveal>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src={findImage("Information architecture")!.src} alt="Platform analysis" className="w-full object-cover" loading="lazy" />
+                    <img src="/images/Arch_TipDirect.webp" alt="Platform analysis" className="w-full object-cover" loading="lazy" />
                   </div>
                 </ScrollReveal>
             }
