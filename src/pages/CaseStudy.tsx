@@ -1397,6 +1397,21 @@ const CaseStudy = () => {
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
+              {project.id === "tipdirect-app" && findImage("Tour guides") ?
+              <div className="grid gap-12 md:grid-cols-2 items-start">
+                  <div className="max-w-3xl">
+                    <SectionLabel>Release & Reception</SectionLabel>
+                    <div className="space-y-4">
+                      {project.releaseReception.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                    </div>
+                  </div>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Tour guides")!.src} alt="Tour guides" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </div>
+              :
               <div className="max-w-3xl">
                 <SectionLabel>Release & Reception</SectionLabel>
                 <div className="space-y-4">
@@ -1405,6 +1420,7 @@ const CaseStudy = () => {
                 )}
                 </div>
               </div>
+              }
             </ScrollReveal>
           </div>
         </section>
