@@ -406,7 +406,7 @@ export const projects: Project[] = [
     clientLogo: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDirect_Logo.webp",
     pillImage: "/images/work/app-pill.webp",
     headerImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDIrect_App_Header.webp",
-    mobileImage: "/images/MobileAI.webp",
+    
     toolsImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Tools-1.webp",
     toolsUsedImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Group-2.webp",
     description: "The TipDirect app was designed as a natural extension of the TipDirect platform, providing tour guides with a streamlined, mobile-first solution for collecting tips on the go. As the lead designer, I focused on creating an experience that would complement the existing platform while addressing the unique needs of guides working in the field.",
