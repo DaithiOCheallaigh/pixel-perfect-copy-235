@@ -205,7 +205,7 @@ const CaseStudy = () => {
           }
 
           <motion.div
-            className={`grid gap-12 items-start ${project.id === "tipdirect-app" ? '' : 'md:grid-cols-[1.2fr_1fr]'}`}
+            className={`grid gap-12 items-start ${(project.id === "tipdirect-app" || project.id === "spotify") ? '' : 'md:grid-cols-[1.2fr_1fr]'}`}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
