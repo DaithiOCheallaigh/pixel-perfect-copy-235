@@ -108,6 +108,12 @@ const CaseStudy = () => {
   "Tech stack", "Survey example", "Mind map", "Research document",
   "User flow", "Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"];
 
+  // For tipdirect-app, all images are placed inline in specific sections
+  const tipdirectAppInlineAlts = [
+  "Information architecture", "App overview",
+  "Payment Links", "Tipping Groups", "Tiered Plans", "Voice Reviews", "Analytics", "Group Management",
+  "Colour system", "Typography system", "Components overview", "Tour guides"];
+
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
