@@ -3,6 +3,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { ShineBorder } from "../components/ui/shine-border";
+import { SEO } from "../components/SEO";
 
 const serviceAreas = [
   {
