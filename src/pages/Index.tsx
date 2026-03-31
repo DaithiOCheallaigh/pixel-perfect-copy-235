@@ -7,12 +7,14 @@ import SocialProof from "../components/SocialProof";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
 import { ShaderAnimation } from "../components/ui/shader-animation";
+import { SEO } from "../components/SEO";
 
 const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
 
 const Index = () => {
   return (
     <main>
+      <SEO title="Home" description="Freelance product designer and digital consultant helping SMEs build smarter digital experiences — powered by AI." url="/" />
       {/* Hero */}
       <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-32 md:px-12 lg:px-24">
         {/* Animated gradient orbs */}

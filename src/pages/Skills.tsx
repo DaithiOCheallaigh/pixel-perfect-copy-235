@@ -3,6 +3,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { ShineBorder } from "../components/ui/shine-border";
+import { SEO } from "../components/SEO";
 
 const serviceAreas = [
   {
@@ -90,6 +91,7 @@ const capabilities: { category: string; items: { label: string; id: string }[] }
 
 const Skills = () => (
   <main className="pt-24">
+    <SEO title="Skills" description="UI/UX design, AI-assisted workflows, design systems, and digital strategy — the full stack of what I bring to a project." url="/skills" />
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>

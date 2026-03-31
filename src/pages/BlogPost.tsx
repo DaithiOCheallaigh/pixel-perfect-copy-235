@@ -1,59 +1,16 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { blogPosts } from "../data/blogPosts";
+import { SEO } from "../components/SEO";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
   const postIndex = blogPosts.findIndex((p) => p.id === id);
   const post = blogPosts[postIndex];
-
-  useEffect(() => {
-    if (!post) return;
-
-    const origin = window.location.origin;
-    const url = `${origin}/blog/${post.id}`;
-    const imageUrl = `${origin}${post.image}`;
-
-    const metaTags: Record<string, string> = {
-      "og:title": post.title,
-      "og:description": post.excerpt,
-      "og:image": imageUrl,
-      "og:url": url,
-      "og:type": "article",
-      "twitter:card": "summary_large_image",
-      "twitter:title": post.title,
-      "twitter:description": post.excerpt,
-      "twitter:image": imageUrl,
-    };
-
-    const elements: HTMLMetaElement[] = [];
-
-    Object.entries(metaTags).forEach(([key, value]) => {
-      const attr = key.startsWith("og:") ? "property" : "name";
-      let el = document.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
-      if (el) {
-        el.setAttribute("content", value);
-      } else {
-        el = document.createElement("meta");
-        el.setAttribute(attr, key);
-        el.setAttribute("content", value);
-        document.head.appendChild(el);
-        elements.push(el);
-      }
-    });
-
-    document.title = `${post.title} — Lacuna Digital`;
-
-    return () => {
-      elements.forEach((el) => el.remove());
-      document.title = "Lacuna Digital — Dave Kelly | Digital Designer & UX Strategist";
-    };
-  }, [post]);
 
   if (!post) {
     return (
@@ -75,6 +32,12 @@ const BlogPost = () => {
 
   return (
     <main className="pt-24">
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        image={`https://www.lacunadigital.io${post.image}`}
+        url={`/blog/${post.id}`}
+      />
       <article className="px-6 md:px-12 lg:px-24">
         {/* ─── Header ─── */}
         <div className="mx-auto max-w-3xl pb-8 pt-12">
