@@ -427,33 +427,42 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>Exploration</SectionLabel>
-                    <div className="space-y-4 mb-6">
-                      {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
-                  <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
-                  )}
-                    </div>
-                    {/* Exploration images (e.g. Spotify) */}
-                    {project.id === "spotify" && project.images &&
-                (() => {
+                    {project.id === "spotify" && project.images ? (() => {
                       const explorationImg = project.images.find((img) => img.alt === "Spotify integration concept");
-                      return explorationImg ? (
-                        <div className="mb-6 overflow-hidden rounded-xl shadow-md">
-                          <img src={explorationImg.src} alt={explorationImg.alt} className="w-full object-cover" loading="lazy" />
+                      return (
+                        <div className="grid gap-8 md:grid-cols-2 items-start">
+                          {explorationImg &&
+                            <div className="overflow-hidden rounded-xl shadow-md">
+                              <img src={explorationImg.src} alt={explorationImg.alt} className="w-full object-cover" loading="lazy" />
+                            </div>
+                          }
+                          <div className="space-y-4">
+                            {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                              <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                            )}
+                          </div>
                         </div>
-                      ) : null;
-                    })()
-                }
-                    {project.explorationVideo &&
-                <div className="overflow-hidden rounded-xl shadow-md">
-                        <video
-                    src={project.explorationVideo}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full object-cover" />
+                      );
+                    })() :
+                    <>
+                      <div className="space-y-4 mb-6">
+                        {(project.explorationDetail || project.exploration || "").split("\n\n").map((p, i) =>
+                          <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                        )}
                       </div>
-                }
+                      {project.explorationVideo &&
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                          <video
+                            src={project.explorationVideo}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="w-full object-cover" />
+                        </div>
+                      }
+                    </>
+                    }
                   </div>
                 </ScrollReveal>
             }
