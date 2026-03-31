@@ -123,8 +123,15 @@ const CaseStudy = () => {
   ["NFC tap", "Create review", "Review output"].includes(img.alt)
   ) || [];
 
+  const caseDescriptions: Record<string, string> = {
+    "ai-reviews": "How I designed an AI-powered review tool that helps businesses capture and showcase authentic customer feedback.",
+    "digital-tipping": "Designing TipDirect — a frictionless digital tipping experience for hospitality and service workers.",
+  };
+  const seoDescription = caseDescriptions[project.id] || project.subtitle || `Case study: ${project.title}`;
+
   return (
     <main className="pt-24">
+      <SEO title={`Case Study — ${project.title}`} description={seoDescription} url={`/case/${project.id}`} />
       {/* Whitelabel / Digital Tipping: Full-width hero image */}
       {(project.id === "whitelabel" || project.id === "digital-tipping") &&
       <section className="px-6 pb-8 md:px-12 lg:px-24">
