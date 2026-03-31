@@ -38,19 +38,39 @@ const ChatWidget = () => {
     const style = document.createElement("style");
     style.id = "hide-wa-widget";
     style.textContent = `
+      #whatsapp-widget-iframe,
+      .wa-chat-box,
+      .lcw-btn,
       iframe[src*="whatsapp"],
-      div[style*="position: fixed"][style*="bottom"][style*="right"]:not([class]):not([data-radix-popper-content-wrapper]) {
+      iframe[src*="lacuna-lead-manager"],
+      [id*="whatsapp"],
+      [class*="whatsapp"] {
         display: none !important;
       }
     `;
     document.head.appendChild(style);
 
+    const isWhatsAppWidgetElement = (el: HTMLElement) => {
+      const id = el.id?.toLowerCase() ?? "";
+      const className = typeof el.className === "string" ? el.className.toLowerCase() : "";
+      const src = (el.getAttribute("src") ?? "").toLowerCase();
+
+      return (
+        id.includes("whatsapp") ||
+        className.includes("whatsapp") ||
+        className.includes("wa-chat-box") ||
+        className.includes("lcw-btn") ||
+        src.includes("whatsapp") ||
+        src.includes("lacuna-lead-manager")
+      );
+    };
+
     const hideWhatsApp = () => {
-      document.querySelectorAll('body > div:not(#root)').forEach((el) => {
+      document.querySelectorAll("body > *").forEach((el) => {
         const htmlEl = el as HTMLElement;
-        const style = window.getComputedStyle(htmlEl);
-        if (style.position === 'fixed' && style.bottom !== 'auto' && style.right !== 'auto') {
-          htmlEl.style.display = 'none';
+        if (htmlEl.id === "root") return;
+        if (isWhatsAppWidgetElement(htmlEl)) {
+          htmlEl.style.display = "none";
         }
       });
     };
@@ -60,9 +80,11 @@ const ChatWidget = () => {
     return () => {
       clearInterval(interval);
       document.getElementById("hide-wa-widget")?.remove();
-      document.querySelectorAll('body > div:not(#root)').forEach((el) => {
+      document.querySelectorAll("body > *").forEach((el) => {
         const htmlEl = el as HTMLElement;
-        htmlEl.style.display = '';
+        if (isWhatsAppWidgetElement(htmlEl)) {
+          htmlEl.style.display = "";
+        }
       });
     };
   }, []);
