@@ -788,6 +788,12 @@ const CaseStudy = () => {
             <ScrollReveal>
                   <div>
                     <SectionLabel>Considerations for Enhancing User Engagement</SectionLabel>
+                    {/* TipDirect App: App visual paired with engagement section */}
+                    {project.id === "tipdirect-app" && findImage("App overview") &&
+                  <div className="mb-8 overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("App overview")!.src} alt="TipDirect App" className="w-full object-cover" loading="lazy" />
+                      </div>
+                  }
                     <div className="grid gap-4 md:grid-cols-2">
                       {project.engagementConsiderations.map((item, i) =>
                   <div key={i} className="rounded-xl bg-card p-6">
@@ -806,6 +812,26 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Design System</SectionLabel>
                     <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.designSystemDescription}</p>
+                    {/* TipDirect App: Design system images */}
+                    {project.id === "tipdirect-app" &&
+                  <div className="space-y-4">
+                        {findImage("Colour system") &&
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={findImage("Colour system")!.src} alt="Colour palette" className="w-full object-cover" loading="lazy" />
+                          </div>
+                      }
+                        {findImage("Typography system") &&
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={findImage("Typography system")!.src} alt="Typography" className="w-full object-cover" loading="lazy" />
+                          </div>
+                      }
+                        {findImage("Components overview") &&
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={findImage("Components overview")!.src} alt="Design system overview" className="w-full object-cover" loading="lazy" />
+                          </div>
+                      }
+                      </div>
+                  }
                   </div>
                 </ScrollReveal>
             }
