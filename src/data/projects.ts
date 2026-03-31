@@ -442,6 +442,7 @@ export const projects: Project[] = [
       { title: "Documentation", desc: "The prototype became a reference point throughout development and beyond. It captured design decisions, interaction patterns, and the intended user experience in a format that could be referenced by anyone on the team." },
     ],
     prototypeLink: "https://www.figma.com/proto/kXnls8kYwzJJkHeBeRlF4w/TipDirect_App?page-id=0%3A1&node-id=1-2&p=f&viewport=16%2C295%2C0.5&t=k5YW9JjSfgAgnsjN-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A392&show-proto-sidebar=1",
+    youtubeEmbed: "https://www.youtube.com/watch?v=XHOmBV4js_E",
     coreFunctionality: [
       { title: "Tip Collection", desc: "The app's primary function enables guides to share their unique tip links or QR codes instantly with tour participants. The tip collection interface was designed for speed and simplicity." },
       { title: "Reviews", desc: "The review request is intentionally tied into the tip collection flow. When tourists complete a tip payment, they're immediately prompted to leave a review whilst the positive experience is still fresh." },
