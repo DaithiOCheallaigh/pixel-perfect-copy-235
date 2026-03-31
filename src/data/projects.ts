@@ -196,7 +196,7 @@ export const projects: Project[] = [
     timeline: "6 months",
     client: "TipDirect",
     clientLogo: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/wp-images/TipDirect_Logo.webp",
-    pillImage: "/images/work/admin-pill-old.webp",
+    pillImage: "/images/work/tipping-pill.webp",
     headerImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/wp-images/Tipping_HeaderProfile.webp",
     mobileImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/wp-images/Tipping-Profile-1.webp",
     toolsImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/assets/wp-images/Tools-1.webp",
