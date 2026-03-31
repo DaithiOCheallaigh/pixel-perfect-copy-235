@@ -176,15 +176,10 @@ const CaseStudy = () => {
 
             {/* Left: title + description + tags */}
             <div className="flex flex-col">
-              {/* Client logo */}
-              {project.clientLogo ?
-              <div className="mb-6">
-                  <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
-                  {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" loading="lazy" />}
-                </div> :
-              project.client ?
-              <span className="font-mono-label mb-4 text-muted-foreground">{project.client}</span> :
-              null}
+              {/* Client name (logos removed except on Marsh pages) */}
+              {project.client &&
+              <span className="font-mono-label mb-4 text-muted-foreground">{project.client}</span>
+              }
               
               {!project.heroSubtitle &&
               <h1 className="mb-6 text-4xl font-black tracking-tighter text-foreground md:text-5xl">{project.title}</h1>
