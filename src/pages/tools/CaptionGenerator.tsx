@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Copy, Check, Lock, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import ToolLayout from "@/components/tools/ToolLayout";
@@ -12,12 +12,18 @@ import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
 const businessTypes = ["Restaurant", "Salon", "Retail", "Service Business", "Other"];
 const tones = ["Friendly", "Professional", "Witty", "Urgent"];
 const platforms = ["Instagram", "Facebook", "LinkedIn"];
+const postTypes = ["Offer", "Event", "Product", "Tip", "Behind the Scenes", "Announcement"];
 
 const CopyBtn = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
   return (
     <button
-      onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
+      onClick={() => {
+        navigator.clipboard.writeText(text);
+        setCopied(true);
+        toast({ title: "Copied!", description: "Caption copied to clipboard" });
+        setTimeout(() => setCopied(false), 2000);
+      }}
       className="shrink-0 rounded-md border border-border p-2 text-muted-foreground transition-colors hover:text-primary"
     >
       {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
@@ -28,6 +34,7 @@ const CopyBtn = ({ text }: { text: string }) => {
 const CaptionGenerator = () => {
   const [businessType, setBusinessType] = useState("");
   const [postAbout, setPostAbout] = useState("");
+  const [selectedPostType, setSelectedPostType] = useState("");
   const [tone, setTone] = useState("");
   const [platform, setPlatform] = useState("");
   const [captions, setCaptions] = useState<string[]>([]);
@@ -41,6 +48,7 @@ const CaptionGenerator = () => {
     }
     setGenerating(true);
     try {
+      const context = selectedPostType ? `[Post type: ${selectedPostType}] ${postAbout.trim()}` : postAbout.trim();
       const res = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-captions`,
         {
@@ -49,7 +57,7 @@ const CaptionGenerator = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
           },
-          body: JSON.stringify({ businessType, postAbout: postAbout.trim(), tone, platform }),
+          body: JSON.stringify({ businessType, postAbout: context, tone, platform }),
         }
       );
       if (!res.ok) {
@@ -80,7 +88,35 @@ const CaptionGenerator = () => {
               {businessTypes.map((t) => (<SelectItem key={t} value={t}>{t}</SelectItem>))}
             </SelectContent>
           </Select>
-          <Input placeholder="What's the post about?" value={postAbout} onChange={(e) => setPostAbout(e.target.value)} />
+
+          <Textarea
+            placeholder="What's the post about?"
+            value={postAbout}
+            onChange={(e) => setPostAbout(e.target.value)}
+            rows={4}
+            className="resize-y"
+          />
+
+          {/* Post type pills */}
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-muted-foreground">Post type (optional)</p>
+            <div className="flex flex-wrap gap-2">
+              {postTypes.map((pt) => (
+                <button
+                  key={pt}
+                  onClick={() => setSelectedPostType(selectedPostType === pt ? "" : pt)}
+                  className={`rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
+                    selectedPostType === pt
+                      ? "bg-primary text-primary-foreground"
+                      : "border border-border bg-card text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {pt}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <Select value={tone} onValueChange={setTone}>
             <SelectTrigger><SelectValue placeholder="Tone" /></SelectTrigger>
             <SelectContent>
@@ -94,53 +130,64 @@ const CaptionGenerator = () => {
             </SelectContent>
           </Select>
           <Button onClick={handleGenerate} disabled={generating} className="w-full">
-            {generating ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating…</> : "Generate Captions"}
+            {generating ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Writing your captions…</> : "Generate Captions"}
           </Button>
         </motion.div>
       ) : (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-          {/* Caption 1 — free */}
-          <div className="rounded-xl border border-border bg-card p-5">
-            <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Caption 1</p>
-            <div className="flex items-start gap-3">
-              <p className="flex-1 whitespace-pre-wrap text-sm text-foreground">{captions[0]}</p>
-              <CopyBtn text={captions[0]} />
+          {/* Section heading */}
+          <div className="rounded-xl border border-border bg-muted/50 p-6">
+            <h2 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">Your Captions</h2>
+
+            {/* Caption 1 — free */}
+            <div className="rounded-xl border border-border bg-card p-5">
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Option 1</p>
+              <div className="flex items-start gap-3">
+                <p className="flex-1 whitespace-pre-wrap text-sm text-foreground">{captions[0]}</p>
+                <CopyBtn text={captions[0]} />
+              </div>
             </div>
+
+            {/* Captions 2 & 3 — gated */}
+            {!unlocked ? (
+              <div className="mt-4 space-y-4">
+                {[1, 2].map((idx) => (
+                  <div key={idx} className="relative overflow-hidden rounded-xl border border-border bg-card p-5">
+                    <div className="pointer-events-none select-none blur-sm">
+                      <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Option {idx + 1}</p>
+                      <p className="text-sm text-muted-foreground">Another great caption option awaits…</p>
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center bg-card/60">
+                      <Lock className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                  </div>
+                ))}
+                <EmailGate toolUsed="caption-generator" businessType={businessType} ctaLabel="Get your free captions →" onUnlock={() => setUnlocked(true)} />
+              </div>
+            ) : (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-4">
+                {captions.slice(1).map((cap, i) => (
+                  <div key={i} className="rounded-xl border border-border bg-card p-5">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Option {i + 2}</p>
+                    <div className="flex items-start gap-3">
+                      <p className="flex-1 whitespace-pre-wrap text-sm text-foreground">{cap}</p>
+                      <CopyBtn text={cap} />
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            )}
           </div>
 
-          {/* Captions 2 & 3 — gated */}
-          {!unlocked ? (
-            <div className="space-y-4">
-              {[1, 2].map((idx) => (
-                <div key={idx} className="relative overflow-hidden rounded-xl border border-border bg-card p-5">
-                  <div className="pointer-events-none select-none blur-sm">
-                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Caption {idx + 1}</p>
-                    <p className="text-sm text-muted-foreground">Another great caption option awaits…</p>
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center bg-card/60">
-                    <Lock className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                </div>
-              ))}
-              <EmailGate toolUsed="caption-generator" businessType={businessType} ctaLabel="Get your free captions →" onUnlock={() => setUnlocked(true)} />
-            </div>
-          ) : (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-              {captions.slice(1).map((cap, i) => (
-                <div key={i} className="rounded-xl border border-border bg-card p-5">
-                  <p className="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Caption {i + 2}</p>
-                  <div className="flex items-start gap-3">
-                    <p className="flex-1 whitespace-pre-wrap text-sm text-foreground">{cap}</p>
-                    <CopyBtn text={cap} />
-                  </div>
-                </div>
-              ))}
-              <ServiceUpsellCard
-                title="Need someone to handle this consistently?"
-                description="Ask me about Social Media Setup — I'll create a content system that runs on autopilot."
-                linkTo="/services#social"
-              />
-            </motion.div>
+          {/* CTA */}
+          {unlocked && (
+            <ServiceUpsellCard
+              title="Want a full month of captions planned and scheduled?"
+              description="I'll create a content calendar, write all your captions, and schedule them — so you never have to think about it."
+              linkTo="https://calendly.com/lacunadigital/30min"
+              linkLabel="Let's talk →"
+              external
+            />
           )}
         </motion.div>
       )}

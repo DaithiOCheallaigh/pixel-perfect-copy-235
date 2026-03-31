@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Plus, Trash2, Loader2, ExternalLink } from "lucide-react";
+import { Plus, Trash2, Loader2, ExternalLink, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -9,7 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 import ToolLayout from "@/components/tools/ToolLayout";
 import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
 
-const emojis = ["🚀", "💼", "🎨", "☕", "🌿", "⚡", "🎯", "💡"];
 const themes = [
   { value: "dark", label: "Dark", bg: "bg-[hsl(0,0%,4%)]", text: "text-white" },
   { value: "light", label: "Light", bg: "bg-white", text: "text-[hsl(0,0%,10%)]" },
@@ -22,7 +21,8 @@ const LinkInBio = () => {
   const [name, setName] = useState("");
   const [tagline, setTagline] = useState("");
   const [links, setLinks] = useState<LinkItem[]>([{ label: "", url: "" }]);
-  const [emoji, setEmoji] = useState("🚀");
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [theme, setTheme] = useState("dark");
   const [published, setPublished] = useState(false);
   const [slug, setSlug] = useState("");
@@ -38,8 +38,24 @@ const LinkInBio = () => {
     setLinks(next);
   };
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => setLogoPreview(ev.target?.result as string);
+    reader.readAsDataURL(file);
+  };
+
   const selectedTheme = themes.find((t) => t.value === theme) || themes[0];
   const validLinks = links.filter((l) => l.label.trim() && l.url.trim());
+
+  const initials = name
+    .trim()
+    .split(/\s+/)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   const handlePublish = async () => {
     if (!name.trim()) { toast({ title: "Please enter a name for your page", variant: "destructive" }); return; }
@@ -49,14 +65,12 @@ const LinkInBio = () => {
     setSubmitting(true);
     const generatedSlug = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || `user-${Date.now()}`;
     try {
-      // Save lead
       await supabase.from("tool_leads" as any).insert({
         name: userName.trim(),
         email: email.trim(),
         tool_used: "link-in-bio",
         business_type: "",
       });
-      // Save bio page
       const { error } = await supabase.from("bio_pages" as any).insert({
         slug: generatedSlug,
         name: name.trim(),
@@ -88,19 +102,23 @@ const LinkInBio = () => {
           <Input placeholder="Name or business name" value={name} onChange={(e) => setName(e.target.value)} />
           <Input placeholder="Tagline (one line)" value={tagline} onChange={(e) => setTagline(e.target.value)} />
 
+          {/* Logo upload */}
           <div className="space-y-1">
-            <p className="text-sm font-medium text-muted-foreground">Profile icon</p>
-            <div className="flex gap-2">
-              {emojis.map((e) => (
-                <button
-                  key={e}
-                  onClick={() => setEmoji(e)}
-                  className={`flex h-10 w-10 items-center justify-center rounded-lg border text-lg transition-colors ${emoji === e ? "border-primary bg-primary/10" : "border-border"}`}
-                >
-                  {e}
-                </button>
-              ))}
-            </div>
+            <p className="text-sm font-medium text-muted-foreground">Logo</p>
+            <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-dashed border-border bg-muted transition-colors hover:border-primary"
+            >
+              {logoPreview ? (
+                <img src={logoPreview} alt="Logo" className="h-full w-full object-cover" />
+              ) : (
+                <div className="flex flex-col items-center gap-1">
+                  <Upload className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-[10px] text-muted-foreground">Upload</span>
+                </div>
+              )}
+            </button>
           </div>
 
           <Select value={theme} onValueChange={setTheme}>
@@ -129,7 +147,16 @@ const LinkInBio = () => {
         <div className="flex items-start justify-center">
           <div className={`w-full max-w-[320px] rounded-3xl border border-border ${selectedTheme.bg} p-8 shadow-xl`}>
             <div className="flex flex-col items-center text-center">
-              <span className="text-4xl">{emoji}</span>
+              {/* Logo / Initials */}
+              <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-border bg-muted">
+                {logoPreview ? (
+                  <img src={logoPreview} alt="Logo" className="h-full w-full object-cover" />
+                ) : (
+                  <span className={`text-lg font-bold ${selectedTheme.text === "text-white" ? "text-foreground" : "text-foreground"}`}>
+                    {initials || "?"}
+                  </span>
+                )}
+              </div>
               <h2 className={`mt-3 text-lg font-bold ${selectedTheme.text}`}>{name || "Your Name"}</h2>
               <p className={`mt-1 text-sm opacity-70 ${selectedTheme.text}`}>{tagline || "Your tagline"}</p>
               <div className="mt-6 w-full space-y-3">
@@ -175,6 +202,18 @@ const LinkInBio = () => {
               className="mt-2 inline-block text-sm font-medium text-primary underline"
             >
               lacunadigital.io/bio/{slug}
+            </a>
+            <p className="mt-3 text-sm text-muted-foreground">
+              We're setting up your page — check your email shortly.<br />
+              Want a full website for your business?
+            </p>
+            <a
+              href="https://calendly.com/lacunadigital/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              Book a free call →
             </a>
           </div>
           <ServiceUpsellCard
