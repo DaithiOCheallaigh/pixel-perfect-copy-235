@@ -826,10 +826,10 @@ const CaseStudy = () => {
                       return (
                         <div className="mb-8">
                           {/* Desktop: side by side */}
-                          <div className="hidden md:grid md:grid-cols-2 gap-4">
+                          <div className="hidden md:grid md:grid-cols-2 gap-4" style={{ height: '500px' }}>
                             {engagementImages.map((img, i) => (
-                              <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                              <div key={i} className="overflow-hidden rounded-xl shadow-md h-full">
+                                <img src={img.src} alt={img.alt} className={`w-full h-full object-cover ${i === 1 ? 'object-bottom' : ''}`} loading="lazy" />
                               </div>
                             ))}
                           </div>
