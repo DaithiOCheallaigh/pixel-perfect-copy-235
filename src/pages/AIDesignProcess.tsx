@@ -89,6 +89,7 @@ const tools = [
 const AIDesignProcess = () => {
   return (
     <main className="min-h-screen pt-24">
+      <SEO title="AI Design Process" description="How I use AI tools to deliver faster, smarter design work without sacrificing quality or craft." url="/ai-design-process" />
       {/* Hero */}
       <section className="relative px-6 py-20 md:px-12 lg:px-24">
         <GlowingStarsBackgroundCard className="absolute inset-0">

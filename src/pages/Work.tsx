@@ -4,9 +4,11 @@ import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
+import { SEO } from "../components/SEO";
 
 const Work = () => (
   <main className="pt-24">
+    <SEO title="Work" description="Selected case studies from enterprise tools, consumer apps, and design systems — designed and built by Dave Kelly." url="/work" />
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>

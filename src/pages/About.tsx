@@ -79,6 +79,7 @@ const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: stri
 
 const About = () => (
   <main className="pt-24">
+    <SEO title="About" description="I'm Dave Kelly — freelance product designer based in North County Dublin. I work directly with founders and teams as a one-person digital ops team." url="/about" />
     {/* Personal Section */}
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
