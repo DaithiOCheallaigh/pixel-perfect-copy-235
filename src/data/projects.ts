@@ -405,7 +405,7 @@ export const projects: Project[] = [
     client: "TipDirect",
     clientLogo: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDirect_Logo.webp",
     pillImage: "/images/work/app-pill.webp",
-    headerImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDIrect_App_Header.webp",
+    headerImage: "/images/TipDIrect_App_Header.webp",
     
     toolsImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Tools-1.webp",
     toolsUsedImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Group-2.webp",
