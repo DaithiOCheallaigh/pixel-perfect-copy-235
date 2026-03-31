@@ -216,7 +216,10 @@ const CaseStudy = () => {
               {project.toolsImage &&
               <div className="mb-6">
                   <span className="font-mono-label mb-2 block text-muted-foreground">Tools</span>
-                  <img src={project.toolsImage} alt="Tools used" className="max-w-[200px]" loading="lazy" />
+                  <img src={project.toolsImage} alt="Tools used" className={`max-w-[200px] ${project.toolsUsedImage ? 'hidden md:block' : ''}`} loading="lazy" />
+                  {project.toolsUsedImage &&
+                    <img src={project.toolsUsedImage} alt="Tools used" className="max-w-[200px] md:hidden" loading="lazy" />
+                  }
                 </div>
               }
 
