@@ -774,6 +774,15 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* TipDirect App: Platform Analysis screenshot after Trimming Down */}
+              {project.id === "tipdirect-app" && findImage("Information architecture") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Information architecture")!.src} alt="Platform analysis" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
               {/* Engagement Considerations */}
               {project.engagementConsiderations &&
             <ScrollReveal>
