@@ -38,10 +38,8 @@ const ChatWidget = () => {
     const style = document.createElement("style");
     style.id = "hide-wa-widget";
     style.textContent = `
-      script[src*="whatsapp"] + *, 
-      [data-client="lacuna"] ~ *,
       iframe[src*="whatsapp"],
-      div[style*="position: fixed"][style*="bottom"][style*="right"]:not([class]) {
+      div[style*="position: fixed"][style*="bottom"][style*="right"]:not([class]):not([data-radix-popper-content-wrapper]) {
         display: none !important;
       }
     `;
