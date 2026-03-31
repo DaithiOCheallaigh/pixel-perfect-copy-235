@@ -860,21 +860,23 @@ const CaseStudy = () => {
                     {/* TipDirect App: Design system images */}
                     {project.id === "tipdirect-app" &&
                   <div className="space-y-4">
-                        {findImage("Colour system") &&
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                            <img src={findImage("Colour system")!.src} alt="Colour palette" className="w-full object-cover" loading="lazy" />
-                          </div>
-                      }
-                        {findImage("Typography system") &&
-                      <div className="overflow-hidden rounded-xl shadow-md">
-                            <img src={findImage("Typography system")!.src} alt="Typography" className="w-full object-cover" loading="lazy" />
-                          </div>
-                      }
                         {findImage("Components overview") &&
                       <div className="overflow-hidden rounded-xl shadow-md">
                             <img src={findImage("Components overview")!.src} alt="Design system overview" className="w-full object-cover" loading="lazy" />
                           </div>
                       }
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {findImage("Colour system") &&
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                              <img src={findImage("Colour system")!.src} alt="Colour palette" className="w-full object-cover" loading="lazy" />
+                            </div>
+                        }
+                          {findImage("Typography system") &&
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                              <img src={findImage("Typography system")!.src} alt="Typography" className="w-full object-cover" loading="lazy" />
+                            </div>
+                        }
+                        </div>
                       </div>
                   }
                   </div>
