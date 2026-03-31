@@ -248,18 +248,23 @@ const WhatsAppScriptGenerator = () => {
                   />
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setTakesBookings(!takesBookings)}
-                    className={`h-5 w-9 rounded-full transition-colors ${takesBookings ? "bg-primary" : "bg-border"}`}
-                  >
-                    <motion.div
-                      className="h-4 w-4 rounded-full bg-foreground"
-                      animate={{ x: takesBookings ? 18 : 2 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    />
-                  </button>
-                  <span className="text-sm text-muted-foreground">Do you take bookings?</span>
+                <div>
+                  <label className="mb-2 block text-sm font-medium">Do you take bookings?</label>
+                  <div className="flex gap-2">
+                    {[true, false].map((val) => (
+                      <button
+                        key={String(val)}
+                        onClick={() => setTakesBookings(val)}
+                        className={`rounded-full px-5 py-1.5 text-sm font-medium transition-colors ${
+                          takesBookings === val
+                            ? "bg-primary text-primary-foreground"
+                            : "border border-border bg-card text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        {val ? "Yes" : "No"}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 {takesBookings && (
