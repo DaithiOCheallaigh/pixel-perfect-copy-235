@@ -108,11 +108,18 @@ const CaseStudy = () => {
   "Tech stack", "Survey example", "Mind map", "Research document",
   "User flow", "Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"];
 
+  // For tipdirect-app, all images are placed inline in specific sections
+  const tipdirectAppInlineAlts = [
+  "Information architecture", "App overview",
+  "Payment Links", "Tipping Groups", "Tiered Plans", "Voice Reviews", "Analytics", "Group Management",
+  "Colour system", "Typography system", "Components overview", "Tour guides"];
+
   const galleryImages = project.images?.filter((img) =>
   img.alt !== "AI Review Steps" && img.alt !== "Mixpanel analytics report" &&
   !(project.id === "booking-app" && bookingAppInlineAlts.includes(img.alt)) &&
   !(project.id === "whitelabel" && whitelabelInlineAlts.includes(img.alt)) &&
-  !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt))
+  !(project.id === "digital-tipping" && digitalTippingInlineAlts.includes(img.alt)) &&
+  !(project.id === "tipdirect-app" && tipdirectAppInlineAlts.includes(img.alt))
   ) || [];
 
   // Helper to find booking-app images by alt
@@ -209,7 +216,10 @@ const CaseStudy = () => {
               {project.toolsImage &&
               <div className="mb-6">
                   <span className="font-mono-label mb-2 block text-muted-foreground">Tools</span>
-                  <img src={project.toolsImage} alt="Tools used" className="max-w-[200px]" loading="lazy" />
+                  <img src={project.toolsImage} alt="Tools used" className={`max-w-[200px] ${project.toolsUsedImage ? 'hidden md:block' : ''}`} loading="lazy" />
+                  {project.toolsUsedImage &&
+                    <img src={project.toolsUsedImage} alt="Tools used" className="max-w-[200px] md:hidden" loading="lazy" />
+                  }
                 </div>
               }
 
@@ -764,11 +774,26 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* TipDirect App: Platform Analysis screenshot after Trimming Down */}
+              {project.id === "tipdirect-app" && findImage("Information architecture") &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Information architecture")!.src} alt="Platform analysis" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
               {/* Engagement Considerations */}
               {project.engagementConsiderations &&
             <ScrollReveal>
                   <div>
                     <SectionLabel>Considerations for Enhancing User Engagement</SectionLabel>
+                    {/* TipDirect App: App visual paired with engagement section */}
+                    {project.id === "tipdirect-app" && findImage("App overview") &&
+                  <div className="mb-8 overflow-hidden rounded-xl shadow-md">
+                        <img src={findImage("App overview")!.src} alt="TipDirect App" className="w-full object-cover" loading="lazy" />
+                      </div>
+                  }
                     <div className="grid gap-4 md:grid-cols-2">
                       {project.engagementConsiderations.map((item, i) =>
                   <div key={i} className="rounded-xl bg-card p-6">
@@ -787,6 +812,26 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Design System</SectionLabel>
                     <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.designSystemDescription}</p>
+                    {/* TipDirect App: Design system images */}
+                    {project.id === "tipdirect-app" &&
+                  <div className="space-y-4">
+                        {findImage("Colour system") &&
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={findImage("Colour system")!.src} alt="Colour palette" className="w-full object-cover" loading="lazy" />
+                          </div>
+                      }
+                        {findImage("Typography system") &&
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={findImage("Typography system")!.src} alt="Typography" className="w-full object-cover" loading="lazy" />
+                          </div>
+                      }
+                        {findImage("Components overview") &&
+                      <div className="overflow-hidden rounded-xl shadow-md">
+                            <img src={findImage("Components overview")!.src} alt="Design system overview" className="w-full object-cover" loading="lazy" />
+                          </div>
+                      }
+                      </div>
+                  }
                   </div>
                 </ScrollReveal>
             }
@@ -1146,7 +1191,25 @@ const CaseStudy = () => {
         </section>
       }
 
-      {/* Core Functionality */}
+      {/* YouTube Prototype Video Embed */}
+      {project.youtubeEmbed &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="overflow-hidden rounded-xl shadow-md" style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+                <iframe
+                src={project.youtubeEmbed.replace("watch?v=", "embed/")}
+                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Prototype walkthrough" />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      }
+
       {project.coreFunctionality &&
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
@@ -1334,6 +1397,21 @@ const CaseStudy = () => {
       <section className="px-6 py-12 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
+              {project.id === "tipdirect-app" && findImage("Tour guides") ?
+              <div className="grid gap-12 md:grid-cols-2 items-start">
+                  <div className="max-w-3xl">
+                    <SectionLabel>Release & Reception</SectionLabel>
+                    <div className="space-y-4">
+                      {project.releaseReception.split("\n\n").map((p, i) =>
+                    <p key={i} className="text-[15px] leading-[1.7] text-muted-foreground">{p}</p>
+                    )}
+                    </div>
+                  </div>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src={findImage("Tour guides")!.src} alt="Tour guides" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </div>
+              :
               <div className="max-w-3xl">
                 <SectionLabel>Release & Reception</SectionLabel>
                 <div className="space-y-4">
@@ -1342,6 +1420,7 @@ const CaseStudy = () => {
                 )}
                 </div>
               </div>
+              }
             </ScrollReveal>
           </div>
         </section>
