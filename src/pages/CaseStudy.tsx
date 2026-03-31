@@ -797,10 +797,26 @@ const CaseStudy = () => {
                   <div>
                     <SectionLabel>Considerations for Enhancing User Engagement</SectionLabel>
                     {/* TipDirect App: App visual paired with engagement section */}
-                    {project.id === "tipdirect-app" && findImage("App overview") &&
-                  <div className="mb-8 overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("App overview")!.src} alt="TipDirect App" className="w-full object-cover" loading="lazy" />
-                      </div>
+                    {project.id === "tipdirect-app" && (() => {
+                      const engagementImages = [
+                        { src: "/images/Resources.webp", alt: "TipDirect Resources" },
+                        { src: "/images/Tech.webp", alt: "TipDirect Tech" },
+                      ];
+                      return (
+                        <div className="mb-8">
+                          {/* Desktop: side by side */}
+                          <div className="hidden md:grid md:grid-cols-2 gap-4">
+                            {engagementImages.map((img, i) => (
+                              <div key={i} className="overflow-hidden rounded-xl shadow-md">
+                                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                              </div>
+                            ))}
+                          </div>
+                          {/* Mobile: carousel */}
+                          <EngagementCarousel images={engagementImages} />
+                        </div>
+                      );
+                    })()
                   }
                     <div className="grid gap-4 md:grid-cols-2">
                       {project.engagementConsiderations.map((item, i) =>
