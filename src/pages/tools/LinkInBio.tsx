@@ -65,6 +65,22 @@ const LinkInBio = () => {
     setSubmitting(true);
     const generatedSlug = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || `user-${Date.now()}`;
     try {
+      let uploadedLogoUrl: string | null = null;
+
+      // Upload logo to storage if one was selected
+      if (fileInputRef.current?.files?.[0]) {
+        const file = fileInputRef.current.files[0];
+        const ext = file.name.split(".").pop() || "png";
+        const path = `${generatedSlug}-${Date.now()}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("bio-logos")
+          .upload(path, file, { upsert: true });
+        if (!uploadError) {
+          const { data: urlData } = supabase.storage.from("bio-logos").getPublicUrl(path);
+          uploadedLogoUrl = urlData.publicUrl;
+        }
+      }
+
       await supabase.from("tool_leads" as any).insert({
         name: userName.trim(),
         email: email.trim(),
@@ -78,6 +94,7 @@ const LinkInBio = () => {
         links: validLinks,
         theme,
         email: email.trim(),
+        logo_url: uploadedLogoUrl,
       });
       if (error) throw error;
       setSlug(generatedSlug);
