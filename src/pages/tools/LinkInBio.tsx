@@ -86,6 +86,20 @@ const LinkInBio = () => {
         tool_used: "link-in-bio",
         business_type: "",
       });
+      // Best-effort external lead capture
+      fetch("https://lacuna-lead-manager.vercel.app/api/public/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tool: "link-in-bio",
+          name: userName.trim(),
+          email: email.trim(),
+          business_name: name.trim(),
+          slug: generatedSlug,
+          headline: tagline.trim(),
+          links: validLinks,
+        }),
+      }).catch(() => {});
       const { error } = await supabase.from("bio_pages" as any).insert({
         slug: generatedSlug,
         name: name.trim(),
