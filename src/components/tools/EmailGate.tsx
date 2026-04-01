@@ -30,6 +30,17 @@ const EmailGate = ({ toolUsed, businessType = "", ctaLabel, onUnlock }: EmailGat
         tool_used: toolUsed,
         business_type: businessType,
       });
+      // Best-effort external lead capture
+      fetch("https://lacuna-lead-manager.vercel.app/api/public/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tool: toolUsed,
+          name: name.trim(),
+          email: email.trim(),
+          business_type: businessType,
+        }),
+      }).catch(() => {});
       onUnlock();
     } catch {
       toast({ title: "Something went wrong — please try again", variant: "destructive" });
