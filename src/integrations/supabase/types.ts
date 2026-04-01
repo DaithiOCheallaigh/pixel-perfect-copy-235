@@ -20,6 +20,7 @@ export type Database = {
           email: string
           id: string
           links: Json
+          logo_url: string | null
           name: string
           slug: string
           tagline: string
@@ -30,6 +31,7 @@ export type Database = {
           email?: string
           id?: string
           links?: Json
+          logo_url?: string | null
           name: string
           slug: string
           tagline?: string
@@ -40,6 +42,7 @@ export type Database = {
           email?: string
           id?: string
           links?: Json
+          logo_url?: string | null
           name?: string
           slug?: string
           tagline?: string
