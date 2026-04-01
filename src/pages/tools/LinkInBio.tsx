@@ -12,7 +12,6 @@ import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
 const themes = [
   { value: "dark", label: "Dark", bg: "bg-[hsl(0,0%,4%)]", text: "text-white" },
   { value: "light", label: "Light", bg: "bg-white", text: "text-[hsl(0,0%,10%)]" },
-  { value: "pink", label: "Brand Pink", bg: "bg-[hsl(310,60%,15%)]", text: "text-white" },
 ];
 
 interface LinkItem { label: string; url: string }
