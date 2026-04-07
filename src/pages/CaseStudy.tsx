@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
@@ -101,6 +102,21 @@ const CaseStudy = () => {
   projects.find((p) => p.id === project.nextProject) :
   null;
 
+  // Lightbox state (must be before early return)
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [lightboxAlt, setLightboxAlt] = useState("");
+
+  const handleMainClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === "IMG") {
+      const img = target as HTMLImageElement;
+      if (img.naturalWidth < 200 || img.classList.contains("no-lightbox") || img.closest("nav") || img.closest("a")) return;
+      if (img.classList.contains("inline")) return;
+      setLightboxSrc(img.src);
+      setLightboxAlt(img.alt || "");
+    }
+  }, []);
+
   if (!project) {
     return (
       <main className="flex min-h-screen items-center justify-center pt-24">
@@ -160,7 +176,7 @@ const CaseStudy = () => {
   const seoDescription = caseDescriptions[project.id] || project.subtitle || `Case study: ${project.title}`;
 
   return (
-    <main className="pt-24">
+    <main className="pt-24" onClick={handleMainClick}>
       <SEO title={`Case Study — ${project.title}`} description={seoDescription} url={`/case/${project.id}`} />
       {/* Whitelabel / Digital Tipping: Full-width hero image */}
       {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "admin-dashboard") &&
@@ -690,10 +706,6 @@ const CaseStudy = () => {
                   })}
                     </div>
                     {galleryImages.filter((img) => ["Group overview"].includes(img.alt)).length > 0
-
-
-
-
 
 
 
@@ -1571,6 +1583,38 @@ const CaseStudy = () => {
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <AvailabilityCTA />
+
+      {/* Lightbox overlay */}
+      <AnimatePresence>
+        {lightboxSrc && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm cursor-zoom-out"
+            onClick={() => setLightboxSrc(null)}
+          >
+            <button
+              onClick={() => setLightboxSrc(null)}
+              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10"
+              aria-label="Close lightbox"
+            >
+              <X className="h-8 w-8" />
+            </button>
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              src={lightboxSrc}
+              alt={lightboxAlt}
+              className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>);
 };
 
