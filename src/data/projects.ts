@@ -263,7 +263,7 @@ export const projects: Project[] = [
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
     timeline: "Ongoing",
     client: "TipDirect",
-    clientLogo: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDirect_Logo.webp",
+    clientLogo: "",
     challengeImageRight: true,
     challengeImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TourGuides.webp",
     pillImage: "/images/work/admin-pill.webp",
