@@ -388,7 +388,7 @@ export const projects: Project[] = [
     componentFocused: "Rather than defaulting to bespoke, image-heavy page sections, I challenged myself to build a modular component system. Custom CTAs, testimonial carousels, feature comparison grids, and pricing blocks were all designed as reusable elements. This component-first approach meant the marketing team could assemble new landing pages without design support, significantly reducing time-to-publish for campaigns.",
     images: [
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDirect_CTA-1.webp", alt: "TipDirect CTA section with conversion-focused design", wide: true },
-      { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDIrect_Components-1.webp", alt: "Reusable component library built for TipDirect", wide: true },
+      
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Web_Mobile-1.webp", alt: "Mobile-first responsive design for tour operators", wide: true },
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDirect_SuccessStories-1.webp", alt: "Social proof and success stories section", wide: true },
     ],
