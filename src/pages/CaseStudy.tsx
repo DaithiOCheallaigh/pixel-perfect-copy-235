@@ -1297,8 +1297,8 @@ const CaseStudy = () => {
                   {project.features.map((feature, i) => {
                     const isWide = feature.image && (feature.title === "Resources" || feature.title === "Setup");
                     return (
-                      <ScrollReveal key={i} delay={i * 0.06}>
-                        <div className={`relative overflow-hidden rounded-2xl bg-card ${isWide ? 'md:col-span-2' : ''}`}>
+                      <ScrollReveal key={i} delay={i * 0.06} className={isWide ? 'md:col-span-2' : ''}>
+                        <div className="relative overflow-hidden rounded-2xl bg-card h-full">
                           <ShineBorder shineColor={["#EC4899", "#8B5CF6", "#EC4899"]} duration={10} borderWidth={1} />
                           {feature.image && (
                             <div className="overflow-hidden">
