@@ -102,6 +102,21 @@ const CaseStudy = () => {
   projects.find((p) => p.id === project.nextProject) :
   null;
 
+  // Lightbox state (must be before early return)
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [lightboxAlt, setLightboxAlt] = useState("");
+
+  const handleMainClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === "IMG") {
+      const img = target as HTMLImageElement;
+      if (img.naturalWidth < 200 || img.classList.contains("no-lightbox") || img.closest("nav") || img.closest("a")) return;
+      if (img.classList.contains("inline")) return;
+      setLightboxSrc(img.src);
+      setLightboxAlt(img.alt || "");
+    }
+  }, []);
+
   if (!project) {
     return (
       <main className="flex min-h-screen items-center justify-center pt-24">
