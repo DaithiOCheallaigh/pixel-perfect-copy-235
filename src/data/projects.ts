@@ -24,7 +24,7 @@ export interface Project {
   clientLogo?: string;
   researchFindings?: string[];
   howItWorks?: { step: string; title: string; text: string }[];
-  features?: { title: string; desc: string }[];
+  features?: { title: string; desc: string; image?: string }[];
   designProcess?: { num: string; title: string; desc: string }[];
   designProcessDetails?: { num: string; title: string; text: string; outcomes?: string; image?: string }[];
   sharingMethods?: string[];
