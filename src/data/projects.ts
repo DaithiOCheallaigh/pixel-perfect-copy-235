@@ -290,7 +290,7 @@ export const projects: Project[] = [
         title: "Research & Ideation",
         text: "This phase consisted of the following:\n- Initial UX exercises to validate the problem space and opportunities\n- Stakeholder interviews to understand pain points and appetite\n- User journey mapping\n- Define project scope and success metrics",
         outcomes: "As a crucial part of any new product design, this phase uncovered several challenges and opportunities for building the product. Key findings included how users would interact with the dashboard, with major emphasis on mobile-friendly administration for on-the-go management and ensuring tipping guests wouldn't need to download additional software.",
-        image: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/UX_InitalPhases.webp",
+        image: "/images/admin-ux-initial-phases.webp",
       },
       {
         num: "02",
@@ -309,7 +309,7 @@ export const projects: Project[] = [
         num: "04",
         title: "Establishing a Design System",
         text: "To establish a scalable design system, I implemented a reference-based architecture in Figma that emphasised component reusability and standardisation. Creating a comprehensive library of atomic components (buttons, form fields, typography) that served as building blocks for more complex interface elements. The system follows a variant-based approach to manage state changes and contextual adaptations, minimising redundant design work and ensuring consistency.\n\nBy implementing naming conventions and organisation structures, I was to quickly locate and build upon components. This systematic approach reduced decision making during feature development, accelerated the design-to-development handoff process and provided easy to follow, consistent implementation patterns, also ensuring visual coherence across the entire platform as it scaled.",
-        image: "/images/admin-ux-initial-phases.webp",
+        image: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/DesignSystem_header.webp",
       },
       {
         num: "05",
