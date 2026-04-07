@@ -8,6 +8,10 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { SEO } from "../components/SEO";
 import { ShineBorder } from "../components/ui/shine-border";
+import tipdirectPricing from "../assets/images/tipdirect-pricing.webp";
+import tipdirectSuccessStories from "../assets/images/tipdirect-success-stories.webp";
+import tipdirectCta from "../assets/images/tipdirect-cta.webp";
+import tipdirectComponents from "../assets/images/tipdirect-components.webp";
 
 const EngagementCarousel = ({ images }: { images: { src: string; alt: string }[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -1055,6 +1059,26 @@ const CaseStudy = () => {
                   </div>
                 </ScrollReveal>
             }
+
+              {/* TipDirect Website Screenshots Grid */}
+              {project.id === "website-tipdirect" &&
+                <ScrollReveal>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="overflow-hidden rounded-2xl border border-border">
+                      <img src={tipdirectPricing} alt="TipDirect pricing plans" className="w-full object-contain" loading="lazy" />
+                    </div>
+                    <div className="overflow-hidden rounded-2xl border border-border">
+                      <img src={tipdirectSuccessStories} alt="TipDirect success stories" className="w-full object-contain" loading="lazy" />
+                    </div>
+                    <div className="overflow-hidden rounded-2xl border border-border">
+                      <img src={tipdirectCta} alt="TipDirect CTA section" className="w-full object-contain" loading="lazy" />
+                    </div>
+                    <div className="overflow-hidden rounded-2xl border border-border">
+                      <img src={tipdirectComponents} alt="TipDirect components overview" className="w-full object-contain" loading="lazy" />
+                    </div>
+                  </div>
+                </ScrollReveal>
+              }
 
               {/* Wireframes row (Booking App) */}
               {project.id === "booking-app" &&
