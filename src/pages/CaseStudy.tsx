@@ -1070,9 +1070,6 @@ const CaseStudy = () => {
                     <div className="overflow-hidden rounded-2xl border border-border">
                       <img src={tipdirectCta} alt="TipDirect CTA section" className="w-full object-contain" loading="lazy" />
                     </div>
-                    <div className="overflow-hidden rounded-2xl border border-border">
-                      <img src={tipdirectComponents} alt="TipDirect components overview" className="w-full object-contain" loading="lazy" />
-                    </div>
                   </div>
                 </ScrollReveal>
               }
