@@ -1068,9 +1068,6 @@ const CaseStudy = () => {
                       <img src={tipdirectPricing} alt="TipDirect pricing plans" className="w-full object-contain" loading="lazy" />
                     </div>
                     <div className="overflow-hidden rounded-2xl border border-border">
-                      <img src={tipdirectSuccessStories} alt="TipDirect success stories" className="w-full object-contain" loading="lazy" />
-                    </div>
-                    <div className="overflow-hidden rounded-2xl border border-border">
                       <img src={tipdirectCta} alt="TipDirect CTA section" className="w-full object-contain" loading="lazy" />
                     </div>
                     <div className="overflow-hidden rounded-2xl border border-border">
