@@ -406,14 +406,6 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Full-width image before Initial Approach (booking-app: User journey map) */}
-              {project.id === "booking-app" && findImage("User journey map") &&
-            <ScrollReveal>
-                  <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src={findImage("User journey map")!.src} alt="User journey map" className="w-full object-cover" loading="lazy" />
-                  </div>
-                </ScrollReveal>
-            }
 
               {/* Image Gallery (non-booking-app) */}
               {project.id !== "booking-app" && galleryImages.length > 0 &&
