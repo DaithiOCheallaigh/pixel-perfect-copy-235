@@ -327,8 +327,8 @@ export const projects: Project[] = [
       },
     ],
     features: [
-      { title: "Dashboard", desc: "Easy access to tipping methods, a run-down of daily activity, display tipping group information and everyday functionality" },
-      { title: "Get Tips", desc: "Everything needed to access and gather tips on the go: QR codes, personal tip links & printouts" },
+      { title: "Dashboard", desc: "Easy access to tipping methods, a run-down of daily activity, display tipping group information and everyday functionality", image: "/images/admin-dashboard-feature.webp" },
+      { title: "Get Tips", desc: "Everything needed to access and gather tips on the go: QR codes, personal tip links & printouts", image: "/images/admin-gettips.webp" },
       { title: "Profile", desc: "Profile photo, details, bio and preferred tip amounts & currency. Personalised accounts perform better", image: "/images/admin-profile.webp" },
       { title: "Payments", desc: "Track all payments and their status on the way to your account", image: "/images/admin-payments.webp" },
       { title: "Setup", desc: "For admins, setup reviews link, social & custom links", image: "/images/admin-reviews.webp" },
