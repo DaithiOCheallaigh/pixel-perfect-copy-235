@@ -375,3 +375,8 @@ html, body {
     offset-distance: 100%;
   }
 }
+
+/* Case study lightbox-enabled images */
+main img:not(.no-lightbox):not(.inline) {
+  cursor: zoom-in;
+}
