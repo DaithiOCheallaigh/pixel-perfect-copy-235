@@ -1056,6 +1056,26 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* TipDirect Website Screenshots Grid */}
+              {project.id === "website-tipdirect" &&
+                <ScrollReveal>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="overflow-hidden rounded-2xl border border-border">
+                      <img src={tipdirectPricing} alt="TipDirect pricing plans" className="w-full object-contain" loading="lazy" />
+                    </div>
+                    <div className="overflow-hidden rounded-2xl border border-border">
+                      <img src={tipdirectSuccessStories} alt="TipDirect success stories" className="w-full object-contain" loading="lazy" />
+                    </div>
+                    <div className="overflow-hidden rounded-2xl border border-border">
+                      <img src={tipdirectCta} alt="TipDirect CTA section" className="w-full object-contain" loading="lazy" />
+                    </div>
+                    <div className="overflow-hidden rounded-2xl border border-border">
+                      <img src={tipdirectComponents} alt="TipDirect components overview" className="w-full object-contain" loading="lazy" />
+                    </div>
+                  </div>
+                </ScrollReveal>
+              }
+
               {/* Wireframes row (Booking App) */}
               {project.id === "booking-app" &&
             <ScrollReveal>
