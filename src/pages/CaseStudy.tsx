@@ -1300,7 +1300,6 @@ const CaseStudy = () => {
                       <ScrollReveal key={i} delay={i * 0.06} className={isWide ? 'md:col-span-2' : ''}>
                         <div className="relative overflow-hidden rounded-2xl bg-card h-full border border-primary/30">
                           {feature.image && (
-                          {feature.image && (
                             <div className="overflow-hidden">
                               <img src={feature.image} alt={feature.title} className="w-full object-cover" loading="lazy" />
                             </div>
