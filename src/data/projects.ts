@@ -267,7 +267,7 @@ export const projects: Project[] = [
     challengeImageRight: true,
     challengeImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TourGuides.webp",
     pillImage: "/images/work/admin-pill.webp",
-    headerImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDirectHeader_Web-2.webp",
+    headerImage: "/images/admin-dashboard-header.webp",
     mobileImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/TipDirect_headerMobileWeb.webp",
     toolsImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Tools-1.webp",
     toolsUsedImage: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Group-2.webp",
