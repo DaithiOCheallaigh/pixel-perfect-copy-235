@@ -731,8 +731,9 @@ const CaseStudy = () => {
                     <SectionLabel>Building the Feature</SectionLabel>
                     <p className="mb-6 text-[15px] leading-[1.7] text-muted-foreground">{project.buildingTheFeature}</p>
                     {inlineImages.filter((img) => img.alt === "AI Review Steps").map((img, i) =>
-                <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                        <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                <div key={i} className="relative overflow-hidden rounded-2xl">
+                        <div className="absolute -inset-4 rounded-3xl bg-primary/20 blur-2xl pointer-events-none" />
+                        <img src={img.src} alt={img.alt} className="relative w-full object-cover rounded-2xl" loading="lazy" />
                       </div>
                 )}
                   </div>
