@@ -692,6 +692,22 @@ const CaseStudy = () => {
                     </div>
                     {galleryImages.filter((img) => ["Group overview"].includes(img.alt)).length > 0
 
+  // Lightbox state
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [lightboxAlt, setLightboxAlt] = useState("");
+
+  const handleMainClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === "IMG") {
+      const img = target as HTMLImageElement;
+      // Skip tiny images (logos, icons, tools)
+      if (img.naturalWidth < 200 || img.classList.contains("no-lightbox") || img.closest("nav") || img.closest("a")) return;
+      // Skip inline icons (figma logo etc)
+      if (img.classList.contains("inline")) return;
+      setLightboxSrc(img.src);
+      setLightboxAlt(img.alt || "");
+    }
+  }, []);
 
 
 
