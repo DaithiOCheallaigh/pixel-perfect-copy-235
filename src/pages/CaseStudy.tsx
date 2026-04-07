@@ -862,6 +862,15 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
+              {/* Admin Dashboard: Components image above design system */}
+              {project.id === "admin-dashboard" &&
+            <ScrollReveal>
+                  <div className="overflow-hidden rounded-xl shadow-md">
+                    <img src="/images/admin-dashboard-components.webp" alt="Admin Dashboard Components" className="w-full object-cover" loading="lazy" />
+                  </div>
+                </ScrollReveal>
+            }
+
               {/* Design System Description */}
               {project.designSystemDescription &&
             <ScrollReveal>
