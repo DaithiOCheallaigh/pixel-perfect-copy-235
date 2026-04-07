@@ -1312,8 +1312,8 @@ const CaseStudy = () => {
                       <ScrollReveal key={i} delay={i * 0.06} className={isLast ? 'md:col-span-2 md:max-w-[calc(50%-0.5rem)]' : ''}>
                         <div className="relative overflow-hidden rounded-2xl bg-card h-full border border-primary/30 flex flex-col">
                           {feature.image && (
-                            <div className="overflow-hidden h-48">
-                              <img src={feature.image} alt={feature.title} className="w-full h-full object-cover object-top" loading="lazy" />
+                            <div className="overflow-hidden">
+                              <img src={feature.image} alt={feature.title} className="w-full object-contain" loading="lazy" />
                             </div>
                           )}
                           <div className="p-5">
