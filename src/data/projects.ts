@@ -24,7 +24,7 @@ export interface Project {
   clientLogo?: string;
   researchFindings?: string[];
   howItWorks?: { step: string; title: string; text: string }[];
-  features?: { title: string; desc: string }[];
+  features?: { title: string; desc: string; image?: string }[];
   designProcess?: { num: string; title: string; desc: string }[];
   designProcessDetails?: { num: string; title: string; text: string; outcomes?: string; image?: string }[];
   sharingMethods?: string[];
@@ -329,13 +329,13 @@ export const projects: Project[] = [
     features: [
       { title: "Dashboard", desc: "Easy access to tipping methods, a run-down of daily activity, display tipping group information and everyday functionality" },
       { title: "Get Tips", desc: "Everything needed to access and gather tips on the go: QR codes, personal tip links & printouts" },
-      { title: "Profile", desc: "Profile photo, details, bio and preferred tip amounts & currency. Personalised accounts perform better" },
-      { title: "Payments", desc: "Track all payments and their status on the way to your account" },
-      { title: "Setup", desc: "For admins, setup reviews link, social & custom links" },
-      { title: "Reports", desc: "Usage analytics provides real-time metrics of platform effectiveness" },
-      { title: "Users", desc: "A user management portal for all guides on an admin's account" },
-      { title: "Resources", desc: "Add physical assets that guides & drivers can tag onto and earn tips from" },
-      { title: "Settings", desc: "Account settings, access to the knowledge base and subscription" },
+      { title: "Profile", desc: "Profile photo, details, bio and preferred tip amounts & currency. Personalised accounts perform better", image: "/images/admin-profile.webp" },
+      { title: "Payments", desc: "Track all payments and their status on the way to your account", image: "/images/admin-payments.webp" },
+      { title: "Setup", desc: "For admins, setup reviews link, social & custom links", image: "/images/admin-reviews.webp" },
+      { title: "Reports", desc: "Usage analytics provides real-time metrics of platform effectiveness", image: "/images/admin-reports.webp" },
+      { title: "Users", desc: "A user management portal for all guides on an admin's account", image: "/images/admin-users.webp" },
+      { title: "Resources", desc: "Add physical assets that guides & drivers can tag onto and earn tips from", image: "/images/admin-resources.webp" },
+      { title: "Settings", desc: "Account settings, access to the knowledge base and subscription", image: "/images/admin-settings.webp" },
     ],
     stats: [
       { value: "€6M+", label: "total tips processed" },
