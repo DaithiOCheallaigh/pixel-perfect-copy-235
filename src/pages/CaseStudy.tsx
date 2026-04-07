@@ -8,6 +8,10 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { SEO } from "../components/SEO";
 import { ShineBorder } from "../components/ui/shine-border";
+import tipdirectPricing from "../assets/images/tipdirect-pricing.webp";
+import tipdirectSuccessStories from "../assets/images/tipdirect-success-stories.webp";
+import tipdirectCta from "../assets/images/tipdirect-cta.webp";
+import tipdirectComponents from "../assets/images/tipdirect-components.webp";
 
 const EngagementCarousel = ({ images }: { images: { src: string; alt: string }[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
