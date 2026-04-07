@@ -1305,18 +1305,18 @@ const CaseStudy = () => {
             <ScrollReveal>
               <SectionLabel>{project.id === "tipdirect-app" ? "Other App Features" : "Key Features"}</SectionLabel>
               {project.id === "admin-dashboard" ? (
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+                <div className="grid gap-4 md:grid-cols-2">
                   {project.features.map((feature, i) => {
-                    const isWide = feature.image && (feature.title === "Resources" || feature.title === "Setup");
+                    const isLast = i === project.features.length - 1;
                     return (
-                      <ScrollReveal key={i} delay={i * 0.06} className={isWide ? 'md:col-span-2' : ''}>
+                      <ScrollReveal key={i} delay={i * 0.06} className={isLast ? 'md:col-span-2 md:max-w-[calc(50%-0.5rem)]' : ''}>
                         <div className="relative overflow-hidden rounded-2xl bg-card h-full border border-primary/30 flex flex-col">
                           {feature.image && (
-                            <div className="overflow-hidden aspect-square">
-                              <img src={feature.image} alt={feature.title} className="w-full h-full object-cover" loading="lazy" />
+                            <div className="overflow-hidden h-48">
+                              <img src={feature.image} alt={feature.title} className="w-full h-full object-cover object-top" loading="lazy" />
                             </div>
                           )}
-                          <div className="p-5 flex-1 flex flex-col justify-center">
+                          <div className="p-5">
                             <h3 className="text-sm font-bold text-foreground">{feature.title}</h3>
                             <p className="mt-1 text-xs text-muted-foreground">{feature.desc}</p>
                           </div>
