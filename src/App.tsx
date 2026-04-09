@@ -34,6 +34,7 @@ import ReviewLink from "./pages/tools/ReviewLink";
 import CaptionGenerator from "./pages/tools/CaptionGenerator";
 import BioPage from "./pages/tools/BioPage";
 import Refer from "./pages/Refer";
+import TPIProposal from "./pages/proposals/TPIProposal";
 import ChatWidget from "./components/chat/ChatWidget";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -150,13 +151,17 @@ const AppContent = () => {
     location.pathname.startsWith("/tools");
 
   const bioRoutes = location.pathname.startsWith("/bio");
-
   const showcaseRoutes = location.pathname.startsWith("/showcase");
+  const proposalRoutes = location.pathname.startsWith("/proposal");
 
   return (
     <>
       <ScrollToTop />
-      {bioRoutes ? (
+      {proposalRoutes ? (
+        <Routes>
+          <Route path="/proposal/tpi" element={<TPIProposal />} />
+        </Routes>
+      ) : bioRoutes ? (
         <Routes>
           <Route path="/bio/:slug" element={<BioPage />} />
         </Routes>
