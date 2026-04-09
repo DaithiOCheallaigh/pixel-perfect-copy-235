@@ -531,7 +531,7 @@ const TPIProposal = () => {
                 Book Your Introductory Call
               </a>
               <p className="mt-6 text-sm text-muted-foreground">
-                Dave Connolly · Founder, Lacuna Digital · lacunadigital.io
+                Dave Kelly · Founder, Lacuna Digital · lacunadigital.io
               </p>
             </div>
           </ScrollReveal>
