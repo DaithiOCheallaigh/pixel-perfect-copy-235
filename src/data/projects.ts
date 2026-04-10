@@ -261,7 +261,7 @@ export const projects: Project[] = [
     heroSubtitle: "A case study on building the central management interface for TipDirect",
     workDescription: "We built a dashboard for the TipDirect platform, providing customers with all the tools needed to facilitate digital tipping.",
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
-    timeline: "Ongoing",
+    timeline: "2 Years",
     client: "TipDirect",
     clientLogo: "",
     challengeImageRight: true,
