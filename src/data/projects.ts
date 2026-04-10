@@ -338,7 +338,7 @@ export const projects: Project[] = [
       { title: "Settings", desc: "Account settings, access to the knowledge base and subscription", image: "/images/admin-settings.webp" },
     ],
     stats: [
-      { value: "€6M+", label: "total tips processed" },
+      { value: "€8M+", label: "total tips processed" },
       { value: "6", label: "design phases completed" },
       { value: "9", label: "core features delivered" },
     ],
