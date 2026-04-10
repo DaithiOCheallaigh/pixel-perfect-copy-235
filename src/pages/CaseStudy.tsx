@@ -12,6 +12,7 @@ import tipdirectPricing from "../assets/images/tipdirect-pricing.webp";
 import tipdirectSuccessStories from "../assets/images/tipdirect-success-stories.webp";
 import tipdirectCta from "../assets/images/tipdirect-cta.webp";
 import tipdirectComponents from "../assets/images/tipdirect-components.webp";
+import figmaLogo from "@/assets/logos/figma.svg";
 
 const EngagementCarousel = ({ images }: { images: { src: string; alt: string }[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -921,7 +922,7 @@ const CaseStudy = () => {
                     <div className="flex flex-wrap justify-center gap-3 mb-12">
                       {project.designSystemLinks.map((link) =>
                   <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90">
-                          {link.label === "Design System" ? "🖥 " : <><img src="/src/assets/logos/figma.svg" alt="Figma" className="inline h-4 w-4" /> </>}{link.label}
+                          {link.label === "Design System" ? "🖥 " : <><img src={figmaLogo} alt="Figma" className="inline h-4 w-4" /> </>}{link.label}
                         </a>
                   )}
                     </div>
