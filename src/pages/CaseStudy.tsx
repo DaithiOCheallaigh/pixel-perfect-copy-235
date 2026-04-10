@@ -965,40 +965,7 @@ const CaseStudy = () => {
                 </ScrollReveal>
             }
 
-              {/* Detailed Design Process Phases */}
-              {project.designProcessDetails &&
-            project.designProcessDetails.map((phase, i) =>
-            <ScrollReveal key={`phase-${i}`}>
-                    <div>
-                      <SectionLabel>{`${phase.num}/ ${phase.title}`}</SectionLabel>
-                      <div className="space-y-4 mb-6">
-                        {phase.text.split("\n").filter(Boolean).map((line, j) => {
-                    if (line.startsWith("- ")) {
-                      return (
-                        <li key={j} className="ml-4 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
-                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
-                                {line.replace("- ", "")}
-                              </li>);
-
-                    }
-                    return <p key={j} className="text-[15px] leading-[1.7] text-muted-foreground">{line}</p>;
-                  })}
-                      </div>
-                      {phase.outcomes &&
-                <div className="rounded-xl bg-card p-6 mb-6">
-                          <h4 className="mb-2 text-sm font-bold text-foreground">Outcomes</h4>
-                          <p className="text-sm text-muted-foreground">{phase.outcomes}</p>
-                        </div>
-                }
-                      {phase.image &&
-                <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={phase.image} alt={phase.title} className="w-full object-cover" loading="lazy" />
-                        </div>
-                }
-                    </div>
-                  </ScrollReveal>
-            )
-            }
+              {/* Detailed Design Process Phases — moved to after Key Features */}
 
               {/* Numbered Feature Steps (3-column cards with screenshots) */}
               {project.howItWorks &&
@@ -1360,6 +1327,45 @@ const CaseStudy = () => {
               </div>
               )}
             </ScrollReveal>
+          </div>
+        </section>
+      }
+
+      {/* Detailed Design Process Phases (after Key Features) */}
+      {project.designProcessDetails &&
+      <section className="px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl space-y-16">
+            {project.designProcessDetails.map((phase, i) =>
+          <ScrollReveal key={`phase-${i}`}>
+                <div>
+                  <SectionLabel>{`${phase.num}/ ${phase.title}`}</SectionLabel>
+                  <div className="space-y-4 mb-6">
+                    {phase.text.split("\n").filter(Boolean).map((line, j) => {
+                if (line.startsWith("- ")) {
+                  return (
+                    <li key={j} className="ml-4 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
+                            <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                            {line.replace("- ", "")}
+                          </li>);
+
+                }
+                return <p key={j} className="text-[15px] leading-[1.7] text-muted-foreground">{line}</p>;
+              })}
+                  </div>
+                  {phase.outcomes &&
+            <div className="rounded-xl bg-card p-6 mb-6">
+                      <h4 className="mb-2 text-sm font-bold text-foreground">Outcomes</h4>
+                      <p className="text-sm text-muted-foreground">{phase.outcomes}</p>
+                    </div>
+            }
+                  {phase.image &&
+            <div className="overflow-hidden rounded-xl shadow-md">
+                      <img src={phase.image} alt={phase.title} className="w-full object-cover" loading="lazy" />
+                    </div>
+            }
+                </div>
+              </ScrollReveal>
+          )}
           </div>
         </section>
       }
