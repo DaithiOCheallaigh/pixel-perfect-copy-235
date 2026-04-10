@@ -257,7 +257,7 @@ export const projects: Project[] = [
   {
     id: "admin-dashboard",
     title: "Admin Dashboard",
-    subtitle: "A comprehensive admin platform processing €6,000,000+ in tips",
+    subtitle: "A comprehensive admin platform processing €8,000,000+ in tips",
     heroSubtitle: "A case study on building the central management interface for TipDirect",
     workDescription: "We built a dashboard for the TipDirect platform, providing customers with all the tools needed to facilitate digital tipping.",
     tags: ["UI/UX", "Project Planning", "Interaction Design", "Analytics"],
@@ -322,7 +322,7 @@ export const projects: Project[] = [
         num: "06",
         title: "UAT, Launch & Measurement",
         text: "The User Acceptance Testing (UAT) phase for TipDirect employed a structured approach managed through a ClickUp kanban board, allowing for transparent tracking of issues and feature validation. Prior to launch, we established key performance indicators derived from our initial brief, including user adoption rates, average tip amount, review submission percentage, and guide retention metrics.",
-        outcomes: "As a result of our meticulous planning and implementation, the product remained agile and easy to build upon. TipDirect itself achieved remarkable outcomes within its first years. The platform processed thousands of tips totaling more than €6,000,000 in value, the platform continues to enjoy steady growth as it moves into new markets.",
+        outcomes: "As a result of our meticulous planning and implementation, the product remained agile and easy to build upon. TipDirect itself achieved remarkable outcomes within its first years. The platform processed thousands of tips totaling more than €8,000,000 in value, the platform continues to enjoy steady growth as it moves into new markets.",
         image: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/UAT-Launch.webp",
       },
     ],
