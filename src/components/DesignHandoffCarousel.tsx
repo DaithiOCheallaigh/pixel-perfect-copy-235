@@ -177,12 +177,12 @@ const DesignHandoffCarousel = () => {
               <div className="rounded-lg border border-border px-4 py-2 text-sm text-foreground">Decision?</div>
               <div className="flex flex-col items-start gap-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-green-500 font-medium">Yes →</span>
-                  <div className="rounded bg-green-500/10 px-3 py-1 text-xs text-green-500">Path A</div>
+                  <span className="text-xs font-medium text-primary">Yes →</span>
+                  <div className="rounded bg-primary/10 px-3 py-1 text-xs text-primary">Path A</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-amber-500 font-medium">No →</span>
-                  <div className="rounded bg-amber-500/10 px-3 py-1 text-xs text-amber-500">Path B</div>
+                  <span className="text-xs font-medium text-muted-foreground">No →</span>
+                  <div className="rounded bg-muted/50 px-3 py-1 text-xs text-muted-foreground">Path B</div>
                 </div>
               </div>
             </div>

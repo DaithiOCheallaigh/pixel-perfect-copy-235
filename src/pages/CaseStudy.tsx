@@ -989,11 +989,13 @@ const CaseStudy = () => {
                           <p className="text-sm text-muted-foreground">{phase.outcomes}</p>
                         </div>
                 }
-                      {phase.image &&
-                <div className="overflow-hidden rounded-xl shadow-md">
+                      {phase.num === "05" && project.id === "admin-dashboard" ? (
+                        <DesignHandoffCarousel />
+                      ) : phase.image ? (
+                        <div className="overflow-hidden rounded-xl shadow-md">
                           <img src={phase.image} alt={phase.title} className="w-full object-cover" loading="lazy" />
                         </div>
-                }
+                      ) : null}
                     </div>
                   </ScrollReveal>
             )
