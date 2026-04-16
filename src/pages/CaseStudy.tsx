@@ -8,6 +8,7 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { SEO } from "../components/SEO";
 import { ShineBorder } from "../components/ui/shine-border";
+import DesignHandoffCarousel from "../components/DesignHandoffCarousel";
 import tipdirectPricing from "../assets/images/tipdirect-pricing.webp";
 import tipdirectSuccessStories from "../assets/images/tipdirect-success-stories.webp";
 import tipdirectCta from "../assets/images/tipdirect-cta.webp";
@@ -989,11 +990,13 @@ const CaseStudy = () => {
                           <p className="text-sm text-muted-foreground">{phase.outcomes}</p>
                         </div>
                 }
-                      {phase.image &&
-                <div className="overflow-hidden rounded-xl shadow-md">
+                      {phase.num === "05" && project.id === "admin-dashboard" ? (
+                        <DesignHandoffCarousel />
+                      ) : phase.image ? (
+                        <div className="overflow-hidden rounded-xl shadow-md">
                           <img src={phase.image} alt={phase.title} className="w-full object-cover" loading="lazy" />
                         </div>
-                }
+                      ) : null}
                     </div>
                   </ScrollReveal>
             )
