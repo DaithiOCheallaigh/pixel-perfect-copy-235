@@ -23,6 +23,7 @@ import Sitemap from "./pages/Sitemap";
 import Services from "./pages/Services";
 import ShowcasePage from "./pages/ShowcasePage";
 import ShowcaseAdmin from "./pages/ShowcaseAdmin";
+import ShowcasesIndex from "./pages/ShowcasesIndex";
 import ShowcaseNotFound from "./components/showcase/ShowcaseNotFound";
 import IndustryLanding from "./pages/IndustryLanding";
 import GetStarted from "./pages/GetStarted";
