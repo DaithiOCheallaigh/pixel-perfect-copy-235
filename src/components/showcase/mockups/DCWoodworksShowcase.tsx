@@ -297,15 +297,15 @@ const DCWoodworksShowcase = () => {
         </div>
 
         {/* Hero hamburger (top-right, no header bar) */}
-        <div className="absolute top-0 right-0 z-20 px-6 md:px-12 py-6">
+        <div className="absolute top-0 right-0 z-30 px-6 md:px-12 py-6">
           <button
             onClick={() => setMenuOpen(true)}
-            className="flex flex-col gap-[5px] p-2 hover:opacity-70 transition-opacity"
+            className="flex flex-col gap-[6px] p-2 hover:opacity-70 transition-opacity"
             aria-label="Open menu"
           >
-            <span className="block w-6 h-[1.5px]" style={{ background: BG }} />
-            <span className="block w-6 h-[1.5px]" style={{ background: BG }} />
-            <span className="block w-6 h-[1.5px]" style={{ background: BG }} />
+            <span className="block" style={{ width: 24, height: 2, background: BG, borderRadius: 0 }} />
+            <span className="block" style={{ width: 24, height: 2, background: BG, borderRadius: 0 }} />
+            <span className="block" style={{ width: 24, height: 2, background: BG, borderRadius: 0 }} />
           </button>
         </div>
 
