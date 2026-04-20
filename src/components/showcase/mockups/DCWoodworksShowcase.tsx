@@ -311,14 +311,6 @@ const DCWoodworksShowcase = () => {
 
         {/* Hero text */}
         <div className="absolute inset-0 flex flex-col items-center justify-end pb-20 md:pb-28 px-6 z-10 text-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ fontFamily: BODY, fontSize: 11, fontWeight: 500, letterSpacing: "0.32em", textTransform: "uppercase", color: BG, opacity: 0.9, marginBottom: 18 }}
-          >
-            Estd. ⁂ Bespoke Joinery
-          </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
