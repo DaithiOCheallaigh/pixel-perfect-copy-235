@@ -23,6 +23,7 @@ import Sitemap from "./pages/Sitemap";
 import Services from "./pages/Services";
 import ShowcasePage from "./pages/ShowcasePage";
 import ShowcaseAdmin from "./pages/ShowcaseAdmin";
+import ShowcasesIndex from "./pages/ShowcasesIndex";
 import ShowcaseNotFound from "./components/showcase/ShowcaseNotFound";
 import IndustryLanding from "./pages/IndustryLanding";
 import GetStarted from "./pages/GetStarted";
@@ -153,6 +154,7 @@ const AppContent = () => {
 
   const bioRoutes = location.pathname.startsWith("/bio");
   const showcaseRoutes = location.pathname.startsWith("/showcase");
+  const showcasesIndexRoute = location.pathname === "/showcases";
   const proposalRoutes = location.pathname.startsWith("/proposal");
 
   return (
@@ -162,6 +164,10 @@ const AppContent = () => {
         <Routes>
           <Route path="/proposal/tpi" element={<TPIProposal />} />
           <Route path="/proposal/elsevier" element={<ElsevierUXAudit />} />
+        </Routes>
+      ) : showcasesIndexRoute ? (
+        <Routes>
+          <Route path="/showcases" element={<ShowcasesIndex />} />
         </Routes>
       ) : bioRoutes ? (
         <Routes>
