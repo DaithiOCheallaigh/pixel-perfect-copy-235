@@ -317,7 +317,7 @@ const DCWoodworksShowcase = () => {
             transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: SERIF, fontSize: "clamp(40px, 6.5vw, 78px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.05, color: BG, maxWidth: 880, fontFeatureSettings: "'liga', 'dlig', 'ss01'" }}
           >
-            Bespoke Kitchens, <em style={{ fontStyle: "italic", fontWeight: 300 }}>Crafted</em> in Ireland
+            Bespoke Kitchens, Crafted in Ireland
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
