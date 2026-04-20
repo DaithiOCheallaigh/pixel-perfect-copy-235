@@ -154,6 +154,7 @@ const AppContent = () => {
 
   const bioRoutes = location.pathname.startsWith("/bio");
   const showcaseRoutes = location.pathname.startsWith("/showcase");
+  const showcasesIndexRoute = location.pathname === "/showcases";
   const proposalRoutes = location.pathname.startsWith("/proposal");
 
   return (
@@ -163,6 +164,10 @@ const AppContent = () => {
         <Routes>
           <Route path="/proposal/tpi" element={<TPIProposal />} />
           <Route path="/proposal/elsevier" element={<ElsevierUXAudit />} />
+        </Routes>
+      ) : showcasesIndexRoute ? (
+        <Routes>
+          <Route path="/showcases" element={<ShowcasesIndex />} />
         </Routes>
       ) : bioRoutes ? (
         <Routes>
