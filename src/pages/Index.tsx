@@ -6,7 +6,7 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 import SocialProof from "../components/SocialProof";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
-import { ShaderAnimation } from "../components/ui/shader-animation";
+import { EtheralShadow } from "../components/ui/etheral-shadow";
 import { SEO } from "../components/SEO";
 
 const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
