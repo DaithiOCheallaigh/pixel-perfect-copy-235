@@ -19,7 +19,7 @@ const Index = () => {
       <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-32 md:px-12 lg:px-24">
         {/* Animated gradient orbs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-30 dark:opacity-100">
-          <ShaderAnimation />
+          <EtheralShadow animation={{ scale: 50, speed: 50 }} noise={{ opacity: 50, scale: 50 }} />
         </div>
         <div className="pointer-events-none absolute inset-0 grid-background opacity-50" />
 
