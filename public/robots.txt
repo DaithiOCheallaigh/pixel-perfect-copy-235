@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://lacunadigital.io/sitemap.xml
+Sitemap: https://www.lacunadigital.io/sitemap.xml
