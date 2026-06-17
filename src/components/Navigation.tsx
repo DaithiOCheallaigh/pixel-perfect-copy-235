@@ -28,7 +28,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12">
         <Link to="/" className="relative flex items-center">
           <div className="relative h-9 w-9 overflow-hidden rounded-full">
-            <img src={avatarImg} alt="Dave" className="h-full w-full object-cover" />
+            <img src={avatarImg} alt="Dave Kelly" className="h-full w-full object-cover" />
             <ShineBorder
               shineColor={["#A855F7", "#EC4899", "#F97316"]}
               duration={10}

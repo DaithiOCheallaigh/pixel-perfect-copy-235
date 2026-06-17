@@ -30,7 +30,7 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Hi, I'm Dave!
+            Hi, I'm Dave — <span className="block md:inline">AI-Powered Product Designer for SMEs</span>
           </motion.h1>
 
           <motion.p

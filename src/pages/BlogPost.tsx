@@ -37,6 +37,22 @@ const BlogPost = () => {
         description={post.excerpt}
         image={`https://www.lacunadigital.io${post.image}`}
         url={`/blog/${post.id}`}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.excerpt,
+          image: `https://www.lacunadigital.io${post.image}`,
+          datePublished: post.date,
+          author: { "@type": "Person", name: "Dave Kelly" },
+          publisher: {
+            "@type": "Organization",
+            name: "Lacuna Digital",
+            logo: { "@type": "ImageObject", url: "https://www.lacunadigital.io/favicon.png" },
+          },
+          mainEntityOfPage: `https://www.lacunadigital.io/blog/${post.id}`,
+        }}
       />
       <article className="px-6 md:px-12 lg:px-24">
         {/* ─── Header ─── */}

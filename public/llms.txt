@@ -1,0 +1,27 @@
+# Lacuna Digital
+
+> Lacuna Digital is the independent practice of Dave Kelly — an AI-powered product designer and digital consultant based in North County Dublin, helping SMEs ship smarter websites, apps, and digital operations.
+
+Lacuna Digital pairs hands-on product design (UX, UI, design systems, branding) with AI-assisted build workflows so small and mid-sized businesses can move from idea to shipped product in weeks, not months. Service pillars cover Online Visibility (web design, SEO, content) and Business Efficiency (AI integration, internal tooling, workflow automation).
+
+## Pages
+
+- [Home](/): Overview of Dave Kelly and Lacuna Digital's AI-driven design practice.
+- [About](/about): Background, working style, and product design lifecycle philosophy.
+- [Skill Set](/skills): Design, research, and AI-assisted build capabilities.
+- [My Work](/work): Selected case studies across SaaS, ticketing, hospitality, and fintech.
+- [Blog](/blog): Essays on AI-assisted design, UX strategy, and modern interfaces.
+- [AI Design Process](/ai-design-process): How AI is woven through discovery, design, and delivery.
+- [AI Integration](/ai-integration): Embedding AI into product and operational workflows for SMEs.
+- [Web Design Services](/web-design): SME-focused web design and build engagements.
+- [Services](/services): Full menu of design, web, AI, and growth services.
+- [Start a Project](/start-project): Intake form for new engagements and consultations.
+
+## Case studies
+
+- [Marsh Design System](/work/marsh-design-system): Enterprise design system for Marsh McLennan.
+- [Marsh Internal Tooling](/work/marsh-internal-tooling): Internal product tooling redesign.
+
+## Optional
+
+- [Sitemap](/sitemap): Human-readable index of public pages.

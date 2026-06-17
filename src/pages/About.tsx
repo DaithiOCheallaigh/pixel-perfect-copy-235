@@ -158,7 +158,7 @@ const About = () => (
           ].map((section, i) => (
             <ScrollReveal key={section.title} delay={i * 0.1}>
               <div className="rounded-sm bg-card p-6">
-                <h3 className="mb-4 text-lg font-bold text-foreground">{section.title}</h3>
+                <h2 className="mb-4 text-lg font-bold text-foreground">{section.title}</h2>
                 <ul className="space-y-3">
                   {section.items.map((item, j) => (
                     <li key={j} className="text-sm leading-relaxed text-muted-foreground">{item}</li>
