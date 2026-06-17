@@ -272,32 +272,41 @@ class Star {
 }
 
 export function SpiralAnimation() {
+    const containerRef = useRef<HTMLDivElement>(null)
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const animationRef = useRef<AnimationController | null>(null)
-    const [dimensions, setDimensions] = useState({
-        width: typeof window !== 'undefined' ? window.innerWidth : 1024,
-        height: typeof window !== 'undefined' ? window.innerHeight : 768,
-    })
+    const [size, setSize] = useState(0)
 
     useEffect(() => {
-        const handleResize = () => {
-            setDimensions({ width: window.innerWidth, height: window.innerHeight })
+        const el = containerRef.current
+        if (!el) return
+        const update = () => {
+            const rect = el.getBoundingClientRect()
+            // Square canvas sized to cover the container (use the larger side)
+            const next = Math.ceil(Math.max(rect.width, rect.height))
+            setSize((prev) => (Math.abs(prev - next) > 1 ? next : prev))
         }
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
+        update()
+        const ro = new ResizeObserver(update)
+        ro.observe(el)
+        window.addEventListener('resize', update)
+        return () => {
+            ro.disconnect()
+            window.removeEventListener('resize', update)
+        }
     }, [])
 
     useEffect(() => {
         const canvas = canvasRef.current
-        if (!canvas) return
+        if (!canvas || size === 0) return
         const ctx = canvas.getContext('2d')
         if (!ctx) return
         const dpr = window.devicePixelRatio || 1
-        const size = Math.max(dimensions.width, dimensions.height)
         canvas.width = size * dpr
         canvas.height = size * dpr
-        canvas.style.width = `${dimensions.width}px`
-        canvas.style.height = `${dimensions.height}px`
+        canvas.style.width = `${size}px`
+        canvas.style.height = `${size}px`
+        ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.scale(dpr, dpr)
         animationRef.current = new AnimationController(canvas, ctx, dpr, size)
         return () => {
@@ -306,10 +315,10 @@ export function SpiralAnimation() {
                 animationRef.current = null
             }
         }
-    }, [dimensions])
+    }, [size])
 
     return (
-        <div className="absolute inset-0 h-full w-full overflow-hidden">
+        <div ref={containerRef} className="absolute inset-0 h-full w-full overflow-hidden">
             <canvas
                 ref={canvasRef}
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
