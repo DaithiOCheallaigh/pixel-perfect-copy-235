@@ -130,7 +130,7 @@ const MainLayout = () => (
       <Route path="/skills" element={<Skills />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:id" element={<BlogPost />} />
-      <Route path="/case/spark" element={<SparkCaseStudy />} />
+      <Route path="/work/spark" element={<SparkCaseStudy />} />
       <Route path="/case/:id" element={<CaseStudy />} />
       <Route path="/service/:id" element={<ServicePage />} />
       <Route path="/web-design" element={<WebDesignServices />} />
