@@ -617,4 +617,17 @@ export const projects: Project[] = [
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Therapie_PillShop.webp", alt: "Shop integration" },
     ],
   },
+  {
+    id: "spark",
+    title: "Spark",
+    subtitle: "A self-guided study companion for nursing and health-sciences students, and an LMS-companion for faculty",
+    workDescription: "Contract UI/UX design for a two-sided learning product — student self-study and faculty LMS companion — built on and extended into Elsevier's Leyden design system.",
+    tags: ["Healthcare Education", "Design Systems", "AI Workflow"],
+    timeline: "Contract",
+    client: "Elsevier",
+    pillImage: "/images/work/spark-placeholder.svg",
+    headerImage: "/images/work/spark-placeholder.svg",
+    description: "",
+    nextProject: null,
+  },
 ];
