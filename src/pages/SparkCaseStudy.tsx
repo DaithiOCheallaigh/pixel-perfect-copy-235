@@ -62,7 +62,7 @@ const SparkCaseStudy = () => {
       <SEO
         title="Spark — Elsevier Case Study | Dave Kelly"
         description="Contract UI/UX case study: designing Spark, a self-guided learning and teaching companion for nursing and health-sciences education at Elsevier."
-        path="/case/spark"
+        url="/case/spark"
       />
 
       {/* Sticky in-page nav */}
