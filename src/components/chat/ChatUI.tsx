@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send } from "iconsax-react";
 import { Check } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+
 import MessageBubble from "./MessageBubble";
 import TypingIndicator from "./TypingIndicator";
 import QuickReplies from "./QuickReplies";
@@ -109,7 +109,7 @@ function loadPackageSelections(): PackageSelection[] | null {
 /* ------------------------------------------------------------------ */
 
 const ChatUI = ({ compact = false }: { compact?: boolean }) => {
-  const navigate = useNavigate();
+  
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [state, setState] = useState<ChatState>(() => {
