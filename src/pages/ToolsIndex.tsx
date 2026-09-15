@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import {
-  Whatsapp,
   Link1,
   Star1,
   MessageEdit,
@@ -14,12 +13,7 @@ import ServicesNavigation from "@/components/ServicesNavigation";
 import ServicesFooter from "@/components/ServicesFooter";
 
 const tools = [
-  {
-    icon: Whatsapp,
-    title: "WhatsApp Script Generator",
-    desc: "Generate ready-to-use auto-reply scripts for your WhatsApp Business account.",
-    link: "/tools/whatsapp-scripts",
-  },
+
   {
     icon: Link1,
     title: "Link-in-Bio Builder",
@@ -47,7 +41,7 @@ const ToolsIndex = () => {
     if (meta)
       meta.setAttribute(
         "content",
-        "Free tools for small businesses — WhatsApp scripts, link pages, review links, caption generators. No sign-up required."
+        "Free tools for small businesses — link pages, review links, caption generators. No sign-up required."
       );
   }, []);
 
