@@ -60,8 +60,10 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        // Until lacunadigital.io is verified in Resend, sends must use the
+        // shared test sender and can only be delivered to the account owner.
         from: "Lacuna Digital <onboarding@resend.dev>",
-        to: ["info@lacunadigital.io"],
+        to: [Deno.env.get("NOTIFY_EMAIL") ?? "davekellydesign@gmail.com"],
         reply_to: email,
         subject: `Consultation Request: ${name} — ${services.length} service${services.length === 1 ? "" : "s"} selected`,
         html: htmlBody,
