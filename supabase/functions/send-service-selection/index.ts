@@ -73,7 +73,7 @@ serve(async (req) => {
     if (!res.ok) {
       const errorText = await res.text();
       console.error("Resend error:", res.status, errorText);
-      return new Response(JSON.stringify({ error: "Failed to send email" }), {
+      return new Response(JSON.stringify({ error: "Failed to send email", status: res.status, details: errorText }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
