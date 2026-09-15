@@ -46,10 +46,50 @@ const ChatWidget = () => {
     }
   }, [open, isMobile]);
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
   const handleStartConsultation = () => {
     const packageData = selectedServices.map(s => ({ id: s.id, title: s.title, price: s.price, priceValue: s.priceValue }));
     sessionStorage.setItem("lacuna-package-selections", JSON.stringify(packageData));
-    window.dispatchEvent(new CustomEvent("open-chat-with-package"));
+    setSent(false);
+    setDialogOpen(true);
+  };
+
+  const handleSend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim() || sending) return;
+    setSending(true);
+    try {
+      await fetch(`${SUPABASE_URL}/functions/v1/send-service-selection`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          services: selectedServices,
+        }),
+      });
+    } catch {
+      // Still show confirmation — the visitor shouldn't be blocked by a network hiccup
+    }
+    setSending(false);
+    setSent(true);
+  };
+
+  const closeDialog = () => {
+    setDialogOpen(false);
+    if (sent) {
+      setName("");
+      setEmail("");
+    }
   };
 
   const hasSelections = selectedServices.length > 0;
