@@ -165,16 +165,6 @@ const allServices: ServiceItem[] = [
     category: "efficiency",
   },
   {
-    id: "whatsapp",
-    icon: Whatsapp,
-    title: "WhatsApp Business",
-    desc: "Turn WhatsApp into a professional, automated business tool.",
-    price: "Free Consultation",
-    priceValue: 0,
-    link: "/start-project",
-    category: "efficiency",
-  },
-  {
     id: "ai-assistant",
     icon: Cpu,
     title: "AI Personal Assistant",
@@ -198,7 +188,6 @@ const industryPackages = [
     emoji: "🍕",
     title: "Food & Hospitality",
     items: [
-      { name: "WhatsApp Business Profile", price: "FREE" },
       { name: "Microsite", price: "FREE" },
       { name: "Deliveroo Registration & Setup", price: "€350" },
     ],
@@ -212,7 +201,6 @@ const industryPackages = [
       { name: "Domain Registration", price: "Variable" },
       { name: "Microsite", price: "FREE" },
       { name: "Online Reservation System", price: "€300" },
-      { name: "WhatsApp Business Profile", price: "FREE" },
     ],
     total: "From €300 fully operational",
     link: "/services/beauty-wellness",
@@ -224,7 +212,6 @@ const industryPackages = [
       { name: "Domain & Setup", price: "Variable" },
       { name: "Microsite", price: "FREE" },
       { name: "Stripe Integration", price: "€450" },
-      { name: "WhatsApp Business", price: "FREE" },
       { name: "Prototype/MVP", price: "From €3,500" },
     ],
     total: "Launch-ready from €450",
@@ -349,7 +336,6 @@ const smePricing = [
   { service: "Social media setup", price: "€200 + €100/month maintenance", note: "" },
   { service: "Automated content posting", price: "€89/month", note: "" },
   { service: "AI chatbot integration", price: "Free–€100 + €20/month maintenance", note: "" },
-  { service: "WhatsApp Business number", price: "€80/month", note: "" },
   { service: "AI Personal Assistant", price: "€100/month", note: "" },
   { service: "Business registration", price: "€1,500", note: "" },
   { service: "Accountant procurement", price: "€600", note: "" },
@@ -368,12 +354,7 @@ type PricingCategory = "ai" | "web" | "sme";
 /* ------------------------------------------------------------------ */
 
 const freeTools = [
-  {
-    icon: Whatsapp,
-    title: "WhatsApp Script Generator",
-    desc: "Generate ready-to-use auto-reply scripts for your WhatsApp Business.",
-    link: "/tools/whatsapp-script-generator",
-  },
+
   {
     icon: Link1,
     title: "Link-in-Bio Builder",
