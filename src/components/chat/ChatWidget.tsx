@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight } from "lucide-react";
+import { X, ArrowRight, Check } from "lucide-react";
 import { Messages1 } from "iconsax-react";
 import ChatUI from "./ChatUI";
 import { useIsMobile } from "@/hooks/use-mobile";
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 interface SelectedService {
   id: string;
