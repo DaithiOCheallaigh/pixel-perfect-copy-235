@@ -29,8 +29,6 @@ import ShowcaseNotFound from "./components/showcase/ShowcaseNotFound";
 import IndustryLanding from "./pages/IndustryLanding";
 import GetStarted from "./pages/GetStarted";
 import ToolsIndex from "./pages/ToolsIndex";
-import WhatsAppScriptGenerator from "./pages/WhatsAppScriptGenerator";
-import WhatsAppScripts from "./pages/tools/WhatsAppScripts";
 import LinkInBio from "./pages/tools/LinkInBio";
 import ReviewLink from "./pages/tools/ReviewLink";
 import CaptionGenerator from "./pages/tools/CaptionGenerator";
@@ -190,8 +188,6 @@ const AppContent = () => {
             <Route path="/ai-integration" element={<AIIntegration />} />
             <Route path="/get-started" element={<GetStarted />} />
             <Route path="/tools" element={<ToolsIndex />} />
-            <Route path="/tools/whatsapp-scripts" element={<WhatsAppScripts />} />
-            <Route path="/tools/whatsapp-script-generator" element={<WhatsAppScriptGenerator />} />
             <Route path="/tools/link-in-bio" element={<LinkInBio />} />
             <Route path="/tools/review-link" element={<ReviewLink />} />
             <Route path="/tools/caption-generator" element={<CaptionGenerator />} />

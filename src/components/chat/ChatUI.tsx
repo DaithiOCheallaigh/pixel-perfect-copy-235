@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send } from "iconsax-react";
 import { Check } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+
 import MessageBubble from "./MessageBubble";
 import TypingIndicator from "./TypingIndicator";
 import QuickReplies from "./QuickReplies";
@@ -36,7 +36,7 @@ const CHALLENGE_CHIPS = [
 ];
 
 const REACTION_CHIPS = ["✅ That sounds good", "🤔 Tell me more"];
-const FINAL_CHIPS = ["👍 Yes, get my script", "👋 No thanks, I'm good"];
+const FINAL_CHIPS = ["👋 Thanks, I'm good"];
 
 const SESSION_KEY = "lacuna-chat-state";
 const PACKAGE_KEY = "lacuna-package-selections";
@@ -109,7 +109,7 @@ function loadPackageSelections(): PackageSelection[] | null {
 /* ------------------------------------------------------------------ */
 
 const ChatUI = ({ compact = false }: { compact?: boolean }) => {
-  const navigate = useNavigate();
+  
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [state, setState] = useState<ChatState>(() => {
@@ -297,14 +297,10 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
         });
       }
     } else if (state.stage === "done") {
-      if (chip.includes("Yes, get my script")) {
-        navigate("/tools/whatsapp-script-generator");
-      } else {
-        addMessage("user", chip);
-        setTimeout(() => {
-          addMessage("bot", "Great chatting with you! Dave will be in touch soon. 👋");
-        }, 800);
-      }
+      addMessage("user", chip);
+      setTimeout(() => {
+        addMessage("bot", "Great chatting with you! Dave will be in touch soon. 👋");
+      }, 800);
     }
   };
 
@@ -373,7 +369,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
       const displayName = state.collectedData.name?.split(" ")[0] || "";
       addMessage(
         "bot",
-        `Perfect, ${displayName}! ✅ I've passed your details to Dave. He'll reach out to arrange your exploration call — no cost, no commitment.\n\nIn the meantime, would you like a free WhatsApp Business script for your business? Takes 2 minutes.`,
+        `Perfect, ${displayName}! ✅ I've passed your details to Dave. He'll reach out to arrange your exploration call — no cost, no commitment.`,
         FINAL_CHIPS
       );
       setState((prev) => ({

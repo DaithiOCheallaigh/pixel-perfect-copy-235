@@ -33,62 +33,6 @@ const ChatWidget = () => {
     return () => window.removeEventListener("open-chat-with-package", handleOpenWithPackage);
   }, []);
 
-  // Hide external WhatsApp widget on services routes where ChatWidget is shown
-  useEffect(() => {
-    const style = document.createElement("style");
-    style.id = "hide-wa-widget";
-    style.textContent = `
-      #whatsapp-widget-iframe,
-      .wa-chat-box,
-      .lcw-btn,
-      iframe[src*="whatsapp"],
-      iframe[src*="lacuna-lead-manager"],
-      [id*="whatsapp"],
-      [class*="whatsapp"] {
-        display: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-
-    const isWhatsAppWidgetElement = (el: HTMLElement) => {
-      const id = el.id?.toLowerCase() ?? "";
-      const className = typeof el.className === "string" ? el.className.toLowerCase() : "";
-      const src = (el.getAttribute("src") ?? "").toLowerCase();
-
-      return (
-        id.includes("whatsapp") ||
-        className.includes("whatsapp") ||
-        className.includes("wa-chat-box") ||
-        className.includes("lcw-btn") ||
-        src.includes("whatsapp") ||
-        src.includes("lacuna-lead-manager")
-      );
-    };
-
-    const hideWhatsApp = () => {
-      document.querySelectorAll("body > *").forEach((el) => {
-        const htmlEl = el as HTMLElement;
-        if (htmlEl.id === "root") return;
-        if (isWhatsAppWidgetElement(htmlEl)) {
-          htmlEl.style.display = "none";
-        }
-      });
-    };
-    hideWhatsApp();
-    const interval = setInterval(hideWhatsApp, 500);
-
-    return () => {
-      clearInterval(interval);
-      document.getElementById("hide-wa-widget")?.remove();
-      document.querySelectorAll("body > *").forEach((el) => {
-        const htmlEl = el as HTMLElement;
-        if (isWhatsAppWidgetElement(htmlEl)) {
-          htmlEl.style.display = "";
-        }
-      });
-    };
-  }, []);
-
   // Lock body scroll on mobile when chat is open
   useEffect(() => {
     if (open && isMobile) {

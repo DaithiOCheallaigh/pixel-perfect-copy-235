@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, Globe, MessageCircle, Calendar, Search, Bot, Users } from "lucide-react";
+import { ArrowRight, Globe, Calendar, Search, Bot, Users } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import {
   Carousel,
@@ -22,7 +22,7 @@ import {
   MessageText,
   Calendar1,
   People,
-  Whatsapp,
+  
   Cpu,
   Link1,
   Star1,
@@ -165,16 +165,6 @@ const allServices: ServiceItem[] = [
     category: "efficiency",
   },
   {
-    id: "whatsapp",
-    icon: Whatsapp,
-    title: "WhatsApp Business",
-    desc: "Turn WhatsApp into a professional, automated business tool.",
-    price: "Free Consultation",
-    priceValue: 0,
-    link: "/start-project",
-    category: "efficiency",
-  },
-  {
     id: "ai-assistant",
     icon: Cpu,
     title: "AI Personal Assistant",
@@ -198,7 +188,6 @@ const industryPackages = [
     emoji: "🍕",
     title: "Food & Hospitality",
     items: [
-      { name: "WhatsApp Business Profile", price: "FREE" },
       { name: "Microsite", price: "FREE" },
       { name: "Deliveroo Registration & Setup", price: "€350" },
     ],
@@ -212,7 +201,6 @@ const industryPackages = [
       { name: "Domain Registration", price: "Variable" },
       { name: "Microsite", price: "FREE" },
       { name: "Online Reservation System", price: "€300" },
-      { name: "WhatsApp Business Profile", price: "FREE" },
     ],
     total: "From €300 fully operational",
     link: "/services/beauty-wellness",
@@ -224,7 +212,6 @@ const industryPackages = [
       { name: "Domain & Setup", price: "Variable" },
       { name: "Microsite", price: "FREE" },
       { name: "Stripe Integration", price: "€450" },
-      { name: "WhatsApp Business", price: "FREE" },
       { name: "Prototype/MVP", price: "From €3,500" },
     ],
     total: "Launch-ready from €450",
@@ -349,7 +336,6 @@ const smePricing = [
   { service: "Social media setup", price: "€200 + €100/month maintenance", note: "" },
   { service: "Automated content posting", price: "€89/month", note: "" },
   { service: "AI chatbot integration", price: "Free–€100 + €20/month maintenance", note: "" },
-  { service: "WhatsApp Business number", price: "€80/month", note: "" },
   { service: "AI Personal Assistant", price: "€100/month", note: "" },
   { service: "Business registration", price: "€1,500", note: "" },
   { service: "Accountant procurement", price: "€600", note: "" },
@@ -368,12 +354,7 @@ type PricingCategory = "ai" | "web" | "sme";
 /* ------------------------------------------------------------------ */
 
 const freeTools = [
-  {
-    icon: Whatsapp,
-    title: "WhatsApp Script Generator",
-    desc: "Generate ready-to-use auto-reply scripts for your WhatsApp Business.",
-    link: "/tools/whatsapp-script-generator",
-  },
+
   {
     icon: Link1,
     title: "Link-in-Bio Builder",
@@ -691,20 +672,9 @@ const Services = () => {
                 content: "Your digital home base. A fast, conversion-focused website that makes your business look credible and gets people to act.",
                 category: "Visibility",
                 icon: Globe,
-                relatedIds: [2, 4],
+                relatedIds: [3, 4],
                 status: "completed" as const,
                 energy: 95,
-              },
-              {
-                id: 2,
-                title: "WhatsApp Business",
-                date: "Communication",
-                content: "Turn WhatsApp into a professional, automated business tool. Respond instantly, qualify leads, and never miss an enquiry.",
-                category: "Efficiency",
-                icon: MessageCircle,
-                relatedIds: [1, 5],
-                status: "completed" as const,
-                energy: 80,
               },
               {
                 id: 3,
@@ -713,7 +683,7 @@ const Services = () => {
                 content: "Ditch the phone bookings. An online reservation system that works while you sleep and plugs into everything else.",
                 category: "Efficiency",
                 icon: Calendar,
-                relatedIds: [2, 5],
+                relatedIds: [1, 5],
                 status: "in-progress" as const,
                 energy: 70,
               },
@@ -735,7 +705,7 @@ const Services = () => {
                 content: "An AI employee for your business — handling FAQs, booking queries, and follow-ups around the clock so you don't have to.",
                 category: "Efficiency",
                 icon: Bot,
-                relatedIds: [2, 3],
+                relatedIds: [1, 3],
                 status: "in-progress" as const,
                 energy: 90,
               },
@@ -746,7 +716,7 @@ const Services = () => {
                 content: "Know your customers, track every interaction, and never lose a lead. The connective tissue that ties the whole system together.",
                 category: "Efficiency",
                 icon: Users,
-                relatedIds: [1, 2, 5],
+                relatedIds: [1, 5],
                 status: "pending" as const,
                 energy: 75,
               },
