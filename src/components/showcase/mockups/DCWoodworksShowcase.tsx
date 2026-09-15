@@ -3,15 +3,6 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ChevronDown, Instagram, X } from "lucide-react";
 import dcLogo from "@/assets/images/showcase/dc-woodworks-logo.png";
 
-// Hide external WhatsApp widget on this page
-const useHideWhatsApp = () => {
-  useEffect(() => {
-    const style = document.createElement("style");
-    style.textContent = `#whatsapp-widget-iframe, [id*="whatsapp"], .wa-chat-box, [class*="whatsapp"] { display: none !important; }`;
-    document.head.appendChild(style);
-    return () => { style.remove(); };
-  }, []);
-};
 
 
 // --- IMAGES ---
