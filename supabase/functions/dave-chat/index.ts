@@ -16,16 +16,16 @@ Services Dave offers:
 - Domain & custom email: from €150 setup
 - Social media setup & management: €200 setup + €100/month
 - Digital reservation systems: €200 setup + €100/month
-- WhatsApp Business setup: free
+
 - AI chatbot integration: free to €100 setup + €20/month
 - CRM setup: free strategy session
 - AI personal assistant: €100/month
 - Business registration: €1,500
 
 Industry combo packages:
-- Food & Hospitality: WhatsApp Business (free) + Microsite (free) + Deliveroo registration (€350) = €350 total
-- Beauty & Wellness: Microsite (free) + Online reservation system (€300) + WhatsApp Business (free) = from €300
-- Startup Bootstrap: Microsite (free) + Stripe integration (€450) + WhatsApp Business (free) = from €450
+- Food & Hospitality: Microsite (free) + Deliveroo registration (€350) = €350 total
+- Beauty & Wellness: Microsite (free) + Online reservation system (€300) = from €300
+- Startup Bootstrap: Microsite (free) + Stripe integration (€450) = from €450
 
 Your goal in this conversation:
 1. Find out what type of business they run
