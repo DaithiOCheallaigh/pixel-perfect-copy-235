@@ -60,8 +60,10 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        // Until lacunadigital.io is verified in Resend, sends must use the
+        // shared test sender and can only be delivered to the account owner.
         from: "Lacuna Digital <onboarding@resend.dev>",
-        to: ["info@lacunadigital.io"],
+        to: [Deno.env.get("NOTIFY_EMAIL") ?? "davekellydesign@gmail.com"],
         reply_to: email,
         subject: `Consultation Request: ${name} — ${services.length} service${services.length === 1 ? "" : "s"} selected`,
         html: htmlBody,
@@ -71,7 +73,7 @@ serve(async (req) => {
     if (!res.ok) {
       const errorText = await res.text();
       console.error("Resend error:", res.status, errorText);
-      return new Response(JSON.stringify({ error: "Failed to send email" }), {
+      return new Response(JSON.stringify({ error: "Failed to send email", status: res.status, details: errorText }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
