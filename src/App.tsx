@@ -36,7 +36,7 @@ import BioPage from "./pages/tools/BioPage";
 import Refer from "./pages/Refer";
 import TPIProposal from "./pages/proposals/TPIProposal";
 import ElsevierUXAudit from "./pages/proposals/ElsevierUXAudit";
-import ChatWidget from "./components/chat/ChatWidget";
+
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
@@ -194,7 +194,7 @@ const AppContent = () => {
             <Route path="/refer" element={<Refer />} />
             <Route path="/tools/*" element={<ToolsIndex />} />
           </Routes>
-          <ChatWidget />
+          
         </>
       ) : (
         <MainLayout />
