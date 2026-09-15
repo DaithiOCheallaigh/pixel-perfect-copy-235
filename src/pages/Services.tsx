@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, Globe, MessageCircle, Calendar, Search, Bot, Users } from "lucide-react";
+import { ArrowRight, Globe, Calendar, Search, Bot, Users } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import {
   Carousel,
@@ -22,7 +22,7 @@ import {
   MessageText,
   Calendar1,
   People,
-  Whatsapp,
+  
   Cpu,
   Link1,
   Star1,
@@ -672,20 +672,9 @@ const Services = () => {
                 content: "Your digital home base. A fast, conversion-focused website that makes your business look credible and gets people to act.",
                 category: "Visibility",
                 icon: Globe,
-                relatedIds: [2, 4],
+                relatedIds: [3, 4],
                 status: "completed" as const,
                 energy: 95,
-              },
-              {
-                id: 2,
-                title: "WhatsApp Business",
-                date: "Communication",
-                content: "Turn WhatsApp into a professional, automated business tool. Respond instantly, qualify leads, and never miss an enquiry.",
-                category: "Efficiency",
-                icon: MessageCircle,
-                relatedIds: [1, 5],
-                status: "completed" as const,
-                energy: 80,
               },
               {
                 id: 3,
