@@ -630,10 +630,6 @@ const Services = () => {
                 <TickCircle variant="Bold" className="h-4 w-4 text-primary" />
                 Projects live in 1–2 weeks
               </span>
-              <span className="inline-flex items-center gap-2">
-                <TickCircle variant="Bold" className="h-4 w-4 text-primary" />
-                Fixed pricing, no retainers
-              </span>
             </div>
 
           </motion.div>
