@@ -38,6 +38,7 @@ import TPIProposal from "./pages/proposals/TPIProposal";
 import ElsevierUXAudit from "./pages/proposals/ElsevierUXAudit";
 
 import Navigation from "./components/Navigation";
+import ServiceSelectionBar from "./components/ServiceSelectionBar";
 import Footer from "./components/Footer";
 
 
@@ -194,7 +195,7 @@ const AppContent = () => {
             <Route path="/refer" element={<Refer />} />
             <Route path="/tools/*" element={<ToolsIndex />} />
           </Routes>
-          
+          <ServiceSelectionBar />
         </>
       ) : (
         <MainLayout />
