@@ -57,18 +57,18 @@ const industries: Record<string, IndustryData> = {
       "Whether you're a restaurant, café, or takeaway — I'll set up your online presence and your Deliveroo profile. All for €200.",
     metaTitle: "Food & Hospitality Digital Setup — Lacuna Digital",
     metaDesc:
-      "Get your restaurant, café, or takeaway online with a microsite and Deliveroo setup — from €200.",
+      "Get your restaurant, café, or takeaway online with a microsite and Deliveroo setup — from €1,200.",
     problems: [
       "Customers can't find you — or find you and see nothing useful",
       "You're losing orders to competitors who are already on Deliveroo",
       "Your phone is ringing with questions that could be answered automatically",
     ],
     items: [
-      { label: "Professional microsite (menu, location, hours, order link)", price: "FREE", free: true },
+      { label: "Professional microsite (menu, location, hours, order link)", price: "€1,000" },
       { label: "Deliveroo registration & onboarding", price: "€200" },
       { label: "Auto-reply setup for common questions", price: "FREE", free: true },
     ],
-    total: "€200 one-off",
+    total: "€1,200 one-off",
     totalNote: "+ optional €100/month management",
     timeline: [
       { week: "Week 1", title: "Discovery & Setup", desc: "Quick call, collect your menu, photos, and business details." },
@@ -88,7 +88,7 @@ const industries: Record<string, IndustryData> = {
       "I set up your online booking and your professional web presence — so clients can find you and book instantly, any time of day.",
     metaTitle: "Beauty & Wellness Digital Setup — Lacuna Digital",
     metaDesc:
-      "Online booking and a microsite for salons, barbers, and wellness businesses — from €85.",
+      "Online booking and a microsite for salons, barbers, and wellness businesses — from €1,085.",
     problems: [
       "You're taking bookings by phone and DM, and things fall through the cracks",
       "Clients can't easily find your prices, availability, or location",
@@ -96,10 +96,10 @@ const industries: Record<string, IndustryData> = {
     ],
     items: [
       { label: "Domain registration & setup", price: "Variable" },
-      { label: "Professional microsite with service menu & booking link", price: "FREE", free: true },
+      { label: "Professional microsite with service menu & booking link", price: "€1,000" },
       { label: "Online reservation system (Fresha / Calendly integration)", price: "€85" },
     ],
-    total: "From €85",
+    total: "From €1,085",
     totalNote: "+ domain cost",
     timeline: [
       { week: "Week 1", title: "Discovery & Branding", desc: "Quick call, collect your service list, pricing, and brand colours." },
@@ -119,7 +119,7 @@ const industries: Record<string, IndustryData> = {
       "I've helped early-stage founders get their first product live, take payments, and start collecting leads — without burning through budget.",
     metaTitle: "Startup Bootstrap Package — Lacuna Digital",
     metaDesc:
-      "Launch your startup online with a landing page and Stripe payments — from €300.",
+      "Launch your startup online with a landing page and Stripe payments — from €1,300.",
     problems: [
       "You need a credible online presence before you can raise or sell",
       "You're not sure which tools to use or how to connect them",
@@ -127,12 +127,12 @@ const industries: Record<string, IndustryData> = {
     ],
     items: [
       { label: "Domain registration & setup", price: "Variable" },
-      { label: "Microsite (landing page + email capture)", price: "FREE", free: true },
+      { label: "Microsite (landing page + email capture)", price: "€1,000" },
       { label: "Stripe payment setup", price: "€50" },
       { label: "Stripe integration into your site", price: "€250" },
       { label: "Optional: MVP prototype", price: "From €2,000" },
     ],
-    total: "From €300",
+    total: "From €1,300",
     totalNote: "to launch-ready",
     timeline: [
       { week: "Week 1", title: "Scope & Strategy", desc: "Define your MVP, user flow, and payment structure." },
