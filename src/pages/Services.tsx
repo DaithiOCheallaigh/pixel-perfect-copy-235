@@ -665,6 +665,9 @@ const Services = () => {
         </div>
       </section>
 
+      {/* ── Social Proof ── */}
+      <SocialProof />
+
       {/* ── Orbital System ── */}
       <section className="relative px-6 py-16 md:px-12 lg:px-24 overflow-hidden">
         <div className="mx-auto max-w-7xl">
@@ -849,9 +852,6 @@ const Services = () => {
           </div>
         </div>
       </section>
-
-      {/* ── Social Proof ── */}
-      <SocialProof />
 
       {/* ── Pricing ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
