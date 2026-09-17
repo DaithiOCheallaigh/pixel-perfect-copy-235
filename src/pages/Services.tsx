@@ -78,7 +78,7 @@ const allServices: ServiceItem[] = [
     icon: Monitor,
     title: "Website Creation",
     desc: "Fast, conversion-focused websites that make your business look the part.",
-    price: "From free (microsite) to €375",
+    price: "From €375",
     priceValue: 375,
     link: "/web-design",
     category: "visibility",
@@ -188,10 +188,10 @@ const industryPackages = [
     emoji: "🍕",
     title: "Food & Hospitality",
     items: [
-      { name: "Microsite", price: "FREE" },
+      { name: "Microsite", price: "€1,000" },
       { name: "Deliveroo Registration & Setup", price: "€350" },
     ],
-    total: "€350 to get online and taking orders",
+    total: "€1,350 to get online and taking orders",
     link: "/services/food-hospitality",
   },
   {
@@ -199,10 +199,10 @@ const industryPackages = [
     title: "Beauty & Wellness",
     items: [
       { name: "Domain Registration", price: "Variable" },
-      { name: "Microsite", price: "FREE" },
+      { name: "Microsite", price: "€1,000" },
       { name: "Online Reservation System", price: "€300" },
     ],
-    total: "From €300 fully operational",
+    total: "From €1,300 fully operational",
     link: "/services/beauty-wellness",
   },
   {
@@ -210,11 +210,11 @@ const industryPackages = [
     title: "Startup Bootstrap",
     items: [
       { name: "Domain & Setup", price: "Variable" },
-      { name: "Microsite", price: "FREE" },
+      { name: "Microsite", price: "€1,000" },
       { name: "Stripe Integration", price: "€450" },
       { name: "Prototype/MVP", price: "From €3,500" },
     ],
-    total: "Launch-ready from €450",
+    total: "Launch-ready from €1,450",
     link: "/services/startup-bootstrap",
   },
 ];
@@ -328,7 +328,7 @@ const webPricing = [
 ];
 
 const smePricing = [
-  { service: "Microsite", price: "FREE", note: "with Lacuna hosting plan" },
+  { service: "Microsite", price: "€1,000", note: "one-off build" },
   { service: "Linktree-style site", price: "€10/month", note: "" },
   { service: "Full website", price: "€375 build + €150/month", note: "" },
   { service: "Custom email setup", price: "€150 + €50/month per inbox", note: "" },
