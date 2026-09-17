@@ -598,12 +598,12 @@ const Services = () => {
               LACUNA DIGITAL — SERVICES
             </span>
             <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl">
-              Your digital ops team.
+              Get your business online in days,
               <br />
-              <span className="text-primary">One person. Powered by AI.</span>
+              <span className="text-primary">not months.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              I help small businesses get found online and run smarter — by building the tools they need and automating the workflows that slow them down.
+              I'm Dave — your digital ops team of one, powered by AI. I build the website, set up the tools, and automate the busywork so you can get back to running the business.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <a
@@ -619,6 +619,23 @@ const Services = () => {
                 Book a free call
               </Link>
             </div>
+
+            {/* Trust strip */}
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+              <span className="inline-flex items-center gap-2">
+                <span className="text-primary">★★★★★</span>
+                5.0 on Google Reviews
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <TickCircle variant="Bold" className="h-4 w-4 text-primary" />
+                Projects live in 1–2 weeks
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <TickCircle variant="Bold" className="h-4 w-4 text-primary" />
+                Fixed pricing, no retainers
+              </span>
+            </div>
+
           </motion.div>
         </div>
       </section>
@@ -647,6 +664,9 @@ const Services = () => {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* ── Social Proof ── */}
+      <SocialProof />
 
       {/* ── Orbital System ── */}
       <section className="relative px-6 py-16 md:px-12 lg:px-24 overflow-hidden">
@@ -832,9 +852,6 @@ const Services = () => {
           </div>
         </div>
       </section>
-
-      {/* ── Social Proof ── */}
-      <SocialProof />
 
       {/* ── Pricing ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
