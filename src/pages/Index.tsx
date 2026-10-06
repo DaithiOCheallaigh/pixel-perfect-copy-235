@@ -179,19 +179,19 @@ const Index = () => {
               {
                 num: "01",
                 title: "Discovery",
-                image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/01/Dicovery.webp?fit=300%2C158&ssl=1",
+                image: "/images/process/discovery.svg",
                 text: "Every project begins with understanding your vision. I take pride in exploring creative possibilities that not only bring ideas to life but also drive business growth.",
               },
               {
                 num: "02",
                 title: "Selection",
-                image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/01/Selection.webp?fit=300%2C158&ssl=1",
+                image: "/images/process/selection.svg",
                 text: "I focus on developing solutions that stand out in today's competitive landscape. My approach combines strategic thinking with cutting-edge design practices.",
               },
               {
                 num: "03",
                 title: "Implementation",
-                image: "https://i0.wp.com/lacunadigital.io/wp-content/uploads/2025/01/Implmentation.webp?fit=300%2C158&ssl=1",
+                image: "/images/process/implementation.svg",
                 text: "I believe in creating purpose-driven designs that resonate with target audiences. Each project is carefully crafted to ensure maximum impact and meaningful connections with users.",
               },
             ].map((step, i) => (
