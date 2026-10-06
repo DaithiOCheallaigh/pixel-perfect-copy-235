@@ -5,6 +5,7 @@ import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SEO } from "../components/SEO";
+import { LockKeyhole } from "lucide-react";
 
 const Work = () => (
   <main className="pt-24">
@@ -73,7 +74,11 @@ const Work = () => (
                           <span key={tag} className="font-mono-label text-xs text-muted-foreground">{tag}</span>
                         ))}
                       </div>
-                      <span className="text-lg text-muted-foreground transition-colors group-hover:text-primary">→</span>
+                      {project.id === "spark" ? (
+                        <span className="inline-flex shrink-0 items-center gap-2 text-xs text-muted-foreground"><LockKeyhole className="h-4 w-4" />Password protected</span>
+                      ) : (
+                        <span className="text-lg text-muted-foreground transition-colors group-hover:text-primary">→</span>
+                      )}
                     </div>
                   </div>
                 </Link>

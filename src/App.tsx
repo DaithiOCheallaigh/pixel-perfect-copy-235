@@ -11,6 +11,7 @@ import Skills from "./pages/Skills";
 import Blog from "./pages/Blog";
 import CaseStudy from "./pages/CaseStudy";
 import SparkCaseStudy from "./pages/SparkCaseStudy";
+import SparkPasswordGate from "./components/SparkPasswordGate";
 import ServicePage from "./pages/ServicePage";
 import WebDesignServices from "./pages/WebDesignServices";
 import AIDesignProcess from "./pages/AIDesignProcess";
@@ -129,7 +130,8 @@ const MainLayout = () => (
       <Route path="/skills" element={<Skills />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:id" element={<BlogPost />} />
-      <Route path="/work/spark" element={<SparkCaseStudy />} />
+      <Route path="/work/spark" element={<SparkPasswordGate><SparkCaseStudy /></SparkPasswordGate>} />
+      <Route path="/case/spark" element={<SparkPasswordGate><SparkCaseStudy /></SparkPasswordGate>} />
       <Route path="/case/:id" element={<CaseStudy />} />
       <Route path="/service/:id" element={<ServicePage />} />
       <Route path="/web-design" element={<WebDesignServices />} />
