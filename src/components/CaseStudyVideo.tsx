@@ -13,6 +13,7 @@ interface CaseStudyVideoProps {
  * when the visitor prefers reduced motion.
  */
 const CaseStudyVideo = ({ src, ariaLabel, className = "", style }: CaseStudyVideoProps) => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -25,8 +26,9 @@ const CaseStudyVideo = ({ src, ariaLabel, className = "", style }: CaseStudyVide
   }, []);
 
   useEffect(() => {
+    const wrapper = wrapperRef.current;
     const video = videoRef.current;
-    if (!video) return;
+    if (!wrapper || !video) return;
 
     if (reducedMotion) {
       video.pause();
@@ -44,12 +46,13 @@ const CaseStudyVideo = ({ src, ariaLabel, className = "", style }: CaseStudyVide
       { threshold: [0, 0.4] }
     );
 
-    observer.observe(video);
+    observer.observe(wrapper);
     return () => observer.disconnect();
   }, [reducedMotion]);
 
   return (
     <div
+      ref={wrapperRef}
       className={`aspect-video overflow-hidden rounded-xl border border-border bg-black ${className}`}
       style={style}
     >
