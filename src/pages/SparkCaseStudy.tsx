@@ -339,7 +339,7 @@ const SparkCaseStudy = () => {
                     aria-label={stat.figureAlt}
                     className="mx-auto mb-4 w-full max-w-[240px] [--hairline-plate:hsl(var(--background))] [--hairline-stroke:1]"
                   />
-                  <span className="block text-3xl font-black tracking-tighter text-foreground md:text-4xl">
+                  <span className="block min-h-[2.1em] text-3xl font-black leading-[1.05] tracking-tighter text-foreground md:text-4xl">
                     {stat.title}
                   </span>
                   <span className="mt-2 block text-sm text-muted-foreground">{stat.label}</span>
