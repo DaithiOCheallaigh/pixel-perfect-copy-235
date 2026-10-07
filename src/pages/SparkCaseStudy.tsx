@@ -334,6 +334,11 @@ const SparkCaseStudy = () => {
             {stats.map((stat, i) => (
               <ScrollReveal key={i} delay={i * 0.08}>
                 <div className="text-center">
+                  <stat.figure
+                    theme="auto"
+                    aria-label={stat.figureAlt}
+                    className="mx-auto mb-4 w-full max-w-[240px] [--hairline-plate:hsl(var(--background))] [--hairline-stroke:1]"
+                  />
                   <span className="block text-5xl font-black tracking-tighter text-foreground md:text-6xl">
                     {stat.value}
                   </span>

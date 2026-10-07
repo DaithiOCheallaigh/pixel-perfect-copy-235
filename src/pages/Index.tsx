@@ -8,6 +8,7 @@ import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SpiralAnimation } from "../components/ui/spiral-animation";
 import { SEO } from "../components/SEO";
+import { Laptop, Loupe, Sieve } from "@lucasmarkes/hairline/react";
 
 const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
 
