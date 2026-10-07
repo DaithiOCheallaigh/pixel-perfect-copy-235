@@ -29,6 +29,12 @@ const roleBreakdown = [
 
 const featureVideos = [
   {
+    title: "USMLE Study Guide",
+    text: "Every USMLE system mapped to the student's progress — drill from system to topic and into the resources behind it: Osmosis videos, topic overviews, clinical cases and 3D anatomy.",
+    src: "/videos/spark-study-guide.mp4",
+    alt: "Spark USMLE Study Guide drilling from system to topic",
+  },
+  {
     title: "AI Coach — diagnose, don't tutor",
     text: "After a wrong answer, students ask the Coach what they missed. It explains why their choice doesn't fit and which findings in the question point to the right answer — building clinical reasoning rather than handing out answers.",
     src: "/videos/spark-ai-coach.mp4",
@@ -40,12 +46,6 @@ const featureVideos = [
     src: "/videos/spark-readiness.mp4",
     alt: "Spark exam readiness view with score predictor and topic strengths",
   },
-  // {
-  //   title: "USMLE Study Guide",
-  //   text: "Every USMLE system mapped to the student's progress — drill from system to topic and into the resources behind it: Osmosis videos, topic overviews, clinical cases and 3D anatomy.",
-  //   src: "/videos/spark-study-guide.mp4",
-  //   alt: "Spark USMLE Study Guide drilling from system to topic",
-  // },
 ];
 
 const processSteps = [
