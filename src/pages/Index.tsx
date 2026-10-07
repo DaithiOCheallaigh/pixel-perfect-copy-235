@@ -180,19 +180,22 @@ const Index = () => {
               {
                 num: "01",
                 title: "Discovery",
-                image: "/images/process/discovery.svg",
+                figure: Loupe,
+                figureAlt: "A magnifier sliding across a ruled sheet",
                 text: "Every project begins with understanding your vision. I take pride in exploring creative possibilities that not only bring ideas to life but also drive business growth.",
               },
               {
                 num: "02",
                 title: "Selection",
-                image: "/images/process/selection.svg",
+                figure: Sieve,
+                figureAlt: "Stacked sieves, one lifted clear of the rest",
                 text: "I focus on developing solutions that stand out in today's competitive landscape. My approach combines strategic thinking with cutting-edge design practices.",
               },
               {
                 num: "03",
                 title: "Implementation",
-                image: "/images/process/implementation.svg",
+                figure: Laptop,
+                figureAlt: "A laptop opening on its hinge",
                 text: "I believe in creating purpose-driven designs that resonate with target audiences. Each project is carefully crafted to ensure maximum impact and meaningful connections with users.",
               },
             ].map((step, i) => (
