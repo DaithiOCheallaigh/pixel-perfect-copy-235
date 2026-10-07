@@ -201,12 +201,11 @@ const Index = () => {
             ].map((step, i) => (
               <ScrollReveal key={step.num} delay={i * 0.15} className="h-full">
                 <div className="group flex h-full flex-col rounded-xl bg-white dark:bg-card p-4">
-                  <div className="mb-4 overflow-hidden rounded-lg">
-                    <img
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full object-contain dark:invert"
-                      loading="lazy"
+                  <div className="mb-4">
+                    <step.figure
+                      theme="auto"
+                      aria-label={step.figureAlt}
+                      className="mx-auto w-full max-w-[260px] [--hairline-plate:#ffffff] dark:[--hairline-plate:hsl(var(--card))] [--hairline-stroke:1]"
                     />
                   </div>
                   <span className="font-mono-label text-primary">{step.num}</span>
