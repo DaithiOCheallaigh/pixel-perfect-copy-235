@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
@@ -8,6 +9,8 @@ import CaseStudyVideo from "../components/CaseStudyVideo";
 import introVideo from "../assets/spark-intro.mp4.asset.json";
 import { projects } from "../data/projects";
 import { Branches, Exploded, Riffle } from "@lucasmarkes/hairline/react";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const roleBreakdown = [
   {
@@ -110,6 +113,8 @@ const stats = [
 ];
 
 const SparkCaseStudy = () => {
+  const [prototypeLoaded, setPrototypeLoaded] = useState(false);
+  const isMobile = useIsMobile();
   const project = projects.find((p) => p.id === "spark");
   const nextProject = project?.nextProject
     ? projects.find((p) => p.id === project.nextProject)
@@ -167,6 +172,15 @@ const SparkCaseStudy = () => {
         </div>
       </section>
 
+      {/* INTRO VIDEO */}
+      <section className="px-6 pb-8 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <CaseStudyVideo src={introVideo.url} ariaLabel="Spark product overview walkthrough" />
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* 2. THE BRIEF */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -194,23 +208,6 @@ const SparkCaseStudy = () => {
         </div>
       </section>
 
-      {/* 3. BRIEF IMAGE PLACEHOLDER */}
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Product Overview</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              A 30-second walkthrough of the student experience, recorded from the working Alpha
-              prototype: the daily focus dashboard, the USMLE Study Guide, the AI Coach inside the
-              test player, and performance tracking.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <CaseStudyVideo src={introVideo.url} ariaLabel="Spark product overview walkthrough" />
-          </ScrollReveal>
-        </div>
-      </section>
-
       {/* 3b. FEATURE HIGHLIGHTS */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -231,6 +228,54 @@ const SparkCaseStudy = () => {
                 </div>
               </ScrollReveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* INTERACTIVE STUDENT PROTOTYPE */}
+      <section className="px-6 py-16 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <SectionLabel>Try the Prototype</SectionLabel>
+            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
+              The working Alpha prototype, live in the page. Click through the student dashboard,
+              open a topic in the Study Guide, start a quiz and ask the AI Coach. It runs in your
+              browser with sample data, so nothing is saved.
+            </p>
+          </ScrollReveal>
+          {!isMobile && (
+            <ScrollReveal delay={0.1}>
+              <div className="overflow-hidden rounded-xl border border-border bg-background">
+                {prototypeLoaded ? (
+                  <iframe
+                    src="/embeds/spark-student.html#screen=home"
+                    title="Spark student prototype (interactive)"
+                    loading="lazy"
+                    className="block aspect-[16/10] w-full border-0"
+                  />
+                ) : (
+                  <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-4">
+                    <Button onClick={() => setPrototypeLoaded(true)}>
+                      Load interactive prototype
+                    </Button>
+                    <span className="font-mono-label text-xs text-muted-foreground">
+                      ~2 MB · opens the student dashboard
+                    </span>
+                  </div>
+                )}
+              </div>
+            </ScrollReveal>
+          )}
+          <div className="mt-4 flex justify-end">
+            <Button
+              asChild
+              variant={isMobile ? "outline" : "link"}
+              className={`font-mono-label text-muted-foreground ${isMobile ? "w-full" : "h-auto p-0"}`}
+            >
+              <a href="/embeds/spark-student.html#screen=home" target="_blank" rel="noopener">
+                Open full screen ↗
+              </a>
+            </Button>
           </div>
         </div>
       </section>
