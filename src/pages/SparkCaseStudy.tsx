@@ -7,6 +7,10 @@ import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import CaseStudyVideo from "../components/CaseStudyVideo";
 import introVideo from "../assets/spark-intro.mp4.asset.json";
+import claudeLogo from "@/assets/logos/claude.png";
+import figmaLogo from "@/assets/logos/figma.svg";
+import confluenceLogo from "@/assets/logos/confluence.svg";
+import jiraLogo from "@/assets/logos/jira.svg";
 import { projects } from "../data/projects";
 import { Branches, Exploded, Riffle } from "@lucasmarkes/hairline/react";
 import { Button } from "@/components/ui/button";
@@ -112,6 +116,13 @@ const stats = [
   },
 ];
 
+const tools = [
+  { name: "Claude", icon: claudeLogo },
+  { name: "Figma (incl. MCP)", icon: figmaLogo },
+  { name: "Confluence", icon: confluenceLogo },
+  { name: "Jira", icon: jiraLogo },
+];
+
 const SparkCaseStudy = () => {
   const [prototypeLoaded, setPrototypeLoaded] = useState(false);
   const isMobile = useIsMobile();
@@ -169,6 +180,30 @@ const SparkCaseStudy = () => {
               </span>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* TOOLS */}
+      <section className="px-6 pb-8 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <SectionLabel>Tools</SectionLabel>
+            <ul className="flex flex-wrap items-center gap-x-8 gap-y-4">
+              {tools.map((tool) => (
+                <li key={tool.name} className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-card">
+                    <img
+                      src={tool.icon}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-4 w-4 object-contain"
+                    />
+                  </span>
+                  <span className="font-mono-label text-muted-foreground">{tool.name}</span>
+                </li>
+              ))}
+            </ul>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -351,23 +386,6 @@ const SparkCaseStudy = () => {
         </div>
       </section>
 
-      {/* 7. TOOLS */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Tools</SectionLabel>
-            <div className="flex flex-wrap items-center gap-2 font-mono-label text-muted-foreground">
-              <span>Claude</span>
-              <span>·</span>
-              <span>Figma (incl. MCP)</span>
-              <span>·</span>
-              <span>Confluence</span>
-              <span>·</span>
-              <span>Jira</span>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
 
       {/* 8. OUTCOMES */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
