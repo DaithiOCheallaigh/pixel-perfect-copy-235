@@ -619,7 +619,7 @@ export const projects: Project[] = [
   },
   {
     id: "spark",
-    title: "Spark",
+    title: "MedEd Workspace",
     subtitle: "A self-guided study companion for nursing and health-sciences students, and an LMS-companion for faculty",
     workDescription: "Contract UI/UX design for a two-sided learning product — student self-study and faculty LMS companion — built on and extended into Elsevier's Leyden design system.",
     tags: ["Healthcare Education", "Design Systems", "AI Workflow"],

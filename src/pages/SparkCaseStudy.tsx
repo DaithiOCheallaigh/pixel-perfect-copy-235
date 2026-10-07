@@ -23,7 +23,7 @@ const roleBreakdown = [
   },
   {
     title: "Designing for a Portfolio, Not Just a Product",
-    text: "Made component and pattern decisions with Elsevier's adjacent health-science products (e.g. nursing) in mind, so Spark's design stayed reusable rather than bespoke.",
+    text: "Made component and pattern decisions with Elsevier's adjacent health-science products (e.g. nursing) in mind, so MedEd Workspace's design stayed reusable rather than bespoke.",
   },
   {
     title: "Student Experience",
@@ -40,19 +40,19 @@ const featureVideos = [
     title: "USMLE Study Guide",
     text: "Every USMLE system mapped to the student's progress — drill from system to topic and into the resources behind it: Osmosis videos, topic overviews, clinical cases and 3D anatomy.",
     src: "/videos/spark-study-guide.mp4",
-    alt: "Spark USMLE Study Guide drilling from system to topic",
+    alt: "MedEd Workspace USMLE Study Guide drilling from system to topic",
   },
   {
     title: "AI Coach — diagnose, don't tutor",
     text: "After a wrong answer, students ask the Coach what they missed. It explains why their choice doesn't fit and which findings in the question point to the right answer — building clinical reasoning rather than handing out answers.",
     src: "/videos/spark-ai-coach.mp4",
-    alt: "Spark AI Coach explaining why a chosen answer doesn't fit",
+    alt: "MedEd Workspace AI Coach explaining why a chosen answer doesn't fit",
   },
   {
     title: "Exam Readiness",
     text: "Diagnostic and full-length mock exams, a score predictor, strengths and weaknesses by topic, and a history of past tests, so students know where they stand before exam day.",
     src: "/videos/spark-readiness.mp4",
-    alt: "Spark exam readiness view with score predictor and topic strengths",
+    alt: "MedEd Workspace exam readiness view with score predictor and topic strengths",
   },
 ];
 
@@ -160,7 +160,7 @@ const SparkCaseStudy = () => {
               <span>Healthcare Education · Design Systems · AI Workflow</span>
             </div>
             <h1 className="mb-4 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">
-              Spark
+              MedEd Workspace
             </h1>
             <p className="mb-8 max-w-3xl text-lg text-muted-foreground md:text-xl">
               A self-guided study companion for nursing and health-sciences students, and an
@@ -211,7 +211,7 @@ const SparkCaseStudy = () => {
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
-            <CaseStudyVideo src={introVideo.url} ariaLabel="Spark product overview walkthrough" />
+            <CaseStudyVideo src={introVideo.url} ariaLabel="MedEd Workspace product overview walkthrough" />
           </ScrollReveal>
         </div>
       </section>
@@ -223,18 +223,18 @@ const SparkCaseStudy = () => {
             <SectionLabel>The Brief</SectionLabel>
             <div className="max-w-3xl space-y-4">
               <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                Spark is a two-sided learning product built on Elsevier's existing content and design
+                MedEd Workspace is a two-sided learning product built on Elsevier's existing content and design
                 system rather than as a green-field build. For students, it's a self-guided exam-prep
                 companion built around spiral learning — spaced, repeated exposure to concepts rather
                 than one-and-done review — combined with AI-supported study assistance and mock exams
-                designed to build genuine exam readiness. For faculty, Spark complements the LMS rather
+                designed to build genuine exam readiness. For faculty, MedEd Workspace complements the LMS rather
                 than replacing it: instructors build and assign study content and get visibility into
                 class performance, so struggling students can be identified before an exam rather than
                 after.
               </p>
               <p className="text-[15px] leading-[1.7] text-muted-foreground">
                 Elsevier runs comparable learning products across other health-science markets —
-                nursing among them — so every design decision on Spark had to hold up as a reusable
+                nursing among them — so every design decision on MedEd Workspace had to hold up as a reusable
                 pattern across that wider portfolio, not just as a one-off solution for a single
                 product.
               </p>
@@ -284,7 +284,7 @@ const SparkCaseStudy = () => {
                 {prototypeLoaded ? (
                   <iframe
                     src="/embeds/spark-student.html#screen=home"
-                    title="Spark student prototype (interactive)"
+                    title="MedEd Workspace student prototype (interactive)"
                     loading="lazy"
                     className="block aspect-[16/10] w-full border-0"
                   />
@@ -321,7 +321,7 @@ const SparkCaseStudy = () => {
           <ScrollReveal>
             <SectionLabel>My Role</SectionLabel>
             <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              As contract UI/UX designer on Spark, I worked across both the student and faculty
+              As contract UI/UX designer on MedEd Workspace, I worked across both the student and faculty
               experiences, embedded in cross-functional squads alongside product, engineering, and
               content teams.
             </p>
