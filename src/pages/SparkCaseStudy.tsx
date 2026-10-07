@@ -205,7 +205,7 @@ const SparkCaseStudy = () => {
               than mocked up as static comps.
             </p>
           </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {featureVideos.map((feature, i) => (
               <ScrollReveal key={feature.title} delay={i * 0.08}>
                 <div>
