@@ -87,22 +87,22 @@ const processSteps = [
   },
 ];
 
-/* Placeholder outcomes — swap [N] for real figures */
+/* Outcomes — short title with a supporting line */
 const stats = [
   {
-    value: "[N]",
+    title: "Shared Components",
     label: "Reusable components contributed back to the shared design system",
     figure: Riffle,
     figureAlt: "A tray of cards, one lifted out: components contributed back to the shared design system",
   },
   {
-    value: "[N]",
+    title: "Parallel Squads",
     label: "Development squads supported in parallel",
     figure: Branches,
     figureAlt: "A branch forking off main and merging back: squads working in parallel",
   },
   {
-    value: "↑",
+    title: "Faster Handoff",
     label: "Faster design-to-dev handoff via spec-driven, dev-ready Figma files",
     figure: Exploded,
     figureAlt: "An app window separated into layers: spec-driven design handoff",
@@ -339,8 +339,8 @@ const SparkCaseStudy = () => {
                     aria-label={stat.figureAlt}
                     className="mx-auto mb-4 w-full max-w-[240px] [--hairline-plate:hsl(var(--background))] [--hairline-stroke:1]"
                   />
-                  <span className="block text-5xl font-black tracking-tighter text-foreground md:text-6xl">
-                    {stat.value}
+                  <span className="block min-h-[2.1em] text-3xl font-black leading-[1.05] tracking-tighter text-foreground md:text-4xl">
+                    {stat.title}
                   </span>
                   <span className="mt-2 block text-sm text-muted-foreground">{stat.label}</span>
                 </div>
