@@ -8,6 +8,7 @@ import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SpiralAnimation } from "../components/ui/spiral-animation";
 import { SEO } from "../components/SEO";
+import { Laptop, Loupe, Sieve } from "@lucasmarkes/hairline/react";
 
 const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
 
@@ -179,30 +180,32 @@ const Index = () => {
               {
                 num: "01",
                 title: "Discovery",
-                image: "/images/process/discovery.svg",
+                figure: Loupe,
+                figureAlt: "A magnifier sliding across a ruled sheet",
                 text: "Every project begins with understanding your vision. I take pride in exploring creative possibilities that not only bring ideas to life but also drive business growth.",
               },
               {
                 num: "02",
                 title: "Selection",
-                image: "/images/process/selection.svg",
+                figure: Sieve,
+                figureAlt: "Stacked sieves, one lifted clear of the rest",
                 text: "I focus on developing solutions that stand out in today's competitive landscape. My approach combines strategic thinking with cutting-edge design practices.",
               },
               {
                 num: "03",
                 title: "Implementation",
-                image: "/images/process/implementation.svg",
+                figure: Laptop,
+                figureAlt: "A laptop opening on its hinge",
                 text: "I believe in creating purpose-driven designs that resonate with target audiences. Each project is carefully crafted to ensure maximum impact and meaningful connections with users.",
               },
             ].map((step, i) => (
               <ScrollReveal key={step.num} delay={i * 0.15} className="h-full">
                 <div className="group flex h-full flex-col rounded-xl bg-white dark:bg-card p-4">
-                  <div className="mb-4 overflow-hidden rounded-lg">
-                    <img
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full object-contain dark:invert"
-                      loading="lazy"
+                  <div className="mb-4">
+                    <step.figure
+                      theme="auto"
+                      aria-label={step.figureAlt}
+                      className="mx-auto w-full max-w-[260px] [--hairline-plate:#ffffff] dark:[--hairline-plate:hsl(var(--card))] [--hairline-stroke:1]"
                     />
                   </div>
                   <span className="font-mono-label text-primary">{step.num}</span>
