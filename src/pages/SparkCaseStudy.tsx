@@ -4,6 +4,8 @@ import { ArrowRight } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
+import CaseStudyVideo from "../components/CaseStudyVideo";
+import introVideo from "../assets/spark-intro.mp4.asset.json";
 import { projects } from "../data/projects";
 
 const roleBreakdown = [
@@ -23,6 +25,27 @@ const roleBreakdown = [
     title: "Faculty Experience",
     text: "Shaped the LMS-companion experience for instructors: building and assigning study content, and surfacing insights that flag struggling students early.",
   },
+];
+
+const featureVideos = [
+  {
+    title: "AI Coach — diagnose, don't tutor",
+    text: "After a wrong answer, students ask the Coach what they missed. It explains why their choice doesn't fit and which findings in the question point to the right answer — building clinical reasoning rather than handing out answers.",
+    src: "/videos/spark-ai-coach.mp4",
+    alt: "Spark AI Coach explaining why a chosen answer doesn't fit",
+  },
+  {
+    title: "Exam Readiness",
+    text: "Diagnostic and full-length mock exams, a score predictor, strengths and weaknesses by topic, and a history of past tests, so students know where they stand before exam day.",
+    src: "/videos/spark-readiness.mp4",
+    alt: "Spark exam readiness view with score predictor and topic strengths",
+  },
+  // {
+  //   title: "USMLE Study Guide",
+  //   text: "Every USMLE system mapped to the student's progress — drill from system to topic and into the resources behind it: Osmosis videos, topic overviews, clinical cases and 3D anatomy.",
+  //   src: "/videos/spark-study-guide.mp4",
+  //   alt: "Spark USMLE Study Guide drilling from system to topic",
+  // },
 ];
 
 const processSteps = [
@@ -159,21 +182,40 @@ const SparkCaseStudy = () => {
       <section className="px-6 py-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
-            <SectionLabel>Student & Faculty Overview</SectionLabel>
+            <SectionLabel>Product Overview</SectionLabel>
             <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              Placeholder for a high-level view of the two-sided product — student self-study flow and
-              faculty class-insights dashboard.
+              A 30-second walkthrough of the student experience, recorded from the working Alpha
+              prototype: the daily focus dashboard, the USMLE Study Guide, the AI Coach inside the
+              test player, and performance tracking.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <div className="overflow-hidden rounded-xl border border-border">
-              <div className="flex aspect-[16/10] w-full items-center justify-center bg-muted/50">
-                <span className="font-mono-label text-center px-6 text-muted-foreground">
-                  [Placeholder — Student self-study flow screenshot]
-                </span>
-              </div>
-            </div>
+            <CaseStudyVideo src={introVideo.url} ariaLabel="Spark product overview walkthrough" />
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* 3b. FEATURE HIGHLIGHTS */}
+      <section className="px-6 py-16 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <SectionLabel>Feature Highlights</SectionLabel>
+            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
+              Short loops of the features I designed end to end, captured from the prototype rather
+              than mocked up as static comps.
+            </p>
+          </ScrollReveal>
+          <div className="grid gap-8 md:grid-cols-2">
+            {featureVideos.map((feature, i) => (
+              <ScrollReveal key={feature.title} delay={i * 0.08}>
+                <div>
+                  <CaseStudyVideo src={feature.src} ariaLabel={feature.alt} />
+                  <h3 className="mt-4 mb-2 text-lg font-bold text-foreground">{feature.title}</h3>
+                  <p className="text-[15px] leading-[1.7] text-muted-foreground">{feature.text}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
