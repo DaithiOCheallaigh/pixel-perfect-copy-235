@@ -1,89 +1,90 @@
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
 import { GlowingStarsBackgroundCard } from "@/components/ui/glowing-stars";
-import { motion } from "framer-motion";
-import {
-  Cpu,
-  SearchNormal1,
-  Kanban,
-  Brush,
-  Code,
-  Chart,
-  Routing,
-} from "iconsax-react";
+import { Cpu } from "iconsax-react";
+import { Plug, Padlock, Loupe, Riffle, Exploded, Laptop, Branches, Plot } from "@lucasmarkes/hairline/react";
 import ScrollReveal from "@/components/ScrollReveal";
 import AvailabilityCTA from "@/components/AvailabilityCTA";
 import SectionLabel from "@/components/SectionLabel";
 import claudeLogo from "@/assets/logos/claude.png";
 import notionLogo from "@/assets/logos/notion.png";
-import lovableLogo from "@/assets/logos/lovable.png";
+import githubLogo from "@/assets/logos/github.svg";
+import processVideo from "@/assets/ai-design-process.mp4.asset.json";
 import figmaLogo from "@/assets/logos/figma.svg";
 import aiSystemImg from "@/assets/images/ai-system-2.webp";
 
-const steps = [
+const chapters = [
   {
-    num: "01",
-    icon: <Routing size="36" variant="TwoTone" />,
-    heading: "New & Existing Products",
-    body: "The process is designed to work across both greenfield builds and established products needing improvement. Whether you're validating a new idea or evolving a live product, the same structured approach applies — ensuring nothing is skipped and every decision is informed.",
-    tag: "Universal Methodology",
+    tag: "00 — Toolstack",
+    heading: "Connected tools, orchestrated by Claude",
+    body: "Notion, Figma and GitHub are connected to Claude over MCP. One chat researches, plans, designs, builds and ships — no copy-pasting between apps, and every step leaves a trail.",
+    tools: "Claude · Notion · Figma · GitHub",
+    figure: Plug,
+    figureAlt: "A plug drawn toward its socket: tools connected to Claude over MCP",
   },
   {
-    num: "02",
-    icon: <Cpu size="36" variant="TwoTone" />,
-    heading: "AI-Powered Toolstack",
-    body: "Every step of this process is accelerated by a curated set of tools: Claude for research synthesis and documentation, Notion for knowledge management and sprint planning, Lovable for rapid product prototyping, and Figma for component design and visual systems.",
-    tag: "Claude · Notion · Lovable · Figma",
+    tag: "01 — Workspace access",
+    heading: "Open the workspace",
+    body: "Claude asks Notion for the project workspace. You approve it once, and every tool call is scoped: reading research, writing docs and deploying previews are always allowed, while destructive actions like deleting a project stay blocked.",
+    tools: "Notion · MCP permissions",
+    figure: Padlock,
+    figureAlt: "A padlock swinging open: scoped workspace access",
   },
   {
-    num: "03",
-    icon: <SearchNormal1 size="36" variant="TwoTone" />,
-    heading: "Requirements Gathering, Heuristic Review & Vertical Context",
-    body: "Before any design work begins, we establish a full picture of the problem space. This includes a structured requirements gathering session, a heuristic evaluation of any existing product, and deep research into the competitive vertical — giving us the context to design with confidence and direction.",
-    tag: "Discovery",
+    tag: "02 — Discovery",
+    heading: "Start with the real problem",
+    body: "Requirements gathering, a heuristic review of any existing product and research into the vertical, synthesised with Claude. Interview notes become clear themes before a single screen is drawn.",
+    tools: "Claude · Notion",
+    figure: Loupe,
+    figureAlt: "A loupe over a page: discovery and research synthesis",
   },
   {
-    num: "04",
-    icon: <Chart size="36" variant="TwoTone" />,
-    heading: "Roadmap & Gantt Planning",
-    body: "With requirements defined, we build a clear project roadmap using a Gantt chart structure. This maps deliverables across time, surfaces dependencies, and gives stakeholders full visibility into timeline and scope — keeping the project grounded in reality from day one.",
-    tag: "Project Management",
+    tag: "03 — Specs & roadmap",
+    heading: "Plan & write product specs",
+    body: "Themes from discovery become specs, a roadmap and a Kanban board in Notion. Your specs become the living product roadmap, with sprints mapped back to the research.",
+    tools: "Notion · Kanban",
+    figure: Riffle,
+    figureAlt: "A tray of cards, one lifted out: specs organised into a roadmap",
   },
   {
-    num: "05",
-    icon: <Kanban size="36" variant="TwoTone" />,
-    heading: "Kanban Methodology",
-    body: "Day-to-day delivery is managed through a Kanban board in Notion. Tasks flow from backlog to in-progress to done in transparent, manageable cycles. This keeps the team aligned, surfaces blockers early, and ensures consistent forward momentum without the overhead of rigid sprint ceremonies.",
-    tag: "Agile Delivery",
+    tag: "04 — Atomic prototyping",
+    heading: "Build the prototype using atomic principles",
+    body: "A tokenised design system in Figma (colour, type and spacing tokens) feeds atoms, molecules and organisms, so every build stays consistent as the product scales.",
+    tools: "Figma · Design tokens",
+    figure: Exploded,
+    figureAlt: "An app window separated into layers: atomic design system",
   },
   {
-    num: "06",
-    icon: <Brush size="36" variant="TwoTone" />,
-    heading: "Tokenised Design System & Brand Identity",
-    body: "All visual output is grounded in a tokenised design system — colours, typography, spacing, and components are defined as reusable tokens in Figma. This ensures visual consistency at scale, accelerates handoff, and makes brand evolution effortless when the product grows.",
-    tag: "Design Systems",
+    tag: "05 — Build & prototype",
+    heading: "From spec to prototype",
+    body: "Claude Code builds the user flows, components and screens into a working prototype, synced to the Figma tokens with no hard-coded values.",
+    tools: "Claude Code · Figma",
+    figure: Laptop,
+    figureAlt: "A laptop opening: the working prototype",
   },
   {
-    num: "07",
-    icon: <Code size="36" variant="TwoTone" />,
-    heading: "Systematic Build: Userflows, Components & Deployment",
-    body: "With a design system in place, we build systematically — mapping every user flow, constructing reusable components, and assembling screens with precision. Lovable accelerates the build phase dramatically, turning design into a live, deployable product without sacrificing quality or structure.",
-    tag: "Build & Deploy",
+    tag: "06 — Deploy & validate",
+    heading: "Ship it to real users",
+    body: "Claude pushes to GitHub and ships a live build, then invites testers so the research can be validated with real people, not assumptions.",
+    tools: "GitHub · Claude",
+    figure: Branches,
+    figureAlt: "A branch forking off main and merging back: shipping a build",
   },
   {
-    num: "08",
-    icon: <Chart size="36" variant="TwoTone" />,
-    heading: "Analytical Observation & Iterative Design",
-    body: "Post-launch, the process doesn't stop. Analytics tools surface real user behaviour, which feeds directly back into the design cycle. Each iteration is informed by data — not assumptions — allowing the product to evolve continuously and improve with every release.",
-    tag: "Analytics · Iteration",
+    tag: "07 — Analytics & iteration",
+    heading: "Measure, then iterate",
+    body: "Tracking and usage analytics go in from day one. Real user behaviour after launch drives the next round of refinements, and the loop starts again.",
+    tools: "Analytics · Claude",
+    figure: Plot,
+    figureAlt: "A plotted chart: measuring real usage",
   },
 ];
 
 const tools = [
   { name: "Claude", logo: claudeLogo },
   { name: "Notion", logo: notionLogo },
-  { name: "Lovable", logo: lovableLogo },
   { name: "Figma", logo: figmaLogo },
+  { name: "GitHub", logo: githubLogo },
 ];
 
 const AIDesignProcess = () => {
@@ -110,7 +111,7 @@ const AIDesignProcess = () => {
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
             <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
-              An end-to-end process for building better products — faster. Combining AI tooling, structured research, and systematic design to take ideas from discovery to launch.
+              An end-to-end process for building better products, faster. One Claude chat connects research, planning, design, build and analytics, taking ideas from discovery to launch.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.3}>
@@ -142,59 +143,67 @@ const AIDesignProcess = () => {
         </div>
       </section>
 
-      {/* Steps — bento grid */}
+      {/* Process film */}
+      <section className="px-6 pt-16 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <div className="aspect-video overflow-hidden rounded-xl border border-border bg-background">
+              <video
+                src={processVideo.url}
+                controls
+                playsInline
+                preload="none"
+                poster="/images/ai-design-process-poster.jpg"
+                aria-label="AI-Led Design: my Claude process, from toolstack to analytics (1 minute 19)"
+                className="block h-full w-full"
+              />
+            </div>
+            <p className="mt-3 font-mono-label text-xs text-muted-foreground">
+              Process film · 1:19 · sound on
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Workflow chapters */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
             <SectionLabel>The Process</SectionLabel>
+            <p className="text-muted-foreground">
+              One Claude chat runs the whole loop. Each stage below is a chapter in the film above.
+            </p>
           </ScrollReveal>
-          <div className="mt-16 grid gap-4 md:grid-cols-2">
-            {steps.map((step, i) => {
-              // Alternate which column gets the "tall" card
-              // Row 0: left tall (span 2 rows), right short
-              // Row 1: left short, right tall (span 2 rows)
-              const rowPair = Math.floor(i / 2);
-              const isLeft = i % 2 === 0;
-              const isTall = rowPair % 2 === 0 ? isLeft : !isLeft;
-
-              return (
-                <ScrollReveal key={step.num} delay={i * 0.04}>
-                  <div
-                    className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/30 md:p-8 ${
-                      isTall ? "md:row-span-2 justify-between" : "justify-between"
-                    }`}
-                  >
-                    {/* Background step number */}
-                    <span className="pointer-events-none absolute -bottom-4 right-6 select-none text-[120px] font-extrabold leading-none text-foreground/[0.04]">
-                      {step.num}
+          <div className="mt-12 flex flex-col gap-4">
+            {chapters.map((chapter, i) => (
+              <ScrollReveal key={chapter.tag} distance={0}>
+                <article className="grid items-center gap-6 rounded-2xl border border-border bg-card p-6 md:grid-cols-2 md:gap-10 md:p-10">
+                  <div className={`order-2 min-w-0 ${i % 2 === 0 ? "md:order-1" : "md:order-2"}`}>
+                    <span className="font-mono-label mb-4 block text-primary">
+                      {chapter.tag}
                     </span>
-
-                    {/* Top: tag + icon */}
-                    <div>
-                      <span className="font-mono-label mb-4 block text-primary">
-                        {step.tag}
-                      </span>
-                      <h3 className="mb-3 text-lg font-extrabold tracking-tight text-foreground md:text-xl">
-                        {step.heading}
-                      </h3>
-                      <p className="text-sm leading-relaxed text-muted-foreground">
-                        {step.body}
+                    <h3 className="mb-4 text-2xl font-extrabold tracking-tight md:text-3xl">
+                      {chapter.heading}
+                    </h3>
+                    <p className="text-[15px] leading-[1.7] text-muted-foreground">
+                      {chapter.body}
+                    </p>
+                    {chapter.tools && (
+                      <p className="mt-5 font-mono-label text-xs text-muted-foreground/60">
+                        Tools: {chapter.tools}
                       </p>
-                    </div>
-
-                    {/* Bottom: icon badge */}
-                    <div className="mt-6 flex items-center justify-between">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
-                        {step.icon}
-                      </div>
-                      <span className="font-mono-label text-muted-foreground/40 text-xs">
-                        Step {step.num}
-                      </span>
-                    </div>
+                    )}
                   </div>
-                </ScrollReveal>
-              );
-            })}
+                  <div className={`order-1 min-w-0 ${i % 2 === 0 ? "md:order-2" : "md:order-1"}`}>
+                    <chapter.figure
+                      theme="auto"
+                      aria-label={chapter.figureAlt}
+                      className="mx-auto w-full max-w-[280px] [--hairline-plate:hsl(var(--card))] [--hairline-stroke:1]"
+                    />
+                  </div>
+                </article>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
