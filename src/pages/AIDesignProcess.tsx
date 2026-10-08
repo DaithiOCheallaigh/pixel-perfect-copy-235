@@ -11,7 +11,6 @@ import notionLogo from "@/assets/logos/notion.png";
 import githubLogo from "@/assets/logos/github.svg";
 import processVideo from "@/assets/ai-design-process.mp4.asset.json";
 import figmaLogo from "@/assets/logos/figma.svg";
-import aiSystemImg from "@/assets/images/ai-system-2.webp";
 
 const chapters = [
   {
@@ -225,10 +224,14 @@ const AIDesignProcess = () => {
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
-            <img
-              src={aiSystemImg}
-              alt="AI system architecture diagram showing interconnected tools"
-              className="mx-auto w-full max-w-sm"
+            <iframe
+              src="/embeds/hairline-relay.html"
+              title="Claude at the centre, connected to Notion, Figma and GitHub"
+              loading="lazy"
+              scrolling="no"
+              aria-hidden="true"
+              tabIndex={-1}
+              className="mx-auto block aspect-[5/4] w-full max-w-lg border-0 bg-transparent"
             />
           </ScrollReveal>
           <ScrollReveal delay={0.3}>
@@ -243,10 +246,10 @@ const AIDesignProcess = () => {
                 Marsh Internal Tooling →
               </Link>
               <Link
-                to="/work/marsh-design-system"
+                to="/work/spark"
                 className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/20"
               >
-                Marsh Design System Rebrand →
+                Elsevier MedEd Workspace →
               </Link>
             </div>
           </ScrollReveal>
