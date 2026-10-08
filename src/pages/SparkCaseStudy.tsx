@@ -6,7 +6,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import CaseStudyVideo from "../components/CaseStudyVideo";
-import introVideo from "../assets/spark-intro.mp4.asset.json";
+import walkthroughVideo from "../assets/spark-walkthrough.mp4.asset.json";
 import claudeLogo from "@/assets/logos/claude.png";
 import figmaLogo from "@/assets/logos/figma.svg";
 import confluenceLogo from "@/assets/logos/confluence.svg";
@@ -211,7 +211,20 @@ const SparkCaseStudy = () => {
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
           <ScrollReveal>
-            <CaseStudyVideo src={introVideo.url} ariaLabel="MedEd Workspace product overview walkthrough" />
+            <div className="aspect-video overflow-hidden rounded-xl border border-border bg-black">
+              <video
+                src={walkthroughVideo.url}
+                controls
+                playsInline
+                preload="none"
+                poster="/images/work/spark-walkthrough-poster.jpg"
+                aria-label="Spark walkthrough: two curricula, one experience (narrated, 3 minutes)"
+                className="block h-full w-full"
+              />
+            </div>
+            <p className="mt-3 font-mono-label text-xs text-muted-foreground">
+              Narrated walkthrough · 3 min · sound on
+            </p>
           </ScrollReveal>
         </div>
       </section>
