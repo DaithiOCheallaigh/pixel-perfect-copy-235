@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
 import { GlowingStarsBackgroundCard } from "@/components/ui/glowing-stars";
 import { Cpu } from "iconsax-react";
-import { Plug, Padlock, Loupe, Riffle, Exploded, Laptop, Branches, Plot } from "@lucasmarkes/hairline/react";
+import { Plug, Loupe, Riffle, Exploded, Laptop, Branches, Plot } from "@lucasmarkes/hairline/react";
+import type { HairlineProps } from "@lucasmarkes/hairline/react";
+import type { ComponentType } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import AvailabilityCTA from "@/components/AvailabilityCTA";
 import SectionLabel from "@/components/SectionLabel";
@@ -12,7 +14,17 @@ import githubLogo from "@/assets/logos/github.svg";
 import processVideo from "@/assets/ai-design-process.mp4.asset.json";
 import figmaLogo from "@/assets/logos/figma.svg";
 
-const chapters = [
+type Chapter = {
+  tag: string;
+  heading: string;
+  body: string;
+  tools?: string;
+  figure?: ComponentType<HairlineProps>;
+  embed?: string;
+  figureAlt: string;
+};
+
+const chapters: Chapter[] = [
   {
     tag: "00 — Toolstack",
     heading: "Connected tools, orchestrated by Claude",
@@ -26,8 +38,8 @@ const chapters = [
     heading: "Open the workspace",
     body: "Claude asks Notion for the project workspace. You approve it once, and every tool call is scoped: reading research, writing docs and deploying previews are always allowed, while destructive actions like deleting a project stay blocked.",
     tools: "Notion · MCP permissions",
-    figure: Padlock,
-    figureAlt: "A padlock swinging open: scoped workspace access",
+    embed: "/embeds/hairline-notion.html",
+    figureAlt: "Notion's cube as a box whose lid lifts: opening the project workspace",
   },
   {
     tag: "02 — Discovery",
@@ -174,35 +186,48 @@ const AIDesignProcess = () => {
             </p>
           </ScrollReveal>
           <div className="mt-12 flex flex-col gap-4">
-            {chapters.map((chapter, i) => (
-              <ScrollReveal key={chapter.tag} distance={0}>
-                <article className="grid items-center gap-6 rounded-2xl border border-border bg-card p-6 md:grid-cols-2 md:gap-10 md:p-10">
-                  <div className={`order-2 min-w-0 ${i % 2 === 0 ? "md:order-1" : "md:order-2"}`}>
-                    <span className="font-mono-label mb-4 block text-primary">
-                      {chapter.tag}
-                    </span>
-                    <h3 className="mb-4 text-2xl font-extrabold tracking-tight md:text-3xl">
-                      {chapter.heading}
-                    </h3>
-                    <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                      {chapter.body}
-                    </p>
-                    {chapter.tools && (
-                      <p className="mt-5 font-mono-label text-xs text-muted-foreground/60">
-                        Tools: {chapter.tools}
+            {chapters.map((chapter, i) => {
+              const Figure = chapter.figure;
+              return (
+                <ScrollReveal key={chapter.tag} distance={0}>
+                  <article className="grid items-center gap-6 rounded-2xl border border-border bg-card p-6 md:grid-cols-2 md:gap-10 md:p-10">
+                    <div className={`order-2 min-w-0 ${i % 2 === 0 ? "md:order-1" : "md:order-2"}`}>
+                      <span className="font-mono-label mb-4 block text-primary">
+                        {chapter.tag}
+                      </span>
+                      <h3 className="mb-4 text-2xl font-extrabold tracking-tight md:text-3xl">
+                        {chapter.heading}
+                      </h3>
+                      <p className="text-[15px] leading-[1.7] text-muted-foreground">
+                        {chapter.body}
                       </p>
-                    )}
-                  </div>
-                  <div className={`order-1 min-w-0 ${i % 2 === 0 ? "md:order-2" : "md:order-1"}`}>
-                    <chapter.figure
-                      theme="auto"
-                      aria-label={chapter.figureAlt}
-                      className="mx-auto w-full max-w-[280px] [--hairline-plate:hsl(var(--card))] [--hairline-stroke:1]"
-                    />
-                  </div>
-                </article>
-              </ScrollReveal>
-            ))}
+                      {chapter.tools && (
+                        <p className="mt-5 font-mono-label text-xs text-muted-foreground/60">
+                          Tools: {chapter.tools}
+                        </p>
+                      )}
+                    </div>
+                    <div className={`order-1 min-w-0 ${i % 2 === 0 ? "md:order-2" : "md:order-1"}`}>
+                      {chapter.embed ? (
+                        <iframe
+                          src={chapter.embed}
+                          title={chapter.figureAlt}
+                          loading="lazy"
+                          scrolling="no"
+                          className="mx-auto block aspect-[5/4] w-full max-w-[280px] border-0 bg-transparent"
+                        />
+                      ) : Figure ? (
+                        <Figure
+                          theme="auto"
+                          aria-label={chapter.figureAlt}
+                          className="mx-auto w-full max-w-[280px] [--hairline-plate:hsl(var(--card))] [--hairline-stroke:1]"
+                        />
+                      ) : null}
+                    </div>
+                  </article>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>
