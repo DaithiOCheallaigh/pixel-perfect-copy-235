@@ -165,12 +165,12 @@ const AIDesignProcess = () => {
                 playsInline
                 preload="none"
                 poster="/images/ai-design-process-poster.jpg"
-                aria-label="AI-Led Design: my Claude process, from toolstack to analytics (1 minute 19)"
+                aria-label="AI-Led Design: my Claude process, from toolstack to analytics (1 minute 17)"
                 className="block h-full w-full"
               />
             </div>
             <p className="mt-3 font-mono-label text-xs text-muted-foreground">
-              Process film · 1:19 · sound on
+              Process film · 1:17 · sound on
             </p>
           </ScrollReveal>
         </div>
