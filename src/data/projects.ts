@@ -88,6 +88,19 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "spark",
+    title: "MedEd Workspace",
+    subtitle: "A self-guided study companion for nursing and health-sciences students, and an LMS-companion for faculty",
+    workDescription: "Contract UI/UX design for a two-sided learning product — student self-study and faculty LMS companion — built on and extended into Elsevier's Leyden design system.",
+    tags: ["Healthcare Education", "Design Systems", "AI Workflow"],
+    timeline: "Contract",
+    client: "Elsevier",
+    pillImage: "/images/work/spark-pill.webp",
+    headerImage: "/images/work/spark-pill.webp",
+    description: "",
+    nextProject: null,
+  },
+  {
     id: "marsh-design-system",
     title: "Marsh Design System Rebrand",
     subtitle: "Rebranding an enterprise component library with an AI-first workflow",
@@ -616,18 +629,5 @@ export const projects: Project[] = [
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/HighDef.jpg", alt: "High definition renders" },
       { src: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Therapie_PillShop.webp", alt: "Shop integration" },
     ],
-  },
-  {
-    id: "spark",
-    title: "MedEd Workspace",
-    subtitle: "A self-guided study companion for nursing and health-sciences students, and an LMS-companion for faculty",
-    workDescription: "Contract UI/UX design for a two-sided learning product — student self-study and faculty LMS companion — built on and extended into Elsevier's Leyden design system.",
-    tags: ["Healthcare Education", "Design Systems", "AI Workflow"],
-    timeline: "Contract",
-    client: "Elsevier",
-    pillImage: "/images/work/spark-pill.webp",
-    headerImage: "/images/work/spark-pill.webp",
-    description: "",
-    nextProject: null,
   },
 ];
