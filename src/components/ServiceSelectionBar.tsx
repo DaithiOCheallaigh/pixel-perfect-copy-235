@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { submitLead } from "@/lib/submitLead";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, Check } from "lucide-react";
 
@@ -19,6 +20,11 @@ const ServiceSelectionBar = () => {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const barButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleSelectionChange = (e: CustomEvent<SelectedService[] | null>) => {
@@ -30,32 +36,91 @@ const ServiceSelectionBar = () => {
 
   const handleStart = () => {
     setSent(false);
+    setError("");
     setDialogOpen(true);
   };
+
+  // Focus management: focus name on open, trap Tab, close on Escape
+  useEffect(() => {
+    if (!dialogOpen) return;
+    const t = window.setTimeout(() => nameRef.current?.focus(), 50);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeDialog();
+        return;
+      }
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const els = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([tabindex="-1"]), a[href]')
+      ).filter((el) => el.offsetParent !== null);
+      if (!els.length) return;
+      const first = els[0];
+      const last = els[els.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (!dialogRef.current.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      window.clearTimeout(t);
+      document.removeEventListener("keydown", onKey);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dialogOpen, sent]);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || sending) return;
     setSending(true);
+    setError("");
+    let ok = false;
     try {
-      await fetch(`${SUPABASE_URL}/functions/v1/send-service-selection`, {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/send-service-selection`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           apikey: SUPABASE_KEY,
           Authorization: `Bearer ${SUPABASE_KEY}`,
         },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), services: selectedServices }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          serviceIds: selectedServices.map((s) => s.id),
+          company_website: honeypot,
+        }),
       });
+      ok = res.ok;
     } catch {
-      // Visitor shouldn't be blocked by a network hiccup
+      ok = false;
     }
     setSending(false);
+    if (!ok) {
+      setError("Something went wrong sending your request. Please try again, or email davekellydesign@gmail.com.");
+      return;
+    }
+    if (!honeypot) {
+      void submitLead({
+        name: name.trim(),
+        email: email.trim(),
+        service: selectedServices.map((s) => s.title).join(", "),
+        message: `Service selection: ${selectedServices.map((s) => `${s.title} (${s.price})`).join(", ")}`,
+      }).catch(() => {});
+    }
     setSent(true);
   };
 
   const closeDialog = () => {
     setDialogOpen(false);
+    setError("");
+    window.setTimeout(() => barButtonRef.current?.focus(), 0);
     if (sent) {
       setName("");
       setEmail("");
@@ -81,6 +146,10 @@ const ServiceSelectionBar = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 24, scale: 0.96 }}
               transition={{ type: "spring", damping: 25, stiffness: 350 }}
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={sent ? "consultation-sent-title" : "consultation-dialog-title"}
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0a0a0b]/95 p-6 shadow-2xl shadow-black/50 backdrop-blur-xl md:p-8"
             >
@@ -89,7 +158,7 @@ const ServiceSelectionBar = () => {
                   <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary">
                     <Check className="h-7 w-7 text-primary-foreground" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground">Sent to Dave</h3>
+                  <h3 id="consultation-sent-title" className="text-xl font-bold text-foreground">Sent to Dave</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     Your consultation request has been sent to Dave and he will be in touch shortly to continue the conversation.
                   </p>
@@ -104,7 +173,7 @@ const ServiceSelectionBar = () => {
                 <>
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-foreground">Start your free consultation</h3>
+                      <h3 id="consultation-dialog-title" className="text-xl font-bold text-foreground">Start your free consultation</h3>
                       <p className="mt-1 text-sm text-muted-foreground">
                         {selectedServices.length} {selectedServices.length === 1 ? "service" : "services"} selected — Dave will get back to you shortly.
                       </p>
@@ -127,23 +196,54 @@ const ServiceSelectionBar = () => {
                     ))}
                   </ul>
 
-                  <form onSubmit={handleSend} className="mt-6 space-y-3">
-                    <input
-                      type="text"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
-                    />
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Your email"
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
-                    />
+                  <form onSubmit={handleSend} className="relative mt-6 space-y-3">
+                    <div
+                      aria-hidden="true"
+                      style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}
+                    >
+                      <label htmlFor="ssb-company-website">Company website</label>
+                      <input
+                        id="ssb-company-website"
+                        name="company_website"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={honeypot}
+                        onChange={(e) => setHoneypot(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label htmlFor="ssb-name" className="text-xs font-medium text-muted-foreground">Your name</label>
+                      <input
+                        id="ssb-name"
+                        ref={nameRef}
+                        type="text"
+                        required
+                        maxLength={100}
+                        autoComplete="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Jane Doe"
+                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label htmlFor="ssb-email" className="text-xs font-medium text-muted-foreground">Your email</label>
+                      <input
+                        id="ssb-email"
+                        type="email"
+                        required
+                        maxLength={254}
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="jane@example.com"
+                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
+                      />
+                    </div>
+                    {error && (
+                      <p role="alert" className="text-sm text-destructive">{error}</p>
+                    )}
                     <button
                       type="submit"
                       disabled={sending}
@@ -152,6 +252,9 @@ const ServiceSelectionBar = () => {
                       {sending ? "Sending…" : "Send to Dave"}
                       {!sending && <ArrowRight className="h-4 w-4" />}
                     </button>
+                    <p className="text-center text-xs text-muted-foreground">
+                      We'll only use your details to respond to your enquiry.
+                    </p>
                   </form>
                 </>
               )}
@@ -165,6 +268,7 @@ const ServiceSelectionBar = () => {
           {hasSelections && (
             <motion.button
               key="selection-bar"
+              ref={barButtonRef}
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 20, opacity: 0 }}

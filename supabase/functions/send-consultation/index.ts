@@ -1,88 +1,94 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { corsHeaders, escapeHtml, isValidEmail, json, sendResend, str, subjectSafe } from "../_shared/email-utils.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+const TEXT = 300;
 
-serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   try {
-    const { formData, brief } = await req.json();
-    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-    if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY is not configured");
+    let body: Record<string, unknown>;
+    try {
+      body = await req.json();
+    } catch {
+      return json({ error: "Invalid JSON" }, 400);
+    }
+    const f = (body?.formData ?? null) as Record<string, unknown> | null;
+    if (!f || typeof f !== "object") return json({ error: "Missing formData" }, 400);
 
-    const htmlBody = `
+    if (typeof f.company_website === "string" && f.company_website.trim()) return json({ success: true });
+
+    const errors: string[] = [];
+    const req_ = (k: string, max: number, required = false) => {
+      const v = str(f[k], max, required);
+      if (v === null) errors.push(k);
+      return v ?? "";
+    };
+
+    const fullName = req_("fullName", 100, true);
+    const email = typeof f.email === "string" ? f.email.trim() : "";
+    if (!isValidEmail(email)) errors.push("email");
+    const phone = req_("phone", 40);
+    const companyName = req_("companyName", TEXT, true);
+    const websiteUrl = req_("websiteUrl", TEXT);
+    const industry = req_("industry", TEXT, true);
+    const source = req_("source", TEXT, true);
+    const projectDescription = req_("projectDescription", 5000, true);
+    const existingBrand = req_("existingBrand", TEXT);
+    const urgency = req_("urgency", TEXT);
+    const budgetRange = req_("budgetRange", TEXT, true);
+    const launchDate = req_("launchDate", 20);
+    const deadlineDetails = req_("deadlineDetails", TEXT);
+    const hasDeadline = f.hasDeadline === true;
+
+    const arr = (k: string, max: number) => {
+      const v = f[k];
+      if (v === undefined) return [] as string[];
+      if (!Array.isArray(v) || v.length > max || v.some((x) => typeof x !== "string" || x.length > TEXT)) {
+        errors.push(k);
+        return [];
+      }
+      return (v as string[]).map((x) => x.trim()).filter(Boolean);
+    };
+    const projectTypes = arr("projectTypes", 10);
+    const competitorUrls = arr("competitorUrls", 5);
+
+    if (errors.length) return json({ error: "Invalid fields", fields: errors }, 400);
+
+    const e = escapeHtml;
+    const html = `
       <h1>New Project Consultation</h1>
       <hr/>
       <h2>About the Client</h2>
-      <p><strong>Name:</strong> ${formData.fullName}</p>
-      <p><strong>Company:</strong> ${formData.companyName}</p>
-      <p><strong>Website:</strong> ${formData.websiteUrl || "N/A"}</p>
-      <p><strong>Industry:</strong> ${formData.industry}</p>
-      <p><strong>Source:</strong> ${formData.source}</p>
-      
+      <p><strong>Name:</strong> ${e(fullName)}</p>
+      <p><strong>Email:</strong> ${e(email)}</p>
+      <p><strong>Phone:</strong> ${e(phone || "N/A")}</p>
+      <p><strong>Company:</strong> ${e(companyName)}</p>
+      <p><strong>Website:</strong> ${e(websiteUrl || "N/A")}</p>
+      <p><strong>Industry:</strong> ${e(industry)}</p>
+      <p><strong>Source:</strong> ${e(source)}</p>
+
       <h2>Project Details</h2>
-      <p><strong>Type:</strong> ${(formData.projectTypes || []).join(", ")}</p>
-      <p><strong>Description:</strong> ${formData.projectDescription}</p>
-      <p><strong>Existing Brand:</strong> ${formData.existingBrand}</p>
-      <p><strong>Urgency:</strong> ${formData.urgency}</p>
-      
-      <h2>Goals & Audience</h2>
-      <p><strong>Goals:</strong> ${(formData.websiteGoals || []).join(", ")}</p>
-      <p><strong>Target Audience:</strong> ${formData.targetAudience}</p>
-      <p><strong>Success Definition:</strong> ${formData.successDefinition}</p>
-      <p><strong>Competitor URLs:</strong> ${(formData.competitorUrls || []).filter(Boolean).join(", ") || "None"}</p>
-      
+      <p><strong>Type:</strong> ${e(projectTypes.join(", ") || "N/A")}</p>
+      <p><strong>Existing Brand:</strong> ${e(existingBrand || "N/A")}</p>
+      <p><strong>Urgency:</strong> ${e(urgency || "N/A")}</p>
+      <p><strong>Competitor / inspiration URLs:</strong> ${e(competitorUrls.join(", ") || "None")}</p>
+      <p><strong>Description:</strong></p>
+      <pre style="white-space: pre-wrap; font-family: sans-serif;">${e(projectDescription)}</pre>
+
       <h2>Budget & Timeline</h2>
-      <p><strong>Budget:</strong> ${formData.budgetRange}</p>
-      <p><strong>Launch Date:</strong> ${formData.launchDate || "Flexible"}</p>
-      <p><strong>Hard Deadline:</strong> ${formData.hasDeadline ? formData.deadlineDetails : "No"}</p>
-      
-      <h2>Brand Assets</h2>
-      <p><strong>Font Preferences:</strong> ${formData.fontPreferences || "Not specified"}</p>
-      <p><strong>Brand Colours:</strong> ${(formData.brandColours || []).join(", ") || "Not specified"}</p>
-      
-      <hr/>
-      <h2>AI-Generated Project Brief</h2>
-      <pre style="white-space: pre-wrap; font-family: sans-serif;">${brief || "No brief generated"}</pre>
+      <p><strong>Budget:</strong> ${e(budgetRange)}</p>
+      <p><strong>Launch Date:</strong> ${e(launchDate || "Flexible")}</p>
+      <p><strong>Hard Deadline:</strong> ${hasDeadline ? e(deadlineDetails || "Yes") : "No"}</p>
     `;
 
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "Lacuna Digital <onboarding@resend.dev>",
-        to: ["davekellydesign@gmail.com"],
-        subject: `New Project Enquiry: ${formData.companyName} — ${formData.fullName}`,
-        html: htmlBody,
-      }),
+    return await sendResend({
+      reply_to: email,
+      subject: subjectSafe(`New Project Enquiry: ${companyName} — ${fullName}`),
+      html,
     });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Resend error:", res.status, errorText);
-      return new Response(
-        JSON.stringify({ error: "Failed to send email" }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
-  } catch (e) {
-    console.error("send-consultation error:", e);
-    return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+  } catch (err) {
+    console.error("send-consultation error:", err);
+    return json({ error: "Internal error" }, 500);
   }
 });
