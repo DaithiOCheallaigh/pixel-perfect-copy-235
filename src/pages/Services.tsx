@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight, Globe, Calendar, Search, Bot, Users } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import {
@@ -69,7 +69,6 @@ interface ServiceItem {
   link: string;
   category: "visibility" | "efficiency";
   featured?: boolean;
-  expandedDetail?: string;
 }
 
 const allServices: ServiceItem[] = [
@@ -359,7 +358,7 @@ const freeTools = [
     icon: Link1,
     title: "Link-in-Bio Builder",
     desc: "Build a beautiful mobile link page for your business — no sign-up needed.",
-    link: "/tools/link-builder",
+    link: "/tools/link-in-bio",
   },
   {
     icon: Star1,
@@ -371,7 +370,7 @@ const freeTools = [
     icon: MessageEdit,
     title: "Social Caption Generator",
     desc: "AI writes captions with hashtags for any platform, in your tone.",
-    link: "/tools/caption-gen",
+    link: "/tools/caption-generator",
   },
 ];
 
@@ -420,7 +419,6 @@ const SelectableServiceCard = ({
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const Icon = service.icon;
-  const [showDetail, setShowDetail] = useState(false);
 
   return (
     <motion.div
@@ -433,6 +431,7 @@ const SelectableServiceCard = ({
       <button
         type="button"
         onClick={onToggle}
+        aria-pressed={selected}
         className={`group relative flex h-full w-full flex-col rounded-xl border p-6 text-left transition-all ${
           selected
             ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
@@ -461,32 +460,6 @@ const SelectableServiceCard = ({
         <Icon variant="TwoTone" className={`h-7 w-7 text-primary ${service.featured ? "mt-4" : ""}`} />
         <h3 className="mt-4 text-base font-bold">{service.title}</h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
-
-        {/* Expanded detail on hover/click for featured card */}
-        {service.expandedDetail && (
-          <>
-            <button
-              type="button"
-              onClick={(e) => { e.stopPropagation(); setShowDetail(!showDetail); }}
-              className="mt-2 text-xs font-medium text-primary hover:underline"
-            >
-              {showDetail ? "Show less" : "Learn more"}
-            </button>
-            <AnimatePresence>
-              {showDetail && (
-                <motion.p
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden text-xs leading-relaxed text-muted-foreground"
-                >
-                  {service.expandedDetail}
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </>
-        )}
 
         <div className="mt-4 flex items-center justify-between">
           <p className="text-xs font-semibold text-primary">{service.price}</p>
@@ -530,6 +503,13 @@ const Services = () => {
       : null;
     window.dispatchEvent(new CustomEvent("service-selection-change", { detail }));
   }, [selectedIds]);
+
+  // Clear the floating selection bar when leaving the page
+  useEffect(() => {
+    return () => {
+      window.dispatchEvent(new CustomEvent("service-selection-change", { detail: null }));
+    };
+  }, []);
 
   useEffect(() => {
     document.title = "Services — Lacuna Digital";
@@ -869,6 +849,7 @@ const Services = () => {
                 <button
                   key={cat.key}
                   onClick={() => setActiveCategory(cat.key)}
+                  aria-pressed={activeCategory === cat.key}
                   className={`relative z-10 rounded-md px-5 py-2 text-sm font-semibold transition-colors ${
                     activeCategory === cat.key
                       ? "text-primary-foreground"
@@ -893,6 +874,7 @@ const Services = () => {
                   <button
                     key={c}
                     onClick={() => setCurrency(c)}
+                    aria-pressed={currency === c}
                     className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
                       currency === c
                         ? "bg-primary text-primary-foreground"
