@@ -31,7 +31,7 @@
 - [x] Audit protected files, run 172 tests and check expertise navigation in the preview; no backend edits or publishing.
 
 # Recruiter-focused portfolio
-- [ ] Add shared profile and hiring contact section; replace commercial portfolio chrome.
-- [ ] Update homepage, featured work, About experience and recruiter password contact using supplied copy.
-- [ ] Replace portfolio availability sections and remove commercial links and dependencies.
-- [ ] Run tests, audit protected files and verify desktop/mobile portfolio and contact navigation.
+- [x] Add shared profile and hiring contact section; replace commercial portfolio chrome.
+- [x] Update homepage, featured work, About experience and recruiter password contact using supplied copy.
+- [x] Replace portfolio availability sections and remove commercial links and dependencies.
+- [x] Run 180 passing tests, confirm error-free preview build, audit protected files and verify desktop/mobile portfolio and contact navigation.
