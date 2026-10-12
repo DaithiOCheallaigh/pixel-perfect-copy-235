@@ -12,7 +12,7 @@
 - Pages using usePageDescription synchronise the static description fallback with their managed SEO description and restore it on unmount; this avoids conflicting descriptions without changing the site's static head globally.
 - Intake options and plain-English working terms are shared data modules using the pricing catalogue; this makes numeric rules testable without duplicating page values.
 - Selection estimates derive setup and recurring fees by service ID from the pricing catalogue, never by parsing labels or trusting stored price totals; this keeps monthly fees separate and stale session prices out of quotes.
-- Generate public/llms.txt pricing with scripts/generate-llms.ts from the shared catalogue; this keeps the static discovery document aligned with frontend prices.
+- Generate portfolio public/llms.txt from projects/profile and public/llms-services.txt pricing from the shared catalogue using scripts/generate-llms.ts; this separates recruiter discovery from commercial pricing without creating a services directory.
 - Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
 - SEO derives section branding, default sharing image and fallback service schema from the current pathname; PortfolioSEO is a compatibility re-export and layouts do not set page metadata, avoiding competing head tags.
 - Portfolio pages use HiringCTA while commercial pages retain AvailabilityCTA; this isolates hiring contact from commercial offers.
