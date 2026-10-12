@@ -24,3 +24,8 @@
 - [x] Add plain-English Terms and refresh llms.txt and sitemap.
 - [x] Audit all frontend/public copy and report backend-only stale values without changing them.
 - [x] Run 106 passing tests and verify central flows and desktop/mobile pages; no publishing or real test emails.
+
+# Commercial links and SEO URLs
+- [ ] Point the listed commercial and client-page links directly to /services paths.
+- [ ] Replace listed manual metadata effects with SEO and simplify shared availability.
+- [ ] Audit protected files, run tests and check expertise navigation in the preview; no backend edits or publishing.
