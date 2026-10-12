@@ -1,7 +1,43 @@
 import { monthlyLabel, segments, webLadder, carePlans, careTerms, addOns, studio, entry, terms, eur, priceLabel, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
 import { writeFileSync } from "node:fs";
+import { projects } from "../src/data/projects";
+import { YEARS_EXPERIENCE, CV_URL, PORTFOLIO_EMAIL, LINKEDIN_URL } from "../src/data/profile";
 
-export function buildLlmsText() {
+const BASE_URL = "https://www.lacunadigital.io";
+
+export function buildPortfolioLlms() {
+  const caseStudies = projects.filter(project => !project.comingSoon).map(project => {
+    if (project.id === "spark") return `- [MedEd Workspace (Elsevier)](${BASE_URL}/work/spark): password-protected`;
+    const path = project.id === "marsh-design-system" || project.id === "marsh-internal-tooling"
+      ? `/work/${project.id}` : `/case/${project.id}`;
+    return `- [${project.title}](${BASE_URL}${path})`;
+  });
+  return `# Dave Kelly — Senior Product Designer
+
+> Dave Kelly is a senior product designer based in Dublin, Ireland, with ${YEARS_EXPERIENCE} years' experience across enterprise tools, design systems and consumer products. Open to full-time senior product design roles.
+
+## Pages
+
+- [Home](${BASE_URL}/)
+- [Work](${BASE_URL}/work)
+- [About](${BASE_URL}/about)
+- [Skills](${BASE_URL}/skills)
+- [AI Design Process](${BASE_URL}/ai-design-process)
+- [Blog](${BASE_URL}/blog)
+- [CV (PDF)](${BASE_URL}${CV_URL})
+
+## Case studies
+
+${caseStudies.join("\n")}
+
+## Contact
+
+- Email: ${PORTFOLIO_EMAIL}
+- LinkedIn: ${LINKEDIN_URL}
+`;
+}
+
+export function buildServicesLlms() {
   const packageLine = (p: (typeof webLadder)[number]) => `- ${p.name}: ${priceLabel(p)}${p.monthly ? `; ${monthlyLabel(p)}` : ""}. Live in ${p.live}.`;
   const studioRows = [
     `Day rate ${eur(studio.dayRate)}; agency white-label ${eur(studio.agencyDayRate)}/day (${studio.agencyMinDays}-day minimum).`,
@@ -21,21 +57,15 @@ Senior product design and AI-assisted build: fixed-price launches from 5 working
 
 ## Pages
 
-- [Home](/)
-- [About](/about)
-- [Skill Set](/skills)
-- [My Work](/work)
-- [Blog](/blog)
-- [AI Design Process](/ai-design-process)
-- [Services](/services)
-${Object.values(segments).map(s => `- [${s.title}](/services/${s.slug})`).join("\n")}
-- [Web Design](/web-design)
-- [Product Studio](/product-studio)
-- [Free tools](/tools)
-- [Refer](/refer)
-- [Terms](/terms)
-- [Get Started](/get-started)
-- [Start a Project](/start-project)
+- [Services](${BASE_URL}/services)
+${Object.values(segments).map(s => `- [${s.title}](${BASE_URL}/services/${s.slug})`).join("\n")}
+- [Web Design](${BASE_URL}/services/web-design)
+- [Product Studio](${BASE_URL}/services/product-studio)
+- [Free tools](${BASE_URL}/services/tools)
+- [Refer](${BASE_URL}/services/refer)
+- [Terms](${BASE_URL}/services/terms)
+- [Get Started](${BASE_URL}/services/get-started)
+- [Start a Project](${BASE_URL}/services/start-project)
 
 ## Services & pricing (EUR, + VAT unless stated)
 
@@ -67,25 +97,24 @@ ${careTerms.minimums}. ${careTerms.annualPrepay}. ${careTerms.exit}
 
 ${studioRows.map(row => `- ${row}`).join("\n")}
 
-## Case studies
+## Proof (portfolio case studies)
 
-- [Marsh Design System](/work/marsh-design-system)
-- [Marsh Internal Tooling](/work/marsh-internal-tooling)
-- [MedEd Workspace](/work/spark): password-protected portfolio case study.
-- [TripAdmit white-label](/case/whitelabel)
-- [TipDirect tipping](/case/digital-tipping)
-- [AI-assisted reviews](/case/ai-reviews)
-- [Therapie booking](/case/booking-app)
+- [Marsh Design System](${BASE_URL}/work/marsh-design-system)
+- [Marsh Internal Tooling](${BASE_URL}/work/marsh-internal-tooling)
+- [MedEd Workspace](${BASE_URL}/work/spark): password-protected portfolio case study.
+- [TripAdmit white-label](${BASE_URL}/case/whitelabel)
+- [TipDirect tipping](${BASE_URL}/case/digital-tipping)
+- [AI-assisted reviews](${BASE_URL}/case/ai-reviews)
+- [Therapie booking](${BASE_URL}/case/booking-app)
 
 ## Contact
 
 ${CONTACT_EMAIL}
 Book a free call: ${CALENDLY_URL}
-
-## Optional
-
-- [Sitemap](/sitemap)
 `;
 }
 
-if (process.argv[1]?.endsWith("generate-llms.ts")) writeFileSync("public/llms.txt", buildLlmsText());
+if (process.argv[1]?.endsWith("generate-llms.ts")) {
+  writeFileSync("public/llms.txt", buildPortfolioLlms());
+  writeFileSync("public/llms-services.txt", buildServicesLlms());
+}
