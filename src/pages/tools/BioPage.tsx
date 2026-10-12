@@ -42,7 +42,7 @@ const BioPage = () => {
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center text-foreground">
       <h1 className="text-2xl font-bold">Page not found</h1>
       <p className="mt-2 text-muted-foreground">This link page doesn't exist.</p>
-      <Link to="/tools/link-in-bio" className="mt-4 text-sm font-medium text-primary underline">Create your own →</Link>
+      <Link to="/services/tools/link-in-bio" className="mt-4 text-sm font-medium text-primary underline">Create your own →</Link>
     </div>
   );
 
@@ -94,7 +94,7 @@ const BioPage = () => {
               ))}
             </div>
             <p className={`mt-10 text-xs opacity-40 ${t.text}`}>
-              Built with <a href="/tools/link-in-bio" className="underline">Lacuna Digital</a>
+              Built with <a href="/services/tools/link-in-bio" className="underline">Lacuna Digital</a>
             </p>
           </div>
         </div>

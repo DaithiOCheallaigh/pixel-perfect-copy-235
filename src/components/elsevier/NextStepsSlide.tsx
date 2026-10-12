@@ -76,7 +76,7 @@ const NextStepsSlide = () => (
       {/* Callout */}
       <div className="rounded-xl bg-white/5 border border-white/10 p-6 text-center space-y-2">
         <p className="text-sm text-white/60">
-          Prepared by <strong className="text-white/80">Lacuna Digital</strong> — lacunadigital.io
+          Prepared by <strong className="text-white/80">Lacuna Digital</strong> — lacunadigital.io/services
         </p>
         <p className="text-xs text-white/35">
           For more information contact dave@lacunadigital.io

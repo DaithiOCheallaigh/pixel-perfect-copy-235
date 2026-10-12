@@ -11,23 +11,18 @@ const ServicesFooter = () => (
         <Link to="/services" className="text-sm text-muted-foreground transition-colors hover:text-primary">
           Services
         </Link>
-        <Link to="/web-design" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+        <Link to="/services/web-design" className="text-sm text-muted-foreground transition-colors hover:text-primary">
           Web Design
         </Link>
-        <Link to="/product-studio" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+        <Link to="/services/product-studio" className="text-sm text-muted-foreground transition-colors hover:text-primary">
           Product Studio
         </Link>
-        <Link to="/terms" className="text-sm text-muted-foreground md:hover:text-primary">Terms</Link>
+        <Link to="/services/terms" className="text-sm text-muted-foreground md:hover:text-primary">Terms</Link>
         <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-muted-foreground md:hover:text-primary">{CONTACT_EMAIL}</a>
         <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground md:hover:text-primary">Book a free call ↗</a>
-        <a
-          href="https://www.lacunadigital.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
-        >
-          Learn more about Dave ↗
-        </a>
+        <Link to="/work" className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary">
+          Selected work
+        </Link>
         <a
           href="https://www.linkedin.com/in/davidkelly89/"
           target="_blank"

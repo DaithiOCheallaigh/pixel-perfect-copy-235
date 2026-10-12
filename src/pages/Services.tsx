@@ -62,7 +62,7 @@ const allServices: ServiceItem[] = [
     desc: "Fast, conversion-focused websites that make your business look the part.",
     price: `From ${priceLabel(webLadder[0])} · ${monthlyLabel(webLadder[0])}`,
     priceValue: webLadder[0].price ?? 0,
-    link: "/web-design",
+    link: "/services/web-design",
     category: "visibility",
   },
   {
@@ -72,7 +72,7 @@ const allServices: ServiceItem[] = [
     desc: "A professional email address and domain that builds instant trust.",
     price: `${eur(addOns.email.setup)} setup (${addOns.email.inboxesIncluded} inboxes) · licences at cost`,
     priceValue: addOns.email.setup,
-    link: "/start-project",
+    link: "/services/start-project",
     category: "visibility",
   },
   {
@@ -82,7 +82,7 @@ const allServices: ServiceItem[] = [
     desc: "I set up your channels, create your content strategy, and post for you each month from your photos.",
     price: `${eur(addOns.socialSetup)} setup · posting ${eur(addOns.socialPosting.monthly)}/mo (${addOns.socialPosting.posts} posts)`,
     priceValue: addOns.socialSetup,
-    link: "/start-project",
+    link: "/services/start-project",
     category: "visibility",
   },
   {
@@ -92,7 +92,7 @@ const allServices: ServiceItem[] = [
     desc: "Get found on Google Maps and in local searches — where your customers are looking.",
     price: `${eur(addOns.gbp)} setup · or in Growth care`,
     priceValue: addOns.gbp,
-    link: "/start-project",
+    link: "/services/start-project",
     category: "visibility",
   },
   {
@@ -102,7 +102,7 @@ const allServices: ServiceItem[] = [
     desc: "I tune your menu, categories and photos on delivery platforms once your account is approved.",
     price: `${eur(addOns.listingTuneup)} per platform, after approval`,
     priceValue: addOns.listingTuneup,
-    link: "/start-project",
+    link: "/services/start-project",
     category: "visibility",
   },
   {
@@ -112,7 +112,7 @@ const allServices: ServiceItem[] = [
     desc: "I'll map how your business currently operates — tools, workflows, gaps — then either build bespoke software to fix it or optimise what you already have.",
     price: `${eur(entry.aiAudit.price)} · half credited`,
     priceValue: entry.aiAudit.price,
-    link: "/start-project",
+    link: "/services/start-project",
     category: "efficiency",
     featured: false,
   },
@@ -123,7 +123,7 @@ const allServices: ServiceItem[] = [
     desc: "An always-on assistant that qualifies leads, answers FAQs, and books appointments — 24/7.",
     price: `${eur(addOns.aiAssistant.setup)} + ${eur(addOns.aiAssistant.monthly)}/mo · or in Growth + AI`,
     priceValue: addOns.aiAssistant.setup,
-    link: "/ai-integration",
+    link: "/services/start-project",
     category: "efficiency",
   },
   {
@@ -133,7 +133,7 @@ const allServices: ServiceItem[] = [
     desc: "Ditch the phone bookings. I set up a reservation system that works while you sleep.",
     price: `${eur(addOns.booking)} setup${VAT_REGISTERED ? " + VAT" : ""} (salons from ${priceLabel(segments.salons.packages[0])})`,
     priceValue: addOns.booking,
-    link: "/start-project",
+    link: "/services/start-project",
     category: "efficiency",
   },
   {
@@ -143,7 +143,7 @@ const allServices: ServiceItem[] = [
     desc: "Know your customers, track every interaction, and never drop a lead.",
     price: `${eur(addOns.crmStarter)} starter`,
     priceValue: addOns.crmStarter,
-    link: "/start-project",
+    link: "/services/start-project",
     category: "efficiency",
   },
   {
@@ -153,7 +153,7 @@ const allServices: ServiceItem[] = [
     desc: "An AI receptionist for your business — answering calls, booking appointments, and following up.",
     price: `${eur(addOns.aiReceptionist.setup)} setup + ${eur(addOns.aiReceptionist.monthly)}/mo`,
     priceValue: addOns.aiReceptionist.setup,
-    link: "/ai-integration",
+    link: "/services/start-project",
     category: "efficiency",
   },
 ];
@@ -171,19 +171,19 @@ const freeTools = [
     icon: Link1,
     title: "Link-in-Bio Builder",
     desc: "Build a beautiful mobile link page for your business — free.",
-    link: "/tools/link-in-bio",
+    link: "/services/tools/link-in-bio",
   },
   {
     icon: Star1,
     title: "Google Review Link Generator",
     desc: "Get a direct review link and QR code to share with customers.",
-    link: "/tools/review-link",
+    link: "/services/tools/review-link",
   },
   {
     icon: MessageEdit,
     title: "Social Caption Generator",
     desc: "AI writes captions with hashtags for any platform, in your tone.",
-    link: "/tools/caption-generator",
+    link: "/services/tools/caption-generator",
   },
 ];
 
@@ -404,7 +404,7 @@ const Services = () => {
                 Build your package <ArrowRight className="h-4 w-4" />
               </a>
               <Link
-                to="/start-project"
+                to="/services/start-project"
                 className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
               >
                 Get a fixed quote
@@ -434,7 +434,7 @@ const Services = () => {
               Not sure what you need? A free intro call and a fixed written quote within {entry.introCall.quoteWithin}.
             </p>
             <Button asChild className="mt-4 rounded-sm">
-              <Link to="/start-project">Get a fixed quote <ArrowRight /></Link>
+              <Link to="/services/start-project">Get a fixed quote <ArrowRight /></Link>
             </Button>
             <p className="mt-4 text-xs text-muted-foreground">
               Custom AI or multi-site project? {entry.healthCheck.name} {eur(entry.healthCheck.price)}, half credited against your project.
@@ -631,7 +631,7 @@ const Services = () => {
                   {webLadder.slice(0, 3).map((pkg) => `${pkg.name} ${priceLabel(pkg)}`).join(" · ")}
                 </p>
                 <Button asChild variant="outline" className="mt-6 h-auto whitespace-normal rounded-sm py-2.5">
-                  <Link to="/web-design">Explore web design <ArrowRight /></Link>
+                  <Link to="/services/web-design">Explore web design <ArrowRight /></Link>
                 </Button>
               </article>
             </ScrollReveal>
@@ -691,7 +691,7 @@ const Services = () => {
                     ))}
                   </ul>
                   <Button asChild variant={plan.popular ? "default" : "outline"} className="mt-8 rounded-sm">
-                    <Link to="/start-project">Get started <ArrowRight /></Link>
+                    <Link to="/services/start-project">Get started <ArrowRight /></Link>
                   </Button>
                 </article>
               </ScrollReveal>
@@ -710,7 +710,7 @@ const Services = () => {
             <div className="mt-16 text-center">
               <p className="text-muted-foreground">Not sure which package is right for you?</p>
               <Button asChild className="mt-4 rounded-sm">
-                <Link to="/start-project">Book a Discovery Call <ArrowRight /></Link>
+                <Link to="/services/start-project">Book a Discovery Call <ArrowRight /></Link>
               </Button>
             </div>
           </ScrollReveal>

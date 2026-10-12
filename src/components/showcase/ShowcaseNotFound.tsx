@@ -16,7 +16,7 @@ const ShowcaseNotFound = () => (
         This page doesn't exist or is no longer available.
       </p>
       <a
-        href="https://lacunadigital.io"
+        href="https://www.lacunadigital.io/services"
         className="text-sm text-primary underline hover:text-primary/80 transition-colors"
       >
         Visit Lacuna Digital

@@ -1,20 +1,12 @@
-import { useEffect } from "react";
+import { SEO } from "@/components/SEO";
 import { motion } from "framer-motion";
 import ChatUI from "@/components/chat/ChatUI";
 
 const GetStarted = () => {
-  useEffect(() => {
-    document.title = "Get Started — Lacuna Digital";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta)
-      meta.setAttribute(
-        "content",
-        "Tell us about your business and get a personalised recommendation in minutes."
-      );
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-foreground">
+      <SEO title="Get Started" description="Tell us about your business and get a personalised recommendation in minutes." url="/services/get-started" />
 
       <section className="flex min-h-screen flex-col items-center justify-center px-6 pb-12 pt-24">
         <motion.div

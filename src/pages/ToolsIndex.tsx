@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowLeft } from "lucide-react";
@@ -16,35 +16,27 @@ const tools = [
     icon: Link1,
     title: "Link-in-Bio Builder",
     desc: "Build a beautiful mobile-optimised link page — free.",
-    link: "/tools/link-in-bio",
+    link: "/services/tools/link-in-bio",
   },
   {
     icon: Star1,
     title: "Google Review Link Generator",
     desc: "Get a direct review link + QR code to share with customers.",
-    link: "/tools/review-link",
+    link: "/services/tools/review-link",
   },
   {
     icon: MessageEdit,
     title: "Social Caption Generator",
     desc: "AI writes captions with hashtags for any platform, in your tone.",
-    link: "/tools/caption-generator",
+    link: "/services/tools/caption-generator",
   },
 ];
 
 const ToolsIndex = () => {
-  useEffect(() => {
-    document.title = "Free Business Tools — Lacuna Digital";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta)
-      meta.setAttribute(
-        "content",
-        "Free tools for small businesses — link pages, review links, caption generators."
-      );
-  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO title="Free Business Tools" description="Free tools for small businesses — link pages, review links, caption generators." url="/services/tools" />
 
       <section className="px-6 pb-12 pt-32 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
@@ -100,7 +92,7 @@ const ToolsIndex = () => {
                 Need something custom? I build tools like these for businesses every week.
               </p>
               <Link
-                to="/start-project"
+                to="/services/start-project"
                 className="group mt-4 inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
               >
                 Let's talk <ArrowRight className="h-4 w-4" />

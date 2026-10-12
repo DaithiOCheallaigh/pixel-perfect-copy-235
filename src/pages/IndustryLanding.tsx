@@ -40,7 +40,7 @@ const IndustryLanding = () => {
               <p className="mt-4 text-2xl font-bold text-primary md:text-3xl">{segment.tagline}</p>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{content.supporting}</p>
               <div className="mt-10 flex flex-wrap gap-4">
-                <Button asChild className="h-auto whitespace-normal rounded-sm px-6 py-3"><Link to="/start-project">Get a fixed quote in 48 hours <ArrowRight /></Link></Button>
+                <Button asChild className="h-auto whitespace-normal rounded-sm px-6 py-3"><Link to="/services/start-project">Get a fixed quote in 48 hours <ArrowRight /></Link></Button>
                 <Button asChild variant="outline" className="h-auto whitespace-normal rounded-sm px-6 py-3"><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a free call</a></Button>
               </div>
             </motion.div>
@@ -86,7 +86,7 @@ const IndustryLanding = () => {
                   {pkg.monthly && <p className="mt-2 text-sm text-muted-foreground">{monthlyLabel(pkg)}</p>}
                   <ul className="mt-6 flex-1 space-y-3">{pkg.scope?.map((item) => <li key={item} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" /><span>{item}</span></li>)}</ul>
                   <p className="mt-6 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">Live in {pkg.live} from a complete intake</p>
-                  <Button asChild variant={pkg.popular ? "default" : "outline"} className="mt-6 h-auto whitespace-normal rounded-sm py-3"><Link to="/start-project">Get a fixed quote in 48 hours<ArrowRight /></Link></Button>
+                  <Button asChild variant={pkg.popular ? "default" : "outline"} className="mt-6 h-auto whitespace-normal rounded-sm py-3"><Link to="/services/start-project">Get a fixed quote in 48 hours<ArrowRight /></Link></Button>
                 </article>
               </ScrollReveal>)}
             </div>
@@ -107,7 +107,7 @@ const IndustryLanding = () => {
               {plan.popular && <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Most Popular</span>}
               <h3 className="text-lg font-bold">{plan.name}</h3><p className="mt-4 text-2xl font-bold">{eur(plan.monthly)}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
               <ul className="mt-6 flex-1 space-y-3">{plan.includes.map((item) => <li key={item} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" /><span>{item === "One module for your industry" ? `Growth module: ${segment.growthModule}` : item}</span></li>)}</ul>
-              <Button asChild variant={plan.popular ? "default" : "outline"} className="mt-6 rounded-sm"><Link to="/start-project">Choose {plan.name}<ArrowRight /></Link></Button>
+              <Button asChild variant={plan.popular ? "default" : "outline"} className="mt-6 rounded-sm"><Link to="/services/start-project">Choose {plan.name}<ArrowRight /></Link></Button>
             </article>
           </ScrollReveal>)}</div>
           <div className="mt-6 space-y-3 text-xs leading-relaxed text-muted-foreground"><p>Minimum term: {segment.careMinMonths} months</p><p>{careTerms.annualPrepay}</p><p>{careTerms.exit}</p></div>

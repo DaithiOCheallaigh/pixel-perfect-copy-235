@@ -38,14 +38,14 @@ const WebDesignServices = () => {
   usePageDescription(description);
   return (
   <main className="bg-background pt-24 text-foreground">
-    <SEO title="Websites for professional services & other businesses" description={description} url="/web-design" />
+    <SEO title="Websites for professional services & other businesses" description={description} url="/services/web-design" />
     <section className="px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Web Design</SectionLabel>
         <h1 className="max-w-4xl text-4xl font-black md:text-6xl">Websites for professional services &amp; other businesses</h1>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">I handle strategy, design, build and launch. A fixed scope, a fixed price and a launch date in writing — with one person responsible from start to finish.</p>
         <p className="mt-4 text-sm text-primary">{availability.headline} · Next start: {availability.nextStart}</p>
-        <Button asChild className="mt-6"><Link to="/start-project">Get a fixed quote in 48 hours <ArrowRight /></Link></Button>
+        <Button asChild className="mt-6"><Link to="/services/start-project">Get a fixed quote in 48 hours <ArrowRight /></Link></Button>
       </div>
     </section>
     <section className="px-6 py-12 md:px-12 lg:px-24">
@@ -68,7 +68,7 @@ const WebDesignServices = () => {
             {tier.monthly && <p className="mt-2 text-sm text-primary">{monthlyLabel(tier)}</p>}
             <ul className="mt-6 flex-1 space-y-3">{tier.scope?.map(item => <li key={item} className="flex gap-2 text-sm text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" />{item}</li>)}</ul>
             <p className="mt-5 text-xs text-muted-foreground">Live in {tier.live} from a complete intake</p>
-            <Button asChild variant="outline" className="mt-6"><Link to="/start-project">Get a fixed quote <ArrowRight /></Link></Button>
+            <Button asChild variant="outline" className="mt-6"><Link to="/services/start-project">Get a fixed quote <ArrowRight /></Link></Button>
           </article>)}
         </div>
         <p className="mt-6 text-sm text-muted-foreground">A revision round is one consolidated written list within 5 working days; new work after design sign-off is {eur(addOns.hourly)}/hour.</p>
@@ -91,7 +91,7 @@ const WebDesignServices = () => {
       <p>Under {eur(terms.upfrontBelow)}: {terms.upTo1000}. Up to {eur(terms.splitThrough)}: {terms.to3000}. Above: {terms.over3000}.</p>
       <p>{terms.payMonthlyNote}.</p><p>{vatFootnote()}</p>
       <Link to="/services#packages" className="block text-primary">Looking for an industry package? Kitchens &amp; Joinery · Clinics &amp; Practices · Trades · Salons &amp; Barbers · Tours · Restaurants →</Link>
-      <Button asChild variant="outline"><Link to="/product-studio">Explore Product Studio <ArrowRight /></Link></Button>
+      <Button asChild variant="outline"><Link to="/services/product-studio">Explore Product Studio <ArrowRight /></Link></Button>
     </div></section>
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" /><SocialProof />  </main>
 );
