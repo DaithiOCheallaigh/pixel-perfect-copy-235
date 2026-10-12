@@ -1,17 +1,19 @@
+import { addOns, entry, eur, priceLabel, VAT_REGISTERED, webLadder } from "../_shared/pricing.ts";
 import { corsHeaders, escapeHtml, isValidEmail, json, sendResend, str, subjectSafe } from "../_shared/email-utils.ts";
 
-// Server-side source of truth (mirrors allServices in src/pages/Services.tsx)
-const SERVICES: Record<string, { title: string; price: string; priceValue: number; monthly?: boolean }> = {
-  website: { title: "Website Creation", price: "From €375", priceValue: 375 },
-  "domain-email": { title: "Domain & Custom Email", price: "From €150 setup", priceValue: 150 },
-  "social-media": { title: "Social Media Setup", price: "From €200 setup", priceValue: 200 },
-  "local-seo": { title: "Local SEO & Google", price: "Strategy free", priceValue: 0 },
-  "platform-onboarding": { title: "Platform Onboarding", price: "From €200", priceValue: 200 },
-  "ai-audit": { title: "Bespoke AI Audit", price: "Free Consultation", priceValue: 0 },
-  chatbots: { title: "AI-Powered Chatbots", price: "Free Consultation", priceValue: 0 },
-  reservations: { title: "Reservation Systems", price: "€200 setup", priceValue: 200 },
-  crm: { title: "CRM Setup & Integration", price: "Free Consultation", priceValue: 0 },
-  "ai-assistant": { title: "AI Personal Assistant", price: "€100/month", priceValue: 100, monthly: true },
+// Server-side source of truth, built from the shared pricing (mirrors the /services cards).
+const v = VAT_REGISTERED ? " + VAT" : "";
+const SERVICES: Record<string, { title: string; price: string; oneOff: number; monthly: number }> = {
+  website: { title: "Website (Launch)", price: `From ${priceLabel(webLadder[0])}`, oneOff: webLadder[0].price ?? 0, monthly: 0 },
+  "domain-email": { title: "Domain & Custom Email", price: `${eur(addOns.email.setup)} setup${v} (${addOns.email.inboxesIncluded} inboxes) · licences at cost`, oneOff: addOns.email.setup, monthly: 0 },
+  "social-media": { title: "Social Media Setup", price: `${eur(addOns.socialSetup)} setup${v} · optional posting ${eur(addOns.socialPosting.monthly)}/mo (${addOns.socialPosting.posts} posts)`, oneOff: addOns.socialSetup, monthly: 0 },
+  "local-seo": { title: "Google profile & local SEO", price: `${eur(addOns.gbp)} setup${v}`, oneOff: addOns.gbp, monthly: 0 },
+  "platform-onboarding": { title: "Delivery listing tune-up", price: `${eur(addOns.listingTuneup)}${v} per platform, after approval`, oneOff: addOns.listingTuneup, monthly: 0 },
+  "ai-audit": { title: "AI Opportunity Audit", price: `${eur(entry.aiAudit.price)}${v} · half credited`, oneOff: entry.aiAudit.price, monthly: 0 },
+  chatbots: { title: "AI website assistant", price: `${eur(addOns.aiAssistant.setup)} + ${eur(addOns.aiAssistant.monthly)}/mo${v}`, oneOff: addOns.aiAssistant.setup, monthly: addOns.aiAssistant.monthly },
+  reservations: { title: "Online booking setup", price: `${eur(addOns.booking)} setup${v}`, oneOff: addOns.booking, monthly: 0 },
+  crm: { title: "CRM starter", price: `${eur(addOns.crmStarter)}${v}`, oneOff: addOns.crmStarter, monthly: 0 },
+  "ai-assistant": { title: "AI receptionist", price: `${eur(addOns.aiReceptionist.setup)} setup + ${eur(addOns.aiReceptionist.monthly)}/mo${v}`, oneOff: addOns.aiReceptionist.setup, monthly: addOns.aiReceptionist.monthly },
 };
 
 Deno.serve(async (req) => {
@@ -40,8 +42,8 @@ Deno.serve(async (req) => {
     if (!ids.length) return json({ error: "No valid services selected" }, 400);
 
     const services = ids.map((id) => SERVICES[id]);
-    const oneOff = services.filter((s) => !s.monthly).reduce((t, s) => t + s.priceValue, 0);
-    const monthly = services.filter((s) => s.monthly).reduce((t, s) => t + s.priceValue, 0);
+    const oneOff = services.reduce((t, s) => t + s.oneOff, 0);
+    const monthly = services.reduce((t, s) => t + s.monthly, 0);
     const rows = services
       .map((s) => `<tr><td style="padding:6px 12px;border:1px solid #ddd;">${escapeHtml(s.title)}</td><td style="padding:6px 12px;border:1px solid #ddd;">${escapeHtml(s.price)}</td></tr>`)
       .join("");
@@ -52,9 +54,9 @@ Deno.serve(async (req) => {
       <p><strong>Email:</strong> ${escapeHtml(email)}</p>
       <h2>Selected Services (${services.length})</h2>
       <table style="border-collapse:collapse;">${rows}</table>
-      <p><strong>Indicative one-off setup (from):</strong> €${oneOff.toLocaleString()}</p>
-      ${monthly ? `<p><strong>Indicative monthly:</strong> €${monthly.toLocaleString()}/month</p>` : ""}
-      <p style="color:#666;">Indicative only — "from" prices and free consultations; final quote depends on scope. Sent from the services selection bar on lacunadigital.io</p>
+      <p><strong>One-off total:</strong> ${eur(oneOff)}</p>
+      ${monthly ? `<p><strong>Monthly total:</strong> ${eur(monthly)}/month</p>` : ""}
+      <p style="color:#666;">Indicative, ex VAT — final fixed quote follows. Sent from the services selection bar on lacunadigital.io</p>
     `;
 
     return await sendResend({

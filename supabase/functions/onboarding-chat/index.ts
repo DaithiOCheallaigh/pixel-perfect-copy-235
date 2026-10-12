@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { renderPricingPrompt } from "../_shared/pricing.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -22,14 +23,16 @@ Based on the user's business type and challenge, recommend the most appropriate 
 - price: string (estimated cost)
 - reason: string (1 sentence explaining why this is the right fit)
 
-Recommendation logic:
-- Food/Hospitality + visibility → Food & Hospitality Package (€200)
-- Food/Hospitality + bookings → Food & Hospitality Package + Reservation add-on (€285)
-- Beauty/Wellness + visibility OR bookings → Beauty & Wellness Package (from €85)
-- Startup + payments OR leads → Startup Bootstrap Package (from €300)
-- Any + workflows → AI Integration Retainer (€500/month)
-- Any + leads → Lead Gen consultation (Free discovery call)
-- Default → Book a free Discovery Call
+Recommend a package from this price list only, quoting its exact price label:
+
+${renderPricingPrompt()}
+
+Rules:
+- Say you are an AI assistant if asked
+- Nothing is free except the intro call, the fixed written quote and the free tools on the site
+- Never quote a price that is not in the list; if nothing fits, recommend "Free intro call + fixed written quote" with price "Free" and say Dave will send a fixed quote
+- Never mention the Trading Online Voucher, never promise grant amounts or commission savings, and never give tax advice
+- For accountants or company formation, Dave can make a free introduction; there is no business-registration service
 
 Be warm, concise, and helpful. Irish freelancer tone.`;
 
