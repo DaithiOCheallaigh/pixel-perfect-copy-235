@@ -2,6 +2,14 @@ import { describe, expect, it } from "vitest";
 import { addOns, availability, carePlans, entry, incVat, priceLabel, segments, studio, terms, VAT_RATE, VAT_REGISTERED, webLadder } from "@/data/pricing";
 
 describe("pricing catalogue", () => {
+  it("requires upfront payment below 1000 and split payment through 3000", () => {
+    expect(terms.upfrontBelow).toBe(1000);
+    expect(terms.splitThrough).toBe(3000);
+  });
+  it("bills extra work in 30-minute blocks at 100 per hour", () => {
+    expect(terms.extraWorkBlockMinutes).toBe(30);
+    expect(addOns.hourly * terms.extraWorkBlockMinutes / 60).toBe(50);
+  });
   it("uses the registered 23% VAT rate", () => {
     expect(VAT_REGISTERED).toBe(true);
     expect(VAT_RATE).toBe(0.23);

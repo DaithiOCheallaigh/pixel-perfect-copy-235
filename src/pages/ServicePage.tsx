@@ -5,6 +5,8 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import AvailabilityCTA from "../components/AvailabilityCTA";
 import { getServiceById, services } from "../data/services";
+import { CALENDLY_URL, vatFootnote } from "@/data/pricing";
+import { Button } from "@/components/ui/button";
 import avatarImg from "@/assets/avatar.jpeg";
 
 const ServicePage = () => {
@@ -62,6 +64,8 @@ const ServicePage = () => {
             <h1 className="mb-6 mt-2 text-4xl font-black tracking-tighter text-foreground md:text-6xl">
               {service.title}
             </h1>
+            <p className="mb-3 text-lg font-semibold text-primary">{service.priceLine}</p>
+            <p className="mb-6 text-xs text-muted-foreground">{vatFootnote()}</p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }}>
@@ -207,15 +211,15 @@ const ServicePage = () => {
         <div className="mx-auto max-w-4xl text-center">
           <ScrollReveal>
             <h2 className="mb-4 text-2xl font-bold text-foreground">Interested in this service?</h2>
-            <p className="mb-6 text-sm text-muted-foreground">Book in for a free consultation to discuss your project</p>
-            <a
-              href="https://calendly.com/lacunaconsulting-info/30min?back=1&month=2025-02"
+            <p className="mb-6 text-sm text-muted-foreground">Book a free 20-minute call to discuss your project</p>
+            <Button asChild><a
+              href={CALENDLY_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-1.5 rounded-sm bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5"
             >
               Book a Call <span>↗</span>
-            </a>
+            </a></Button>
           </ScrollReveal>
         </div>
       </section>

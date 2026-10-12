@@ -88,8 +88,8 @@ export const segmentPages: Record<SegmentKey, SegmentPage> = {
 export const legacySegmentRedirects: Record<string, string> = {
   "beauty-wellness": "/services/salons-barbers",
   "food-hospitality": "/services/restaurants-cafes",
-  "startup-bootstrap": "/web-design",
-  startup: "/web-design",
+  "startup-bootstrap": "/product-studio",
+  startup: "/product-studio",
 };
 export const getSegmentKey = (slug: string | undefined): SegmentKey | undefined =>
   (Object.keys(segments) as SegmentKey[]).find((key) => segments[key].slug === slug);

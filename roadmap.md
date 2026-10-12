@@ -10,3 +10,10 @@
 - [x] Redirect the four legacy industry URLs.
 - [x] Test pricing/routing rules and verify all six pages at desktop and phone widths.
 - [x] Confirm passing preview build and no backend changes.
+
+# Pricing overhaul — step 3
+- [x] Update Web Design tiers, add-ons, care and terms from the pricing catalogue.
+- [x] Create Product Studio with portfolio proof, studio/AI offers, ownership, FAQs and funding note.
+- [x] Update navigation, redirects and individual service prices/copy.
+- [x] Run rule tests and verify requested pages and navigation in the preview.
+- [x] Confirm error-free build, backend untouched and nothing published.

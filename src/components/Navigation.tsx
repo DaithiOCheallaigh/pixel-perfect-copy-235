@@ -12,6 +12,8 @@ const Navigation = ({ visible }: { visible: boolean }) => {
   const links = [
     { label: "My Work", to: "/work" },
     { label: "Skill Set", to: "/skills" },
+    { label: "Services", to: "/services" },
+    { label: "Product Studio", to: "/product-studio" },
     { label: "About", to: "/about" },
     { label: "Blog", to: "/blog" },
   ];
@@ -39,7 +41,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
           <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="text-muted-foreground font-normal">| AI Designer</span></span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-4 lg:gap-6 xl:gap-8 lg:flex">
           {links.map((link) => (
             <Link
               key={link.to}
@@ -60,7 +62,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-3 lg:hidden">
           <ThemeToggle />
           <button
             className="flex flex-col gap-1.5"
@@ -75,7 +77,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
       </div>
 
       <motion.div
-        className="border-t border-border md:hidden"
+        className="border-t border-border lg:hidden"
         initial={false}
         animate={{ height: mobileOpen ? "auto" : 0, opacity: mobileOpen ? 1 : 0 }}
         transition={{ duration: 0.3 }}

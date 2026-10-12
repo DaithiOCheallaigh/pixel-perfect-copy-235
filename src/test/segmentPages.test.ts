@@ -14,7 +14,7 @@ describe("industry pages", () => {
   });
   it.each([
     ["beauty-wellness", "/services/salons-barbers"], ["food-hospitality", "/services/restaurants-cafes"],
-    ["startup-bootstrap", "/web-design"], ["startup", "/web-design"],
+    ["startup-bootstrap", "/product-studio"], ["startup", "/product-studio"],
   ])("redirects %s to %s", (slug, destination) => {
     expect(legacySegmentRedirects[slug]).toBe(destination);
   });
