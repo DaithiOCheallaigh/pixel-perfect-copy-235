@@ -37,7 +37,7 @@
 - [x] Run 180 passing tests, confirm error-free preview build, audit protected files and verify desktop/mobile portfolio and contact navigation.
 
 # Portfolio skills, writing and project accuracy
-- [ ] Update supplied skills, author sign-off and portfolio sitemap.
-- [ ] Correct project attribution, Marsh roles and visible work ordering.
-- [ ] Preserve deleted blog URLs with tested redirects; audit retained writing.
-- [ ] Run tests and preview checks; confirm backend files unchanged.
+- [x] Update supplied skills, author sign-off and portfolio sitemap.
+- [x] Correct project attribution, Marsh roles and visible work ordering.
+- [x] Preserve deleted blog URLs with tested redirects; retained writing contains no prohibited sales passages.
+- [x] Run 190 passing tests and desktop/mobile preview checks; clean build and backend unchanged. Literal audit exceptions are existing asset URLs containing LacunaPortfolioSite and tour-booking availability prose, not commercial offers.
