@@ -12,7 +12,7 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
   const links = [
     { label: "Services", to: "/services" },
     { label: "Web Design", to: "/web-design" },
-    { label: "AI Integration", to: "/ai-integration" },
+    { label: "Product Studio", to: "/product-studio" },
     { label: "Free Tools", to: "/tools" },
   ];
 
@@ -41,7 +41,7 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 lg:flex">
           {links.map((link) => (
             <Link
               key={link.to}
@@ -62,7 +62,7 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-3 lg:hidden">
           <ThemeToggle />
           <button
             className="flex flex-col gap-1.5"
@@ -77,7 +77,7 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
       </div>
 
       <motion.div
-        className="border-t border-border md:hidden"
+        className="border-t border-border lg:hidden"
         initial={false}
         animate={{ height: mobileOpen ? "auto" : 0, opacity: mobileOpen ? 1 : 0 }}
         transition={{ duration: 0.3 }}

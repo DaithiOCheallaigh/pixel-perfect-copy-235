@@ -1,123 +1,12 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
-import { TickCircle, InfoCircle, ExportSquare } from "iconsax-react";
-import ScrollReveal from "../components/ScrollReveal";
-import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
-import SocialProof from "../components/SocialProof";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "../components/ui/carousel";
-
-/* ------------------------------------------------------------------ */
-/*  Currency                                                           */
-/* ------------------------------------------------------------------ */
-
-type Currency = "EUR" | "USD" | "GBP";
-
-const currencySymbols: Record<Currency, string> = { EUR: "€", USD: "$", GBP: "£" };
-const currencyRates: Record<Currency, number> = { EUR: 1, USD: 1.08, GBP: 0.86 };
-
-const convertPrice = (eurAmount: number, currency: Currency): string => {
-  const converted = Math.round(eurAmount * currencyRates[currency]);
-  return `${currencySymbols[currency]}${converted.toLocaleString()}`;
-};
-
-/* ------------------------------------------------------------------ */
-/*  Data                                                               */
-/* ------------------------------------------------------------------ */
-
-interface PricingTierData {
-  name: string;
-  eurPrice: number;
-  prefix?: string;
-  popular?: boolean;
-  features: string[];
-  cta: string;
-  ctaHref: string;
-}
-
-const tiers: PricingTierData[] = [
-  {
-    name: "Starter",
-    eurPrice: 1999,
-    features: [
-      "Up to 5 pages (Home, About, Services, Blog, Contact)",
-      "Custom design to brand guidelines",
-      "Mobile responsive",
-      "Contact form integration",
-      "Basic on-page SEO setup",
-      "2 rounds of revisions per design phase",
-      "Fully deployed website",
-      "Handover & walkthrough session",
-    ],
-    cta: "Get Started",
-    ctaHref: "/start-project",
-  },
-  {
-    name: "Business",
-    eurPrice: 3999,
-    popular: true,
-    features: [
-      "Everything in Starter, plus:",
-      "Up to 10 pages",
-      "Blog or news section",
-      "Analytics setup (GA / Tag Manager)",
-      "Performance & accessibility optimisation",
-      "Social media integration",
-      "3 rounds of revisions per design phase",
-    ],
-    cta: "Get Started",
-    ctaHref: "/start-project",
-  },
-  {
-    name: "Enterprise",
-    eurPrice: 7500,
-    prefix: "From ",
-    features: [
-      "Everything in Business, plus:",
-      "Unlimited pages",
-      "E-commerce or booking system integration",
-      "Advanced animations and interactions",
-      "Custom functionality & API integrations",
-      "Design system documentation",
-      "Priority support during and post-launch",
-      "Dedicated project management",
-    ],
-    cta: "Get Started",
-    ctaHref: "/start-project",
-  },
-];
-
-interface AddOn {
-  service: string;
-  eurCost: number | null;
-  suffix?: string;
-  prefix?: string;
-  label?: string;
-}
-
-const addOns: AddOn[] = [
-  { service: "Professional email setup (Google Workspace / M365)", eurCost: 25, suffix: "/mo", prefix: "From " },
-  { service: "Additional pages beyond tier limit", eurCost: 150, suffix: " per page" },
-  { service: "Out-of-scope amendments", eurCost: 120, suffix: "/hr" },
-  { service: "Monthly maintenance retainer", eurCost: 299, suffix: "/mo", prefix: "From " },
-  { service: "Copywriting", eurCost: null, label: "POA" },
-  { service: "Logo & brand identity", eurCost: 799, prefix: "From " },
-];
-
-const formatAddOnCost = (addOn: AddOn, currency: Currency): string => {
-  if (addOn.label) return addOn.label;
-  if (!addOn.eurCost) return "POA";
-  return `${addOn.prefix || ""}${convertPrice(addOn.eurCost, currency)}${addOn.suffix || ""}`;
-};
-
-const notes = [
-  "Hosting and domain registration are the client's responsibility and are not included in any tier.",
-  "Professional email (e.g. name@yourbusiness.ie) requires a Google Workspace or Microsoft 365 subscription, billed directly to the client. Setup can be arranged as an add-on.",
-  "A 50% deposit is required before work commences. The remaining balance is due on launch.",
-  "All prices are exclusive of VAT (23%).",
-];
+import { ArrowRight, Check } from "lucide-react";
+import SectionLabel from "@/components/SectionLabel";
+import SocialProof from "@/components/SocialProof";
+import ServicesNavigation from "@/components/ServicesNavigation";
+import ServicesFooter from "@/components/ServicesFooter";
+import { SEO } from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+import { addOns, availability, carePlans, careTerms, eur, priceLabel, terms, vatFootnote, webLadder } from "@/data/pricing";
 
 interface RecentProject {
   name: string;
@@ -135,242 +24,75 @@ const recentProjects: RecentProject[] = [
   { name: "KBB Digital", descriptor: "Interior design photography & digital marketing studio", url: "https://www.kbbdigital.ie/", image: "/images/work/kbb-digital.png" },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Component                                                          */
-/* ------------------------------------------------------------------ */
-
-const WebDesignServices = () => {
-  const [currency, setCurrency] = useState<Currency>("EUR");
-
-  return (
-    <main className="pt-24">
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="px-6 pt-4 pb-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl">
-          <Link to="/services" className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary">
-            <ArrowLeft size={14} />
-            Back to Services
-          </Link>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="font-mono-label text-primary">Services</span>
-            <h1 className="mt-3 text-4xl font-black tracking-tighter text-foreground md:text-6xl">
-              Web Design &amp; Development
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-              From concept to deployment — fully designed, built, and launched websites for businesses that mean business.
-            </p>
-          </motion.div>
+const extras = [
+  ["Extra page", `${eur(addOns.extraPage)} per page`],
+  ["Google Business Profile setup", eur(addOns.gbp)],
+  ["Online booking setup", eur(addOns.booking)],
+  ["Stripe checkout", eur(addOns.stripe)],
+  ["Email setup", `${eur(addOns.email.setup)} (${addOns.email.inboxesIncluded} inboxes); +${eur(addOns.email.extraInbox)} per extra inbox. Licences billed to you.`],
+  ["Brand starter", eur(addOns.brandStarter)],
+  ["Copywriting", `${eur(addOns.copyPerPage)} per page`],
+  ["Extra work", `${eur(addOns.hourly)}/hour in 30-minute blocks`],
+];
+const WebDesignServices = () => (
+  <main className="bg-background pt-24 text-foreground">
+    <SEO title="Websites for professional services & other businesses" description={`Professional business websites from ${eur(webLadder[0]?.price ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery.`} url="/web-design" />
+    <ServicesNavigation visible={true} />
+    <section className="px-6 pb-12 pt-8 md:px-12 lg:px-24">
+      <div className="mx-auto max-w-6xl">
+        <SectionLabel>Web Design</SectionLabel>
+        <h1 className="max-w-4xl text-4xl font-black md:text-6xl">Websites for professional services &amp; other businesses</h1>
+        <p className="mt-6 max-w-2xl text-lg text-muted-foreground">I handle strategy, design, build and launch. A fixed scope, a fixed price and a launch date in writing — with one person responsible from start to finish.</p>
+        <p className="mt-4 text-sm text-primary">{availability.headline} · Next start: {availability.nextStart}</p>
+        <Button asChild className="mt-6"><Link to="/start-project">Get a fixed quote in 48 hours <ArrowRight /></Link></Button>
+      </div>
+    </section>
+    <section className="px-6 py-12 md:px-12 lg:px-24">
+      <div className="mx-auto max-w-6xl">
+        <SectionLabel>Recent Work</SectionLabel>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {recentProjects.map(project => <a key={project.name} href={project.url} target="_blank" rel="noopener noreferrer" className="group overflow-hidden rounded-lg border border-border bg-card md:hover:border-primary/40">
+            <img src={project.image} alt={`${project.name} website`} className="aspect-video w-full object-cover object-top" loading="lazy" />
+            <div className="p-5"><h2 className="font-bold">{project.name} ↗</h2><p className="mt-2 text-sm text-muted-foreground">{project.descriptor}</p></div>
+          </a>)}
         </div>
-      </section>
-
-      {/* ── INTRO ────────────────────────────────────────────── */}
-      <section className="px-6 pb-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl">
-          <ScrollReveal>
-            <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
-              Every website we build starts with strategy and ends with a fully deployed, production-ready product. We handle design, development, and launch — hosting and domain registration remain with you. All projects are scoped upfront, with clear deliverables and transparent pricing.
-            </p>
-          </ScrollReveal>
+      </div>
+    </section>
+    <section id="pricing" className="px-6 py-12 md:px-12 lg:px-24">
+      <div className="mx-auto max-w-6xl">
+        <SectionLabel>Website Packages</SectionLabel>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {webLadder.map(tier => <article key={tier.id} className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
+            <h2 className="text-xl font-bold">{tier.name}</h2><p className="mt-3 text-2xl font-bold">{priceLabel(tier)}</p>
+            {tier.monthly && <p className="mt-2 text-sm text-primary">or {eur(tier.monthly)}/mo × 12</p>}
+            <ul className="mt-6 flex-1 space-y-3">{tier.scope?.map(item => <li key={item} className="flex gap-2 text-sm text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" />{item}</li>)}</ul>
+            <p className="mt-5 text-xs text-muted-foreground">Live in {tier.live} from a complete intake</p>
+            <Button asChild variant="outline" className="mt-6"><Link to="/start-project">Get a fixed quote <ArrowRight /></Link></Button>
+          </article>)}
         </div>
-      </section>
-
-      {/* ── RECENT WORK ──────────────────────────────────────── */}
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Recent Work</SectionLabel>
-            <p className="mb-8 text-sm text-muted-foreground">
-              A selection of recently designed and deployed websites.
-            </p>
-          </ScrollReveal>
-
-          <Carousel opts={{ align: "start", loop: true }} className="w-full">
-            <CarouselContent className="-ml-4">
-              {recentProjects.map((project) => (
-                <CarouselItem key={project.name} className="pl-4 sm:basis-1/2">
-                  <motion.a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ y: -4 }}
-                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                    className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/40"
-                  >
-                    <div className="overflow-hidden">
-                      <img
-                        src={project.image}
-                        alt={`${project.name} website preview`}
-                        className="aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="flex flex-1 flex-col justify-between p-5">
-                      <div>
-                        <h3 className="text-base font-bold text-foreground transition-colors group-hover:text-primary">
-                          {project.name}
-                        </h3>
-                        <p className="mt-1 text-sm text-muted-foreground">{project.descriptor}</p>
-                      </div>
-                      <div className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground transition-colors group-hover:text-primary">
-                        <span className="truncate">{project.url.replace("https://", "")}</span>
-                        <ExportSquare size={14} variant="TwoTone" className="flex-shrink-0" />
-                      </div>
-                    </div>
-                  </motion.a>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="mt-6 flex items-center justify-center gap-2">
-              <CarouselPrevious className="static translate-y-0" />
-              <CarouselNext className="static translate-y-0" />
-            </div>
-          </Carousel>
+        <p className="mt-6 text-sm text-muted-foreground">A revision round is one consolidated written list within 5 working days; new work after design sign-off is {eur(addOns.hourly)}/hour.</p>
+        <div className="mt-12">
+          <SectionLabel>Add-ons</SectionLabel>
+          <dl>{extras.map(([name, price]) => <div key={name} className="grid gap-2 border-b border-border py-4 sm:grid-cols-2"><dt className="font-medium">{name}</dt><dd className="text-sm text-muted-foreground sm:text-right">{price}</dd></div>)}</dl>
         </div>
-      </section>
-
-      {/* ── PRICING ──────────────────────────────────────────── */}
-      <section id="pricing" className="px-6 py-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
-              <SectionLabel>Pricing</SectionLabel>
-              <div className="flex rounded-lg border border-border bg-card p-1">
-                {(["EUR", "USD", "GBP"] as Currency[]).map((c) => (
-                  <button
-                    key={c}
-                    onClick={() => setCurrency(c)}
-                    className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-all ${
-                      currency === c
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {currencySymbols[c]} {c}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {tiers.map((tier, i) => (
-              <ScrollReveal key={tier.name} delay={i * 0.1}>
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  className={`relative flex h-full flex-col rounded-xl p-6 transition-colors ${
-                    tier.popular
-                      ? "border-2 border-primary bg-card"
-                      : "border border-border bg-card"
-                  }`}
-                >
-                  {tier.popular && (
-                    <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-0.5 text-xs font-semibold text-primary-foreground">
-                      Most Popular
-                    </span>
-                  )}
-
-                  <h3 className="text-lg font-bold text-foreground">{tier.name}</h3>
-                  <p className="mt-1 text-2xl font-black tracking-tight text-foreground">
-                    {tier.prefix || ""}{convertPrice(tier.eurPrice, currency)}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">+ VAT (23%)</p>
-
-                  <ul className="mt-6 flex-1 space-y-3">
-                    {tier.features.map((f, fi) => (
-                      <li key={fi} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <TickCircle size={16} variant="Bulk" className="mt-0.5 flex-shrink-0 text-primary" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    to={tier.ctaHref}
-                    className={`mt-6 inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all hover:gap-2.5 ${
-                      tier.popular
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                        : "border border-border bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground"
-                    }`}
-                  >
-                    {tier.cta}
-                  </Link>
-                </motion.div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          {/* ── ADDITIONAL SERVICES ────────────────────────────── */}
-          <ScrollReveal>
-            <div className="mt-12">
-              <h3 className="mb-4 text-lg font-bold text-foreground">Additional Services</h3>
-              <div className="overflow-hidden rounded-xl border border-border">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border bg-card">
-                      <th className="px-4 py-3 text-left font-semibold text-foreground">Service</th>
-                      <th className="px-4 py-3 text-right font-semibold text-foreground">Cost</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {addOns.map((a, i) => (
-                      <tr key={i} className="border-b border-border last:border-0">
-                        <td className="px-4 py-3 text-muted-foreground">{a.service}</td>
-                        <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
-                          {formatAddOnCost(a, currency)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* ── NOTES ─────────────────────────────────────────── */}
-          <ScrollReveal>
-            <div className="mt-8 space-y-3">
-              {notes.map((note, i) => (
-                <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <InfoCircle size={14} variant="Bulk" className="mt-0.5 flex-shrink-0 text-muted-foreground/60" />
-                  <span>{note}</span>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <section className="px-6 py-12 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-xl border border-border bg-card p-8 md:p-10">
-          <ScrollReveal>
-            <SectionLabel>Next Step</SectionLabel>
-            <h2 className="max-w-3xl text-3xl font-black tracking-tight text-foreground md:text-4xl">
-              Looking beyond your website?
-            </h2>
-            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
-              A great digital presence is only part of the picture. Once your site is working for you, the next step is making your entire business work smarter. Our AI Integration service helps SMEs identify where time and margin are being lost — and builds custom tools to recover them.
-            </p>
-            <Link
-              to="/ai-integration"
-              className="mt-6 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Explore AI Integration →
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-      <SocialProof />
-      <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-      <AvailabilityCTA />
-    </main>
-  );
-};
-
+      </div>
+    </section>
+    <section className="px-6 py-12 md:px-12 lg:px-24">
+      <div className="mx-auto max-w-6xl"><SectionLabel>Care Plans</SectionLabel>
+        <div className="grid gap-4 md:grid-cols-3">{carePlans.map(plan => <article key={plan.id} className="rounded-lg border border-border bg-card p-6"><h2 className="text-xl font-bold">{plan.name}</h2><p className="mt-3 text-2xl font-bold">{eur(plan.monthly)}<span className="text-sm font-normal text-muted-foreground"> / month</span></p><ul className="mt-5 space-y-3 text-sm text-muted-foreground">{plan.includes.map(item => <li key={item}>{item}</li>)}</ul></article>)}</div>
+        <p className="mt-6 text-sm text-muted-foreground">{careTerms.minimums}. {careTerms.annualPrepay}.</p><p className="mt-3 text-sm text-muted-foreground">{careTerms.exit}</p>
+      </div>
+    </section>
+    <section className="px-6 py-12 md:px-12 lg:px-24"><div className="mx-auto max-w-6xl space-y-4 text-sm text-muted-foreground">
+      <SectionLabel>Good to Know</SectionLabel>
+      <p>Year-1 domain included. Launch includes 12 months' hosting; after that, hosting is in every care plan, or move it to your own account free.</p>
+      <p>Professional email licences are billed to you directly.</p>
+      <p>Under {eur(terms.upfrontBelow)}: {terms.upTo1000}. Up to {eur(terms.splitThrough)}: {terms.to3000}. Above: {terms.over3000}.</p>
+      <p>{terms.payMonthlyNote}.</p><p>{vatFootnote()}</p>
+      <Link to="/services#packages" className="block text-primary">Looking for an industry package? Kitchens &amp; Joinery · Clinics &amp; Practices · Trades · Salons &amp; Barbers · Tours · Restaurants →</Link>
+      <Button asChild variant="outline"><Link to="/product-studio">Explore Product Studio <ArrowRight /></Link></Button>
+    </div></section>
+    <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" /><SocialProof /><ServicesFooter />
+  </main>
+);
 export default WebDesignServices;

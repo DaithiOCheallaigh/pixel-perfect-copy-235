@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect, Component, type ReactNode, type ErrorInfo } from "react";
 import Index from "./pages/Index";
 import Work from "./pages/Work";
@@ -15,7 +15,7 @@ import SparkPasswordGate from "./components/SparkPasswordGate";
 import ServicePage from "./pages/ServicePage";
 import WebDesignServices from "./pages/WebDesignServices";
 import AIDesignProcess from "./pages/AIDesignProcess";
-import AIIntegration from "./pages/AIIntegration";
+import ProductStudio from "./pages/ProductStudio";
 import BlogPost from "./pages/BlogPost";
 import StartProject from "./pages/StartProject";
 import MarshInternalTooling from "./pages/MarshInternalTooling";
@@ -136,7 +136,8 @@ const MainLayout = () => (
       <Route path="/service/:id" element={<ServicePage />} />
       <Route path="/web-design" element={<WebDesignServices />} />
       <Route path="/ai-design-process" element={<AIDesignProcess />} />
-      <Route path="/ai-integration" element={<AIIntegration />} />
+      <Route path="/ai-integration" element={<Navigate to="/product-studio" replace />} />
+      <Route path="/product-studio" element={<ProductStudio />} />
       <Route path="/work/marsh-internal-tooling" element={<MarshInternalTooling />} />
       <Route path="/work/marsh-design-system" element={<MarshDesignSystem />} />
       <Route path="/start-project" element={<StartProject />} />
@@ -149,7 +150,7 @@ const MainLayout = () => (
 
 const AppContent = () => {
   const location = useLocation();
-  const servicesRoutes = ["/services", "/web-design", "/ai-integration", "/get-started", "/refer"];
+  const servicesRoutes = ["/services", "/web-design", "/product-studio", "/ai-integration", "/get-started", "/refer"];
   const isServicesRoute =
     servicesRoutes.includes(location.pathname) ||
     location.pathname.startsWith("/services/") ||
@@ -188,7 +189,8 @@ const AppContent = () => {
             <Route path="/services" element={<Services />} />
             <Route path="/services/:slug" element={<IndustryLanding />} />
             <Route path="/web-design" element={<WebDesignServices />} />
-            <Route path="/ai-integration" element={<AIIntegration />} />
+            <Route path="/ai-integration" element={<Navigate to="/product-studio" replace />} />
+      <Route path="/product-studio" element={<ProductStudio />} />
             <Route path="/get-started" element={<GetStarted />} />
             <Route path="/tools" element={<ToolsIndex />} />
             <Route path="/tools/link-in-bio" element={<LinkInBio />} />
