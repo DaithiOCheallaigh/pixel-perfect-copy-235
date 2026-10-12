@@ -47,3 +47,8 @@
 - [x] Save supplied 1200×630 portfolio sharing image; preserve services image byte-for-byte.
 - [x] Replace shared and static head metadata; add page-specific and private-page tags.
 - [x] Verify route titles, canonical URLs, schemas and noindex behavior in preview; 197 tests pass, latest build is clean and backend unchanged. Nothing published.
+
+# Portfolio and services discovery split
+- [ ] Split llms outputs and write matching static documents.
+- [ ] Update static sitemap coverage, priorities and supplied content-change date; replace robots groups.
+- [ ] Run targeted and full tests, verify served documents and confirm backend unchanged.
