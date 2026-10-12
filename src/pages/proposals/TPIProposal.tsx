@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { CALENDLY_URL } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import {
   Calculator,
@@ -522,7 +523,7 @@ const TPIProposal = () => {
           <ScrollReveal delay={0.2}>
             <div className="mt-16 text-center">
               <a
-                href="https://calendly.com/lacunaconsulting-info/30min"
+                href={CALENDLY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
