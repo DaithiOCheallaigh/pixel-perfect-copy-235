@@ -1,11 +1,11 @@
 import dcKitchen from "@/assets/images/showcase/dc-woodworks-contemporary.jpg";
-import { segments, type Pkg } from "@/data/pricing";
+import { lowestCorePackage, segments, type Pkg } from "@/data/pricing";
 
 export type SegmentKey = keyof typeof segments;
 export type ProofItem = { name: string; description: string; image: string; alt: string; link?: string };
 export type SegmentPage = { supporting: string; metaCategory: string; proof: ProofItem[]; faqs: { question: string; answer: string }[] };
 
-const dcProof: ProofItem = { name: "DC Wood Creations", description: "A bespoke joinery showcase with project photography and clear enquiry paths.", image: dcKitchen, alt: "DC Wood Creations contemporary kitchen", link: "/showcase/dc-woodworks" };
+const dcProof: ProofItem = { name: "DC Wood Creations", description: "A bespoke joinery showcase with project photography and clear enquiry paths.", image: dcKitchen, alt: "DC Wood Creations contemporary kitchen" };
 
 export const segmentPages: Record<SegmentKey, SegmentPage> = {
   kitchens: {
@@ -93,10 +93,9 @@ export const legacySegmentRedirects: Record<string, string> = {
 };
 export const getSegmentKey = (slug: string | undefined): SegmentKey | undefined =>
   (Object.keys(segments) as SegmentKey[]).find((key) => segments[key].slug === slug);
-export const lowestPackage = (packages: Pkg[]): Pkg | undefined =>
-  packages.reduce<Pkg | undefined>((best, pkg) => !best || (pkg.price ?? pkg.priceFrom ?? Infinity) < (best.price ?? best.priceFrom ?? Infinity) ? pkg : best, undefined);
+export const lowestPackage = (packages: Pkg[]): Pkg | undefined => lowestCorePackage(packages);
 
-export const grantNote = "You may be eligible for the LEO Grow Digital Voucher if you have at least one paid employee and complete LEO Digital for Business first; apply and get approval before any spend. I'll provide a quote in the format your LEO needs.";
+export const grantNote = "Some digital tools and services may qualify for the LEO Grow Digital Voucher (bespoke websites and software are excluded). You need at least one paid employee and must complete LEO Digital for Business first, then get approval before any spend. I'll provide a quote in the format your LEO needs.";
 export const clinicCompliance = [
   "Data hosted in the EU",
   "A data-processing agreement is available — I never act as processor for clinical intake without one",

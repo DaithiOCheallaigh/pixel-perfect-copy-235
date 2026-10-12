@@ -27,7 +27,7 @@ const AvailabilityCTA = () => {
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 rounded-sm bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
           >
-            Book a Call <span className="transition-all">→</span>
+            Book a free call <span className="transition-all">→</span>
           </a>
           <Link
             to="/start-project"

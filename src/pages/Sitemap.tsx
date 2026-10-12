@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { services } from "@/data/services";
 import { blogPosts } from "@/data/blogPosts";
 import { projects } from "@/data/projects";
+import { segments } from "@/data/pricing";
 
 const sectionClass = "mb-10";
 const headingClass = "text-lg font-semibold text-foreground mb-3 border-b border-border pb-2";
@@ -14,10 +15,13 @@ const corePages = [
   { path: "/about", label: "About" },
   { path: "/skills", label: "Skills" },
   { path: "/blog", label: "Blog" },
+  { path: "/services", label: "Services" },
+  ...Object.values(segments).map((s) => ({ path: `/services/${s.slug}`, label: s.title })),
   { path: "/web-design", label: "Web Design Services" },
+  { path: "/product-studio", label: "Product Studio" },
   { path: "/ai-design-process", label: "AI Design Process" },
-  { path: "/ai-integration", label: "AI Integration for SMEs" },
   { path: "/start-project", label: "Start a Project" },
+  { path: "/terms", label: "Terms" },
   { path: "/sitemap", label: "Sitemap" },
 ];
 

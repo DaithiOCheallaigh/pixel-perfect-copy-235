@@ -1,8 +1,8 @@
-import { segments, webLadder, carePlans, careTerms, addOns, studio, entry, terms, eur, priceLabel, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
+import { monthlyLabel, segments, webLadder, carePlans, careTerms, addOns, studio, entry, terms, eur, priceLabel, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
 import { writeFileSync } from "node:fs";
 
 export function buildLlmsText() {
-  const packageLine = (p: (typeof webLadder)[number]) => `- ${p.name}: ${priceLabel(p)}${p.monthly ? `; or ${eur(p.monthly)}/mo × 12` : ""}. Live in ${p.live}.`;
+  const packageLine = (p: (typeof webLadder)[number]) => `- ${p.name}: ${priceLabel(p)}${p.monthly ? `; ${monthlyLabel(p)}` : ""}. Live in ${p.live}.`;
   const studioRows = [
     `Day rate ${eur(studio.dayRate)}; agency white-label ${eur(studio.agencyDayRate)}/day (${studio.agencyMinDays}-day minimum).`,
     `Fractional Product Designer ${eur(studio.fractional.monthly)}/month for ${studio.fractional.days} days (${studio.fractional.minMonths}-month minimum).`,
@@ -40,9 +40,9 @@ ${Object.values(segments).map(s => `- [${s.title}](/services/${s.slug})`).join("
 ## Services & pricing (EUR, + VAT unless stated)
 
 ${vatFootnote()}
-Free 20-minute introductory call and fixed written quote within ${entry.introCall.quoteWithin}. Digital Health Check ${eur(entry.healthCheck.price)} (+${eur(entry.healthCheck.onSiteExtra)} on site), half credited against custom work.
+Free intro call and fixed written quote within ${entry.introCall.quoteWithin}. Digital Health Check ${eur(entry.healthCheck.price)} (+${eur(entry.healthCheck.onSiteExtra)} on site), half credited against custom work.
 
-${Object.values(segments).map(s => `### ${s.title}\n\n${s.packages.map(packageLine).join("\n")}`).join("\n\n")}
+${Object.values(segments).map(s => `### ${s.title}\n\n${s.packages.filter(p => !p.addOn).map(packageLine).join("\n")}`).join("\n\n")}
 
 ### Web ladder
 
@@ -80,7 +80,7 @@ ${studioRows.map(row => `- ${row}`).join("\n")}
 ## Contact
 
 ${CONTACT_EMAIL}
-Book a 20-minute call: ${CALENDLY_URL}
+Book a free call: ${CALENDLY_URL}
 
 ## Optional
 

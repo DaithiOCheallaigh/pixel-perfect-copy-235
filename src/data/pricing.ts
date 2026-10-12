@@ -5,9 +5,9 @@ export const YEARS_EXPERIENCE = "over 10";
 export const CALENDLY_URL = "https://calendly.com/lacunaconsulting-info/30min";
 export const CONTACT_EMAIL = "info@lacunaconsulting.com";
 export const availability = { headline: "Now booking new projects", nextStart: "November 2026", productStudioFrom: "November 2026" };
-export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; scope?: string[] };
+export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[] };
 export const entry = {
-  introCall: { name: "Free 20-minute call + fixed written quote", price: 0, quoteWithin: "48 hours" },
+  introCall: { name: "Free intro call + fixed written quote", price: 0, quoteWithin: "48 hours" },
   healthCheck: { name: "Digital Health Check", price: 250, onSiteExtra: 100, creditShare: 0.5, scope: "custom work only (AI, automation, multi-site)" },
   aiAudit: { name: "AI Opportunity Audit", price: 1250, creditShare: 0.5, maxStaff: 15 },
 };
@@ -32,7 +32,7 @@ export const segments = {
   food: { title: "Restaurants & Cafés", slug: "restaurants-cafes", tagline: "Your menu, your orders, your customers.", growthModule: "menu and price updates + 1 Google post", careMinMonths: 3, growDigital: false, packages: [
     { id: "menu-kit", name: "Menu & Google Kit", price: 450, incVatHeadline: 550, selfServe: true, live: "5 working days", scope: ["HTML menu page on your own domain (up to 60 items)", "Menu and order links on your Google profile", "Review QR card", "Year-1 domain and hosting"] },
     { id: "order-direct", name: "Order Direct (Flipdish route)", price: 600, live: "2 weeks + Flipdish onboarding", popular: true, scope: ["Your own Flipdish account set up (Flipdish's fee is billed by Flipdish)", "Menu imported and branded", "Google order links"] },
-    { id: "listing-tuneup", name: "Delivery listing tune-up (per platform)", price: 250, live: "5 working days after the platform approves you", scope: ["Menu copy, categories and photo selection on Uber Eats, Deliveroo or Just Eat"] } ] as Pkg[] },
+    { id: "listing-tuneup", name: "Delivery listing tune-up (per platform)", price: 250, addOn: true, live: "5 working days after the platform approves you", scope: ["Menu copy, categories and photo selection on Uber Eats, Deliveroo or Just Eat"] } ] as Pkg[] },
 };
 export const webLadder: Pkg[] = [
   { id: "launch", name: "Launch", price: 750, monthly: 70, selfServe: true, live: "7 working days", scope: ["1-page site", "Year-1 domain and 12 months' hosting included", "Contact or booking button", "Google profile claim", "1 revision round"] },
@@ -59,3 +59,11 @@ export const priceLabel = (p: Pkg) => {
   return `${p.priceFrom ? "from " : ""}${eur(amount)}${VAT_REGISTERED ? " + VAT" : ""}`;
 };
 export const vatFootnote = () => VAT_REGISTERED ? "Prices + VAT at 23% unless shown as incl. VAT." : "No VAT charged.";
+export const monthlyLabel = (p: Pkg) => {
+  if (p.monthly === undefined) return undefined;
+  if (VAT_REGISTERED && p.incVatHeadline) return `or ${eur(incVat(p.monthly))}/mo × 12 incl. VAT`;
+  return `or ${eur(p.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""} × 12`;
+};
+/** Lowest-priced core package, ignoring add-ons. */
+export const lowestCorePackage = (packages: Pkg[]): Pkg | undefined =>
+  packages.filter(p => !p.addOn).reduce<Pkg | undefined>((best, pkg) => !best || (pkg.price ?? pkg.priceFrom ?? Infinity) < (best.price ?? best.priceFrom ?? Infinity) ? pkg : best, undefined);

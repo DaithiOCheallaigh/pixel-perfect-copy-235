@@ -179,8 +179,8 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
 
     setTimeout(() => {
       const acknowledgement = hasAudit
-        ? `Great choices! 🎯 I can see you're interested in ${serviceNames.length === 1 ? serviceNames[0] : serviceList} (estimated ${priceText}). The AI Opportunity Audit is a starting point — Dave will map out how your business runs and where AI can help.\n\nLet's arrange a free 20-minute call so Dave can scope this for you. What's your name?`
-        : `Great choices! 🎯 You've selected ${serviceNames.length === 1 ? serviceNames[0] : serviceList}${totalEstimate > 0 ? ` (estimated ${priceText})` : ""}.\n\nLet's arrange a free 20-minute call so Dave can scope this for you. What's your name?`;
+        ? `Great choices! 🎯 I can see you're interested in ${serviceNames.length === 1 ? serviceNames[0] : serviceList} (estimated ${priceText}). The AI Opportunity Audit is a starting point — Dave will map out how your business runs and where AI can help.\n\nLet's arrange a free intro call so Dave can scope this for you. What's your name?`
+        : `Great choices! 🎯 You've selected ${serviceNames.length === 1 ? serviceNames[0] : serviceList}${totalEstimate > 0 ? ` (estimated ${priceText})` : ""}.\n\nLet's arrange a free intro call so Dave can scope this for you. What's your name?`;
 
       setState((prev) => ({
         ...prev,

@@ -6,7 +6,7 @@ import ServicesNavigation from "@/components/ServicesNavigation";
 import ServicesFooter from "@/components/ServicesFooter";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { addOns, availability, carePlans, careTerms, eur, priceLabel, terms, vatFootnote, webLadder } from "@/data/pricing";
+import { monthlyLabel, addOns, availability, carePlans, careTerms, eur, priceLabel, terms, vatFootnote, webLadder } from "@/data/pricing";
 import { usePageDescription } from "@/hooks/usePageDescription";
 
 interface RecentProject {
@@ -68,7 +68,7 @@ const WebDesignServices = () => {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {webLadder.map(tier => <article key={tier.id} className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
             <h2 className="text-xl font-bold">{tier.name}</h2><p className="mt-3 text-2xl font-bold">{priceLabel(tier)}</p>
-            {tier.monthly && <p className="mt-2 text-sm text-primary">or {eur(tier.monthly)}/mo × 12</p>}
+            {tier.monthly && <p className="mt-2 text-sm text-primary">{monthlyLabel(tier)}</p>}
             <ul className="mt-6 flex-1 space-y-3">{tier.scope?.map(item => <li key={item} className="flex gap-2 text-sm text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" />{item}</li>)}</ul>
             <p className="mt-5 text-xs text-muted-foreground">Live in {tier.live} from a complete intake</p>
             <Button asChild variant="outline" className="mt-6"><Link to="/start-project">Get a fixed quote <ArrowRight /></Link></Button>

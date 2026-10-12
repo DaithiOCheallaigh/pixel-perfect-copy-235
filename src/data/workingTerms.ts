@@ -3,7 +3,7 @@ import { addOns, careTerms, eur, terms } from "./pricing";
 export const CONTENT_PAUSE_WORKING_DAYS = 15;
 export const REVISION_WINDOW_WORKING_DAYS = 5;
 export const workingTerms = [
-  { title: "Payment", text: `Under ${eur(terms.upfrontBelow)}: ${terms.upTo1000}. Up to ${eur(terms.splitThrough)}: ${terms.to3000}, with the balance before go-live. Above ${eur(terms.splitThrough)}: ${terms.over3000}. ${terms.payMonthlyNote}.` },
+  { title: "Payment", text: `Under ${eur(terms.upfrontBelow)}: ${terms.upTo1000}. Up to ${eur(terms.splitThrough)}: ${terms.to3000}. Above ${eur(terms.splitThrough)}: ${terms.over3000}. ${terms.payMonthlyNote}.` },
   { title: "Discounts", text: "One discount per order." },
   { title: "Care plans", text: `${careTerms.minimums}. ${careTerms.annualPrepay}. ${careTerms.exit}` },
   { title: "Revision rounds", text: `A revision round is one consolidated written list within ${REVISION_WINDOW_WORKING_DAYS} working days. New work after design sign-off is ${eur(addOns.hourly)}/hour, billed in ${terms.extraWorkBlockMinutes}-minute blocks.` },
