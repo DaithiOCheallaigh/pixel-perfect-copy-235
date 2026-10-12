@@ -220,7 +220,7 @@ const AIDesignProcess = () => {
                         <Figure
                           theme="auto"
                           aria-label={chapter.figureAlt}
-                          className="mx-auto w-full max-w-[280px] [--hairline-plate:hsl(var(--card))] [--hairline-stroke:1]"
+                          className="mx-auto w-full max-w-[280px] [--hairline-plate:hsl(var(--card))] [--hairline-stroke:1.3] [--hl-hi:#f2f0ec] [--hl-edge:#9a9ca3] [--hl-mid:#7c7e86] [--hl-lo:#55575d]"
                         />
                       ) : null}
                     </div>
