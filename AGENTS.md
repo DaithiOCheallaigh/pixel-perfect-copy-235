@@ -9,3 +9,4 @@
 - IndustryLanding renders all six pricing segments through one template, with editorial proof and FAQs in src/data/segmentPages.ts and legacy URLs redirected by React Router; this keeps scopes, VAT and care terms consistent without duplicating prices.
 - ProductStudio owns the product-team and business-automation offers; legacy AI Integration URLs redirect there, keeping one current offer page rather than competing pricing pages.
 - Individual service price lines are defined in the service catalogue using the shared pricing exports and rendered by ServicePage; this keeps every detail page priced without duplicating amounts in presentation code.
+- Pages using usePageDescription synchronise the static description fallback with their managed SEO description and restore it on unmount; this avoids conflicting descriptions without changing the site's static head globally.

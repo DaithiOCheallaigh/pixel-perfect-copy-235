@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { availability, CALENDLY_URL, entry, eur, studio, vatFootnote, YEARS_EXPERIENCE } from "@/data/pricing";
 import figmaLogo from "@/assets/logos/figma.svg";
+import { usePageDescription } from "@/hooks/usePageDescription";
 
 const proof = [
   { name: "TripAdmit white-label booking", image: "/images/work/wl-design-overview.webp", link: "/case/whitelabel" },
-  { name: "TipDirect tipping", image: "/images/work/tipping-tools.webp", link: "/case/digital-tipping" },
+  { name: "TipDirect tipping", image: "/images/work/tipping-header.webp", link: "/case/digital-tipping" },
   { name: "AI-assisted reviews", image: "/images/work/ai-pill.webp", link: "/case/ai-reviews" },
   { name: "Therapie", image: "/images/work/therapie-booking.webp", link: "/case/booking-app" },
   { name: "Marsh design system", image: "/images/work/marsh-design-system.webp", link: "/work/marsh-design-system", figma: true },
@@ -46,9 +47,12 @@ const faqs = [
   { question: "How should I treat this cost for tax?", answer: "That depends on your business — please check with your accountant." },
 ];
 
-const ProductStudio = () => (
+const ProductStudio = () => {
+  const description = `Fixed-fee AI audits (${eur(entry.aiAudit.price)}), automation sprints, UX audits and AI-built prototypes — senior, designer-led.`;
+  usePageDescription(description);
+  return (
   <main className="bg-background pt-24 text-foreground">
-    <SEO title="Product Studio" description={`Fixed-fee AI audits (${eur(entry.aiAudit.price)}), automation sprints, UX audits and AI-built prototypes — senior, designer-led.`} url="/product-studio" />
+    <SEO title="Product Studio" description={description} url="/product-studio" />
     <ServicesNavigation visible={true} />
     <section className="relative px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
@@ -92,4 +96,5 @@ const ProductStudio = () => (
     <footer className="border-t border-border px-6 py-10 md:px-12 lg:px-24"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6"><span className="text-sm text-muted-foreground">Lacuna Digital · Dave Kelly</span><Link to="/services" className="text-sm text-primary">Running a local business? →</Link></div></footer>
   </main>
 );
+};
 export default ProductStudio;

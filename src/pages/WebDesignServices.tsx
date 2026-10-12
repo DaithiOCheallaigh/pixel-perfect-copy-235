@@ -7,6 +7,7 @@ import ServicesFooter from "@/components/ServicesFooter";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { addOns, availability, carePlans, careTerms, eur, priceLabel, terms, vatFootnote, webLadder } from "@/data/pricing";
+import { usePageDescription } from "@/hooks/usePageDescription";
 
 interface RecentProject {
   name: string;
@@ -34,9 +35,12 @@ const extras = [
   ["Copywriting", `${eur(addOns.copyPerPage)} per page`],
   ["Extra work", `${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks`],
 ];
-const WebDesignServices = () => (
+const WebDesignServices = () => {
+  const description = `Professional business websites from ${eur(webLadder[0]?.price ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery.`;
+  usePageDescription(description);
+  return (
   <main className="bg-background pt-24 text-foreground">
-    <SEO title="Websites for professional services & other businesses" description={`Professional business websites from ${eur(webLadder[0]?.price ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery.`} url="/web-design" />
+    <SEO title="Websites for professional services & other businesses" description={description} url="/web-design" />
     <ServicesNavigation visible={true} />
     <section className="px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
@@ -95,4 +99,5 @@ const WebDesignServices = () => (
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" /><SocialProof /><ServicesFooter />
   </main>
 );
+};
 export default WebDesignServices;
