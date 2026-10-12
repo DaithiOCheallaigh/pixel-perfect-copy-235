@@ -43,7 +43,7 @@ describe("public sitemap boundaries", () => {
 
   it("lists portfolio URLs before services URLs", () => {
     const firstService = paths.indexOf("/services");
-    expect(firstService).toBe(22);
+    expect(firstService).toBe(24);
     expect(paths.slice(firstService).every(path => path.startsWith("/services"))).toBe(true);
   });
 
