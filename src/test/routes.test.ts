@@ -19,6 +19,9 @@ function follow(url: string) {
 }
 
 const redirects: [string, string][] = [
+  ["/blog/partner-for-agencies", "/services"],
+  ["/blog/benefits-digital-agency", "/services"],
+  ["/blog/partner-for-agencies?utm_source=qr#article", "/services?utm_source=qr#article"],
   ["/product-studio", "/services/product-studio"],
   ["/ai-integration", "/services/product-studio"],
   ["/web-design#pricing", "/services/web-design#pricing"],
@@ -66,6 +69,7 @@ describe("route table", () => {
   });
   it.each([
     ["/work/spark", "spark-work"], ["/case/spark", "spark-case"], ["/case/ai-reviews", "case-study"],
+    ["/blog/8-principles-fluid-interfaces", "blog-post"],
     ["/", "home"], ["/nope", "not-found"],
   ])("matches portfolio %s as %s", (url, id) => {
     expect(leaf(url).id).toBe(id);

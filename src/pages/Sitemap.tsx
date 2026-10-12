@@ -19,6 +19,7 @@ const corePages = [
 
 // Marsh pages have dedicated routes, others use /case/:id
 const dedicatedRoutes: Record<string, string> = {
+  "spark": "/work/spark",
   "marsh-design-system": "/work/marsh-design-system",
   "marsh-internal-tooling": "/work/marsh-internal-tooling",
 };
@@ -26,10 +27,10 @@ const dedicatedRoutes: Record<string, string> = {
 const Sitemap = () => {
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
-      <SEO title="Sitemap" description="Dave Kelly — Senior Product Designer" url="/sitemap" />
+      <SEO title="Sitemap" description="All pages on Dave Kelly's portfolio: case studies, process and writing." url="/sitemap" />
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Sitemap</h1>
-        <p className="text-muted-foreground mb-12 text-sm">All pages on lacunadigital.io</p>
+        <p className="text-muted-foreground mb-12 text-sm">All pages on Dave Kelly's portfolio</p>
 
         <div className={sectionClass}>
           <h2 className={headingClass}>Pages</h2>
@@ -43,7 +44,7 @@ const Sitemap = () => {
         <div className={sectionClass}>
           <h2 className={headingClass}>Case Studies</h2>
           <ul className="space-y-2">
-            {projects.map((p) => {
+            {projects.filter((project) => !project.comingSoon).map((p) => {
               const path = dedicatedRoutes[p.id] || `/case/${p.id}`;
               return (
                 <li key={p.id}><Link to={path} className={linkClass}>{p.title}</Link></li>

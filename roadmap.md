@@ -35,3 +35,9 @@
 - [x] Update homepage, featured work, About experience and recruiter password contact using supplied copy.
 - [x] Replace portfolio availability sections and remove commercial links and dependencies.
 - [x] Run 180 passing tests, confirm error-free preview build, audit protected files and verify desktop/mobile portfolio and contact navigation.
+
+# Portfolio skills, writing and project accuracy
+- [ ] Update supplied skills, author sign-off and portfolio sitemap.
+- [ ] Correct project attribution, Marsh roles and visible work ordering.
+- [ ] Preserve deleted blog URLs with tested redirects; audit retained writing.
+- [ ] Run tests and preview checks; confirm backend files unchanged.

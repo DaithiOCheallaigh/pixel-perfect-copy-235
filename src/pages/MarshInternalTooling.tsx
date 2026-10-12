@@ -138,7 +138,7 @@ const MarshInternalTooling = () => {
             <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
               <span>
                 <span className="uppercase tracking-wider">Role:</span>{" "}
-                <span className="text-foreground">Freelance Product Designer</span>
+                <span className="text-foreground">Senior UI/UX Designer (contract)</span>
               </span>
               <span>
                 <span className="uppercase tracking-wider">Deliverable:</span>{" "}

@@ -53,6 +53,9 @@ export const routeTable: RouteDef[] = [
   { id: "legacy-service", path: "/service", redirectTo: "/services" },
   { id: "legacy-contact", path: "/contact", redirectTo: "/about#contact" },
 
+  { id: "legacy-blog-partner", path: "/blog/partner-for-agencies", redirectTo: "/services" },
+  { id: "legacy-blog-benefits", path: "/blog/benefits-digital-agency", redirectTo: "/services" },
+
   // PORTFOLIO: Dave Kelly
   { id: "portfolio-layout", children: [
     { id: "home", path: "/" },
