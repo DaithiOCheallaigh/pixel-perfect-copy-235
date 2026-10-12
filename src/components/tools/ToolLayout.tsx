@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import SectionLabel from "@/components/SectionLabel";
-import ServicesNavigation from "@/components/ServicesNavigation";
-import ServicesFooter from "@/components/ServicesFooter";
 
 interface ToolLayoutProps {
   title: string;
@@ -23,7 +21,6 @@ const ToolLayout = ({ title, description, metaTitle, metaDescription, children }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <ServicesNavigation visible={true} />
 
       <section className="px-6 pb-8 pt-32 md:px-12 lg:px-24">
         <div className="mx-auto max-w-3xl">
@@ -46,8 +43,7 @@ const ToolLayout = ({ title, description, metaTitle, metaDescription, children }
         <div className="mx-auto max-w-3xl">{children}</div>
       </section>
 
-      <ServicesFooter />
-    </div>
+          </div>
   );
 };
 

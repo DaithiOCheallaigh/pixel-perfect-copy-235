@@ -1,10 +1,9 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useLocation } from "react-router-dom";
+import { resolveLegacyTarget } from "@/routing/resolveLegacyTarget";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
-import ServicesNavigation from "@/components/ServicesNavigation";
-import ServicesFooter from "@/components/ServicesFooter";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -13,8 +12,9 @@ import { clinicCompliance, getSegmentKey, grantNote, legacySegmentRedirects, low
 
 const IndustryLanding = () => {
   const { slug } = useParams<{ slug: string }>();
+  const { search, hash } = useLocation();
   const redirect = slug ? legacySegmentRedirects[slug] : undefined;
-  if (redirect) return <Navigate to={redirect} replace />;
+  if (redirect) return <Navigate to={resolveLegacyTarget(redirect, {}, search, hash)} replace />;
   const key = getSegmentKey(slug);
   if (!key) return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6 text-foreground">
@@ -30,7 +30,6 @@ const IndustryLanding = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO title={segment.title} description={`${content.metaCategory} from ${lowest ? priceLabel(lowest) : "a fixed quote"}. ${segment.tagline}`} url={`/services/${segment.slug}`} />
-      <ServicesNavigation visible={true} />
       <main>
         <section className="relative px-6 pb-16 pt-32 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">
@@ -121,8 +120,7 @@ const IndustryLanding = () => {
 
         <section className="px-6 pb-16 pt-8 md:px-12 lg:px-24"><div className="mx-auto max-w-5xl"><p className="text-xs leading-relaxed text-muted-foreground">{vatFootnote()} Software licences are billed to you directly.</p></div></section>
       </main>
-      <ServicesFooter />
-    </div>
+          </div>
   );
 };
 export default IndustryLanding;

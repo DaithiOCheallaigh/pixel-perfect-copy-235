@@ -9,8 +9,6 @@ import {
 } from "iconsax-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
-import ServicesNavigation from "@/components/ServicesNavigation";
-import ServicesFooter from "@/components/ServicesFooter";
 
 const tools = [
 
@@ -47,7 +45,6 @@ const ToolsIndex = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <ServicesNavigation visible={true} />
 
       <section className="px-6 pb-12 pt-32 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
@@ -113,8 +110,7 @@ const ToolsIndex = () => {
         </div>
       </section>
 
-      <ServicesFooter />
-    </div>
+          </div>
   );
 };
 

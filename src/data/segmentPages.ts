@@ -88,8 +88,8 @@ export const segmentPages: Record<SegmentKey, SegmentPage> = {
 export const legacySegmentRedirects: Record<string, string> = {
   "beauty-wellness": "/services/salons-barbers",
   "food-hospitality": "/services/restaurants-cafes",
-  "startup-bootstrap": "/product-studio",
-  startup: "/product-studio",
+  "startup-bootstrap": "/services/product-studio",
+  startup: "/services/product-studio",
 };
 export const getSegmentKey = (slug: string | undefined): SegmentKey | undefined =>
   (Object.keys(segments) as SegmentKey[]).find((key) => segments[key].slug === slug);
@@ -103,3 +103,4 @@ export const clinicCompliance = [
   "Any AI assistant is non-clinical and tells patients it is an AI",
   "Reviews get response guidance, not ghost-written replies",
 ];
+export const RESERVED_SERVICE_PATHS = ["product-studio", "web-design", "start-project", "get-started", "terms", "refer", "tools", "expertise", "insights"] as const;

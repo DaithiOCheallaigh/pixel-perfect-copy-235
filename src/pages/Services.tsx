@@ -37,8 +37,6 @@ import { lowestCorePackage, monthlyLabel, VAT_REGISTERED, addOns, carePlans, car
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
-import ServicesNavigation from "@/components/ServicesNavigation";
-import ServicesFooter from "@/components/ServicesFooter";
 
 /* ------------------------------------------------------------------ */
 /*  Services data                                                      */
@@ -377,7 +375,6 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <ServicesNavigation visible={true} />
 
       {/* ── Hero ── */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-16 md:px-12 lg:px-24">
@@ -756,8 +753,7 @@ const Services = () => {
         </div>
       </section>
 
-      <ServicesFooter />
-    </div>
+          </div>
   );
 };
 

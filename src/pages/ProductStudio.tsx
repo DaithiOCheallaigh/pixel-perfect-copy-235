@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock3, TrendingUp, Users } from "lucide-react";
-import ServicesNavigation from "@/components/ServicesNavigation";
 import SectionLabel from "@/components/SectionLabel";
 import ScrollReveal from "@/components/ScrollReveal";
 import { SEO } from "@/components/SEO";
@@ -9,7 +8,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { availability, CALENDLY_URL, entry, eur, studio, vatFootnote, YEARS_EXPERIENCE } from "@/data/pricing";
 import figmaLogo from "@/assets/logos/figma.svg";
 import { usePageDescription } from "@/hooks/usePageDescription";
-import { CONTACT_EMAIL } from "@/data/pricing";
 
 const proof = [
   { name: "TripAdmit white-label booking", image: "/images/work/wl-design-overview.webp", link: "/case/whitelabel" },
@@ -54,7 +52,6 @@ const ProductStudio = () => {
   return (
   <main className="bg-background pt-24 text-foreground">
     <SEO title="Product Studio" description={description} url="/product-studio" />
-    <ServicesNavigation visible={true} />
     <section className="relative px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Product Studio</SectionLabel>
@@ -94,7 +91,6 @@ const ProductStudio = () => {
       <SectionLabel>Funding Supports</SectionLabel><p className="max-w-4xl text-muted-foreground">Supports may apply depending on your business — for example Enterprise Ireland's Digital Discovery or a LEO Feasibility Grant — each with its own eligibility rules and approval required before any spend. I'll format quotes the way they require.</p>
     </div></section>
     <section className="px-6 py-12 md:px-12 lg:px-24"><div className="mx-auto max-w-6xl"><SectionLabel>Questions</SectionLabel><Accordion type="single" collapsible>{faqs.map((faq, i) => <AccordionItem key={faq.question} value={`faq-${i}`}><AccordionTrigger className="text-left">{faq.question}</AccordionTrigger><AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent></AccordionItem>)}</Accordion></div></section>
-    <footer className="border-t border-border px-6 py-10 md:px-12 lg:px-24"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6"><span className="text-sm text-muted-foreground">Lacuna Digital · Dave Kelly</span><nav className="flex flex-wrap gap-6"><a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-muted-foreground md:hover:text-primary">{CONTACT_EMAIL}</a><Link to="/terms" className="text-sm text-muted-foreground md:hover:text-primary">Terms</Link><Link to="/services" className="text-sm text-primary">Running a local business? →</Link></nav></div></footer>
   </main>
 );
 };
