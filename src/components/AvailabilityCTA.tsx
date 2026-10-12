@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ScrollReveal from "./ScrollReveal";
+import { availability, CALENDLY_URL } from "@/data/pricing";
 
-const AvailabilityCTA = () => (
+const AvailabilityCTA = () => {
+  const { pathname } = useLocation();
+  const productEngagement = pathname === "/product-studio" || pathname.startsWith("/case/") || pathname.startsWith("/work/");
+  return (
   <section className="border-t border-border px-6 py-24 md:px-12 lg:px-24">
     <div className="mx-auto max-w-5xl text-center">
       <ScrollReveal>
@@ -12,13 +16,13 @@ const AvailabilityCTA = () => (
       </ScrollReveal>
       <ScrollReveal delay={0.1}>
         <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-foreground md:text-6xl">
-          Ready for new collaborations in Q1, 2027.
+          {productEngagement ? `Product design engagements: next start ${availability.productStudioFrom}` : `${availability.headline} — next start ${availability.nextStart}`}
         </h2>
       </ScrollReveal>
       <ScrollReveal delay={0.2}>
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="https://calendly.com/lacunaconsulting-info/30min"
+            href={CALENDLY_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 rounded-sm bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
@@ -43,6 +47,7 @@ const AvailabilityCTA = () => (
       </ScrollReveal>
     </div>
   </section>
-);
+  );
+};
 
 export default AvailabilityCTA;

@@ -8,6 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import ToolLayout from "@/components/tools/ToolLayout";
 import EmailGate from "@/components/tools/EmailGate";
 import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
+import { CALENDLY_URL } from "@/data/pricing";
 
 const businessTypes = ["Restaurant", "Salon", "Retail", "Service Business", "Other"];
 const tones = ["Friendly", "Professional", "Witty", "Urgent"];
@@ -184,7 +185,7 @@ const CaptionGenerator = () => {
             <ServiceUpsellCard
               title="Want a full month of captions planned and scheduled?"
               description="I'll create a content calendar, write all your captions, and schedule them — so you never have to think about it."
-              linkTo="https://calendly.com/lacunadigital/30min"
+              linkTo={CALENDLY_URL}
               linkLabel="Let's talk →"
               external
             />

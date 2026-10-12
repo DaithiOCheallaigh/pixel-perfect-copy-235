@@ -8,6 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ToolLayout from "@/components/tools/ToolLayout";
 import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
+import { CALENDLY_URL, segments, webLadder, priceLabel } from "@/data/pricing";
 
 const themes = [
   { value: "dark", label: "Dark", bg: "bg-[hsl(0,0%,4%)]", text: "text-white" },
@@ -122,9 +123,9 @@ const LinkInBio = () => {
   return (
     <ToolLayout
       title="Link-in-Bio Builder"
-      description="Build a beautiful mobile-optimised link page — no sign-up needed."
+      description="Build a beautiful mobile-optimised link page — free."
       metaTitle="Free Link-in-Bio Builder — Lacuna Digital"
-      metaDescription="Create a mobile-optimised link page for free. No sign-up required."
+      metaDescription="Create a mobile-optimised link page for free."
     >
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Inputs */}
@@ -234,11 +235,11 @@ const LinkInBio = () => {
               lacunadigital.io/bio/{slug}
             </a>
             <p className="mt-3 text-sm text-muted-foreground">
-              We're setting up your page — check your email shortly.<br />
+              I'm setting up your page — check your email shortly.<br />
               Want a full website for your business?
             </p>
             <a
-              href="https://calendly.com/lacunadigital/30min"
+              href={CALENDLY_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
@@ -248,8 +249,8 @@ const LinkInBio = () => {
           </div>
           <ServiceUpsellCard
             title="Your link page is live. Ready for a full website?"
-            description="Microsites start free — I'll design and build something that truly represents your brand."
-            linkTo="/services#website"
+            description={`Keep this page free forever, or put it on your own domain with Booking Fix (${priceLabel(segments.salons.packages[0])}) or a one-page site from ${priceLabel(webLadder[0])}.`}
+            linkTo="/services#packages"
           />
         </motion.div>
       )}

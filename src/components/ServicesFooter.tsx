@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CONTACT_EMAIL, CALENDLY_URL } from "@/data/pricing";
 
 const ServicesFooter = () => (
   <footer className="border-t border-border bg-background px-6 py-12 md:px-12">
@@ -13,9 +14,12 @@ const ServicesFooter = () => (
         <Link to="/web-design" className="text-sm text-muted-foreground transition-colors hover:text-primary">
           Web Design
         </Link>
-        <Link to="/ai-integration" className="text-sm text-muted-foreground transition-colors hover:text-primary">
-          AI Integration
+        <Link to="/product-studio" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+          Product Studio
         </Link>
+        <Link to="/terms" className="text-sm text-muted-foreground md:hover:text-primary">Terms</Link>
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-muted-foreground md:hover:text-primary">{CONTACT_EMAIL}</a>
+        <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground md:hover:text-primary">Book a call ↗</a>
         <a
           href="https://www.lacunadigital.io"
           target="_blank"
