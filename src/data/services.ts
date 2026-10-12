@@ -1,4 +1,4 @@
-import { addOns, carePlans, entry, eur, segments, studio, webLadder, YEARS_EXPERIENCE } from "@/data/pricing";
+import { addOns, carePlans, entry, eur, priceLabel, segments, studio, VAT_REGISTERED, webLadder, YEARS_EXPERIENCE } from "@/data/pricing";
 
 export interface Service {
   id: string;
