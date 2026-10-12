@@ -8,6 +8,7 @@ import ToolLayout from "@/components/tools/ToolLayout";
 import EmailGate from "@/components/tools/EmailGate";
 import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
 import { QRCodeSVG } from "qrcode.react";
+import { CALENDLY_URL, addOns, priceLabel } from "@/data/pricing";
 
 const ReviewLink = () => {
   const [businessName, setBusinessName] = useState("");
@@ -60,7 +61,7 @@ const ReviewLink = () => {
       title="Google Review Link Generator"
       description="Get a direct Google review link + QR code to share with customers."
       metaTitle="Free Google Review Link Generator — Lacuna Digital"
-      metaDescription="Generate a direct Google review link and QR code for your business. Free, no sign-up."
+      metaDescription="Generate a Google Maps link and QR code for your business. Free."
     >
       {!reviewLink ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
@@ -70,7 +71,7 @@ const ReviewLink = () => {
             Generate Review Link
           </Button>
           <p className="text-xs text-muted-foreground">
-            We'll create a Google Maps link for your business. For a direct Place ID review link, get in touch for a free setup.
+            I'll create a Google Maps link for your business. A direct Place ID review link is included in Google profile setup ({priceLabel({ id: "gbp", name: "Google profile setup", price: addOns.gbp, live: "" })}) or any Growth plan.
           </p>
         </motion.div>
       ) : (
@@ -119,8 +120,8 @@ const ReviewLink = () => {
               {/* CTA */}
               <ServiceUpsellCard
                 title="Want a verified direct review link + a printed QR card for your counter?"
-                description="I'll set up your verified Google Place ID link and design a branded QR card you can print and display."
-                linkTo="https://calendly.com/lacunadigital/30min"
+                description={`Included in Google profile setup (${priceLabel({ id: "gbp", name: "Google profile setup", price: addOns.gbp, live: "" })}) or any Growth plan.`}
+                linkTo={CALENDLY_URL}
                 linkLabel="Get in touch →"
                 external
               />
@@ -128,6 +129,7 @@ const ReviewLink = () => {
           )}
         </motion.div>
       )}
+      <p className="mt-6 text-xs text-muted-foreground">Ask every customer, not just happy ones — Google doesn't allow filtering reviews.</p>
     </ToolLayout>
   );
 };

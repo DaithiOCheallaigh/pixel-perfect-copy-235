@@ -17,7 +17,7 @@ const tools = [
   {
     icon: Link1,
     title: "Link-in-Bio Builder",
-    desc: "Build a beautiful mobile-optimised link page — no sign-up needed.",
+    desc: "Build a beautiful mobile-optimised link page — free.",
     link: "/tools/link-in-bio",
   },
   {
@@ -41,7 +41,7 @@ const ToolsIndex = () => {
     if (meta)
       meta.setAttribute(
         "content",
-        "Free tools for small businesses — link pages, review links, caption generators. No sign-up required."
+        "Free tools for small businesses — link pages, review links, caption generators."
       );
   }, []);
 
@@ -68,7 +68,7 @@ const ToolsIndex = () => {
               Free tools for your business
             </h1>
             <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-              I built these so you can see what AI and good design can do for a small business — no sign-up required. If you want any of these set up properly, just get in touch.
+              Free tools for your small business. If you want any of these set up properly, just get in touch.
             </p>
           </motion.div>
         </div>

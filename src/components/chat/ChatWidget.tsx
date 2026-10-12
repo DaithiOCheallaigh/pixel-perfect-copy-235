@@ -183,7 +183,7 @@ const ChatWidget = () => {
                 <>
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-foreground">Start your free consultation</h3>
+                      <h3 className="text-xl font-bold text-foreground">Book a free 20-minute call</h3>
                       <p className="mt-1 text-sm text-muted-foreground">
                         {selectedServices.length} {selectedServices.length === 1 ? "service" : "services"} selected — Dave will get back to you shortly.
                       </p>
@@ -262,7 +262,7 @@ const ChatWidget = () => {
                 </span>
                 <span className="hidden text-sm text-muted-foreground sm:inline">→</span>
                 <span className="hidden text-sm font-semibold text-primary sm:inline">
-                  Start my free consultation
+                  Book my 20-minute call
                 </span>
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground">
                   <ArrowRight className="h-5 w-5" />

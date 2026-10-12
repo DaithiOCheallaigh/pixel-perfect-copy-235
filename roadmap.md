@@ -17,3 +17,10 @@
 - [x] Update navigation, redirects and individual service prices/copy.
 - [x] Run rule tests and verify requested pages and navigation in the preview.
 - [x] Confirm error-free build, backend untouched and nothing published.
+
+# Pricing overhaul — step 4
+- [x] Update intake, service totals, free tools and referral copy using shared pricing.
+- [x] Update availability, homepage doors and footer contact/links.
+- [x] Add plain-English Terms and refresh llms.txt and sitemap.
+- [x] Audit all frontend/public copy and report backend-only stale values without changing them.
+- [x] Run 106 passing tests and verify central flows and desktop/mobile pages; no publishing or real test emails.

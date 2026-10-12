@@ -5,6 +5,8 @@ import { Check, Plus, X, Sparkles, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
+import { CONTACT_EMAIL, entry } from "@/data/pricing";
+import { BUDGET_OPTIONS, INDUSTRIES } from "@/data/projectIntake";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://lgdjivhyveowybzhbqum.supabase.co";
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZGppdmh5dmVvd3liemhicXVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMjMyNDMsImV4cCI6MjA4Nzg5OTI0M30.ThNz5RF9Pco9Up0nIn_gaMIUSV_yc2WINGBXpuvF-A0";
@@ -73,17 +75,10 @@ const STEP_LABELS = [
   "Budget & Timeline",
 ];
 
-const INDUSTRIES = ["Hospitality", "Beauty & Wellness", "Travel", "E-commerce", "Professional Services", "Other"];
 const SOURCES = ["Google", "Referral", "Social Media", "Portfolio", "Other"];
 const PROJECT_TYPES = ["New Website", "Redesign", "Landing Page", "E-commerce", "Web App", "Brand + Website"];
 const BRAND_OPTIONS = ["Yes", "No", "In progress"];
 const URGENCY_OPTIONS = ["Exploring options", "Ready to start within a month", "ASAP"];
-const BUDGET_OPTIONS = [
-  { label: "Starter — €1,999", desc: "Perfect for small businesses & landing pages" },
-  { label: "Business — €3,999", desc: "Multi-page sites with CMS & animations" },
-  { label: "Enterprise — €7,500+", desc: "Complex builds, integrations & full brand" },
-  { label: "Not sure yet", desc: "Let's discuss what works for you" },
-];
 
 // ─── Pill / Toggle Components ──────────────────────────────────
 const Pill = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
@@ -291,8 +286,8 @@ const StartProject = () => {
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
             <Check className="h-8 w-8 text-primary" />
           </div>
-          <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-foreground">We've received your brief</h2>
-          <p className="mb-8 text-sm text-muted-foreground">Dave will be in touch within 1–2 business days.</p>
+          <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-foreground">I've received your brief</h2>
+          <p className="mb-8 text-sm text-muted-foreground">I reply within 1 business day, with a fixed quote within {entry.introCall.quoteWithin}.</p>
           <Link
             to="/"
             className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
@@ -479,7 +474,7 @@ const StartProject = () => {
                 <Group id="sp-budgetRange" label="Budget Range" required error={errors.budgetRange}>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {BUDGET_OPTIONS.map((b) => (
-                      <BudgetCard key={b.label} label={b.label} desc={b.desc} selected={form.budgetRange === b.label} onClick={() => set("budgetRange", b.label)} />
+                      <BudgetCard key={b.value} label={b.label} desc={b.desc} selected={form.budgetRange === b.value} onClick={() => set("budgetRange", b.value)} />
                     ))}
                   </div>
                 </Group>
@@ -544,7 +539,7 @@ const StartProject = () => {
         </div>
         {isLastStep && (
           <p className="mt-4 text-right text-xs text-muted-foreground">
-            We'll only use your details to respond to your enquiry. 'Enhance with AI' sends your description to an AI service to draft a brief.
+            I'll only use your details to respond to your enquiry. 'Enhance with AI' sends your description to an AI service to draft a brief.
           </p>
         )}
       </div>
@@ -552,7 +547,7 @@ const StartProject = () => {
       {/* Footer */}
       <div className="fixed bottom-0 left-0 right-0 border-t border-[#2a2a2a] bg-[#0d0d0d]/80 px-6 py-4 text-center backdrop-blur-sm">
         <p className="text-xs text-muted-foreground">
-          All enquiries are reviewed personally by Dave Kelly · info@lacunaconsulting.com
+          All enquiries are reviewed personally by Dave Kelly · {CONTACT_EMAIL}
         </p>
       </div>
     </div>

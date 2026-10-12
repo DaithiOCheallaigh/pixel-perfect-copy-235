@@ -172,7 +172,7 @@ const freeTools = [
   {
     icon: Link1,
     title: "Link-in-Bio Builder",
-    desc: "Build a beautiful mobile link page for your business — no sign-up needed.",
+    desc: "Build a beautiful mobile link page for your business — free.",
     link: "/tools/link-in-bio",
   },
   {

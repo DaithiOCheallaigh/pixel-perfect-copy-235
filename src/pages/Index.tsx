@@ -9,6 +9,8 @@ import { ShineBorder } from "../components/ui/shine-border";
 import { SpiralAnimation } from "../components/ui/spiral-animation";
 import { SEO } from "../components/SEO";
 import { Laptop, Loupe, Sieve } from "@lucasmarkes/hairline/react";
+import { YEARS_EXPERIENCE } from "@/data/pricing";
+import { Button } from "@/components/ui/button";
 
 const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
 
@@ -31,7 +33,7 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Hi, I'm Dave — <span className="block md:inline">AI-Powered Product Designer for SMEs</span>
+            Hi, I'm Dave
           </motion.h1>
 
           <motion.p
@@ -40,8 +42,7 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            I am a versatile AI driven creative professional combining strategic
-            thinking with hands-on design expertise to deliver impactful results.
+            A senior product designer who has designed for global enterprises — now designing, building and running the digital front door for Irish businesses.
           </motion.p>
 
           <motion.div
@@ -50,22 +51,14 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <a
-              href="/docs/DavidKelly_CV_2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-foreground px-8 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
-            >
-              ↓ Download my CV
-            </a>
-            <Link
-              to="/ai-design-process"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:gap-3"
-            >
-              <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} className="opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              AI Design Process <span className="transition-all">→</span>
-            </Link>
+            <Button asChild size="lg"><Link to="/services">For local businesses →</Link></Button>
+            <Button asChild size="lg" variant="outline"><Link to="/product-studio">Product Studio →</Link></Button>
           </motion.div>
+          <p className="mt-6 text-sm text-muted-foreground">{YEARS_EXPERIENCE} years' experience</p>
+          <div className="mt-5 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+            <Link to="/ai-design-process" className="md:hover:text-primary">AI Design Process →</Link>
+            <a href="/docs/DavidKelly_CV_2026.pdf" target="_blank" rel="noopener noreferrer" className="md:hover:text-primary">Download my CV ↓</a>
+          </div>
         </div>
       </section>
 
@@ -132,7 +125,7 @@ const Index = () => {
                     ))}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Increasingly, people are not carrying cash with them in person. We worked with TripAdmit to pivot their entire business in a new direction by creating a brand centered around digital tipping, TipDirect.
+                    Increasingly, people are not carrying cash with them in person. I worked with TripAdmit to pivot their entire business in a new direction by creating a brand centered around digital tipping, TipDirect.
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
                     View Project <span>→</span>

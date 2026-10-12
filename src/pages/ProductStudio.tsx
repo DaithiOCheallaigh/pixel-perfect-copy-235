@@ -9,6 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { availability, CALENDLY_URL, entry, eur, studio, vatFootnote, YEARS_EXPERIENCE } from "@/data/pricing";
 import figmaLogo from "@/assets/logos/figma.svg";
 import { usePageDescription } from "@/hooks/usePageDescription";
+import { CONTACT_EMAIL } from "@/data/pricing";
 
 const proof = [
   { name: "TripAdmit white-label booking", image: "/images/work/wl-design-overview.webp", link: "/case/whitelabel" },
@@ -59,7 +60,7 @@ const ProductStudio = () => {
         <SectionLabel>Product Studio</SectionLabel>
         <h1 className="max-w-4xl text-4xl font-black md:text-6xl lg:text-7xl">Senior product design for teams that ship.</h1>
         <p className="mt-8 max-w-3xl text-lg text-muted-foreground">UX audits, design systems and AI-built prototypes — from a product designer with {YEARS_EXPERIENCE} years' experience.</p>
-        <p className="mt-5 text-sm text-primary">{availability.headline} · Product Studio from {availability.productStudioFrom}</p>
+        <p className="mt-5 text-sm text-primary">Product design engagements: next start {availability.productStudioFrom}</p>
         <Button asChild className="mt-8"><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a 20-minute call <ArrowRight /></a></Button>
         <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-y border-border py-5 text-sm text-muted-foreground"><span>{YEARS_EXPERIENCE} years' experience</span><span>End-to-end design &amp; build</span><span>Designer-led delivery</span><span>Grant-ready quotes</span></div>
       </div>
@@ -93,7 +94,7 @@ const ProductStudio = () => {
       <SectionLabel>Funding Supports</SectionLabel><p className="max-w-4xl text-muted-foreground">Supports may apply depending on your business — for example Enterprise Ireland's Digital Discovery or a LEO Feasibility Grant — each with its own eligibility rules and approval required before any spend. I'll format quotes the way they require.</p>
     </div></section>
     <section className="px-6 py-12 md:px-12 lg:px-24"><div className="mx-auto max-w-6xl"><SectionLabel>Questions</SectionLabel><Accordion type="single" collapsible>{faqs.map((faq, i) => <AccordionItem key={faq.question} value={`faq-${i}`}><AccordionTrigger className="text-left">{faq.question}</AccordionTrigger><AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent></AccordionItem>)}</Accordion></div></section>
-    <footer className="border-t border-border px-6 py-10 md:px-12 lg:px-24"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6"><span className="text-sm text-muted-foreground">Lacuna Digital · Dave Kelly</span><Link to="/services" className="text-sm text-primary">Running a local business? →</Link></div></footer>
+    <footer className="border-t border-border px-6 py-10 md:px-12 lg:px-24"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6"><span className="text-sm text-muted-foreground">Lacuna Digital · Dave Kelly</span><nav className="flex flex-wrap gap-6"><a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-muted-foreground md:hover:text-primary">{CONTACT_EMAIL}</a><Link to="/terms" className="text-sm text-muted-foreground md:hover:text-primary">Terms</Link><Link to="/services" className="text-sm text-primary">Running a local business? →</Link></nav></div></footer>
   </main>
 );
 };

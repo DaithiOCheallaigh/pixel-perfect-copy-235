@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CONTACT_EMAIL, CALENDLY_URL } from "@/data/pricing";
 
 const Footer = () => (
   <footer className="border-t border-border bg-background px-6 py-12 md:px-12">
@@ -11,7 +12,8 @@ const Footer = () => (
           { label: "My Work", to: "/work" },
           { label: "Skill Set", to: "/skills" },
           { label: "Web Design", to: "/web-design" },
-          { label: "AI Integration", to: "/ai-integration" },
+          { label: "Product Studio", to: "/product-studio" },
+          { label: "Terms", to: "/terms" },
           { label: "About", to: "/about" },
         ]
           .filter(
@@ -27,6 +29,8 @@ const Footer = () => (
             {link.label}
           </Link>
         ))}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-muted-foreground md:hover:text-primary">{CONTACT_EMAIL}</a>
+        <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground md:hover:text-primary">Book a call ↗</a>
         <a
           href="https://www.linkedin.com/in/davidkelly89/"
           target="_blank"

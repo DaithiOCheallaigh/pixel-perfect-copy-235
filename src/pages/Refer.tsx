@@ -8,25 +8,26 @@ import SectionLabel from "@/components/SectionLabel";
 import ServicesNavigation from "@/components/ServicesNavigation";
 import ServicesFooter from "@/components/ServicesFooter";
 import { useToast } from "@/hooks/use-toast";
+import { terms, eur } from "@/data/pricing";
 
 const steps = [
   {
     icon: People,
     num: "1",
     title: "Share your unique link",
-    desc: "Share it with a business you think could use our help.",
+    desc: "Share it with a business you think I could help.",
   },
   {
     icon: TickCircle,
     num: "2",
     title: "They book and pay",
-    desc: "Your referral books and pays for a service.",
+    desc: "Your referral books and pays their deposit.",
   },
   {
     icon: Gift,
     num: "3",
-    title: "You get a month free",
-    desc: "Your next month is completely free. They save €50.",
+    title: `You each save ${eur(terms.referral)}`,
+    desc: "One discount per order, credited when they pay their deposit.",
   },
 ];
 
@@ -40,7 +41,7 @@ const Refer = () => {
   useEffect(() => {
     document.title = "Refer a Friend — Lacuna Digital";
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", "Refer a friend to Lacuna Digital and get a month of your service free. They save €50 on setup.");
+    if (meta) meta.setAttribute("content", `Refer a friend to Lacuna Digital: you get ${eur(terms.referral)} off your next invoice and they get ${eur(terms.referral)} off their package when they pay their deposit.`);
   }, []);
 
   const handleSubmit = async () => {
@@ -78,10 +79,10 @@ const Refer = () => {
           >
             <span className="text-5xl">🎁</span>
             <h1 className="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
-              Share Lacuna Digital — get a month free
+              Share Lacuna Digital — save {eur(terms.referral)} each
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-              If you're a current client and you refer a friend or business contact, you'll get one full month of your service free when they sign up. They get €50 off their setup too.
+              You get {eur(terms.referral)} off your next invoice; they get {eur(terms.referral)} off their package (one discount per order), paid when they pay their deposit.
             </p>
           </motion.div>
         </div>
@@ -119,7 +120,7 @@ const Refer = () => {
                 <>
                   <h2 className="text-xl font-bold">Request your referral link</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Dave will email you your unique referral code within 24 hours.
+                    I will email you your unique referral code within 1 business day.
                   </p>
                   <div className="mt-6 space-y-4">
                     <input
@@ -152,7 +153,7 @@ const Refer = () => {
                   <Check className="mx-auto h-10 w-10 text-primary" />
                   <h3 className="mt-4 text-lg font-bold">Request received!</h3>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Dave will email your unique referral code within 24 hours.
+                    I will email your unique referral code within 1 business day.
                   </p>
                 </div>
               )}
@@ -165,7 +166,7 @@ const Refer = () => {
       <section className="px-6 pb-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-lg text-center">
           <p className="text-muted-foreground">
-            Not a client yet? Here's what we can do for your business.
+            Not a client yet? Here's what I can do for your business.
           </p>
           <Link
             to="/services"
