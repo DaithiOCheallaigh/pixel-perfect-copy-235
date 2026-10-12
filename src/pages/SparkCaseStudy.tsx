@@ -379,29 +379,6 @@ const SparkCaseStudy = () => {
         </div>
       </section>
 
-      {/* 6. PROCESS IMAGE PLACEHOLDER */}
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Process Artefacts</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              Placeholder for workflow diagrams, design-pit artefacts, or the internal workbench tool
-              interface.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <div className="overflow-hidden rounded-xl border border-border">
-              <div className="flex aspect-[16/10] w-full items-center justify-center bg-muted/50">
-                <span className="font-mono-label text-center px-6 text-muted-foreground">
-                  [Placeholder — Faculty insights dashboard screenshot]
-                </span>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-
       {/* 8. OUTCOMES */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">

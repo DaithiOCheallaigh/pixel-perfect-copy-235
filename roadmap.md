@@ -52,3 +52,8 @@
 - [x] Split llms outputs and write matching static documents.
 - [x] Update static sitemap coverage, priorities and supplied content-change date; replace robots groups.
 - [x] Run targeted and full tests (210 passing), verify served documents and confirm backend unchanged; clean build, nothing published.
+
+# Pre-publish frontend review fixes
+- [x] Remove visible portfolio placeholders and seven broken service images; correct Shopify pricing.
+- [x] Make the services CTA commercial-only and label package cards/estimates with VAT.
+- [x] Run 213 passing tests and preview acceptance checks; clean build, backend and password gate unchanged, nothing published.

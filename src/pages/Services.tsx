@@ -71,7 +71,7 @@ const allServices: ServiceItem[] = [
     icon: Sms,
     title: "Domain & Custom Email",
     desc: "A professional email address and domain that builds instant trust.",
-    price: `${eur(addOns.email.setup)} setup (${addOns.email.inboxesIncluded} inboxes) · licences at cost`,
+    price: `${eur(addOns.email.setup)} setup${VAT_REGISTERED ? " + VAT" : ""} (${addOns.email.inboxesIncluded} inboxes) · licences at cost`,
     priceValue: addOns.email.setup,
     link: "/services/start-project",
     category: "visibility",
@@ -81,7 +81,7 @@ const allServices: ServiceItem[] = [
     icon: Instagram,
     title: "Social Media Setup",
     desc: "I set up your channels, create your content strategy, and post for you each month from your photos.",
-    price: `${eur(addOns.socialSetup)} setup · posting ${eur(addOns.socialPosting.monthly)}/mo (${addOns.socialPosting.posts} posts)`,
+    price: `${eur(addOns.socialSetup)} setup · posting ${eur(addOns.socialPosting.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""} (${addOns.socialPosting.posts} posts)`,
     priceValue: addOns.socialSetup,
     link: "/services/start-project",
     category: "visibility",
@@ -91,7 +91,7 @@ const allServices: ServiceItem[] = [
     icon: Location,
     title: "Local SEO & Google",
     desc: "Get found on Google Maps and in local searches — where your customers are looking.",
-    price: `${eur(addOns.gbp)} setup · or in Growth care`,
+    price: `${eur(addOns.gbp)} setup${VAT_REGISTERED ? " + VAT" : ""} · or in Growth care`,
     priceValue: addOns.gbp,
     link: "/services/start-project",
     category: "visibility",
@@ -101,7 +101,7 @@ const allServices: ServiceItem[] = [
     icon: ShoppingCart,
     title: "Delivery listing tune-up",
     desc: "I tune your menu, categories and photos on delivery platforms once your account is approved.",
-    price: `${eur(addOns.listingTuneup)} per platform, after approval`,
+    price: `${eur(addOns.listingTuneup)} per platform${VAT_REGISTERED ? " + VAT" : ""}, after approval`,
     priceValue: addOns.listingTuneup,
     link: "/services/start-project",
     category: "visibility",
@@ -111,7 +111,7 @@ const allServices: ServiceItem[] = [
     icon: Cpu,
     title: entry.aiAudit.name,
     desc: "I'll map how your business currently operates — tools, workflows, gaps — then either build bespoke software to fix it or optimise what you already have.",
-    price: `${eur(entry.aiAudit.price)} · half credited`,
+    price: `${eur(entry.aiAudit.price)}${VAT_REGISTERED ? " + VAT" : ""} · half credited`,
     priceValue: entry.aiAudit.price,
     link: "/services/start-project",
     category: "efficiency",
@@ -122,7 +122,7 @@ const allServices: ServiceItem[] = [
     icon: MessageText,
     title: "AI-Powered Chatbots",
     desc: "An always-on assistant that qualifies leads, answers FAQs, and books appointments — 24/7.",
-    price: `${eur(addOns.aiAssistant.setup)} + ${eur(addOns.aiAssistant.monthly)}/mo · or in Growth + AI`,
+    price: `${eur(addOns.aiAssistant.setup)} + ${eur(addOns.aiAssistant.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""} · or in Growth + AI`,
     priceValue: addOns.aiAssistant.setup,
     link: "/services/start-project",
     category: "efficiency",
@@ -142,7 +142,7 @@ const allServices: ServiceItem[] = [
     icon: People,
     title: "CRM Setup & Integration",
     desc: "Know your customers, track every interaction, and never drop a lead.",
-    price: `${eur(addOns.crmStarter)} starter`,
+    price: `${eur(addOns.crmStarter)} starter${VAT_REGISTERED ? " + VAT" : ""}`,
     priceValue: addOns.crmStarter,
     link: "/services/start-project",
     category: "efficiency",
@@ -152,7 +152,7 @@ const allServices: ServiceItem[] = [
     icon: Cpu,
     title: "AI receptionist",
     desc: "An AI receptionist for your business — answering calls, booking appointments, and following up.",
-    price: `${eur(addOns.aiReceptionist.setup)} setup + ${eur(addOns.aiReceptionist.monthly)}/mo`,
+    price: `${eur(addOns.aiReceptionist.setup)} setup + ${eur(addOns.aiReceptionist.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`,
     priceValue: addOns.aiReceptionist.setup,
     link: "/services/start-project",
     category: "efficiency",
@@ -568,6 +568,7 @@ const Services = () => {
               {renderServiceGrid(efficiencyServices)}
             </div>
           </div>
+          <p className="mt-6 text-xs text-muted-foreground">{vatFootnote()}</p>
         </div>
       </section>
 
