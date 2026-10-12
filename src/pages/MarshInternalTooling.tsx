@@ -7,6 +7,7 @@ import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
 import { CpuArchitecture } from "../components/ui/cpu-architecture";
+import { SEO } from "@/components/SEO";
 
 const products = [
   {
@@ -101,6 +102,7 @@ const MarshInternalTooling = () => {
 
   return (
     <main className="pt-24 overflow-x-hidden">
+      <SEO title="Case Study — Marsh Internal Tooling" description="Three enterprise internal tools for Marsh designed and shipped in parallel on a shared component library and an AI-accelerated workflow." url="/work/marsh-internal-tooling" />
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">

@@ -65,7 +65,7 @@ export default function SparkPasswordGate({ children }: { children: ReactNode })
   if (authorized) return <>{children}</>;
   return (
     <main className="flex min-h-screen items-center justify-center px-6 pt-24 text-foreground">
-      <SEO title="MedEd Workspace — Password protected" description="Private MedEd Workspace case study by Dave Kelly." url="/work/spark" />
+      <SEO title="MedEd Workspace — Password protected" description="Private Elsevier MedEd Workspace case study by Dave Kelly." url="/work/spark" />
       <Helmet><meta name="robots" content="noindex, nofollow" /></Helmet>
       <div className="w-full max-w-sm py-24">
         <LockKeyhole className="mb-6 h-8 w-8 text-primary" aria-hidden="true" />

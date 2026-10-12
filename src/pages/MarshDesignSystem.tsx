@@ -6,6 +6,7 @@ import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
 import claudeLogo from "@/assets/logos/claude.png";
+import { SEO } from "@/components/SEO";
 
 const approaches = [
   {
@@ -39,6 +40,7 @@ const MarshDesignSystem = () => {
 
   return (
     <main className="pt-24 overflow-x-hidden">
+      <SEO title="Case Study — Marsh Design System Rebrand" description="Rebranding Marsh's CORE enterprise component library with an AI-first workflow: 60+ components updated, documented in Storybook and shipped to GitHub before launch." url="/work/marsh-design-system" />
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
