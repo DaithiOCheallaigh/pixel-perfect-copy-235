@@ -13,6 +13,7 @@ import {
   generateId,
 } from "@/lib/daveAI";
 import { submitLead } from "@/lib/submitLead";
+import { selectionPrice, selectionTotals } from "@/data/serviceEstimates";
 
 /* ------------------------------------------------------------------ */
 /*  Constants                                                          */
@@ -147,7 +148,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
     if (!selections || selections.length === 0) return;
 
     const serviceNames = selections.map((s) => s.title);
-    const hasAudit = serviceNames.includes("Bespoke AI Audit");
+    const hasAudit = selections.some(s => s.id === "ai-audit");
 
     const userMessage: Message = {
       id: generateId(),
@@ -156,9 +157,9 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
       timestamp: new Date(),
     };
 
-    const totalEstimate = selections.reduce((sum, s) => sum + s.priceValue, 0);
+    const totalEstimate = selectionTotals(selections).oneOff;
     const serviceList = serviceNames.join(", ");
-    const priceText = totalEstimate === 0 ? "free" : `from €${totalEstimate.toLocaleString()}`;
+    const priceText = selectionPrice(selections);
 
     if (hasAudit) {
       sessionStorage.setItem("lacuna-audit-context", "true");
@@ -178,8 +179,8 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
 
     setTimeout(() => {
       const acknowledgement = hasAudit
-        ? `Great choices! 🎯 I can see you're interested in ${serviceNames.length === 1 ? serviceNames[0] : serviceList}. The Bespoke AI Audit is a brilliant starting point — Dave will map out exactly how your business runs and where AI can make the biggest impact.\n\nLet's arrange a no-cost, no-commitment exploration call so Dave can scope this properly for you. What's your name?`
-        : `Great choices! 🎯 You've selected ${serviceNames.length === 1 ? serviceNames[0] : serviceList}${totalEstimate > 0 ? ` (estimated ${priceText})` : ""}. These are a popular combination.\n\nLet's arrange a no-cost, no-commitment exploration call so Dave can scope this properly for you. What's your name?`;
+        ? `Great choices! 🎯 I can see you're interested in ${serviceNames.length === 1 ? serviceNames[0] : serviceList} (estimated ${priceText}). The AI Opportunity Audit is a starting point — Dave will map out how your business runs and where AI can help.\n\nLet's arrange a free 20-minute call so Dave can scope this for you. What's your name?`
+        : `Great choices! 🎯 You've selected ${serviceNames.length === 1 ? serviceNames[0] : serviceList}${totalEstimate > 0 ? ` (estimated ${priceText})` : ""}.\n\nLet's arrange a free 20-minute call so Dave can scope this for you. What's your name?`;
 
       setState((prev) => ({
         ...prev,
@@ -425,8 +426,8 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
           </div>
           <div>
             <p className="text-sm font-semibold text-white">Chat with Dave's AI</p>
-            <div className="flex items-center gap-2">
-              <p className="text-[11px] text-white/40">Usually replies instantly</p>
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-[11px] text-white/40">AI assistant · Dave replies within 1 business day</p>
               <span className="text-[11px] text-white/20">·</span>
               <button
                 onClick={handleReset}
@@ -463,7 +464,7 @@ const ChatUI = ({ compact = false }: { compact?: boolean }) => {
         {/* Show chips for latest unanswered bot message */}
         {!state.isTyping && lastBotWithChips && (
           <QuickReplies
-            chips={lastBotWithChips.chips!}
+            chips={lastBotWithChips.chips ?? []}
             onSelect={handleChipSelect}
             disabled={state.isTyping}
           />

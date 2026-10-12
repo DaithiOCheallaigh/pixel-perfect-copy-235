@@ -16,6 +16,7 @@ import ServicePage from "./pages/ServicePage";
 import WebDesignServices from "./pages/WebDesignServices";
 import AIDesignProcess from "./pages/AIDesignProcess";
 import ProductStudio from "./pages/ProductStudio";
+import Terms from "./pages/Terms";
 import BlogPost from "./pages/BlogPost";
 import StartProject from "./pages/StartProject";
 import MarshInternalTooling from "./pages/MarshInternalTooling";
@@ -138,6 +139,7 @@ const MainLayout = () => (
       <Route path="/ai-design-process" element={<AIDesignProcess />} />
       <Route path="/ai-integration" element={<Navigate to="/product-studio" replace />} />
       <Route path="/product-studio" element={<ProductStudio />} />
+      <Route path="/terms" element={<Terms />} />
       <Route path="/work/marsh-internal-tooling" element={<MarshInternalTooling />} />
       <Route path="/work/marsh-design-system" element={<MarshDesignSystem />} />
       <Route path="/start-project" element={<StartProject />} />

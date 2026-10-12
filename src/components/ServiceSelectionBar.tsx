@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { submitLead } from "@/lib/submitLead";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, Check } from "lucide-react";
+import { CONTACT_EMAIL, vatFootnote } from "@/data/pricing";
+import { selectionPrice } from "@/data/serviceEstimates";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -103,7 +105,7 @@ const ServiceSelectionBar = () => {
     }
     setSending(false);
     if (!ok) {
-      setError("Something went wrong sending your request. Please try again, or email davekellydesign@gmail.com.");
+      setError(`Something went wrong sending your request. Please try again, or email ${CONTACT_EMAIL}.`);
       return;
     }
     if (!honeypot) {
@@ -195,6 +197,8 @@ const ServiceSelectionBar = () => {
                       </li>
                     ))}
                   </ul>
+                  <p className="mt-4 text-sm font-semibold text-primary">{selectionPrice(selectedServices)}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{vatFootnote()}</p>
 
                   <form onSubmit={handleSend} className="relative mt-6 space-y-3">
                     <div
@@ -253,7 +257,7 @@ const ServiceSelectionBar = () => {
                       {!sending && <ArrowRight className="h-4 w-4" />}
                     </button>
                     <p className="text-center text-xs text-muted-foreground">
-                      We'll only use your details to respond to your enquiry.
+                      I'll only use your details to respond to your enquiry.
                     </p>
                   </form>
                 </>
@@ -281,7 +285,8 @@ const ServiceSelectionBar = () => {
                 {selectedServices.length}
               </div>
               <span className="text-sm font-semibold text-foreground">
-                {selectedServices.length} {selectedServices.length === 1 ? "service" : "services"} selected
+                <span className="block">{selectedServices.length} {selectedServices.length === 1 ? "service" : "services"} selected</span>
+                <span className="block text-xs text-muted-foreground">{selectionPrice(selectedServices)}</span>
               </span>
               <span className="hidden text-sm text-muted-foreground sm:inline">→</span>
               <span className="hidden text-sm font-semibold text-primary sm:inline">Start my free consultation</span>
