@@ -50,6 +50,7 @@ export const addOns = { extraPage: 150, gbp: 350, booking: 350, stripe: 450, ema
 export const studio = { dayRate: 650, agencyDayRate: 600, agencyMinDays: 5, fractional: { days: 4, monthly: 2600, minMonths: 3 }, investorPrototype: 3000, prototypeSprint: 6000, userTestingAddOn: 2500, mvpFrom: 20000, uxAuditFocused: 4500, uxAuditComprehensive: 9000, designSystemFrom: 18000, discoveryRoadmap: 4500, automationSprintRange: [3000, 6500], aiOps: { monthly: 750, hours: 8, overageHourly: 100, minMonths: 3, noticeDays: 30 } };
 export const terms = { upTo1000: "100% upfront", to3000: "50% to book, 50% before go-live", over3000: "40/40/20 (start / design sign-off / before go-live)", payMonthlyNote: "Pay monthly available on packages from €750 to €2,000 (12 months)", oneDiscountPerOrder: true, referral: 100 };
 export const eur = (n: number) => `€${n.toLocaleString("en-IE")}`;
+export const restaurantPayback = { appOrdersMonthly: 4000, directShare: 0.2, savingsMonthly: [85, 105] as const, paybackMonths: [6, 7] as const, flipdishMonthly: [119, 139] as const };
 export const incVat = (ex: number) => Math.round(ex * (1 + VAT_RATE));
 export const priceLabel = (p: Pkg) => {
   if (VAT_REGISTERED && p.incVatHeadline) return `${eur(p.incVatHeadline)} incl. VAT`;
