@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { HelmetProvider, type HelmetServerState } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 
 function headFor(pathname: string, props: React.ComponentProps<typeof SEO>) {
-  const context: { helmet?: { title: { toString(): string }; meta: { toString(): string }; link: { toString(): string }; script: { toString(): string } } } = {};
+  const context: { helmet?: HelmetServerState } = {};
   const previous = HelmetProvider.canUseDOM;
   HelmetProvider.canUseDOM = false;
   try {
