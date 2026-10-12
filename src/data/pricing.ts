@@ -1,7 +1,7 @@
 // src/data/pricing.ts — EUR. The figure shown is what Dave keeps.
 export const VAT_RATE = 0.23;
 export const VAT_REGISTERED = true; // flip to false if not VAT-registered
-export const YEARS_EXPERIENCE = "over 10";
+export { YEARS_EXPERIENCE } from "./profile";
 export const CALENDLY_URL = "https://calendly.com/lacunaconsulting-info/30min";
 export const CONTACT_EMAIL = "info@lacunaconsulting.com";
 export const availability = { headline: "Now booking new projects", nextStart: "November 2026", productStudioFrom: "November 2026" };

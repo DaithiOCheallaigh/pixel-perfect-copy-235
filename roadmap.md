@@ -29,3 +29,9 @@
 - [x] Point the listed commercial and client-page links directly to /services paths.
 - [x] Replace listed manual metadata effects with SEO and simplify shared availability.
 - [x] Audit protected files, run 172 tests and check expertise navigation in the preview; no backend edits or publishing.
+
+# Recruiter-focused portfolio
+- [ ] Add shared profile and hiring contact section; replace commercial portfolio chrome.
+- [ ] Update homepage, featured work, About experience and recruiter password contact using supplied copy.
+- [ ] Replace portfolio availability sections and remove commercial links and dependencies.
+- [ ] Run tests, audit protected files and verify desktop/mobile portfolio and contact navigation.
