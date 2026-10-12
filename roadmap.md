@@ -44,6 +44,6 @@
 
 
 # Section-aware search and sharing metadata
-- [ ] Save supplied portfolio sharing image; preserve services image.
-- [ ] Replace shared and static head metadata; add page-specific and private-page tags.
-- [ ] Verify route titles, canonical URLs, schemas and noindex behavior; run tests and confirm backend unchanged.
+- [x] Save supplied 1200×630 portfolio sharing image; preserve services image byte-for-byte.
+- [x] Replace shared and static head metadata; add page-specific and private-page tags.
+- [x] Verify route titles, canonical URLs, schemas and noindex behavior in preview; 197 tests pass, latest build is clean and backend unchanged. Nothing published.
