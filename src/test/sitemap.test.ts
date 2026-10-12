@@ -35,7 +35,7 @@ describe("public sitemap boundaries", () => {
   });
 
   it("uses the owner's supplied fixed content-change date", () => {
-    expect(entries.length).toBe(64);
+    expect(entries.length).toBe(66);
     for (const entry of entries) {
       expect(entry.getElementsByTagName("lastmod")[0].textContent).toBe("2026-10-12");
     }
