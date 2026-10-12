@@ -32,7 +32,7 @@ const extras = [
   ["Email setup", `${eur(addOns.email.setup)} (${addOns.email.inboxesIncluded} inboxes); +${eur(addOns.email.extraInbox)} per extra inbox. Licences billed to you.`],
   ["Brand starter", eur(addOns.brandStarter)],
   ["Copywriting", `${eur(addOns.copyPerPage)} per page`],
-  ["Extra work", `${eur(addOns.hourly)}/hour in 30-minute blocks`],
+  ["Extra work", `${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks`],
 ];
 const WebDesignServices = () => (
   <main className="bg-background pt-24 text-foreground">
