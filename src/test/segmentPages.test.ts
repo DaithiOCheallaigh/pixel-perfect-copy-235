@@ -6,7 +6,7 @@ describe("industry pages", () => {
   it.each([
     ["kitchens-joinery", "kitchens", 3000], ["clinics-practices", "clinics", 1250],
     ["trades-home", "trades", 950], ["salons-barbers", "salons", 295],
-    ["tours-experiences", "tours", 2000], ["restaurants-cafes", "food", 250],
+    ["tours-experiences", "tours", 2000], ["restaurants-cafes", "food", 450],
   ] as const)("resolves %s with its lowest package price", (slug, key, amount) => {
     expect(getSegmentKey(slug)).toBe(key);
     expect(lowestPackage(segments[key].packages)?.price).toBe(amount);
