@@ -27,33 +27,18 @@ import {
   Link1,
   Star1,
   MessageEdit,
-  SearchNormal1,
   Clock,
   Receipt1,
-  Timer1,
   TickCircle,
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
-import { ShineBorder } from "@/components/ui/shine-border";
+import { Button } from "@/components/ui/button";
+import { addOns, carePlans, careTerms, entry, eur, priceLabel, segments, terms, vatFootnote, webLadder } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
 import ServicesNavigation from "@/components/ServicesNavigation";
 import ServicesFooter from "@/components/ServicesFooter";
-
-/* ------------------------------------------------------------------ */
-/*  Currency                                                           */
-/* ------------------------------------------------------------------ */
-
-type Currency = "EUR" | "USD" | "GBP";
-
-const currencySymbols: Record<Currency, string> = { EUR: "€", USD: "$", GBP: "£" };
-const currencyRates: Record<Currency, number> = { EUR: 1, USD: 1.08, GBP: 0.86 };
-
-const convertPrice = (eurAmount: number, currency: Currency): string => {
-  const converted = Math.round(eurAmount * currencyRates[currency]);
-  return `${currencySymbols[currency]}${converted.toLocaleString()}`;
-};
 
 /* ------------------------------------------------------------------ */
 /*  Services data                                                      */
@@ -77,8 +62,8 @@ const allServices: ServiceItem[] = [
     icon: Monitor,
     title: "Website Creation",
     desc: "Fast, conversion-focused websites that make your business look the part.",
-    price: "From €375",
-    priceValue: 375,
+    price: `From ${eur(webLadder[0].price ?? 0)} · or ${eur(webLadder[0].monthly ?? 0)}/mo`,
+    priceValue: webLadder[0].price ?? 0,
     link: "/web-design",
     category: "visibility",
   },
@@ -87,8 +72,8 @@ const allServices: ServiceItem[] = [
     icon: Sms,
     title: "Domain & Custom Email",
     desc: "A professional email address and domain that builds instant trust.",
-    price: "From €150 setup",
-    priceValue: 150,
+    price: `${eur(addOns.email.setup)} setup (${addOns.email.inboxesIncluded} inboxes) · licences at cost`,
+    priceValue: addOns.email.setup,
     link: "/start-project",
     category: "visibility",
   },
@@ -96,9 +81,9 @@ const allServices: ServiceItem[] = [
     id: "social-media",
     icon: Instagram,
     title: "Social Media Setup",
-    desc: "I set up your channels, create your content strategy, and keep them active.",
-    price: "From €200 setup",
-    priceValue: 200,
+    desc: "I set up your channels, create your content strategy, and post for you each month from your photos.",
+    price: `${eur(addOns.socialSetup)} setup · posting ${eur(addOns.socialPosting.monthly)}/mo (${addOns.socialPosting.posts} posts)`,
+    priceValue: addOns.socialSetup,
     link: "/start-project",
     category: "visibility",
   },
@@ -107,28 +92,28 @@ const allServices: ServiceItem[] = [
     icon: Location,
     title: "Local SEO & Google",
     desc: "Get found on Google Maps and in local searches — where your customers are looking.",
-    price: "Strategy free",
-    priceValue: 0,
+    price: `${eur(addOns.gbp)} setup · or in Growth care`,
+    priceValue: addOns.gbp,
     link: "/start-project",
     category: "visibility",
   },
   {
     id: "platform-onboarding",
     icon: ShoppingCart,
-    title: "Platform Onboarding",
-    desc: "I get you registered and set up on the platforms your customers already use.",
-    price: "From €200",
-    priceValue: 200,
+    title: "Delivery listing tune-up",
+    desc: "I tune your menu, categories and photos on delivery platforms once your account is approved.",
+    price: `${eur(addOns.listingTuneup)} per platform, after approval`,
+    priceValue: addOns.listingTuneup,
     link: "/start-project",
     category: "visibility",
   },
   {
     id: "ai-audit",
     icon: Cpu,
-    title: "Bespoke AI Audit",
+    title: entry.aiAudit.name,
     desc: "I'll map how your business currently operates — tools, workflows, gaps — then either build bespoke software to fix it or optimise what you already have.",
-    price: "Free Consultation",
-    priceValue: 0,
+    price: `${eur(entry.aiAudit.price)} · half credited`,
+    priceValue: entry.aiAudit.price,
     link: "/start-project",
     category: "efficiency",
     featured: false,
@@ -138,8 +123,8 @@ const allServices: ServiceItem[] = [
     icon: MessageText,
     title: "AI-Powered Chatbots",
     desc: "An always-on assistant that qualifies leads, answers FAQs, and books appointments — 24/7.",
-    price: "Free Consultation",
-    priceValue: 0,
+    price: `${eur(addOns.aiAssistant.setup)} + ${eur(addOns.aiAssistant.monthly)}/mo · or in Growth + AI`,
+    priceValue: addOns.aiAssistant.setup,
     link: "/ai-integration",
     category: "efficiency",
   },
@@ -148,8 +133,8 @@ const allServices: ServiceItem[] = [
     icon: Calendar1,
     title: "Reservation Systems",
     desc: "Ditch the phone bookings. I set up a reservation system that works while you sleep.",
-    price: "€200 setup",
-    priceValue: 200,
+    price: `${eur(addOns.booking)} setup (salons from ${eur(segments.salons.packages[0].price ?? 0)})`,
+    priceValue: addOns.booking,
     link: "/start-project",
     category: "efficiency",
   },
@@ -158,18 +143,18 @@ const allServices: ServiceItem[] = [
     icon: People,
     title: "CRM Setup & Integration",
     desc: "Know your customers, track every interaction, and never drop a lead.",
-    price: "Free Consultation",
-    priceValue: 0,
+    price: `${eur(addOns.crmStarter)} starter`,
+    priceValue: addOns.crmStarter,
     link: "/start-project",
     category: "efficiency",
   },
   {
     id: "ai-assistant",
     icon: Cpu,
-    title: "AI Personal Assistant",
-    desc: "An AI employee for your business — handling emails, scheduling, follow-ups, and more.",
-    price: "€100/month",
-    priceValue: 100,
+    title: "AI receptionist",
+    desc: "An AI receptionist for your business — answering calls, booking appointments, and following up.",
+    price: `${eur(addOns.aiReceptionist.setup)} setup + ${eur(addOns.aiReceptionist.monthly)}/mo`,
+    priceValue: addOns.aiReceptionist.setup,
     link: "/ai-integration",
     category: "efficiency",
   },
@@ -177,176 +162,6 @@ const allServices: ServiceItem[] = [
 
 const visibilityServices = allServices.filter((s) => s.category === "visibility");
 const efficiencyServices = allServices.filter((s) => s.category === "efficiency");
-
-/* ------------------------------------------------------------------ */
-/*  Industry packages (updated pricing)                                */
-/* ------------------------------------------------------------------ */
-
-const industryPackages = [
-  {
-    emoji: "🍕",
-    title: "Food & Hospitality",
-    items: [
-      { name: "Microsite", price: "€1,000" },
-      { name: "Deliveroo Registration & Setup", price: "€350" },
-    ],
-    total: "€1,350 to get online and taking orders",
-    link: "/services/food-hospitality",
-  },
-  {
-    emoji: "💄",
-    title: "Beauty & Wellness",
-    items: [
-      { name: "Domain Registration", price: "Variable" },
-      { name: "Microsite", price: "€1,000" },
-      { name: "Online Reservation System", price: "€300" },
-    ],
-    total: "From €1,300 fully operational",
-    link: "/services/beauty-wellness",
-  },
-  {
-    emoji: "🚀",
-    title: "Startup Bootstrap",
-    items: [
-      { name: "Domain & Setup", price: "Variable" },
-      { name: "Microsite", price: "€1,000" },
-      { name: "Stripe Integration", price: "€450" },
-      { name: "Prototype/MVP", price: "From €3,500" },
-    ],
-    total: "Launch-ready from €1,450",
-    link: "/services/startup-bootstrap",
-  },
-];
-
-/* ------------------------------------------------------------------ */
-/*  Pricing data                                                       */
-/* ------------------------------------------------------------------ */
-
-const aiPricing = [
-  {
-    name: "Discovery Audit",
-    eurPrice: 0,
-    prefix: "",
-    label: "One-off",
-    features: [
-      "Full workflow audit & mapping",
-      "AI Opportunity Report",
-      "Prioritised recommendations",
-      "Estimated time & cost savings",
-    ],
-    cta: "Get Started",
-    ctaHref: "/start-project",
-    popular: false,
-  },
-  {
-    name: "Monthly Retainer",
-    eurPrice: 500,
-    prefix: "From ",
-    suffix: " / month",
-    label: "Ongoing",
-    features: [
-      "Ongoing build & integration",
-      "Monthly strategy call",
-      "Support & iteration",
-      "New use cases as you grow",
-      "Cancel with 30 days' notice",
-    ],
-    cta: "Book a Call",
-    ctaHref: "/start-project",
-    popular: true,
-    badge: "Tax deductible",
-  },
-  {
-    name: "Bespoke Integration",
-    eurPrice: 0,
-    customPrice: "Pre-agreed fixed fee",
-    label: "Project-based",
-    features: [
-      "End-to-end AI strategy",
-      "Complex tool integrations",
-      "Custom APIs & connectors",
-      "Fixed price agreed in writing",
-      "Full scoping before any build",
-    ],
-    cta: "Discuss Your Project",
-    ctaHref: "/start-project",
-    popular: false,
-  },
-];
-
-const webPricing = [
-  {
-    name: "Starter",
-    eurPrice: 1999,
-    features: [
-      "Up to 5 pages",
-      "Custom design to brand guidelines",
-      "Mobile responsive",
-      "Contact form integration",
-      "Basic on-page SEO setup",
-      "2 rounds of revisions",
-      "Fully deployed website",
-    ],
-    cta: "Get Started",
-    ctaHref: "/start-project",
-    popular: false,
-  },
-  {
-    name: "Business",
-    eurPrice: 3999,
-    features: [
-      "Everything in Starter, plus:",
-      "Up to 10 pages",
-      "Blog or news section",
-      "Analytics setup (GA / Tag Manager)",
-      "Performance & accessibility optimisation",
-      "Social media integration",
-      "3 rounds of revisions",
-    ],
-    cta: "Get Started",
-    ctaHref: "/start-project",
-    popular: true,
-  },
-  {
-    name: "Enterprise",
-    eurPrice: 7500,
-    prefix: "From ",
-    features: [
-      "Everything in Business, plus:",
-      "Unlimited pages",
-      "E-commerce or booking integration",
-      "Advanced animations & interactions",
-      "Custom functionality & APIs",
-      "Design system documentation",
-      "Priority support",
-    ],
-    cta: "Get Started",
-    ctaHref: "/start-project",
-    popular: false,
-  },
-];
-
-const smePricing = [
-  { service: "Microsite", price: "€1,000", note: "one-off build" },
-  { service: "Linktree-style site", price: "€10/month", note: "" },
-  { service: "Full website", price: "€375 build + €150/month", note: "" },
-  { service: "Custom email setup", price: "€150 + €50/month per inbox", note: "" },
-  { service: "Reservation system setup", price: "€200 + €100/month maintenance", note: "" },
-  { service: "Social media setup", price: "€200 + €100/month maintenance", note: "" },
-  { service: "Automated content posting", price: "€89/month", note: "" },
-  { service: "AI chatbot integration", price: "Free–€100 + €20/month maintenance", note: "" },
-  { service: "AI Personal Assistant", price: "€100/month", note: "" },
-  { service: "Business registration", price: "€1,500", note: "" },
-  { service: "Accountant procurement", price: "€600", note: "" },
-];
-
-const pricingCategories = [
-  { key: "ai" as const, label: "AI Integration" },
-  { key: "web" as const, label: "Web Design" },
-  { key: "sme" as const, label: "SME Services" },
-];
-
-type PricingCategory = "ai" | "web" | "sme";
 
 /* ------------------------------------------------------------------ */
 /*  Tools teaser                                                       */
@@ -392,12 +207,12 @@ const differentiators = [
   {
     icon: Clock,
     title: "Fast turnaround",
-    body: "Most projects are scoped, built, and deployed within weeks — not months. You see results quickly.",
+    body: "Fixed scope, fixed price, a launch date in writing.",
   },
   {
     icon: Receipt1,
     title: "Transparent pricing",
-    body: "Fixed-price packages with no hidden fees. You know exactly what you're paying before we start.",
+    body: "One price per item, published. Software licences (Google Workspace, Fresha, Flipdish etc.) are billed to you directly.",
   },
 ];
 
@@ -428,11 +243,12 @@ const SelectableServiceCard = ({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
     >
-      <button
+      <Button
+        variant="ghost"
         type="button"
         onClick={onToggle}
         aria-pressed={selected}
-        className={`group relative flex h-full w-full flex-col rounded-xl border p-6 text-left transition-all ${
+        className={`group relative flex h-full w-full items-start whitespace-normal flex-col rounded-xl border p-6 text-left transition-all ${
           selected
             ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
             : service.featured
@@ -461,13 +277,13 @@ const SelectableServiceCard = ({
         <h3 className="mt-4 text-base font-bold">{service.title}</h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
 
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-2">
           <p className="text-xs font-semibold text-primary">{service.price}</p>
           <span className="shrink-0 whitespace-nowrap rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
             AI-assisted
           </span>
         </div>
-      </button>
+      </Button>
     </motion.div>
   );
 };
@@ -479,8 +295,6 @@ const SelectableServiceCard = ({
 /* ------------------------------------------------------------------ */
 
 const Services = () => {
-  const [activeCategory, setActiveCategory] = useState<PricingCategory>("ai");
-  const [currency, setCurrency] = useState<Currency>("EUR");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const isMobile = useIsMobile();
 
@@ -578,12 +392,12 @@ const Services = () => {
               LACUNA DIGITAL — SERVICES
             </span>
             <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl">
-              Get your business online in days,
+              Get found, get booked,
               <br />
-              <span className="text-primary">not months.</span>
+              <span className="text-primary">get paid.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              I'm Dave — your digital ops team of one, powered by AI. I build the website, set up the tools, and automate the busywork so you can get back to running the business.
+              Designed by a senior product designer, built in days with AI.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <a
@@ -608,11 +422,27 @@ const Services = () => {
               </span>
               <span className="inline-flex items-center gap-2">
                 <TickCircle variant="Bold" className="h-4 w-4 text-primary" />
-                Projects live in 1–2 weeks
+                Fixed price · launch date in writing
               </span>
             </div>
 
           </motion.div>
+        </div>
+      </section>
+
+      <section className="border-b border-border px-6 py-8 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-7xl">
+          <ScrollReveal>
+            <p className="text-lg leading-relaxed">
+              Not sure what you need? A free 20-minute call and a fixed written quote within {entry.introCall.quoteWithin}.
+            </p>
+            <Button asChild className="mt-4 rounded-sm">
+              <Link to="/start-project">Book a free call <ArrowRight /></Link>
+            </Button>
+            <p className="mt-4 text-xs text-muted-foreground">
+              Custom AI or multi-site project? {entry.healthCheck.name} {eur(entry.healthCheck.price)}, half credited against your project.
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -753,7 +583,7 @@ const Services = () => {
 
 
       {/* ── Ready-Made Packages ── */}
-      <section className="px-6 py-24 md:px-12 lg:px-24">
+      <section id="packages" className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
             <SectionLabel>Packages</SectionLabel>
@@ -766,40 +596,52 @@ const Services = () => {
           </ScrollReveal>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {industryPackages.map((pkg, i) => (
-              <ScrollReveal key={pkg.title} delay={i * 0.1}>
-                <div className="relative flex h-full flex-col rounded-xl border border-border bg-card p-8">
-                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl">{pkg.emoji}</span>
-                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+            {Object.values(segments).map((segment, i) => {
+              const lowest = segment.packages.reduce((best, pkg) =>
+                (pkg.price ?? pkg.priceFrom ?? Infinity) < (best.price ?? best.priceFrom ?? Infinity) ? pkg : best
+              );
+              const popular = segment.packages.find((pkg) => pkg.popular) ?? lowest;
+              const monthlyPackage = popular.monthly ? popular : segment.packages.find((pkg) => pkg.monthly);
+              return (
+                <ScrollReveal key={segment.slug} delay={i * 0.1}>
+                  <article className="relative flex h-full flex-col rounded-xl border border-border bg-card p-8">
+                    <span className="self-start rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
                       AI-assisted build
                     </span>
-                  </div>
-                  <h3 className="mt-4 text-lg font-bold">{pkg.title}</h3>
-                  <ul className="mt-6 flex-1 space-y-3">
-                    {pkg.items.map((item) => (
-                      <li key={item.name} className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">{item.name}</span>
-                        <span className={`font-semibold ${item.price === "FREE" ? "text-primary" : "text-foreground"}`}>
-                          {item.price}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6 border-t border-border pt-4">
-                    <p className="text-sm font-bold text-primary">{pkg.total}</p>
-                  </div>
-                  <Link
-                    to={pkg.link}
-                    className="mt-6 inline-flex items-center justify-center gap-2 rounded-sm bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
-                  >
-                    Get this package <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </ScrollReveal>
-            ))}
+                    <h3 className="mt-4 text-lg font-bold">{segment.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{segment.tagline}</p>
+                    <p className="mt-6 text-xl font-bold text-primary">from {priceLabel(lowest)}</p>
+                    <div className="mt-6 flex-1 border-t border-border pt-4">
+                      <p className="font-mono-label text-xs text-muted-foreground">Most popular</p>
+                      <p className="mt-2 text-sm font-bold">{popular.name}</p>
+                      <p className="mt-1 text-sm text-primary">{priceLabel(popular)}</p>
+                      {monthlyPackage?.monthly && (
+                        <p className="mt-2 text-xs text-muted-foreground">
+                          {monthlyPackage.id !== popular.id && `${monthlyPackage.name}: `}or {eur(monthlyPackage.monthly)}/mo × 12
+                        </p>
+                      )}
+                      <p className="mt-4 text-xs text-muted-foreground">Live in {popular.live}</p>
+                    </div>
+                    <Button asChild className="mt-6 h-auto whitespace-normal rounded-sm py-2.5">
+                      <Link to={`/services/${segment.slug}`}>View packages <ArrowRight /></Link>
+                    </Button>
+                  </article>
+                </ScrollReveal>
+              );
+            })}
+            <ScrollReveal>
+              <article className="flex h-full flex-col rounded-xl border border-border bg-card p-8">
+                <h3 className="text-lg font-bold">Professional services &amp; other businesses</h3>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {webLadder.slice(0, 3).map((pkg) => `${pkg.name} ${eur(pkg.price ?? 0)}`).join(" · ")}
+                </p>
+                <Button asChild variant="outline" className="mt-6 h-auto whitespace-normal rounded-sm py-2.5">
+                  <Link to="/web-design">Explore web design <ArrowRight /></Link>
+                </Button>
+              </article>
+            </ScrollReveal>
           </div>
+          <p className="mt-6 text-xs text-muted-foreground">{vatFootnote()}</p>
         </div>
       </section>
 
@@ -829,187 +671,52 @@ const Services = () => {
         </div>
       </section>
 
-      {/* ── Pricing ── */}
+      {/* ── Care Plans ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
             <SectionLabel>Pricing</SectionLabel>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-              Clear, upfront pricing
-            </h2>
-            <p className="mt-4 max-w-2xl text-muted-foreground">
-              No hidden fees, no hourly billing surprises. Pick a package that fits your needs, or get in touch for something custom.
-            </p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Care plans</h2>
           </ScrollReveal>
-
-          {/* Category slider + Currency switcher */}
-          <div className="mt-10 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-            <div className="relative inline-flex rounded-lg border border-border bg-card p-1">
-              {pricingCategories.map((cat) => (
-                <button
-                  key={cat.key}
-                  onClick={() => setActiveCategory(cat.key)}
-                  aria-pressed={activeCategory === cat.key}
-                  className={`relative z-10 rounded-md px-5 py-2 text-sm font-semibold transition-colors ${
-                    activeCategory === cat.key
-                      ? "text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {activeCategory === cat.key && (
-                    <motion.span
-                      layoutId="pricing-tab"
-                      className="absolute inset-0 rounded-md bg-primary"
-                      transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                    />
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {carePlans.map((plan, i) => (
+              <ScrollReveal key={plan.id} delay={i * 0.1}>
+                <article className={`relative flex h-full flex-col rounded-xl border bg-card p-8 ${plan.popular ? "border-primary" : "border-border"}`}>
+                  {plan.popular && (
+                    <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Most Popular</span>
                   )}
-                  <span className="relative z-10">{cat.label}</span>
-                </button>
-              ))}
-            </div>
-
-            {activeCategory !== "sme" && (
-              <div className="inline-flex rounded-lg border border-border bg-card p-1">
-                {(["EUR", "USD", "GBP"] as Currency[]).map((c) => (
-                  <button
-                    key={c}
-                    onClick={() => setCurrency(c)}
-                    aria-pressed={currency === c}
-                    className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
-                      currency === c
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-            )}
+                  <h3 className="text-lg font-bold">{plan.name}</h3>
+                  <p className="mt-4 text-3xl font-bold">{eur(plan.monthly)}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                  <ul className="mt-6 flex-1 space-y-3">
+                    {plan.includes.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <TickCircle variant="Bulk" className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button asChild variant={plan.popular ? "default" : "outline"} className="mt-8 rounded-sm">
+                    <Link to="/start-project">Get started <ArrowRight /></Link>
+                  </Button>
+                </article>
+              </ScrollReveal>
+            ))}
           </div>
-
-          {/* AI / Web pricing cards */}
-          {activeCategory !== "sme" && (
-            <motion.div
-              key={activeCategory}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35 }}
-              className="mt-8 grid gap-6 md:grid-cols-3"
-            >
-              {(activeCategory === "ai" ? aiPricing : webPricing).map((tier) => {
-                const priceDisplay =
-                  "customPrice" in tier && (tier as any).customPrice
-                    ? (tier as any).customPrice
-                    : tier.eurPrice === 0
-                      ? "Free"
-                      : `${(tier as any).prefix || ""}${convertPrice(tier.eurPrice, currency)}${(tier as any).suffix || ""}`;
-
-                return (
-                  <div
-                    key={tier.name}
-                    className={`relative flex h-full flex-col rounded-xl border p-8 ${
-                      tier.popular ? "border-primary bg-card" : "border-border bg-card"
-                    }`}
-                  >
-                    {tier.popular && (
-                      <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                        Most Popular
-                      </span>
-                    )}
-                    {"badge" in tier && (tier as any).badge && !tier.popular && (
-                      <span className="absolute -top-3 left-6 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold text-muted-foreground">
-                        {(tier as any).badge}
-                      </span>
-                    )}
-                    <h3 className="text-lg font-bold">{tier.name}</h3>
-                    {"label" in tier && (
-                      <p className="mt-1 text-xs font-medium text-muted-foreground">{(tier as any).label}</p>
-                    )}
-                    <p className="mt-4 text-3xl font-bold">{priceDisplay}</p>
-                    <ul className="mt-6 flex-1 space-y-3">
-                      {tier.features.map((feature: string) => (
-                        <li key={feature} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <span className="mt-0.5 text-primary">✓</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <Link
-                      to={tier.ctaHref}
-                      className={`mt-8 inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3 text-sm font-semibold transition-all ${
-                        tier.popular
-                          ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                          : "border border-border text-foreground hover:bg-accent"
-                      }`}
-                    >
-                      {tier.cta} <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </div>
-                );
-              })}
-            </motion.div>
-          )}
-
-          {/* SME Services table */}
-          {activeCategory === "sme" && (
-            <motion.div
-              key="sme"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35 }}
-              className="mt-8 overflow-hidden rounded-xl border border-border"
-            >
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-card">
-                    <th className="px-6 py-4 text-left font-semibold">Service</th>
-                    <th className="px-6 py-4 text-right font-semibold">Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {smePricing.map((row, i) => (
-                    <tr
-                      key={row.service}
-                      className={`border-b border-border transition-colors hover:bg-primary/5 ${
-                        i % 2 === 0 ? "bg-card" : "bg-background"
-                      }`}
-                    >
-                      <td className="px-6 py-4">
-                        <span className="font-medium text-foreground">{row.service}</span>
-                        {row.note && (
-                          <span className="ml-2 text-xs text-muted-foreground">({row.note})</span>
-                        )}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-right font-semibold text-foreground">
-                        {row.price}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="bg-card px-6 py-3">
-                <p className="text-xs text-muted-foreground">
-                  All prices ex-VAT. Hosting and third-party tool costs are passed through at cost.
-                </p>
-              </div>
-            </motion.div>
-          )}
-
           <ScrollReveal delay={0.3}>
-            <p className="mt-6 text-xs text-muted-foreground">
-              All prices are exclusive of VAT (23%).
-            </p>
-            <div className="mt-16 text-center">
-              <p className="text-muted-foreground">
-                Not sure which package is right for you?
+            <div className="mt-6 space-y-3 text-xs leading-relaxed text-muted-foreground">
+              <p>{careTerms.minimums}. {careTerms.annualPrepay}.</p>
+              <p>{careTerms.exit}</p>
+              <p>{vatFootnote()}</p>
+              <p>
+                Payment: under {eur(addOns.brandStarter)} paid upfront; 50/50 up to {eur(segments.kitchens.packages[0].price ?? 0)} with the balance before go-live; {terms.over3000.split(" ")[0]} above. {terms.oneDiscountPerOrder && "One discount per order."}
               </p>
-              <Link
-                to="/start-project"
-                className="group mt-4 inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
-              >
-                Book a Discovery Call <ArrowRight className="h-4 w-4" />
-              </Link>
+              <p>Need an accountant or company formation? I'll introduce you — free.</p>
+            </div>
+            <div className="mt-16 text-center">
+              <p className="text-muted-foreground">Not sure which package is right for you?</p>
+              <Button asChild className="mt-4 rounded-sm">
+                <Link to="/start-project">Book a Discovery Call <ArrowRight /></Link>
+              </Button>
             </div>
           </ScrollReveal>
         </div>
