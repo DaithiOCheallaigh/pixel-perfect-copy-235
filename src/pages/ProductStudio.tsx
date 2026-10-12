@@ -51,7 +51,7 @@ const ProductStudio = () => {
   usePageDescription(description);
   return (
   <main className="bg-background pt-24 text-foreground">
-    <SEO title="Product Studio" description={description} url="/product-studio" />
+    <SEO title="Product Studio" description={description} url="/services/product-studio" />
     <section className="relative px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Product Studio</SectionLabel>

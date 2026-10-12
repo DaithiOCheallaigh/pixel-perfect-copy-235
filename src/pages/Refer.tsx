@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
@@ -7,6 +7,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import { useToast } from "@/hooks/use-toast";
 import { terms, eur } from "@/data/pricing";
+import { SEO } from "@/components/SEO";
 
 const steps = [
   {
@@ -36,11 +37,6 @@ const Refer = () => {
   const [done, setDone] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    document.title = "Refer a Friend — Lacuna Digital";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", `Refer a friend to Lacuna Digital: you get ${eur(terms.referral)} off your next invoice and they get ${eur(terms.referral)} off their package when they pay their deposit.`);
-  }, []);
 
   const handleSubmit = async () => {
     if (!name.trim() || !email.trim()) {
@@ -65,6 +61,7 @@ const Refer = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO title="Refer a Friend" description={`Refer a friend to Lacuna Digital: you get ${eur(terms.referral)} off your next invoice and they get ${eur(terms.referral)} off their package when they pay their deposit.`} url="/services/refer" />
 
       {/* Hero */}
       <section className="px-6 pb-12 pt-32 md:px-12 lg:px-24">

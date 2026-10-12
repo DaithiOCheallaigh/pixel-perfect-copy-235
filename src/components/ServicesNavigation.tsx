@@ -11,12 +11,12 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
 
   const links = [
     { label: "Services", to: "/services" },
-    { label: "Web Design", to: "/web-design" },
-    { label: "Product Studio", to: "/product-studio" },
-    { label: "Free Tools", to: "/tools" },
+    { label: "Web Design", to: "/services/web-design" },
+    { label: "Product Studio", to: "/services/product-studio" },
+    { label: "Free Tools", to: "/services/tools" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => path === "/services" ? location.pathname === path : location.pathname.startsWith(path);
 
   return (
     <motion.header
@@ -55,7 +55,7 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
           ))}
           <ThemeToggle />
           <Link
-            to="/start-project"
+            to="/services/start-project"
             className="group inline-flex items-center gap-1.5 rounded-sm bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5"
           >
             Get Started <span>→</span>
@@ -95,7 +95,7 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
             </Link>
           ))}
           <Link
-            to="/start-project"
+            to="/services/start-project"
             onClick={() => setMobileOpen(false)}
             className="inline-flex items-center gap-2 text-lg font-semibold text-primary"
           >

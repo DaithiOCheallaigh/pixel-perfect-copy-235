@@ -188,7 +188,7 @@ const TPIProposal = () => {
       {/* ── sticky section nav ── */}
       <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center gap-1 overflow-x-auto px-4 py-3 scrollbar-hide md:justify-center md:gap-2">
-          <Link to="/ai-integration" className="mr-3 flex-shrink-0 text-muted-foreground transition-colors hover:text-primary">
+          <Link to="/services/product-studio" className="mr-3 flex-shrink-0 text-muted-foreground transition-colors hover:text-primary">
             <ArrowLeft className="h-4 w-4" />
           </Link>
           {sections.map(({ id, label }) => (
@@ -532,7 +532,7 @@ const TPIProposal = () => {
                 Book Your Introductory Call
               </a>
               <p className="mt-6 text-sm text-muted-foreground">
-                Dave Kelly · Founder, Lacuna Digital · lacunadigital.io
+                Dave Kelly · Founder, Lacuna Digital · lacunadigital.io/services
               </p>
             </div>
           </ScrollReveal>

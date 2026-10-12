@@ -9,7 +9,7 @@ const Terms = () => {
   usePageDescription(description);
   return (
     <main className="px-6 pb-24 pt-32 md:px-12">
-      <SEO title="Terms" description={description} url="/terms" />
+      <SEO title="Terms" description={description} url="/services/terms" />
       <div className="mx-auto max-w-3xl">
         <SectionLabel>Working together</SectionLabel>
         <h1 className="mt-4 text-4xl font-extrabold md:text-6xl">Terms</h1>

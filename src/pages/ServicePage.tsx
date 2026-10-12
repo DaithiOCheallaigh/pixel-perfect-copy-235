@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { SEO } from "@/components/SEO";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
@@ -13,32 +13,13 @@ const ServicePage = () => {
   const { id } = useParams<{ id: string }>();
   const service = getServiceById(id || "");
 
-  useEffect(() => {
-    if (service) {
-      document.title = `${service.title} | Lacuna Digital`;
-      const existingMeta = document.querySelector('meta[name="description"]');
-      if (service.metaDescription) {
-        if (existingMeta) {
-          existingMeta.setAttribute("content", service.metaDescription);
-        } else {
-          const meta = document.createElement("meta");
-          meta.name = "description";
-          meta.content = service.metaDescription;
-          document.head.appendChild(meta);
-        }
-      }
-    }
-    return () => {
-      document.title = "Lacuna Digital";
-    };
-  }, [service]);
 
   if (!service) {
     return (
       <main className="flex min-h-screen items-center justify-center pt-24">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground">Service not found</h1>
-          <Link to="/skills" className="mt-4 inline-block text-primary">← Back to Skill Set</Link>
+          <Link to="/services" className="mt-4 inline-block text-primary">← All services</Link>
         </div>
       </main>
     );
@@ -50,12 +31,13 @@ const ServicePage = () => {
 
   return (
     <main className="pt-24">
+      <SEO title={service.title} description={service.metaDescription ?? service.intro.slice(0, 155)} url={`/services/expertise/${service.id}`} />
       {/* Hero */}
       <section className="px-6 pt-12 pb-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-4xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
-            <Link to="/skills" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">
-              ← Back to Skill Set
+            <Link to="/services" className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary">
+              ← All services
             </Link>
           </motion.div>
 
@@ -170,7 +152,7 @@ const ServicePage = () => {
                   r ? (
                     <Link
                       key={r.id}
-                      to={`/service/${r.id}`}
+                      to={`/services/expertise/${r.id}`}
                       className="group rounded-sm bg-card p-5 transition-all hover:-translate-y-1"
                     >
                       <span className="font-mono-label text-primary">{r.category}</span>

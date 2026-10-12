@@ -134,7 +134,7 @@ const ShowcasePage = () => {
         <>
           {/* Lacuna badge */}
           <a
-            href="https://lacunadigital.io"
+            href="https://www.lacunadigital.io/services"
             target="_blank"
             rel="noopener noreferrer"
             className="fixed bottom-20 left-4 z-40 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 px-3 py-1.5 text-[11px] text-muted-foreground/70 hover:text-foreground transition-colors shadow-sm"

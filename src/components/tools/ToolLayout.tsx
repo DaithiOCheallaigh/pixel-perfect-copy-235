@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import SectionLabel from "@/components/SectionLabel";
@@ -13,19 +13,16 @@ interface ToolLayoutProps {
 }
 
 const ToolLayout = ({ title, description, metaTitle, metaDescription, children }: ToolLayoutProps) => {
-  useEffect(() => {
-    document.title = metaTitle;
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", metaDescription);
-  }, [metaTitle, metaDescription]);
+  const location = useLocation();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO title={metaTitle.replace(/ — Lacuna Digital$/, "")} description={metaDescription} url={location.pathname} />
 
       <section className="px-6 pb-8 pt-32 md:px-12 lg:px-24">
         <div className="mx-auto max-w-3xl">
           <Link
-            to="/tools"
+            to="/services/tools"
             className="mb-8 inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-primary"
           >
             <ArrowLeft className="h-3 w-3" /> Back to Tools

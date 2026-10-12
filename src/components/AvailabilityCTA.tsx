@@ -1,10 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ScrollReveal from "./ScrollReveal";
 import { availability, CALENDLY_URL } from "@/data/pricing";
 
 const AvailabilityCTA = () => {
-  const { pathname } = useLocation();
-  const productEngagement = pathname === "/product-studio" || pathname.startsWith("/case/") || pathname.startsWith("/work/");
   return (
   <section className="border-t border-border px-6 py-24 md:px-12 lg:px-24">
     <div className="mx-auto max-w-5xl text-center">
@@ -16,7 +14,7 @@ const AvailabilityCTA = () => {
       </ScrollReveal>
       <ScrollReveal delay={0.1}>
         <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-foreground md:text-6xl">
-          {productEngagement ? `Product design engagements: next start ${availability.productStudioFrom}` : `${availability.headline} — next start ${availability.nextStart}`}
+          {`${availability.headline} — next start ${availability.nextStart}`}
         </h2>
       </ScrollReveal>
       <ScrollReveal delay={0.2}>
@@ -30,7 +28,7 @@ const AvailabilityCTA = () => {
             Book a free call <span className="transition-all">→</span>
           </a>
           <Link
-            to="/start-project"
+            to="/services/start-project"
             className="group inline-flex items-center gap-2 rounded-sm border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary hover:gap-3"
           >
             Enquiry Form <span className="transition-all">→</span>

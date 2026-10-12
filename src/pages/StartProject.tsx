@@ -149,10 +149,6 @@ const selectClass = inputClass + " appearance-none";
 
 // ─── Main Page ─────────────────────────────────────────────────
 const StartProject = () => {
-  useEffect(() => {
-    document.title = "Start a Project — Lacuna Digital";
-    return () => { document.title = "Lacuna Digital"; };
-  }, []);
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -289,10 +285,10 @@ const StartProject = () => {
           <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-foreground">I've received your brief</h2>
           <p className="mb-8 text-sm text-muted-foreground">I reply within 1 business day, with a fixed quote within {entry.introCall.quoteWithin}.</p>
           <Link
-            to="/"
+            to="/services"
             className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
           >
-            <ArrowLeft className="h-4 w-4" /> Back to lacunadigital.io
+            <ArrowLeft className="h-4 w-4" /> Back to Lacuna Digital
           </Link>
         </motion.div>
       </div>
@@ -303,7 +299,7 @@ const StartProject = () => {
 
   return (
     <div className="min-h-screen">
-      <SEO title="Start a Project" description="Ready to build something? Tell me about your project and let's get started." url="/start-project" />
+      <SEO title="Start a Project" description="Ready to build something? Tell me about your project and let's get started." url="/services/start-project" />
       {/* Top accent border */}
       <div className="h-[2px] w-full bg-gradient-to-r from-[#8b4513] via-[#a0522d] to-[#8b4513]" />
 
