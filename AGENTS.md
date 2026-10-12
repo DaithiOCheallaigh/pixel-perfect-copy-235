@@ -13,3 +13,5 @@
 - Intake options and plain-English working terms are shared data modules using the pricing catalogue; this makes numeric rules testable without duplicating page values.
 - Selection estimates derive setup and recurring fees by service ID from the pricing catalogue, never by parsing labels or trusting stored price totals; this keeps monthly fees separate and stale session prices out of quotes.
 - Generate public/llms.txt pricing with scripts/generate-llms.ts from the shared catalogue; this keeps the static discovery document aligned with frontend prices.
+- Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
+- Portfolio pages use PortfolioSEO and HiringCTA, while commercial pages retain SEO and AvailabilityCTA; this isolates metadata branding and hiring contact from commercial offers.

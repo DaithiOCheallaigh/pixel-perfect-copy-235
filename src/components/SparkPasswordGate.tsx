@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { LockKeyhole, ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { SEO } from '@/components/SEO';
+import { PortfolioSEO as SEO } from '@/components/PortfolioSEO';
 import { supabase } from '@/integrations/supabase/client';
+import { PORTFOLIO_EMAIL } from '@/data/profile';
 import { Helmet } from 'react-helmet-async';
 
 const storageKey = 'spark-project-access';
@@ -64,12 +65,13 @@ export default function SparkPasswordGate({ children }: { children: ReactNode })
   if (authorized) return <>{children}</>;
   return (
     <main className="flex min-h-screen items-center justify-center px-6 pt-24 text-foreground">
-      <SEO title="MedEd Workspace — Password protected" description="Private MedEd Workspace case study by Lacuna Digital." url="/work/spark" />
+      <SEO title="MedEd Workspace — Password protected" description="Private MedEd Workspace case study by Dave Kelly." url="/work/spark" />
       <Helmet><meta name="robots" content="noindex, nofollow" /></Helmet>
       <div className="w-full max-w-sm py-24">
         <LockKeyhole className="mb-6 h-8 w-8 text-primary" aria-hidden="true" />
         <h1 className="mb-4 text-4xl font-black">MedEd Workspace</h1>
         <p className="mb-8 text-muted-foreground">Password-protected case study</p>
+        <p className="mb-8 text-sm text-muted-foreground">Recruiters: <a className="text-primary underline" href={`mailto:${PORTFOLIO_EMAIL}?subject=MedEd%20Workspace%20case%20study`}>email me for the password</a>.</p>
         {checking ? <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" aria-label="Checking project access" /> : (
           <form onSubmit={unlock} className="space-y-4">
             <label htmlFor="spark-password" className="block text-sm font-medium">Password</label>

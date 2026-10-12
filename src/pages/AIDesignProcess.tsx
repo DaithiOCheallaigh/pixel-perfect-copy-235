@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { SEO } from "../components/SEO";
+import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
 import { GlowingStarsBackgroundCard } from "@/components/ui/glowing-stars";
 import { Cpu } from "iconsax-react";
 import { Plug, Loupe, Riffle, Exploded, Laptop, Branches, Plot } from "@lucasmarkes/hairline/react";
 import type { HairlineProps } from "@lucasmarkes/hairline/react";
 import type { ComponentType } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
-import AvailabilityCTA from "@/components/AvailabilityCTA";
+import HiringCTA from "@/components/HiringCTA";
 import SectionLabel from "@/components/SectionLabel";
 import claudeLogo from "@/assets/logos/claude.png";
 import notionLogo from "@/assets/logos/notion.png";
@@ -52,7 +52,7 @@ const chapters: Chapter[] = [
   {
     tag: "03 — Specs & roadmap",
     heading: "Plan & write product specs",
-    body: "Themes from discovery become specs, a roadmap and a Kanban board in Notion. Your specs become the living product roadmap, with sprints mapped back to the research.",
+    body: "Themes from discovery become specs, a roadmap and a Kanban board in Notion. Specs become the living product roadmap, with sprints mapped back to the research.",
     tools: "Notion · Kanban",
     figure: Riffle,
     figureAlt: "A tray of cards, one lifted out: specs organised into a roadmap",
@@ -281,7 +281,7 @@ const AIDesignProcess = () => {
         </div>
       </section>
 
-      <AvailabilityCTA />
+      <HiringCTA />
     </main>
   );
 };

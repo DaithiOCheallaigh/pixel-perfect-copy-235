@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
+import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
-import { SEO } from "../components/SEO";
+import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
 import { LockKeyhole } from "lucide-react";
 
 const Work = () => (
@@ -90,7 +90,7 @@ const Work = () => (
     </section>
 
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-    <AvailabilityCTA />
+    <HiringCTA />
   </main>
 );
 

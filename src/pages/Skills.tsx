@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
+import HiringCTA from "../components/HiringCTA";
 import { ShineBorder } from "../components/ui/shine-border";
-import { SEO } from "../components/SEO";
+import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
 
 const serviceAreas = [
   {
@@ -133,12 +132,7 @@ const Skills = () => (
                 <ul className="space-y-2">
                   {cap.items.map((item) => (
                     <li key={item.id}>
-                      <Link
-                        to={`/service/${item.id}`}
-                        className="text-sm text-foreground transition-colors hover:text-primary"
-                      >
-                        {item.label} →
-                      </Link>
+                      <span className="text-sm text-foreground">{item.label}</span>
                     </li>
                   ))}
                 </ul>
@@ -150,7 +144,7 @@ const Skills = () => (
     </section>
 
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-    <AvailabilityCTA />
+    <HiringCTA />
   </main>
 );
 
