@@ -1,4 +1,4 @@
-import { addOns, entry, webLadder, eur } from "./pricing";
+import { addOns, entry, webLadder, eur, VAT_REGISTERED } from "./pricing";
 
 /** Setup and recurring fees are separate; optional website instalments are not added to setup. */
 export const serviceFees: Record<string, { oneOff: number; monthly: number }> = {
@@ -23,5 +23,5 @@ export function selectionTotals(selections: readonly { id: string }[]) {
 
 export function selectionPrice(selections: readonly { id: string }[]) {
   const totals = selectionTotals(selections);
-  return `from ${eur(totals.oneOff)}${totals.monthly ? ` + ${eur(totals.monthly)}/mo` : ""}`;
+  return `from ${eur(totals.oneOff)}${totals.monthly ? ` + ${eur(totals.monthly)}/mo` : ""}${VAT_REGISTERED ? " + VAT" : ""}`;
 }

@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { selectionTotals } from "@/data/serviceEstimates";
+import { selectionTotals, selectionPrice } from "@/data/serviceEstimates";
 import { BUDGET_OPTIONS, INDUSTRIES } from "@/data/projectIntake";
 import { CONTENT_PAUSE_WORKING_DAYS, REVISION_WINDOW_WORKING_DAYS } from "@/data/workingTerms";
 import { terms } from "@/data/pricing";
 
 describe("Final pricing rules", () => {
+  it("labels setup and monthly selection estimates with VAT", () => {
+    expect(selectionPrice([{ id: "website" }, { id: "chatbots" }, { id: "local-seo" }, { id: "domain-email" }])).toBe("from €1,850 + €100/mo + VAT");
+  });
   it("keeps chatbot setup and monthly fees separate", () => expect(selectionTotals([{ id: "chatbots" }])).toEqual({ oneOff: 600, monthly: 100 }));
   it("keeps receptionist setup and monthly fees separate", () => expect(selectionTotals([{ id: "ai-assistant" }])).toEqual({ oneOff: 950, monthly: 250 }));
   it("includes social posting separately", () => expect(selectionTotals([{ id: "social-media" }])).toEqual({ oneOff: 350, monthly: 200 }));

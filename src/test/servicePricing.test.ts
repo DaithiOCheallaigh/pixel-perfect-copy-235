@@ -1,8 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { getServiceById } from "@/data/services";
+import { getServiceById, services } from "@/data/services";
 import { addOns, carePlans, segments, studio, terms, webLadder } from "@/data/pricing";
 
 describe("detail-page pricing rules", () => {
+  it("does not use broken WordPress image proxy URLs", () => {
+    expect(services.some(service => service.image?.startsWith("https://i0.wp.com"))).toBe(false);
+  });
+  it("prices Shopify at from 7500 plus VAT without a duplicate prefix", () => {
+    expect(getServiceById("shopify")?.priceLine).toBe("from €7,500 + VAT");
+    for (const service of services) expect(service.priceLine).not.toMatch(/from\s+from/i);
+  });
   it("provides a price for every requested local-business service", () => {
     for (const id of ["social-media-management", "local-seo", "domain-email", "reservations", "chatbots", "crm"]) {
       expect(getServiceById(id)?.priceLine).toBeDefined();
