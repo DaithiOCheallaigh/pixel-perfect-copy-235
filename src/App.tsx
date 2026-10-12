@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter, useLocation, useRoutes, type RouteObject } from "react-router-dom";
 import { useEffect, Component, type ReactNode, type ErrorInfo } from "react";
 import Index from "./pages/Index";
 import Work from "./pages/Work";
@@ -39,9 +39,12 @@ import Refer from "./pages/Refer";
 import TPIProposal from "./pages/proposals/TPIProposal";
 import ElsevierUXAudit from "./pages/proposals/ElsevierUXAudit";
 
-import Navigation from "./components/Navigation";
-import ServiceSelectionBar from "./components/ServiceSelectionBar";
-import Footer from "./components/Footer";
+import LegacyRedirect from "./components/LegacyRedirect";
+import PortfolioLayout from "./components/layouts/PortfolioLayout";
+import ServicesLayout from "./components/layouts/ServicesLayout";
+import ServicesNotFound from "./pages/ServicesNotFound";
+import ClientNotFound from "./components/ClientNotFound";
+import { routeTable, type RouteDef } from "./routing/routeTable";
 
 
 const queryClient = new QueryClient();
@@ -120,95 +123,64 @@ const ScrollToTop = () => {
   return null;
 };
 
-const MainLayout = () => (
-  <>
-    <Navigation visible={true} />
-    <ScrollToTop />
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/work" element={<Work />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/skills" element={<Skills />} />
-      <Route path="/blog" element={<Blog />} />
-      <Route path="/blog/:id" element={<BlogPost />} />
-      <Route path="/work/spark" element={<SparkPasswordGate><SparkCaseStudy /></SparkPasswordGate>} />
-      <Route path="/case/spark" element={<SparkPasswordGate><SparkCaseStudy /></SparkPasswordGate>} />
-      <Route path="/case/:id" element={<CaseStudy />} />
-      <Route path="/service/:id" element={<ServicePage />} />
-      <Route path="/web-design" element={<WebDesignServices />} />
-      <Route path="/ai-design-process" element={<AIDesignProcess />} />
-      <Route path="/ai-integration" element={<Navigate to="/product-studio" replace />} />
-      <Route path="/product-studio" element={<ProductStudio />} />
-      <Route path="/terms" element={<Terms />} />
-      <Route path="/work/marsh-internal-tooling" element={<MarshInternalTooling />} />
-      <Route path="/work/marsh-design-system" element={<MarshDesignSystem />} />
-      <Route path="/start-project" element={<StartProject />} />
-      <Route path="/sitemap" element={<Sitemap />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-    <Footer />
-  </>
-);
+const sparkGate = <SparkPasswordGate><SparkCaseStudy /></SparkPasswordGate>;
 
-const AppContent = () => {
-  const location = useLocation();
-  const servicesRoutes = ["/services", "/web-design", "/product-studio", "/ai-integration", "/get-started", "/refer"];
-  const isServicesRoute =
-    servicesRoutes.includes(location.pathname) ||
-    location.pathname.startsWith("/services/") ||
-    location.pathname.startsWith("/tools");
-
-  const bioRoutes = location.pathname.startsWith("/bio");
-  const showcaseRoutes = location.pathname.startsWith("/showcase");
-  const showcasesIndexRoute = location.pathname === "/showcases";
-  const proposalRoutes = location.pathname.startsWith("/proposal");
-
-  return (
-    <>
-      <ScrollToTop />
-      {proposalRoutes ? (
-        <Routes>
-          <Route path="/proposal/tpi" element={<TPIProposal />} />
-          <Route path="/proposal/elsevier" element={<ElsevierUXAudit />} />
-        </Routes>
-      ) : showcasesIndexRoute ? (
-        <Routes>
-          <Route path="/showcases" element={<ShowcasesIndex />} />
-        </Routes>
-      ) : bioRoutes ? (
-        <Routes>
-          <Route path="/bio/:slug" element={<BioPage />} />
-        </Routes>
-      ) : showcaseRoutes ? (
-        <Routes>
-          <Route path="/showcase/admin" element={<ShowcaseAdmin />} />
-          <Route path="/showcase/:slug" element={<ShowcasePage />} />
-          <Route path="/showcase" element={<ShowcaseNotFound />} />
-        </Routes>
-      ) : isServicesRoute ? (
-        <>
-          <Routes>
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:slug" element={<IndustryLanding />} />
-            <Route path="/web-design" element={<WebDesignServices />} />
-            <Route path="/ai-integration" element={<Navigate to="/product-studio" replace />} />
-      <Route path="/product-studio" element={<ProductStudio />} />
-            <Route path="/get-started" element={<GetStarted />} />
-            <Route path="/tools" element={<ToolsIndex />} />
-            <Route path="/tools/link-in-bio" element={<LinkInBio />} />
-            <Route path="/tools/review-link" element={<ReviewLink />} />
-            <Route path="/tools/caption-generator" element={<CaptionGenerator />} />
-            <Route path="/refer" element={<Refer />} />
-            <Route path="/tools/*" element={<ToolsIndex />} />
-          </Routes>
-          <ServiceSelectionBar />
-        </>
-      ) : (
-        <MainLayout />
-      )}
-    </>
-  );
+const elements: Record<string, ReactNode> = {
+  "proposal-tpi": <TPIProposal />,
+  "proposal-elsevier": <ElsevierUXAudit />,
+  "proposal-unknown": <ClientNotFound />,
+  "showcases-index": <ShowcasesIndex />,
+  "showcase-root": <ShowcaseNotFound />,
+  "showcase-admin": <ShowcaseAdmin />,
+  "showcase-page": <ShowcasePage />,
+  "showcase-unknown": <ShowcaseNotFound />,
+  "bio-page": <BioPage />,
+  "bio-unknown": <BioPage />,
+  "services-layout": <ServicesLayout />,
+  "services-home": <Services />,
+  "product-studio": <ProductStudio />,
+  "web-design": <WebDesignServices />,
+  "start-project": <StartProject />,
+  "get-started": <GetStarted />,
+  terms: <Terms />,
+  refer: <Refer />,
+  "tools-index": <ToolsIndex />,
+  "tool-link-in-bio": <LinkInBio />,
+  "tool-review-link": <ReviewLink />,
+  "tool-caption-generator": <CaptionGenerator />,
+  "service-detail": <ServicePage />,
+  segment: <IndustryLanding />,
+  "services-not-found": <ServicesNotFound />,
+  "portfolio-layout": <PortfolioLayout />,
+  home: <Index />,
+  work: <Work />,
+  "spark-work": sparkGate,
+  "spark-case": sparkGate,
+  "case-study": <CaseStudy />,
+  "marsh-internal-tooling": <MarshInternalTooling />,
+  "marsh-design-system": <MarshDesignSystem />,
+  about: <About />,
+  skills: <Skills />,
+  blog: <Blog />,
+  "blog-post": <BlogPost />,
+  "ai-design-process": <AIDesignProcess />,
+  sitemap: <Sitemap />,
+  "not-found": <NotFound />,
 };
+
+function buildRoutes(defs: RouteDef[]): RouteObject[] {
+  return defs.map((def) => {
+    const element = def.redirectTo ? <LegacyRedirect to={def.redirectTo} /> : elements[def.id];
+    if (!element) throw new Error(`No element for route id "${def.id}"`);
+    const children = def.children ? buildRoutes(def.children) : undefined;
+    return (def.index
+      ? { id: def.id, index: true, element }
+      : { id: def.id, path: def.path, element, children }) as RouteObject;
+  });
+}
+
+const routes = buildRoutes(routeTable);
+const AppRoutes = () => useRoutes(routes);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -218,7 +190,8 @@ const App = () => (
       <GlobalErrorListeners />
       <AppErrorBoundary>
         <BrowserRouter>
-          <AppContent />
+          <ScrollToTop />
+          <AppRoutes />
         </BrowserRouter>
       </AppErrorBoundary>
     </TooltipProvider>

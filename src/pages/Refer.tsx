@@ -5,8 +5,6 @@ import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { Gift, People, TickCircle } from "iconsax-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
-import ServicesNavigation from "@/components/ServicesNavigation";
-import ServicesFooter from "@/components/ServicesFooter";
 import { useToast } from "@/hooks/use-toast";
 import { terms, eur } from "@/data/pricing";
 
@@ -67,7 +65,6 @@ const Refer = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <ServicesNavigation visible={true} />
 
       {/* Hero */}
       <section className="px-6 pb-12 pt-32 md:px-12 lg:px-24">
@@ -177,8 +174,7 @@ const Refer = () => {
         </div>
       </section>
 
-      <ServicesFooter />
-    </div>
+          </div>
   );
 };
 

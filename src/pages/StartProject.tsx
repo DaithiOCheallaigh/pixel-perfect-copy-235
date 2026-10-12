@@ -308,7 +308,7 @@ const StartProject = () => {
       <div className="h-[2px] w-full bg-gradient-to-r from-[#8b4513] via-[#a0522d] to-[#8b4513]" />
 
       {/* Progress bar */}
-      <div className="fixed left-0 right-0 top-0 z-50">
+      <div className="fixed left-0 right-0 top-16 z-50">
         <div className="h-[3px] w-full bg-[#1e1e1e]">
           <motion.div
             className="h-full bg-primary"
@@ -545,7 +545,7 @@ const StartProject = () => {
       </div>
 
       {/* Footer */}
-      <div className="fixed bottom-0 left-0 right-0 border-t border-[#2a2a2a] bg-[#0d0d0d]/80 px-6 py-4 text-center backdrop-blur-sm">
+      <div className="border-t border-[#2a2a2a] bg-[#0d0d0d]/80 px-6 py-4 text-center">
         <p className="text-xs text-muted-foreground">
           All enquiries are reviewed personally by Dave Kelly · {CONTACT_EMAIL}
         </p>

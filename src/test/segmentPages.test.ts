@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getSegmentKey, legacySegmentRedirects, lowestPackage, segmentPages } from "@/data/segmentPages";
+import { getSegmentKey, legacySegmentRedirects, lowestPackage, RESERVED_SERVICE_PATHS, segmentPages } from "@/data/segmentPages";
 import { restaurantPayback, segments } from "@/data/pricing";
 
 describe("industry pages", () => {
@@ -14,7 +14,7 @@ describe("industry pages", () => {
   });
   it.each([
     ["beauty-wellness", "/services/salons-barbers"], ["food-hospitality", "/services/restaurants-cafes"],
-    ["startup-bootstrap", "/product-studio"], ["startup", "/product-studio"],
+    ["startup-bootstrap", "/services/product-studio"], ["startup", "/services/product-studio"],
   ])("redirects %s to %s", (slug, destination) => {
     expect(legacySegmentRedirects[slug]).toBe(destination);
   });
@@ -36,5 +36,10 @@ describe("industry pages", () => {
   });
   it("does not resolve an unknown industry", () => {
     expect(getSegmentKey("not-an-industry")).toBeUndefined();
+  });
+  it("never uses a reserved services path as a segment slug or legacy redirect", () => {
+    const reserved: readonly string[] = RESERVED_SERVICE_PATHS;
+    for (const s of Object.values(segments)) expect(reserved).not.toContain(s.slug);
+    for (const k of Object.keys(legacySegmentRedirects)) expect(reserved).not.toContain(k);
   });
 });

@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
-import ServicesNavigation from "@/components/ServicesNavigation";
-import ServicesFooter from "@/components/ServicesFooter";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { monthlyLabel, addOns, availability, carePlans, careTerms, eur, priceLabel, terms, vatFootnote, webLadder } from "@/data/pricing";
@@ -41,7 +39,6 @@ const WebDesignServices = () => {
   return (
   <main className="bg-background pt-24 text-foreground">
     <SEO title="Websites for professional services & other businesses" description={description} url="/web-design" />
-    <ServicesNavigation visible={true} />
     <section className="px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Web Design</SectionLabel>
@@ -96,8 +93,7 @@ const WebDesignServices = () => {
       <Link to="/services#packages" className="block text-primary">Looking for an industry package? Kitchens &amp; Joinery · Clinics &amp; Practices · Trades · Salons &amp; Barbers · Tours · Restaurants →</Link>
       <Button asChild variant="outline"><Link to="/product-studio">Explore Product Studio <ArrowRight /></Link></Button>
     </div></section>
-    <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" /><SocialProof /><ServicesFooter />
-  </main>
+    <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" /><SocialProof />  </main>
 );
 };
 export default WebDesignServices;

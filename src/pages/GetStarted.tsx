@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import ServicesNavigation from "@/components/ServicesNavigation";
-import ServicesFooter from "@/components/ServicesFooter";
 import ChatUI from "@/components/chat/ChatUI";
 
 const GetStarted = () => {
@@ -17,7 +15,6 @@ const GetStarted = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-foreground">
-      <ServicesNavigation visible={true} />
 
       <section className="flex min-h-screen flex-col items-center justify-center px-6 pb-12 pt-24">
         <motion.div
@@ -46,8 +43,7 @@ const GetStarted = () => {
         </motion.div>
       </section>
 
-      <ServicesFooter />
-    </div>
+          </div>
   );
 };
 
