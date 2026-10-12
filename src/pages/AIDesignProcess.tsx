@@ -20,6 +20,7 @@ type Chapter = {
   body: string;
   tools?: string;
   figure?: ComponentType<HairlineProps>;
+  figureNudge?: string;
   embed?: string;
   figureAlt: string;
 };
@@ -31,6 +32,7 @@ const chapters: Chapter[] = [
     body: "Notion, Figma and GitHub are connected to Claude over MCP. One chat researches, plans, designs, builds and ships — no copy-pasting between apps, and every step leaves a trail.",
     tools: "Claude · Notion · Figma · GitHub",
     figure: Plug,
+    figureNudge: "[&>svg]:-translate-x-[12%]",
     figureAlt: "A plug drawn toward its socket: tools connected to Claude over MCP",
   },
   {
@@ -55,6 +57,7 @@ const chapters: Chapter[] = [
     body: "Themes from discovery become specs, a roadmap and a Kanban board in Notion. Specs become the living product roadmap, with sprints mapped back to the research.",
     tools: "Notion · Kanban",
     figure: Riffle,
+    figureNudge: "[&>svg]:-translate-y-[5%]",
     figureAlt: "A tray of cards, one lifted out: specs organised into a roadmap",
   },
   {
@@ -63,6 +66,7 @@ const chapters: Chapter[] = [
     body: "A tokenised design system in Figma (colour, type and spacing tokens) feeds atoms, molecules and organisms, so every build stays consistent as the product scales.",
     tools: "Figma · Design tokens",
     figure: Exploded,
+    figureNudge: "[&>svg]:translate-x-[5%] [&>svg]:-translate-y-[21%]",
     figureAlt: "An app window separated into layers: atomic design system",
   },
   {
@@ -71,6 +75,7 @@ const chapters: Chapter[] = [
     body: "Claude Code builds the user flows, components and screens into a working prototype, synced to the Figma tokens with no hard-coded values.",
     tools: "Claude Code · Figma",
     figure: Laptop,
+    figureNudge: "[&>svg]:translate-x-[5%]",
     figureAlt: "A laptop opening: the working prototype",
   },
   {
@@ -79,6 +84,7 @@ const chapters: Chapter[] = [
     body: "Claude pushes to GitHub and ships a live build, then invites testers so the research can be validated with real people, not assumptions.",
     tools: "GitHub · Claude",
     figure: Branches,
+    figureNudge: "[&>svg]:-translate-y-[10%]",
     figureAlt: "A branch forking off main and merging back: shipping a build",
   },
   {
@@ -87,6 +93,7 @@ const chapters: Chapter[] = [
     body: "Tracking and usage analytics go in from day one. Real user behaviour after launch drives the next round of refinements, and the loop starts again.",
     tools: "Analytics · Claude",
     figure: Plot,
+    figureNudge: "[&>svg]:-translate-y-[2%]",
     figureAlt: "A plotted chart: measuring real usage",
   },
 ];
@@ -220,7 +227,7 @@ const AIDesignProcess = () => {
                         <Figure
                           theme="auto"
                           aria-label={chapter.figureAlt}
-                          className="mx-auto w-full max-w-[280px] [--hairline-plate:hsl(var(--card))] [--hairline-stroke:1.3] [--hl-hi:#f2f0ec] [--hl-edge:#9a9ca3] [--hl-mid:#7c7e86] [--hl-lo:#55575d]"
+                          className={`mx-auto w-full max-w-[280px] [--hairline-plate:hsl(var(--card))] [--hairline-stroke:1.3] [--hl-hi:#f2f0ec] [--hl-edge:#9a9ca3] [--hl-mid:#7c7e86] [--hl-lo:#55575d] ${chapter.figureNudge ?? ""}`}
                         />
                       ) : null}
                     </div>
