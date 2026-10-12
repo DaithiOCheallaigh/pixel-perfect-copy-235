@@ -4,7 +4,7 @@ import { ArrowRight } from "iconsax-react";
 import { useState } from "react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
+import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
 import { CpuArchitecture } from "../components/ui/cpu-architecture";
 
@@ -353,7 +353,7 @@ const MarshInternalTooling = () => {
       )}
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-      <AvailabilityCTA />
+      <HiringCTA />
     </main>
   );
 };

@@ -19,9 +19,6 @@ function follow(url: string) {
 }
 
 const redirects: [string, string][] = [
-  ["/blog/partner-for-agencies", "/services"],
-  ["/blog/benefits-digital-agency", "/services"],
-  ["/blog/partner-for-agencies?utm_source=qr#article", "/services?utm_source=qr#article"],
   ["/product-studio", "/services/product-studio"],
   ["/ai-integration", "/services/product-studio"],
   ["/web-design#pricing", "/services/web-design#pricing"],

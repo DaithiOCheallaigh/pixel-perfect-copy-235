@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { services } from "@/data/services";
 import { blogPosts } from "@/data/blogPosts";
 import { projects } from "@/data/projects";
 
@@ -14,10 +13,7 @@ const corePages = [
   { path: "/about", label: "About" },
   { path: "/skills", label: "Skills" },
   { path: "/blog", label: "Blog" },
-  { path: "/web-design", label: "Web Design Services" },
   { path: "/ai-design-process", label: "AI Design Process" },
-  { path: "/ai-integration", label: "AI Integration for SMEs" },
-  { path: "/start-project", label: "Start a Project" },
   { path: "/sitemap", label: "Sitemap" },
 ];
 
@@ -35,10 +31,6 @@ const Sitemap = () => {
     return () => { document.title = "Lacuna Digital"; };
   }, []);
 
-  const servicesByCategory = services.reduce<Record<string, typeof services>>((acc, s) => {
-    (acc[s.category] ??= []).push(s);
-    return acc;
-  }, {});
 
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
@@ -67,19 +59,6 @@ const Sitemap = () => {
           </ul>
         </div>
 
-        <div className={sectionClass}>
-          <h2 className={headingClass}>Services</h2>
-          {Object.entries(servicesByCategory).map(([category, items]) => (
-            <div key={category} className="mb-6">
-              <h3 className="text-sm font-medium text-foreground/70 mb-2">{category}</h3>
-              <ul className="space-y-2 pl-3">
-                {items.map((s) => (
-                  <li key={s.id}><Link to={`/service/${s.id}`} className={linkClass}>{s.title}</Link></li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
 
         <div className={sectionClass}>
           <h2 className={headingClass}>Blog</h2>

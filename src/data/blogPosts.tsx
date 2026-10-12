@@ -383,8 +383,8 @@ export const blogPosts: BlogPost[] = [
         <p>When you're competing against larger players, your digital experience is often your primary differentiator. A thoughtfully designed product that solves real user problems will outperform a bigger competitor's generic solution every time. Strategic UX design isn't a luxury for SMEs — it's a competitive necessity.</p>
 
         <h2>Ready to Invest in Design That Actually Works?</h2>
-        <p>At Lacuna Digital, we specialise in helping Irish SMEs and scaling startups build digital products grounded in strategy, not just aesthetics. From <a href="/service/user-experience-design" className="text-primary hover:underline">user experience design</a> and <a href="/service/user-interface-design" className="text-primary hover:underline">UI design</a> to <a href="/service/design-strategy" className="text-primary hover:underline">design strategy consulting</a>, every engagement starts with understanding your business goals and your users' needs.</p>
-        <p><a href="/start-project" className="text-primary hover:underline font-semibold">Start a conversation about your project →</a></p>
+        <p>At Lacuna Digital, we specialise in helping Irish SMEs and scaling startups build digital products grounded in strategy, not just aesthetics. From user experience design and UI design to design strategy consulting, every engagement starts with understanding your business goals and your users' needs.</p>
+        <p>Start a conversation about your project.</p>
       </>
     ),
   },

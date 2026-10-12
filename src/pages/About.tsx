@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
+import HiringCTA from "../components/HiringCTA";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SearchNormal1, Calendar, Bezier, TaskSquare, Code1, Chart2 } from "iconsax-react";
 import { type ReactNode } from "react";
@@ -221,7 +221,7 @@ const About = () => (
     </section>
 
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-    <AvailabilityCTA />
+    <HiringCTA />
   </main>
 );
 

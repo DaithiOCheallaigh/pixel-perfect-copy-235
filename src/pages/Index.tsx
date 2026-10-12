@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
+import HiringCTA from "../components/HiringCTA";
 import SocialProof from "../components/SocialProof";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
@@ -237,7 +237,7 @@ const Index = () => {
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
 
       {/* Availability */}
-      <AvailabilityCTA />
+      <HiringCTA />
     </main>
   );
 };
