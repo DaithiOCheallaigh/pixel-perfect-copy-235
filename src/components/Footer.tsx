@@ -30,7 +30,7 @@ const Footer = () => (
           </Link>
         ))}
         <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-muted-foreground md:hover:text-primary">{CONTACT_EMAIL}</a>
-        <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground md:hover:text-primary">Book a call ↗</a>
+        <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground md:hover:text-primary">Book a free call ↗</a>
         <a
           href="https://www.linkedin.com/in/davidkelly89/"
           target="_blank"

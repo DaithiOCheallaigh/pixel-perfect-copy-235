@@ -8,7 +8,7 @@ import ServicesFooter from "@/components/ServicesFooter";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CALENDLY_URL, carePlans, careTerms, eur, priceLabel, restaurantPayback, segments, vatFootnote } from "@/data/pricing";
+import { CALENDLY_URL, carePlans, careTerms, eur, priceLabel, monthlyLabel, restaurantPayback, segments, vatFootnote } from "@/data/pricing";
 import { clinicCompliance, getSegmentKey, grantNote, legacySegmentRedirects, lowestPackage, segmentPages } from "@/data/segmentPages";
 
 const IndustryLanding = () => {
@@ -42,7 +42,7 @@ const IndustryLanding = () => {
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{content.supporting}</p>
               <div className="mt-10 flex flex-wrap gap-4">
                 <Button asChild className="h-auto whitespace-normal rounded-sm px-6 py-3"><Link to="/start-project">Get a fixed quote in 48 hours <ArrowRight /></Link></Button>
-                <Button asChild variant="outline" className="h-auto whitespace-normal rounded-sm px-6 py-3"><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a 20-minute call</a></Button>
+                <Button asChild variant="outline" className="h-auto whitespace-normal rounded-sm px-6 py-3"><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a free call</a></Button>
               </div>
             </motion.div>
           </div>
@@ -59,7 +59,7 @@ const IndustryLanding = () => {
                     <div className="flex flex-1 flex-col p-6">
                       <h3 className="text-base font-bold">{proof.name}</h3>
                       <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{proof.description}</p>
-                      {proof.link && <Button asChild variant="link" className="mt-4 justify-start self-start p-0"><Link to={proof.link}>View {proof.link.startsWith("/showcase/") ? "showcase" : "case study"}<ArrowRight /></Link></Button>}
+                      {proof.link && !proof.link.startsWith("/showcase/") && <Button asChild variant="link" className="mt-4 justify-start self-start p-0"><Link to={proof.link}>View case study<ArrowRight /></Link></Button>}
                     </div>
                   </article>
                 </ScrollReveal>
@@ -84,7 +84,7 @@ const IndustryLanding = () => {
                   {pkg.popular && <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Most Popular</span>}
                   <h3 className="text-lg font-bold">{pkg.name}</h3>
                   <p className="mt-4 text-2xl font-bold text-primary">{priceLabel(pkg)}</p>
-                  {pkg.monthly && <p className="mt-2 text-sm text-muted-foreground">or {eur(pkg.monthly)}/mo × 12</p>}
+                  {pkg.monthly && <p className="mt-2 text-sm text-muted-foreground">{monthlyLabel(pkg)}</p>}
                   <ul className="mt-6 flex-1 space-y-3">{pkg.scope?.map((item) => <li key={item} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" /><span>{item}</span></li>)}</ul>
                   <p className="mt-6 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">Live in {pkg.live} from a complete intake</p>
                   <Button asChild variant={pkg.popular ? "default" : "outline"} className="mt-6 h-auto whitespace-normal rounded-sm py-3"><Link to="/start-project">Get a fixed quote in 48 hours<ArrowRight /></Link></Button>

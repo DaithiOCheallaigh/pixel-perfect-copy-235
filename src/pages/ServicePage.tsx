@@ -211,14 +211,14 @@ const ServicePage = () => {
         <div className="mx-auto max-w-4xl text-center">
           <ScrollReveal>
             <h2 className="mb-4 text-2xl font-bold text-foreground">Interested in this service?</h2>
-            <p className="mb-6 text-sm text-muted-foreground">Book a free 20-minute call to discuss your project</p>
+            <p className="mb-6 text-sm text-muted-foreground">Book a free intro call to discuss your project</p>
             <Button asChild><a
               href={CALENDLY_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-1.5 rounded-sm bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5"
             >
-              Book a Call <span>↗</span>
+              Book a free call <span>↗</span>
             </a></Button>
           </ScrollReveal>
         </div>

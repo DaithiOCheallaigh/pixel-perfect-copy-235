@@ -61,7 +61,7 @@ const ProductStudio = () => {
         <h1 className="max-w-4xl text-4xl font-black md:text-6xl lg:text-7xl">Senior product design for teams that ship.</h1>
         <p className="mt-8 max-w-3xl text-lg text-muted-foreground">UX audits, design systems and AI-built prototypes — from a product designer with {YEARS_EXPERIENCE} years' experience.</p>
         <p className="mt-5 text-sm text-primary">Product design engagements: next start {availability.productStudioFrom}</p>
-        <Button asChild className="mt-8"><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a 20-minute call <ArrowRight /></a></Button>
+        <Button asChild className="mt-8"><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a free call <ArrowRight /></a></Button>
         <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-y border-border py-5 text-sm text-muted-foreground"><span>{YEARS_EXPERIENCE} years' experience</span><span>End-to-end design &amp; build</span><span>Designer-led delivery</span><span>Grant-ready quotes</span></div>
       </div>
     </section>

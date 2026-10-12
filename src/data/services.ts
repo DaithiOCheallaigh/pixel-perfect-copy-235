@@ -271,7 +271,7 @@ export const services: Service[] = [
   // ── Web ──
   {
     id: "cms-content-platforms",
-    priceLine: `From ${eur(webLadder[0]?.price ?? 0)}`,
+    priceLine: `from ${priceLabel(webLadder[2])}`,
     title: "CMS Design & Management Services in Dublin",
     category: "Web",
     intro: `A content management system gives your team the power to update your website without touching code. Whether it's publishing blog posts, updating product pages, or managing an online store, the right CMS transforms your website from a static brochure into a dynamic business tool.\n\nChoosing the wrong CMS — or implementing the right one poorly — leads to frustration, workarounds, and a website your team avoids updating. The result is stale content that hurts both user experience and search rankings.\n\nAt Lacuna Digital, I help Irish SMEs select, set up, and optimise the right CMS for their needs — whether that's WordPress, Shopify, or a headless solution like Contentful. My approach starts with understanding your content workflows, team capabilities, and growth plans, then recommends and implements a solution that fits.\n\nBeyond setup, I design CMS experiences that your team actually enjoys using. Custom templates ensure brand consistency, structured content types make publishing intuitive, and training ensures your team is confident managing content independently.\n\nWith ${YEARS_EXPERIENCE} years of experience implementing CMS solutions for businesses of all sizes across Ireland, I provide the expertise to get your content platform right from the start.`,
@@ -300,7 +300,7 @@ export const services: Service[] = [
   },
   {
     id: "shopify",
-    priceLine: `From ${eur(webLadder[0]?.price ?? 0)} · e-commerce scope quoted separately`,
+    priceLine: `from ${priceLabel(webLadder[3])}`,
     title: "Shopify & E-Commerce Design in Dublin",
     category: "Web",
     intro: "Shopify powers millions of online stores worldwide, and for good reason. It's a robust, user-friendly e-commerce platform that handles everything from product management to payment processing. But a Shopify store is only as good as its design and setup.\n\nThe difference between a Shopify store that converts and one that doesn't often comes down to user experience: clear product presentation, intuitive navigation, streamlined checkout, and a design that builds trust with first-time visitors.\n\nAt Lacuna Digital, I design Shopify stores that balance visual appeal with conversion optimisation. Every store I build is mobile-responsive, brand-aligned, and structured to guide shoppers naturally from browsing to purchase.\n\nMy process covers store setup, theme customisation, product page design, checkout optimisation, and app integration. I also provide training so you can manage your store confidently after launch — adding products, running promotions, and fulfilling orders without ongoing support costs.\n\nWith hands-on experience setting up and optimising Shopify stores for Irish businesses across fashion, food, beauty, and professional services, I understand what makes e-commerce work in the Irish market. You get a store that looks premium without the premium agency price tag.",
@@ -704,7 +704,7 @@ export const services: Service[] = [
   },
   {
     id: "reservations", title: "Booking & Reservation Setup", category: "Web",
-    priceLine: `${eur(addOns.booking)} setup (salons from ${eur(segments.salons.packages.find(pkg => pkg.id === "booking-fix")?.price ?? 0)})`,
+    priceLine: `${eur(addOns.booking)} setup${VAT_REGISTERED ? " + VAT" : ""} (salons from ${priceLabel(segments.salons.packages.find(pkg => pkg.id === "booking-fix")!)})`,
     intro: "I connect your existing booking system and check the appointment links your customers use. Software licences are billed directly to you.",
     expertBio: `I bring ${YEARS_EXPERIENCE} years of product design experience to clear, practical booking journeys.`, relatedServices: ["local-seo"],
   },

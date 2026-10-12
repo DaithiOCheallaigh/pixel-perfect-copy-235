@@ -33,7 +33,7 @@ import {
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { Button } from "@/components/ui/button";
-import { addOns, carePlans, careTerms, entry, eur, priceLabel, segments, terms, vatFootnote, webLadder } from "@/data/pricing";
+import { lowestCorePackage, monthlyLabel, VAT_REGISTERED, addOns, carePlans, careTerms, entry, eur, priceLabel, segments, terms, vatFootnote, webLadder } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
@@ -62,7 +62,7 @@ const allServices: ServiceItem[] = [
     icon: Monitor,
     title: "Website Creation",
     desc: "Fast, conversion-focused websites that make your business look the part.",
-    price: `From ${eur(webLadder[0].price ?? 0)} · or ${eur(webLadder[0].monthly ?? 0)}/mo`,
+    price: `From ${priceLabel(webLadder[0])} · ${monthlyLabel(webLadder[0])}`,
     priceValue: webLadder[0].price ?? 0,
     link: "/web-design",
     category: "visibility",
@@ -133,7 +133,7 @@ const allServices: ServiceItem[] = [
     icon: Calendar1,
     title: "Reservation Systems",
     desc: "Ditch the phone bookings. I set up a reservation system that works while you sleep.",
-    price: `${eur(addOns.booking)} setup (salons from ${eur(segments.salons.packages[0].price ?? 0)})`,
+    price: `${eur(addOns.booking)} setup${VAT_REGISTERED ? " + VAT" : ""} (salons from ${priceLabel(segments.salons.packages[0])})`,
     priceValue: addOns.booking,
     link: "/start-project",
     category: "efficiency",
@@ -410,7 +410,7 @@ const Services = () => {
                 to="/start-project"
                 className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
               >
-                Book a free call
+                Get a fixed quote
               </Link>
             </div>
 
@@ -434,10 +434,10 @@ const Services = () => {
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
             <p className="text-lg leading-relaxed">
-              Not sure what you need? A free 20-minute call and a fixed written quote within {entry.introCall.quoteWithin}.
+              Not sure what you need? A free intro call and a fixed written quote within {entry.introCall.quoteWithin}.
             </p>
             <Button asChild className="mt-4 rounded-sm">
-              <Link to="/start-project">Book a free call <ArrowRight /></Link>
+              <Link to="/start-project">Get a fixed quote <ArrowRight /></Link>
             </Button>
             <p className="mt-4 text-xs text-muted-foreground">
               Custom AI or multi-site project? {entry.healthCheck.name} {eur(entry.healthCheck.price)}, half credited against your project.
@@ -597,9 +597,7 @@ const Services = () => {
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {Object.values(segments).map((segment, i) => {
-              const lowest = segment.packages.reduce((best, pkg) =>
-                (pkg.price ?? pkg.priceFrom ?? Infinity) < (best.price ?? best.priceFrom ?? Infinity) ? pkg : best
-              );
+              const lowest = lowestCorePackage(segment.packages) ?? segment.packages[0];
               const popular = segment.packages.find((pkg) => pkg.popular) ?? lowest;
               const monthlyPackage = popular.monthly ? popular : segment.packages.find((pkg) => pkg.monthly);
               return (
@@ -617,7 +615,7 @@ const Services = () => {
                       <p className="mt-1 text-sm text-primary">{priceLabel(popular)}</p>
                       {monthlyPackage?.monthly && (
                         <p className="mt-2 text-xs text-muted-foreground">
-                          {monthlyPackage.id !== popular.id && `${monthlyPackage.name}: `}or {eur(monthlyPackage.monthly)}/mo × 12
+                          {monthlyPackage.id !== popular.id && `${monthlyPackage.name}: `}{monthlyLabel(monthlyPackage)}
                         </p>
                       )}
                       <p className="mt-4 text-xs text-muted-foreground">Live in {popular.live}</p>
@@ -633,7 +631,7 @@ const Services = () => {
               <article className="flex h-full flex-col rounded-xl border border-border bg-card p-8">
                 <h3 className="text-lg font-bold">Professional services &amp; other businesses</h3>
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {webLadder.slice(0, 3).map((pkg) => `${pkg.name} ${eur(pkg.price ?? 0)}`).join(" · ")}
+                  {webLadder.slice(0, 3).map((pkg) => `${pkg.name} ${priceLabel(pkg)}`).join(" · ")}
                 </p>
                 <Button asChild variant="outline" className="mt-6 h-auto whitespace-normal rounded-sm py-2.5">
                   <Link to="/web-design">Explore web design <ArrowRight /></Link>
