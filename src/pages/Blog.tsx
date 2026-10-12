@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
+import HiringCTA from "../components/HiringCTA";
 import { ShineBorder } from "../components/ui/shine-border";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
@@ -49,7 +49,7 @@ const Blog = () => (
     </section>
 
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-    <AvailabilityCTA />
+    <HiringCTA />
   </main>
 );
 

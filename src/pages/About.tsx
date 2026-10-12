@@ -1,7 +1,8 @@
+import { CV_URL } from "@/data/profile";
 import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
+import HiringCTA from "../components/HiringCTA";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SearchNormal1, Calendar, Bezier, TaskSquare, Code1, Chart2 } from "iconsax-react";
 import { type ReactNode } from "react";
@@ -79,7 +80,7 @@ const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: stri
 
 const About = () => (
   <main className="pt-24">
-    <SEO title="About" description="I'm Dave Kelly — freelance product designer based in North County Dublin. I work directly with founders and teams as a one-person digital ops team." url="/about" />
+    <SEO title="About" description="I'm Dave Kelly, a senior product designer based in Dublin. My experience, my product design lifecycle and what I'm like outside work." url="/about" />
     {/* Personal Section */}
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
@@ -110,23 +111,30 @@ const About = () => (
 
           <ScrollReveal delay={0.1}>
             <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
-              <p>
-                Throughout my career, I've had the privilege of being at the forefront of delivering high-quality,
-                comprehensive design solutions. With a keen eye for detail and a deep understanding of user
-                experience, I consistently produce innovative and effective designs across various digital platforms.
-              </p>
-              <p>
-                I bring both creativity and technical expertise to create tailored solutions that not only meet but
-                exceed expectations. From web design to mobile applications, my commitment to excellence has earned
-                me a reputation as a trusted partner in the digital design landscape.
-              </p>
-              <p>
-                I look forward to hearing about your digital aspirations and beginning the process of bringing them
-                to life, together.
-              </p>
+              <p>I'm a product designer with over 10 years' experience delivering SaaS platforms, mobile apps and digital products across B2B and B2C. I work across user research, UI/UX and design systems, and I've led the rollout of AI-assisted prototyping in product teams using Claude and Lovable.</p>
+              <p>I'm currently looking for a full-time senior product design role. If you're hiring, I'd love to talk.</p>
             </div>
           </ScrollReveal>
         </div>
+
+        <section className="mt-16 max-w-3xl">
+          <ScrollReveal>
+            <h2 className="mb-6 text-lg font-bold text-foreground">Experience</h2>
+            <ul className="space-y-6">
+              {[
+                ["Senior UI/UX Designer (contract)", "Marsh McLennan · 2025–present"],
+                ["Head of Product", "TipDirect (TripAdmit) · 2020–2025"],
+                ["Director – Design Lead", "Lacuna Digital Consultation Ltd · 2018–present (small side practice)"],
+                ["Co-Founder – Design Lead", "Codeucate · 2017–2023"],
+                ["UI/UX Lead", "Dynamic Res (NDRC) · 2016–2017"],
+                ["UI Lead", "Davra Networks · 2014–2016"],
+              ].map(([title, organisation]) => (
+                <li key={title}><p className="font-medium text-foreground">{title}</p><p className="text-sm text-muted-foreground">{organisation}</p></li>
+              ))}
+            </ul>
+            <a href={CV_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block text-sm font-semibold text-primary">Full CV ↓</a>
+          </ScrollReveal>
+        </section>
 
         {/* Interests / Facts / Hobbies */}
         <div className="mt-24 grid gap-8 md:grid-cols-3">
@@ -221,7 +229,7 @@ const About = () => (
     </section>
 
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-    <AvailabilityCTA />
+    <HiringCTA />
   </main>
 );
 

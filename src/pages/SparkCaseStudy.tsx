@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import AvailabilityCTA from "../components/AvailabilityCTA";
+import HiringCTA from "../components/HiringCTA";
 import CaseStudyVideo from "../components/CaseStudyVideo";
 import walkthroughVideo from "../assets/spark-walkthrough.mp4.asset.json";
 import claudeLogo from "@/assets/logos/claude.png";
@@ -452,7 +452,7 @@ const SparkCaseStudy = () => {
       </section>
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-      <AvailabilityCTA />
+      <HiringCTA />
     </main>
   );
 };
