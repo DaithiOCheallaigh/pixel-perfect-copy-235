@@ -164,9 +164,9 @@ const AIDesignProcess = () => {
                 controls
                 playsInline
                 preload="none"
-                poster="/images/ai-design-process-poster.jpg"
+                poster="/images/ai-design-process-poster.webp"
                 aria-label="AI-Led Design: my Claude process, from toolstack to analytics (1 minute 17)"
-                className="block h-full w-full"
+                className="block h-full w-full object-cover"
               />
             </div>
             <p className="mt-3 font-mono-label text-xs text-muted-foreground">
