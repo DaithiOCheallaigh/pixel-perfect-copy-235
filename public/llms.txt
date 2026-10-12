@@ -1,27 +1,120 @@
 # Lacuna Digital
 
-> Lacuna Digital is the independent practice of Dave Kelly — an AI-powered product designer and digital consultant based in North County Dublin, helping SMEs ship smarter websites, apps, and digital operations.
+> Lacuna Digital is Dave Kelly's independent product design and digital consulting practice in North County Dublin.
 
-Lacuna Digital pairs hands-on product design (UX, UI, design systems, branding) with AI-assisted build workflows so small and mid-sized businesses can move from idea to shipped product in weeks, not months. Service pillars cover Online Visibility (web design, SEO, content) and Business Efficiency (AI integration, internal tooling, workflow automation).
+Senior product design and AI-assisted build: fixed-price launches from 5 working days; prototypes in 5 days.
 
 ## Pages
 
-- [Home](/): Overview of Dave Kelly and Lacuna Digital's AI-driven design practice.
-- [About](/about): Background, working style, and product design lifecycle philosophy.
-- [Skill Set](/skills): Design, research, and AI-assisted build capabilities.
-- [My Work](/work): Selected case studies across SaaS, ticketing, hospitality, and fintech.
-- [Blog](/blog): Essays on AI-assisted design, UX strategy, and modern interfaces.
-- [AI Design Process](/ai-design-process): How AI is woven through discovery, design, and delivery.
-- [AI Integration](/ai-integration): Embedding AI into product and operational workflows for SMEs.
-- [Web Design Services](/web-design): SME-focused web design and build engagements.
-- [Services](/services): Full menu of design, web, AI, and growth services.
-- [Start a Project](/start-project): Intake form for new engagements and consultations.
+- [Home](/)
+- [About](/about)
+- [Skill Set](/skills)
+- [My Work](/work)
+- [Blog](/blog)
+- [AI Design Process](/ai-design-process)
+- [Services](/services)
+- [Kitchens & Joinery](/services/kitchens-joinery)
+- [Clinics & Practices](/services/clinics-practices)
+- [Trades & Home services](/services/trades-home)
+- [Salons & Barbers](/services/salons-barbers)
+- [Tours & Experiences](/services/tours-experiences)
+- [Restaurants & Cafés](/services/restaurants-cafes)
+- [Web Design](/web-design)
+- [Product Studio](/product-studio)
+- [Free tools](/tools)
+- [Refer](/refer)
+- [Terms](/terms)
+- [Get Started](/get-started)
+- [Start a Project](/start-project)
+
+## Services & pricing (EUR, + VAT unless stated)
+
+Prices + VAT at 23% unless shown as incl. VAT.
+Free 20-minute introductory call and fixed written quote within 48 hours. Digital Health Check €250 (+€100 on site), half credited against custom work.
+
+### Kitchens & Joinery
+
+- Joinery Pro: €3,000 + VAT. Live in 4–5 weeks from site visit.
+- Showroom: €5,750 + VAT. Live in 6–8 weeks.
+
+### Clinics & Practices
+
+- Practitioner: €1,550 incl. VAT; or €120/mo × 12. Live in 2 weeks.
+- Clinic: €4,300 incl. VAT. Live in 4–6 weeks.
+- Clinic Plus: €7,400 incl. VAT. Live in 6–8 weeks.
+
+### Trades & Home services
+
+- Trade Launch: €1,170 incl. VAT; or €90/mo × 12. Live in 7 working days.
+- Trade Site: €2,150 incl. VAT; or €170/mo × 12. Live in 3 weeks.
+
+### Salons & Barbers
+
+- Booking Fix: €360 incl. VAT. Live in 5 working days.
+- Switch & Save: €800 incl. VAT. Live in 5 working days from your service list and rota.
+- Salon Site: €2,350 incl. VAT; or €180/mo × 12. Live in 3 weeks.
+
+### Tours & Experiences
+
+- Direct Booking: €2,000 + VAT. Live in 3 weeks.
+- Conversion Revamp: €5,500 + VAT. Live in 6–8 weeks.
+
+### Restaurants & Cafés
+
+- Menu & Google Kit: €550 incl. VAT. Live in 5 working days.
+- Order Direct (Flipdish route): €600 + VAT. Live in 2 weeks + Flipdish onboarding.
+- Delivery listing tune-up (per platform): €250 + VAT. Live in 5 working days after the platform approves you.
+
+### Web ladder
+
+- Launch: €750 + VAT; or €70/mo × 12. Live in 7 working days.
+- Business Site: €2,500 + VAT. Live in 3–4 weeks.
+- Business Plus: €5,000 + VAT. Live in 5–6 weeks.
+- Bespoke: from €7,500 + VAT. Live in 8–12 weeks.
+
+### Care plans
+
+- Care: €65/month. Hosting, SSL, backups, uptime monitoring; Security updates and .ie renewal; 30 minutes of edits a month; Reply within 1 business day.
+- Growth: €200/month. Everything in Care; 60 minutes of edits a month; Review-request flow (asks every customer); Monthly report; One module for your industry.
+- Growth + AI: €350/month. Everything in Growth; AI website assistant (up to 200 conversations, says it is an AI); Missed-call text-back; Quarterly 30-minute call.
+3-month minimum for salons and restaurants, 6 months for others. Pay a year upfront, get 1 month free. Your domain, your content, your code. Export any time; no exit fee after the minimum term.
+
+### Key add-ons
+
+- Extra page €150; Google profile €350; booking €350; Stripe checkout €450.
+- Email setup €150 (2 inboxes); extra inbox €40; migration €75 per mailbox; licences billed directly.
+- Social setup €350; posting €200/month (6 posts).
+- Delivery listing tune-up €250 per approved platform.
+- AI assistant €600 + €100/month (200 conversations); missed-call text-back €50/month.
+- AI receptionist €950 + €250/month (300 minutes).
+- CRM starter €1,200; brand starter €1,000; copy €100 per page; extra work €100/hour in 30-minute blocks.
+
+### Product Studio
+
+- Day rate €650; agency white-label €600/day (5-day minimum).
+- Fractional Product Designer €2,600/month for 4 days (3-month minimum).
+- Investor Prototype €3,000 (5 working days); Prototype Sprint €6,000 (3 weeks); 5 moderated tests +€2,500.
+- AI-built MVP from €20,000 (6–10 weeks, only after a Prototype Sprint).
+- UX & Accessibility Audit: Focused €4,500 (5 days, WCAG 2.2 AA spot check); Comprehensive €9,000.
+- Design System Foundation from €18,000 (8 weeks); Digital / AI Discovery Roadmap €4,500 (5 days).
+- AI Opportunity Audit €1,250 (about 2 days, half credited against Automation Sprint, up to 15 staff). Automation Sprint typically €3,000–€6,500, fixed price agreed in writing.
+- AI Ops €750/month for 8 hours including meetings; 3-month minimum then 30 days' notice; overage €100/hour.
 
 ## Case studies
 
-- [Marsh Design System](/work/marsh-design-system): Enterprise design system for Marsh McLennan.
-- [Marsh Internal Tooling](/work/marsh-internal-tooling): Internal product tooling redesign.
+- [Marsh Design System](/work/marsh-design-system)
+- [Marsh Internal Tooling](/work/marsh-internal-tooling)
+- [MedEd Workspace](/work/spark): password-protected portfolio case study.
+- [TripAdmit white-label](/case/whitelabel)
+- [TipDirect tipping](/case/digital-tipping)
+- [AI-assisted reviews](/case/ai-reviews)
+- [Therapie booking](/case/booking-app)
+
+## Contact
+
+info@lacunaconsulting.com
+Book a 20-minute call: https://calendly.com/lacunaconsulting-info/30min
 
 ## Optional
 
-- [Sitemap](/sitemap): Human-readable index of public pages.
+- [Sitemap](/sitemap)
