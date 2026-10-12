@@ -35,7 +35,7 @@ describe("public sitemap boundaries", () => {
   });
 
   it("uses the owner's supplied fixed content-change date", () => {
-    expect(entries.length).toBe(64);
+    expect(entries.length).toBe(66);
     for (const entry of entries) {
       expect(entry.getElementsByTagName("lastmod")[0].textContent).toBe("2026-10-12");
     }
@@ -43,7 +43,7 @@ describe("public sitemap boundaries", () => {
 
   it("lists portfolio URLs before services URLs", () => {
     const firstService = paths.indexOf("/services");
-    expect(firstService).toBe(22);
+    expect(firstService).toBe(24);
     expect(paths.slice(firstService).every(path => path.startsWith("/services"))).toBe(true);
   });
 

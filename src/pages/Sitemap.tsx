@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PortfolioSEO as SEO } from "@/components/PortfolioSEO";
+import { useEffect } from "react";
 import { blogPosts } from "@/data/blogPosts";
 import { projects } from "@/data/projects";
 
@@ -19,18 +19,24 @@ const corePages = [
 
 // Marsh pages have dedicated routes, others use /case/:id
 const dedicatedRoutes: Record<string, string> = {
-  "spark": "/work/spark",
   "marsh-design-system": "/work/marsh-design-system",
   "marsh-internal-tooling": "/work/marsh-internal-tooling",
 };
 
 const Sitemap = () => {
+  useEffect(() => {
+    document.title = "Sitemap — Lacuna Digital";
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", "Full sitemap of Lacuna Digital — browse all pages, services, case studies, and blog posts.");
+    return () => { document.title = "Lacuna Digital"; };
+  }, []);
+
+
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
-      <SEO title="Sitemap" description="All pages on Dave Kelly's portfolio: case studies, process and writing." url="/sitemap" />
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Sitemap</h1>
-        <p className="text-muted-foreground mb-12 text-sm">All pages on Dave Kelly's portfolio</p>
+        <p className="text-muted-foreground mb-12 text-sm">All pages on lacunadigital.io</p>
 
         <div className={sectionClass}>
           <h2 className={headingClass}>Pages</h2>
@@ -44,7 +50,7 @@ const Sitemap = () => {
         <div className={sectionClass}>
           <h2 className={headingClass}>Case Studies</h2>
           <ul className="space-y-2">
-            {projects.filter((project) => !project.comingSoon).map((p) => {
+            {projects.map((p) => {
               const path = dedicatedRoutes[p.id] || `/case/${p.id}`;
               return (
                 <li key={p.id}><Link to={path} className={linkClass}>{p.title}</Link></li>
@@ -52,6 +58,7 @@ const Sitemap = () => {
             })}
           </ul>
         </div>
+
 
         <div className={sectionClass}>
           <h2 className={headingClass}>Blog</h2>

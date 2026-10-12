@@ -1,4 +1,3 @@
-import { LINKEDIN_URL } from "@/data/profile";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -6,7 +5,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { blogPosts } from "../data/blogPosts";
-import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
+import { SEO } from "../components/SEO";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -46,12 +45,11 @@ const BlogPost = () => {
           description: post.excerpt,
           image: `https://www.lacunadigital.io${post.image}`,
           datePublished: post.date,
-          author: { "@type": "Person", "@id": "https://www.lacunadigital.io/#dave-kelly", name: "Dave Kelly" },
+          author: { "@type": "Person", name: "Dave Kelly" },
           publisher: {
-            "@type": "Person",
-            "@id": "https://www.lacunadigital.io/#dave-kelly",
-            name: "Dave Kelly",
-            url: "https://www.lacunadigital.io/",
+            "@type": "Organization",
+            name: "Lacuna Digital",
+            logo: { "@type": "ImageObject", url: "https://www.lacunadigital.io/favicon.png" },
           },
           mainEntityOfPage: `https://www.lacunadigital.io/blog/${post.id}`,
         }}
@@ -126,10 +124,6 @@ const BlogPost = () => {
           </motion.div>
         </div>
       </article>
-
-      <p className="mx-auto mt-12 max-w-3xl px-6 text-sm text-muted-foreground">
-        Dave Kelly is a senior product designer in Dublin working across design systems, product strategy and AI-assisted delivery. Read his <Link to="/work" className="text-primary">case studies</Link> or find him on <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="text-primary">LinkedIn</a>.
-      </p>
 
       {/* ─── Separator ─── */}
       <div className="mx-auto my-16 max-w-3xl px-6">

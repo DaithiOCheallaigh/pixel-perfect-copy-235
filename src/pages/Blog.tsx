@@ -4,11 +4,11 @@ import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { ShineBorder } from "../components/ui/shine-border";
 import { blogPosts } from "../data/blogPosts";
-import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
+import { SEO } from "../components/SEO";
 
 const Blog = () => (
   <main className="pt-24">
-    <SEO title="Blog" description="Thoughts on product design, AI-assisted workflows, design systems and the craft of interfaces." url="/blog" />
+    <SEO title="Blog" description="Thoughts on design, AI workflows, freelance consulting, and building digital products for SMEs." url="/blog" />
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>

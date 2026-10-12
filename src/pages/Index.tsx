@@ -3,19 +3,19 @@ import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
+import SocialProof from "../components/SocialProof";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SpiralAnimation } from "../components/ui/spiral-animation";
-import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
+import { SEO } from "../components/SEO";
 import { Laptop, Loupe, Sieve } from "@lucasmarkes/hairline/react";
-import { CV_URL } from "@/data/profile";
 
-const marshProject = projects.find(p => p.id === "marsh-design-system");
+const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
 
 const Index = () => {
   return (
     <main>
-      <SEO title="Home" description="Dave Kelly is a senior product designer in Dublin with over 10 years' experience across enterprise tools, design systems and consumer products, for Marsh McLennan, Elsevier and TipDirect. Open to full-time senior product design roles." url="/" />
+      <SEO title="Home" description="Freelance product designer and digital consultant helping SMEs build smarter digital experiences — powered by AI." url="/" />
       {/* Hero */}
       <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-32 md:px-12 lg:px-24">
         {/* Animated gradient orbs */}
@@ -31,9 +31,8 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Hi, I'm Dave
+            Hi, I'm Dave — <span className="block md:inline">AI-Powered Product Designer for SMEs</span>
           </motion.h1>
-          <p className="mb-6 font-mono-label text-primary">Senior Product Designer</p>
 
           <motion.p
             className="mx-auto mb-12 max-w-2xl text-lg leading-[1.75] tracking-[-0.01em] text-muted-foreground md:text-xl"
@@ -41,7 +40,8 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Over 10 years designing SaaS platforms, mobile apps and design systems. Currently Senior UI/UX Designer (contract) at Marsh McLennan, previously Head of Product at TipDirect.
+            I am a versatile AI driven creative professional combining strategic
+            thinking with hands-on design expertise to deliver impactful results.
           </motion.p>
 
           <motion.div
@@ -50,15 +50,22 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Link to="/work" className="inline-flex items-center gap-2 rounded-lg bg-foreground px-8 py-3 text-sm font-semibold text-background transition-all hover:opacity-90">View my work →</Link>
-            <a href={CV_URL} target="_blank" rel="noopener noreferrer" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:gap-3">
-              <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} className="opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <a
+              href="/docs/DavidKelly_CV_2026.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg bg-foreground px-8 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
+            >
               ↓ Download my CV
             </a>
+            <Link
+              to="/ai-design-process"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:gap-3"
+            >
+              <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} className="opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              AI Design Process <span className="transition-all">→</span>
+            </Link>
           </motion.div>
-          <div className="mt-5 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-            <Link to="/ai-design-process" className="md:hover:text-primary">AI Design Process →</Link>
-          </div>
         </div>
       </section>
 
@@ -73,24 +80,6 @@ const Index = () => {
 
           {/* Featured project cards — side by side image + text like old site */}
           <div className="space-y-8">
-            {marshProject && (
-              <ScrollReveal>
-                <Link to="/work/marsh-design-system" className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2">
-                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                  <div className="overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-l-xl">
-                    <img src={marshProject.pillImage} alt={marshProject.title} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
-                  </div>
-                  <div className="flex flex-col justify-center p-8 md:p-12">
-                    <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">{marshProject.subtitle}</h3>
-                    <div className="mb-8 flex flex-wrap gap-2">
-                      {marshProject.tags.map(tag => <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>)}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{marshProject.workDescription}</p>
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">View Project <span>→</span></span>
-                  </div>
-                </Link>
-              </ScrollReveal>
-            )}
             {/* AI Reviews — image left, text right */}
             <ScrollReveal>
               <Link
@@ -98,7 +87,7 @@ const Index = () => {
                 className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
               >
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                <div className="overflow-hidden rounded-t-xl md:order-2 md:rounded-t-none md:rounded-r-xl">
+                <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
                   <img
                     src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Ai%20Assisted%20Reviews/AIPill-2.webp"
                     alt="AI Assisted Reviews"
@@ -106,7 +95,7 @@ const Index = () => {
                     loading="lazy"
                   />
                 </div>
-                <div className="flex flex-col justify-center p-8 md:order-1 md:p-12">
+                <div className="flex flex-col justify-center p-8 md:p-12">
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
                     Leveraging AI to increase 5-star reviews by 45% on average
                   </h3>
@@ -133,7 +122,7 @@ const Index = () => {
                 className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
               >
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                <div className="flex flex-col justify-center p-8 md:order-2 md:p-12">
+                <div className="flex flex-col justify-center p-8 md:order-1 md:p-12">
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
                     Enabling tour guides to receive an average tip of $25 through digital tipping
                   </h3>
@@ -143,13 +132,13 @@ const Index = () => {
                     ))}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Increasingly, people are not carrying cash with them in person. I worked with TripAdmit to pivot their entire business in a new direction by creating a brand centered around digital tipping, TipDirect.
+                    Increasingly, people are not carrying cash with them in person. We worked with TripAdmit to pivot their entire business in a new direction by creating a brand centered around digital tipping, TipDirect.
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
                     View Project <span>→</span>
                   </span>
                 </div>
-                <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-l-xl md:rounded-r-none md:order-1">
+                <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-r-xl md:rounded-l-none md:order-2">
                   <img
                     src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Digital%20Tipping/Tipping%20Profile.webp"
                     alt="Digital Tipping"
@@ -193,21 +182,21 @@ const Index = () => {
                 title: "Discovery",
                 figure: Loupe,
                 figureAlt: "A magnifier sliding across a ruled sheet",
-                text: "Every project begins with understanding the problem, the people it affects and the business goal behind it. I explore widely before converging.",
+                text: "Every project begins with understanding your vision. I take pride in exploring creative possibilities that not only bring ideas to life but also drive business growth.",
               },
               {
                 num: "02",
                 title: "Selection",
                 figure: Sieve,
                 figureAlt: "Stacked sieves, one lifted clear of the rest",
-                text: "I narrow options through prototyping, usability testing and stakeholder feedback before committing to a direction.",
+                text: "I focus on developing solutions that stand out in today's competitive landscape. My approach combines strategic thinking with cutting-edge design practices.",
               },
               {
                 num: "03",
                 title: "Implementation",
                 figure: Laptop,
                 figureAlt: "A laptop opening on its hinge",
-                text: "I work closely with engineering through handoff, QA and launch, then track how real users behave and iterate.",
+                text: "I believe in creating purpose-driven designs that resonate with target audiences. Each project is carefully crafted to ensure maximum impact and meaningful connections with users.",
               },
             ].map((step, i) => (
               <ScrollReveal key={step.num} delay={i * 0.15} className="h-full">
@@ -239,6 +228,11 @@ const Index = () => {
           </ScrollReveal>
         </div>
       </section>
+
+      <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
+
+      {/* Testimonials */}
+      <SocialProof />
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
 
