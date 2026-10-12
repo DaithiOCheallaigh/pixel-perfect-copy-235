@@ -1,3 +1,4 @@
+import { SEO } from "@/components/SEO";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
@@ -323,16 +324,7 @@ const Services = () => {
     };
   }, []);
 
-  useEffect(() => {
-    document.title = "Services — Lacuna Digital";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "I help small businesses get found online and run smarter — websites, AI tools, automations, and more."
-      );
-    }
-  }, []);
+
 
   const renderServiceGrid = (services: ServiceItem[]) => {
     if (isMobile) {
@@ -375,6 +367,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO title="Services" description="I help small businesses get found online and run smarter — websites, AI tools, automations, and more." url="/services" />
 
       {/* ── Hero ── */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-16 md:px-12 lg:px-24">

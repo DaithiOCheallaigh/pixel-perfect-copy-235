@@ -14,6 +14,7 @@
 - Selection estimates derive setup and recurring fees by service ID from the pricing catalogue, never by parsing labels or trusting stored price totals; this keeps monthly fees separate and stale session prices out of quotes.
 - Generate public/llms.txt pricing with scripts/generate-llms.ts from the shared catalogue; this keeps the static discovery document aligned with frontend prices.
 - Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
-- Portfolio pages use PortfolioSEO and HiringCTA, while commercial pages retain SEO and AvailabilityCTA; this isolates metadata branding and hiring contact from commercial offers.
+- SEO derives section branding, default sharing image and fallback service schema from the current pathname; PortfolioSEO is a compatibility re-export and layouts do not set page metadata, avoiding competing head tags.
+- Portfolio pages use HiringCTA while commercial pages retain AvailabilityCTA; this isolates hiring contact from commercial offers.
 
 - Work filters and sorts a copy of the project catalogue independently of catalogue order; this preserves other consumers while prioritising recruiter case studies.

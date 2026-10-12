@@ -41,3 +41,9 @@
 - [x] Correct project attribution, Marsh roles and visible work ordering.
 - [x] Preserve deleted blog URLs with tested redirects; retained writing contains no prohibited sales passages.
 - [x] Run 190 passing tests and desktop/mobile preview checks; clean build and backend unchanged. Literal audit exceptions are existing asset URLs containing LacunaPortfolioSite and tour-booking availability prose, not commercial offers.
+
+
+# Section-aware search and sharing metadata
+- [ ] Save supplied portfolio sharing image; preserve services image.
+- [ ] Replace shared and static head metadata; add page-specific and private-page tags.
+- [ ] Verify route titles, canonical URLs, schemas and noindex behavior; run tests and confirm backend unchanged.

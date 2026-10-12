@@ -19,7 +19,6 @@ const themes: Record<string, { bg: string; text: string; linkBorder: string; lin
 };
 
 const OG_IMAGE = "https://www.lacunadigital.io/og-default.png";
-const SITE_TITLE = "Lacuna Digital — Dave Kelly | Digital Designer & UX Strategist";
 
 const BioPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -40,6 +39,7 @@ const BioPage = () => {
   if (loading) return <div className="flex min-h-screen items-center justify-center bg-background"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>;
   if (notFound || !bio) return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center text-foreground">
+      <Helmet><meta name="robots" content="noindex,nofollow" /></Helmet>
       <h1 className="text-2xl font-bold">Page not found</h1>
       <p className="mt-2 text-muted-foreground">This link page doesn't exist.</p>
       <Link to="/services/tools/link-in-bio" className="mt-4 text-sm font-medium text-primary underline">Create your own →</Link>
@@ -52,20 +52,20 @@ const BioPage = () => {
   return (
     <>
       <Helmet>
-        <title>{SITE_TITLE}</title>
-        <meta name="description" content="Digital Designer & UX Strategist — portfolio, services and tools by Dave Kelly." />
+        <title>{bio.name}</title>
+        <meta name="description" content={bio.tagline || bio.name} />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Lacuna Digital" />
-        <meta property="og:title" content={SITE_TITLE} />
-        <meta property="og:description" content="Digital Designer & UX Strategist — portfolio, services and tools by Dave Kelly." />
+        <meta property="og:site_name" content={bio.name} />
+        <meta property="og:title" content={bio.name} />
+        <meta property="og:description" content={bio.tagline || bio.name} />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:url" content={canonicalUrl} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={SITE_TITLE} />
-        <meta name="twitter:description" content="Digital Designer & UX Strategist — portfolio, services and tools by Dave Kelly." />
+        <meta name="twitter:title" content={bio.name} />
+        <meta name="twitter:description" content={bio.tagline || bio.name} />
         <meta name="twitter:image" content={OG_IMAGE} />
       </Helmet>
       <div className={`flex min-h-screen items-center justify-center ${t.bg} px-6 py-12`}>
