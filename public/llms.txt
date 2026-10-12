@@ -20,9 +20,9 @@
 - [AI Assisted Reviews](https://www.lacunadigital.io/case/ai-reviews)
 - [Digital Tipping](https://www.lacunadigital.io/case/digital-tipping)
 - [Admin Dashboard](https://www.lacunadigital.io/case/admin-dashboard)
-- [TipDirect Marketing Website](https://www.lacunadigital.io/case/website-tipdirect)
+- [TipDirect Marketing Website — Travel-Tech UI/UX Case Study](https://www.lacunadigital.io/case/website-tipdirect)
 - [TipDirect App](https://www.lacunadigital.io/case/tipdirect-app)
-- [Spotify Tipping Integration (RFP concept)](https://www.lacunadigital.io/case/spotify)
+- [Spotify Tipping Integration](https://www.lacunadigital.io/case/spotify)
 - [Airline Tour & Activity White-label](https://www.lacunadigital.io/case/whitelabel)
 - [Booking App & Site](https://www.lacunadigital.io/case/booking-app)
 
