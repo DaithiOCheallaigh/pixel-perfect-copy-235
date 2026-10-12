@@ -4,7 +4,7 @@ import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
-import { SEO } from "../components/SEO";
+import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
 import { LockKeyhole } from "lucide-react";
 
 const Work = () => (

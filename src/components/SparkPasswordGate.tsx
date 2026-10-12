@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { LockKeyhole, ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { SEO } from '@/components/SEO';
+import { PortfolioSEO as SEO } from '@/components/PortfolioSEO';
 import { supabase } from '@/integrations/supabase/client';
 import { PORTFOLIO_EMAIL } from '@/data/profile';
 import { Helmet } from 'react-helmet-async';

@@ -5,7 +5,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { blogPosts } from "../data/blogPosts";
-import { SEO } from "../components/SEO";
+import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -47,8 +47,8 @@ const BlogPost = () => {
           datePublished: post.date,
           author: { "@type": "Person", name: "Dave Kelly" },
           publisher: {
-            "@type": "Organization",
-            name: "Lacuna Digital",
+            "@type": "Person",
+            name: "Dave Kelly",
             logo: { "@type": "ImageObject", url: "https://www.lacunadigital.io/favicon.png" },
           },
           mainEntityOfPage: `https://www.lacunadigital.io/blog/${post.id}`,

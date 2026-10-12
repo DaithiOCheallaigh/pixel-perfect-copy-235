@@ -6,7 +6,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
-import { SEO } from "../components/SEO";
+import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
 import { ShineBorder } from "../components/ui/shine-border";
 import DesignHandoffCarousel from "../components/DesignHandoffCarousel";
 import tipdirectPricing from "../assets/images/tipdirect-pricing.webp";

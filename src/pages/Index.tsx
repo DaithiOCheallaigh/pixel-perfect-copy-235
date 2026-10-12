@@ -6,7 +6,7 @@ import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SpiralAnimation } from "../components/ui/spiral-animation";
-import { SEO } from "../components/SEO";
+import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
 import { Laptop, Loupe, Sieve } from "@lucasmarkes/hairline/react";
 import { CV_URL } from "@/data/profile";
 
@@ -15,7 +15,7 @@ const marshProject = projects.find(p => p.id === "marsh-design-system");
 const Index = () => {
   return (
     <main>
-      <SEO title="Home" description="Freelance product designer and digital consultant helping SMEs build smarter digital experiences — powered by AI." url="/" />
+      <SEO title="Home" description="Over 10 years designing SaaS platforms, mobile apps and design systems. Currently Senior UI/UX Designer (contract) at Marsh McLennan, previously Head of Product at TipDirect." url="/" />
       {/* Hero */}
       <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-32 md:px-12 lg:px-24">
         {/* Animated gradient orbs */}

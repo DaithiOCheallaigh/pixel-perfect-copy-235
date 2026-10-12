@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SEO } from "../components/SEO";
+import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
 import { GlowingStarsBackgroundCard } from "@/components/ui/glowing-stars";
 import { Cpu } from "iconsax-react";
 import { Plug, Loupe, Riffle, Exploded, Laptop, Branches, Plot } from "@lucasmarkes/hairline/react";
