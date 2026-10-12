@@ -26,6 +26,6 @@
 - [x] Run 106 passing tests and verify central flows and desktop/mobile pages; no publishing or real test emails.
 
 # Commercial links and SEO URLs
-- [ ] Point the listed commercial and client-page links directly to /services paths.
-- [ ] Replace listed manual metadata effects with SEO and simplify shared availability.
-- [ ] Audit protected files, run tests and check expertise navigation in the preview; no backend edits or publishing.
+- [x] Point the listed commercial and client-page links directly to /services paths.
+- [x] Replace listed manual metadata effects with SEO and simplify shared availability.
+- [x] Audit protected files, run 172 tests and check expertise navigation in the preview; no backend edits or publishing.
