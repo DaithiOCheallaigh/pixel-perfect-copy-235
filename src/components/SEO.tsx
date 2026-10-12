@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 interface SEOProps {
+  brand?: string;
   title: string;
   description: string;
   image?: string;
@@ -13,6 +14,7 @@ const DEFAULT_IMAGE = 'https://www.lacunadigital.io/og-default.png';
 const BASE_URL = 'https://www.lacunadigital.io';
 
 export function SEO({
+  brand = 'Lacuna Digital',
   title,
   description,
   image = DEFAULT_IMAGE,
@@ -20,8 +22,8 @@ export function SEO({
   type = 'website',
   jsonLd,
 }: SEOProps) {
-  const homeTitle = 'Lacuna Digital — AI-Powered Product Design by Dave Kelly';
-  const fullTitle = title === 'Home' ? homeTitle : `${title} | Lacuna Digital`;
+  const homeTitle = brand === 'Lacuna Digital' ? 'Lacuna Digital — AI-Powered Product Design by Dave Kelly' : brand;
+  const fullTitle = title === 'Home' ? homeTitle : `${title} | ${brand}`;
 
   const canonicalUrl = `${BASE_URL}${url}`;
   const ldArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
@@ -33,7 +35,7 @@ export function SEO({
       <link rel="canonical" href={canonicalUrl} />
       {/* Open Graph */}
       <meta property="og:type" content={type} />
-      <meta property="og:site_name" content="Lacuna Digital" />
+      <meta property="og:site_name" content={brand} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
