@@ -88,4 +88,4 @@ Book a 20-minute call: ${CALENDLY_URL}
 `;
 }
 
-if (import.meta.main) writeFileSync("public/llms.txt", buildLlmsText());
+if (process.argv[1]?.endsWith("generate-llms.ts")) writeFileSync("public/llms.txt", buildLlmsText());
