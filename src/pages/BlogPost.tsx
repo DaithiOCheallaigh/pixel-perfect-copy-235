@@ -46,11 +46,12 @@ const BlogPost = () => {
           description: post.excerpt,
           image: `https://www.lacunadigital.io${post.image}`,
           datePublished: post.date,
-          author: { "@type": "Person", name: "Dave Kelly" },
+          author: { "@type": "Person", "@id": "https://www.lacunadigital.io/#dave-kelly", name: "Dave Kelly" },
           publisher: {
             "@type": "Person",
+            "@id": "https://www.lacunadigital.io/#dave-kelly",
             name: "Dave Kelly",
-            logo: { "@type": "ImageObject", url: "https://www.lacunadigital.io/favicon.png" },
+            url: "https://www.lacunadigital.io/",
           },
           mainEntityOfPage: `https://www.lacunadigital.io/blog/${post.id}`,
         }}

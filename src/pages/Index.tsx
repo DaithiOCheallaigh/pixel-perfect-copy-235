@@ -15,7 +15,7 @@ const marshProject = projects.find(p => p.id === "marsh-design-system");
 const Index = () => {
   return (
     <main>
-      <SEO title="Home" description="Over 10 years designing SaaS platforms, mobile apps and design systems. Currently Senior UI/UX Designer (contract) at Marsh McLennan, previously Head of Product at TipDirect." url="/" />
+      <SEO title="Home" description="Dave Kelly is a senior product designer in Dublin with over 10 years' experience across enterprise tools, design systems and consumer products, for Marsh McLennan, Elsevier and TipDirect. Open to full-time senior product design roles." url="/" />
       {/* Hero */}
       <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-32 md:px-12 lg:px-24">
         {/* Animated gradient orbs */}

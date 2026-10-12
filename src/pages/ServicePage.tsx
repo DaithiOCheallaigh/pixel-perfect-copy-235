@@ -17,6 +17,7 @@ const ServicePage = () => {
   if (!service) {
     return (
       <main className="flex min-h-screen items-center justify-center pt-24">
+        <SEO title="Page not found" description="This page doesn't exist." noindex />
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground">Service not found</h1>
           <Link to="/services" className="mt-4 inline-block text-primary">← All services</Link>

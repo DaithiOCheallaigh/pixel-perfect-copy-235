@@ -15,6 +15,7 @@ import { projects } from "../data/projects";
 import { Branches, Exploded, Riffle } from "@lucasmarkes/hairline/react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { SEO } from "@/components/SEO";
 
 const roleBreakdown = [
   {
@@ -133,6 +134,7 @@ const SparkCaseStudy = () => {
 
   return (
     <main className="pt-24 overflow-x-hidden">
+      <SEO title="Case Study — MedEd Workspace" description="Private Elsevier MedEd Workspace case study by Dave Kelly." url="/work/spark" noindex />
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">

@@ -18,7 +18,7 @@ const IndustryLanding = () => {
   const key = getSegmentKey(slug);
   if (!key) return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6 text-foreground">
-      <SEO title="Page not found" description="This industry page is not available." url={`/services/${slug ?? ""}`} />
+      <SEO title="Page not found" description="This industry page is not available." url={`/services/${slug ?? ""}`} noindex />
       <div className="text-center"><h1 className="text-2xl font-bold">Page not found</h1><Button asChild variant="link" className="mt-4"><Link to="/services"><ArrowLeft />Back to Services</Link></Button></div>
     </main>
   );

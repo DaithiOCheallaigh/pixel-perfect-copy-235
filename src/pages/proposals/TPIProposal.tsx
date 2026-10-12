@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -185,6 +186,7 @@ const TPIProposal = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Helmet><meta name="robots" content="noindex,nofollow" /></Helmet>
       {/* ── sticky section nav ── */}
       <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center gap-1 overflow-x-auto px-4 py-3 scrollbar-hide md:justify-center md:gap-2">
