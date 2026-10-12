@@ -1,359 +1,128 @@
-import { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowLeft } from "lucide-react";
-import {
-  
-  Monitor,
-  ShoppingCart,
-  Calendar1,
-  Location,
-  Wallet,
-  MessageText,
-} from "iconsax-react";
+import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import ServicesNavigation from "@/components/ServicesNavigation";
 import ServicesFooter from "@/components/ServicesFooter";
-
-/* ------------------------------------------------------------------ */
-/*  Data                                                               */
-/* ------------------------------------------------------------------ */
-
-interface IndustryItem {
-  label: string;
-  price: string;
-  free?: boolean;
-}
-
-interface TimelineStep {
-  week: string;
-  title: string;
-  desc: string;
-}
-
-interface IndustryData {
-  slug: string;
-  emoji: string;
-  headline: string;
-  subheading: string;
-  metaTitle: string;
-  metaDesc: string;
-  problems: string[];
-  items: IndustryItem[];
-  total: string;
-  totalNote: string;
-  timeline: TimelineStep[];
-  testimonial: string;
-  testimonialAuthor: string;
-}
-
-const industries: Record<string, IndustryData> = {
-  "food-hospitality": {
-    slug: "food-hospitality",
-    emoji: "🍕",
-    headline: "Get your food business online and taking orders — in under two weeks.",
-    subheading:
-      "Whether you're a restaurant, café, or takeaway — I'll set up your online presence and your Deliveroo profile. All for €200.",
-    metaTitle: "Food & Hospitality Digital Setup — Lacuna Digital",
-    metaDesc:
-      "Get your restaurant, café, or takeaway online with a microsite and Deliveroo setup — from €1,200.",
-    problems: [
-      "Customers can't find you — or find you and see nothing useful",
-      "You're losing orders to competitors who are already on Deliveroo",
-      "Your phone is ringing with questions that could be answered automatically",
-    ],
-    items: [
-      { label: "Professional microsite (menu, location, hours, order link)", price: "€1,000" },
-      { label: "Deliveroo registration & onboarding", price: "€200" },
-      { label: "Auto-reply setup for common questions", price: "FREE", free: true },
-    ],
-    total: "€1,200 one-off",
-    totalNote: "+ optional €100/month management",
-    timeline: [
-      { week: "Week 1", title: "Discovery & Setup", desc: "Quick call, collect your menu, photos, and business details." },
-      { week: "Week 2", title: "Build & Launch", desc: "Microsite live, Deliveroo submitted." },
-      { week: "Week 3", title: "Optimise", desc: "Auto-replies tested, Google listing claimed, handover complete." },
-      { week: "Live", title: "You're Online", desc: "Customers can find you, message you, and order — 24/7." },
-    ],
-    testimonial:
-      "Dave had us set up and taking orders on Deliveroo within 10 days. We went from zero online presence to getting new customers every week.",
-    testimonialAuthor: "— Restaurant owner, North Dublin",
-  },
-  "beauty-wellness": {
-    slug: "beauty-wellness",
-    emoji: "💄",
-    headline: "Fill your appointment book — without spending hours on the phone.",
-    subheading:
-      "I set up your online booking and your professional web presence — so clients can find you and book instantly, any time of day.",
-    metaTitle: "Beauty & Wellness Digital Setup — Lacuna Digital",
-    metaDesc:
-      "Online booking and a microsite for salons, barbers, and wellness businesses — from €1,085.",
-    problems: [
-      "You're taking bookings by phone and DM, and things fall through the cracks",
-      "Clients can't easily find your prices, availability, or location",
-      "You're spending time on admin that could be spent with clients",
-    ],
-    items: [
-      { label: "Domain registration & setup", price: "Variable" },
-      { label: "Professional microsite with service menu & booking link", price: "€1,000" },
-      { label: "Online reservation system (Fresha / Calendly integration)", price: "€85" },
-    ],
-    total: "From €1,085",
-    totalNote: "+ domain cost",
-    timeline: [
-      { week: "Week 1", title: "Discovery & Branding", desc: "Quick call, collect your service list, pricing, and brand colours." },
-      { week: "Week 2", title: "Build & Configure", desc: "Microsite designed, booking system integrated, domain connected." },
-      { week: "Week 3", title: "Test & Launch", desc: "Booking system live, everything tested, handover." },
-      { week: "Live", title: "Fully Operational", desc: "Clients book online 24/7. You focus on what you do best." },
-    ],
-    testimonial:
-      "I used to spend an hour a day managing bookings by text. Now clients just book themselves online — it's been a game changer.",
-    testimonialAuthor: "— Salon owner, Swords",
-  },
-  "startup-bootstrap": {
-    slug: "startup-bootstrap",
-    emoji: "🚀",
-    headline: "Go from idea to online in two weeks. For less than you think.",
-    subheading:
-      "I've helped early-stage founders get their first product live, take payments, and start collecting leads — without burning through budget.",
-    metaTitle: "Startup Bootstrap Package — Lacuna Digital",
-    metaDesc:
-      "Launch your startup online with a landing page and Stripe payments — from €1,300.",
-    problems: [
-      "You need a credible online presence before you can raise or sell",
-      "You're not sure which tools to use or how to connect them",
-      "Every week offline is a week of lost validation",
-    ],
-    items: [
-      { label: "Domain registration & setup", price: "Variable" },
-      { label: "Microsite (landing page + email capture)", price: "€1,000" },
-      { label: "Stripe payment setup", price: "€50" },
-      { label: "Stripe integration into your site", price: "€250" },
-      { label: "Optional: MVP prototype", price: "From €2,000" },
-    ],
-    total: "From €1,300",
-    totalNote: "to launch-ready",
-    timeline: [
-      { week: "Week 1", title: "Scope & Strategy", desc: "Define your MVP, user flow, and payment structure." },
-      { week: "Week 2", title: "Build & Integrate", desc: "Landing page live, Stripe connected." },
-      { week: "Week 3", title: "Test & Refine", desc: "End-to-end test, analytics configured, soft launch." },
-      { week: "Live", title: "Launch-Ready", desc: "Start selling, collecting leads, and validating." },
-    ],
-    testimonial:
-      "Dave got us from a slide deck to a live product with payments in under three weeks. We started getting paying customers on day one.",
-    testimonialAuthor: "— Founder, Dublin startup",
-  },
-};
-
-/* ------------------------------------------------------------------ */
-/*  Component                                                          */
-/* ------------------------------------------------------------------ */
+import { SEO } from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { CALENDLY_URL, carePlans, careTerms, eur, priceLabel, restaurantPayback, segments, vatFootnote } from "@/data/pricing";
+import { clinicCompliance, getSegmentKey, grantNote, legacySegmentRedirects, lowestPackage, segmentPages } from "@/data/segmentPages";
 
 const IndustryLanding = () => {
   const { slug } = useParams<{ slug: string }>();
-  const data = slug ? industries[slug] : undefined;
-
-  useEffect(() => {
-    if (data) {
-      document.title = data.metaTitle;
-      const meta = document.querySelector('meta[name="description"]');
-      if (meta) meta.setAttribute("content", data.metaDesc);
-    }
-    return () => {
-      document.title = "Lacuna Digital";
-    };
-  }, [data]);
-
-  if (!data) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold">Page not found</h1>
-          <Link to="/services" className="mt-4 inline-flex items-center gap-2 text-primary hover:underline">
-            <ArrowLeft className="h-4 w-4" /> Back to Services
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const redirect = slug ? legacySegmentRedirects[slug] : undefined;
+  if (redirect) return <Navigate to={redirect} replace />;
+  const key = getSegmentKey(slug);
+  if (!key) return (
+    <main className="flex min-h-screen items-center justify-center bg-background px-6 text-foreground">
+      <SEO title="Page not found" description="This industry page is not available." url={`/services/${slug ?? ""}`} />
+      <div className="text-center"><h1 className="text-2xl font-bold">Page not found</h1><Button asChild variant="link" className="mt-4"><Link to="/services"><ArrowLeft />Back to Services</Link></Button></div>
+    </main>
+  );
+  const segment = segments[key];
+  const content = segmentPages[key];
+  const lowest = lowestPackage(segment.packages);
+  const orderDirect = segments.food.packages.find((pkg) => pkg.id === "order-direct");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO title={segment.title} description={`${content.metaCategory} from ${lowest ? priceLabel(lowest) : "a fixed quote"}. ${segment.tagline}`} url={`/services/${segment.slug}`} />
       <ServicesNavigation visible={true} />
-
-      {/* ── Hero ── */}
-      <section className="relative px-6 pb-24 pt-32 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl">
-          <Link
-            to="/services"
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            <ArrowLeft className="h-3 w-3" /> Back to Services
-          </Link>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="text-4xl">{data.emoji}</span>
-            <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
-              {data.headline}
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              {data.subheading}
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                to="/start-project"
-                className="group inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
-              >
-                Get this package <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a
-                href="#how-it-works"
-                className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
-              >
-                See how it works
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── The Problem ── */}
-      <section className="px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl">
-          <ScrollReveal>
-            <SectionLabel>The Problem</SectionLabel>
-            <h2 className="text-2xl font-bold md:text-3xl">Sound familiar?</h2>
-          </ScrollReveal>
-
-          <div className="mt-10 space-y-6">
-            {data.problems.map((p, i) => (
-              <ScrollReveal key={i} delay={i * 0.1}>
-                <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6">
-                  <span className="mt-0.5 text-lg text-primary">✗</span>
-                  <p className="text-muted-foreground leading-relaxed">{p}</p>
-                </div>
-              </ScrollReveal>
-            ))}
+      <main>
+        <section className="relative px-6 pb-16 pt-32 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <Button asChild variant="outline" size="sm" className="mb-8 rounded-full"><Link to="/services"><ArrowLeft />Back to Services</Link></Button>
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}>
+              <SectionLabel>Industry packages</SectionLabel>
+              <h1 className="max-w-4xl text-3xl font-bold leading-tight md:text-5xl lg:text-6xl">{segment.title}</h1>
+              <p className="mt-4 text-2xl font-bold text-primary md:text-3xl">{segment.tagline}</p>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{content.supporting}</p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Button asChild className="h-auto whitespace-normal rounded-sm px-6 py-3"><Link to="/start-project">Get a fixed quote in 48 hours <ArrowRight /></Link></Button>
+                <Button asChild variant="outline" className="h-auto whitespace-normal rounded-sm px-6 py-3"><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a 20-minute call</a></Button>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── The Solution ── */}
-      <section className="px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl">
-          <ScrollReveal>
-            <SectionLabel>The Solution</SectionLabel>
-            <h2 className="text-2xl font-bold md:text-3xl">What's included</h2>
-          </ScrollReveal>
-
-          <div className="mt-10 space-y-4">
-            {data.items.map((item, i) => (
-              <ScrollReveal key={i} delay={i * 0.06}>
-                <div className="flex items-center justify-between rounded-lg border border-border bg-card px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <span className="text-primary">✓</span>
-                    <span className="text-sm font-medium text-foreground">{item.label}</span>
-                  </div>
-                  <span className={`text-sm font-bold ${item.free ? "text-primary" : "text-foreground"}`}>
-                    {item.price}
-                  </span>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          <ScrollReveal delay={0.3}>
-            <div className="mt-8 rounded-xl border border-primary/30 bg-primary/5 p-6 text-center">
-              <p className="text-2xl font-bold text-foreground">
-                Total: {data.total}
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">{data.totalNote}</p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ── Timeline ── */}
-      <section id="how-it-works" className="px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl">
-          <ScrollReveal>
-            <SectionLabel>How It Works</SectionLabel>
-            <h2 className="text-2xl font-bold md:text-3xl">What it looks like in practice</h2>
-          </ScrollReveal>
-
-          <div className="relative mt-12">
-            {/* Vertical line */}
-            <div className="absolute left-[19px] top-0 -z-0 hidden h-full w-px bg-border md:block" />
-
-            <div className="space-y-8">
-              {data.timeline.map((step, i) => (
-                <ScrollReveal key={i} delay={i * 0.1}>
-                  <div className="flex gap-6">
-                    <div className="flex flex-col items-center">
-                      <div className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-xs font-bold ${
-                        step.week === "Live"
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border bg-card text-foreground"
-                      }`}>
-                        {step.week === "Live" ? "✓" : i + 1}
-                      </div>
+        <section aria-labelledby="proof-heading" className="px-6 py-16 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal><SectionLabel>Selected work</SectionLabel><h2 id="proof-heading" className="text-2xl font-bold md:text-3xl">Work you can see</h2></ScrollReveal>
+            <div className={`mt-8 grid gap-6 ${content.proof.length > 1 ? "sm:grid-cols-2" : "max-w-2xl"} ${content.proof.length > 2 ? "lg:grid-cols-3" : ""}`}>
+              {content.proof.map((proof, i) => (
+                <ScrollReveal key={proof.name} delay={i * 0.08}>
+                  <article className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card">
+                    <img src={proof.image} alt={proof.alt} loading="lazy" className="aspect-[16/10] w-full object-contain" />
+                    <div className="flex flex-1 flex-col p-6">
+                      <h3 className="text-base font-bold">{proof.name}</h3>
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{proof.description}</p>
+                      {proof.link && <Button asChild variant="link" className="mt-4 justify-start self-start p-0"><Link to={proof.link}>View {proof.link.startsWith("/showcase/") ? "showcase" : "case study"}<ArrowRight /></Link></Button>}
                     </div>
-                    <div className="pb-2">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                        {step.week}
-                      </p>
-                      <h3 className="mt-1 text-base font-bold">{step.title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{step.desc}</p>
-                    </div>
-                  </div>
+                  </article>
                 </ScrollReveal>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
+        {key === "clinics" && <section aria-labelledby="compliance-heading" className="border-y border-border px-6 py-12 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl"><ScrollReveal>
+            <SectionLabel>Practice safeguards</SectionLabel><h2 id="compliance-heading" className="text-2xl font-bold md:text-3xl">Compliance panel</h2>
+            <ul className="mt-6 space-y-4">{clinicCompliance.map((point) => <li key={point} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" /><span>{point}</span></li>)}</ul>
+          </ScrollReveal></div>
+        </section>}
 
-      {/* ── CTA Strip ── */}
-      <section className="px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-4xl text-center">
-          <ScrollReveal>
-            <h2 className="text-2xl font-bold md:text-3xl">
-              Ready to get started?
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              I'll have you live in 2 weeks.
-            </p>
-            <Link
-              to="/start-project"
-              className="group mt-8 inline-flex items-center gap-2 rounded-sm bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:gap-3"
-            >
-              Get this package <ArrowRight className="h-4 w-4" />
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
+        <section id="packages" className="px-6 py-16 md:px-12 lg:px-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal><SectionLabel>Fixed scope</SectionLabel><h2 className="text-2xl font-bold md:text-3xl">Packages</h2></ScrollReveal>
+            <div className={`mt-10 grid gap-6 md:grid-cols-2 ${segment.packages.length === 3 ? "lg:grid-cols-3" : ""}`}>
+              {segment.packages.map((pkg, i) => <ScrollReveal key={pkg.id} delay={i * 0.08}>
+                <article className={`relative flex h-full flex-col rounded-xl border bg-card p-6 md:p-8 ${pkg.popular ? "border-primary" : "border-border"}`}>
+                  {pkg.popular && <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Most Popular</span>}
+                  <h3 className="text-lg font-bold">{pkg.name}</h3>
+                  <p className="mt-4 text-2xl font-bold text-primary">{priceLabel(pkg)}</p>
+                  {pkg.monthly && <p className="mt-2 text-sm text-muted-foreground">or {eur(pkg.monthly)}/mo × 12</p>}
+                  <ul className="mt-6 flex-1 space-y-3">{pkg.scope?.map((item) => <li key={item} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" /><span>{item}</span></li>)}</ul>
+                  <p className="mt-6 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">Live in {pkg.live} from a complete intake</p>
+                  <Button asChild variant={pkg.popular ? "default" : "outline"} className="mt-6 h-auto whitespace-normal rounded-sm py-3"><Link to="/start-project">Get a fixed quote in 48 hours<ArrowRight /></Link></Button>
+                </article>
+              </ScrollReveal>)}
+            </div>
+            {segment.growDigital && <ScrollReveal><p className="mt-8 border-l-2 border-primary pl-5 text-sm leading-relaxed text-muted-foreground">{grantNote}</p></ScrollReveal>}
+          </div>
+        </section>
 
-      {/* ── Mobile sticky bar ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/90 p-3 backdrop-blur-md md:hidden">
-        <Link
-          to="/start-project"
-          className="flex w-full items-center justify-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
-        >
-          💬 Get this package <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
+        {key === "food" && <section className="border-y border-border px-6 py-12 md:px-12 lg:px-24"><div className="mx-auto max-w-5xl"><ScrollReveal>
+          <SectionLabel>Direct ordering</SectionLabel><h2 className="text-2xl font-bold md:text-3xl">An illustrative payback</h2>
+          <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted-foreground">Example: on {eur(restaurantPayback.appOrdersMonthly)}/month of app orders, moving {restaurantPayback.directShare * 100}% to your own Flipdish ordering saves roughly {eur(restaurantPayback.savingsMonthly[0])}–{restaurantPayback.savingsMonthly[1]}/month after Flipdish's fee and card costs, so the {eur(orderDirect?.price ?? 0)} setup pays back in about {restaurantPayback.paybackMonths.join("–")} months.</p>
+          <p className="mt-4 text-sm text-muted-foreground">Flipdish's own fee ({eur(restaurantPayback.flipdishMonthly[0])}–{restaurantPayback.flipdishMonthly[1]}/month) is billed by Flipdish.</p>
+        </ScrollReveal></div></section>}
 
-      <div className="pb-16 md:pb-0">
-        <ServicesFooter />
-      </div>
+        <section id="care" className="px-6 py-16 md:px-12 lg:px-24"><div className="mx-auto max-w-5xl">
+          <ScrollReveal><SectionLabel>After launch</SectionLabel><h2 className="text-2xl font-bold md:text-3xl">Care plans</h2></ScrollReveal>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">{carePlans.map((plan, i) => <ScrollReveal key={plan.id} delay={i * 0.08}>
+            <article className={`relative flex h-full flex-col rounded-xl border bg-card p-6 ${plan.popular ? "border-primary" : "border-border"}`}>
+              {plan.popular && <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Most Popular</span>}
+              <h3 className="text-lg font-bold">{plan.name}</h3><p className="mt-4 text-2xl font-bold">{eur(plan.monthly)}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+              <ul className="mt-6 flex-1 space-y-3">{plan.includes.map((item) => <li key={item} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" /><span>{item === "One module for your industry" ? `Growth module: ${segment.growthModule}` : item}</span></li>)}</ul>
+              <Button asChild variant={plan.popular ? "default" : "outline"} className="mt-6 rounded-sm"><Link to="/start-project">Choose {plan.name}<ArrowRight /></Link></Button>
+            </article>
+          </ScrollReveal>)}</div>
+          <div className="mt-6 space-y-3 text-xs leading-relaxed text-muted-foreground"><p>Minimum term: {segment.careMinMonths} months</p><p>{careTerms.annualPrepay}</p><p>{careTerms.exit}</p></div>
+        </div></section>
+
+        <section className="px-6 py-16 md:px-12 lg:px-24"><div className="mx-auto max-w-5xl"><ScrollReveal>
+          <SectionLabel>Questions</SectionLabel><h2 className="text-2xl font-bold md:text-3xl">Before you book</h2>
+          <Accordion type="single" collapsible className="mt-8">{content.faqs.map((faq, i) => <AccordionItem key={faq.question} value={`faq-${i}`} className="border-border"><AccordionTrigger className="gap-4 text-left">{faq.question}</AccordionTrigger><AccordionContent className="max-w-3xl leading-relaxed text-muted-foreground">{faq.answer}</AccordionContent></AccordionItem>)}</Accordion>
+        </ScrollReveal></div></section>
+
+        <section className="px-6 pb-16 pt-8 md:px-12 lg:px-24"><div className="mx-auto max-w-5xl"><p className="text-xs leading-relaxed text-muted-foreground">{vatFootnote()} Software licences are billed to you directly.</p></div></section>
+      </main>
+      <ServicesFooter />
     </div>
   );
 };
-
 export default IndustryLanding;
