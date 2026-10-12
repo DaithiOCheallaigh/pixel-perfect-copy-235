@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import SEO from "@/components/SEO";
+import { SEO } from "@/components/SEO";
 
 const ServicesNotFound = () => {
   const { pathname } = useLocation();
