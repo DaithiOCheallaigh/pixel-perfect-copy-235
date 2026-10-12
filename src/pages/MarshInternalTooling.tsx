@@ -4,10 +4,9 @@ import { ArrowRight } from "iconsax-react";
 import { useState } from "react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import HiringCTA from "../components/HiringCTA";
+import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { CpuArchitecture } from "../components/ui/cpu-architecture";
-import { SEO } from "@/components/SEO";
 
 const products = [
   {
@@ -102,7 +101,6 @@ const MarshInternalTooling = () => {
 
   return (
     <main className="pt-24 overflow-x-hidden">
-      <SEO title="Case Study — Marsh Internal Tooling" description="Three enterprise internal tools for Marsh designed and shipped in parallel on a shared component library and an AI-accelerated workflow." url="/work/marsh-internal-tooling" />
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -140,7 +138,7 @@ const MarshInternalTooling = () => {
             <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
               <span>
                 <span className="uppercase tracking-wider">Role:</span>{" "}
-                <span className="text-foreground">Senior UI/UX Designer (contract)</span>
+                <span className="text-foreground">Freelance Product Designer</span>
               </span>
               <span>
                 <span className="uppercase tracking-wider">Deliverable:</span>{" "}
@@ -355,7 +353,7 @@ const MarshInternalTooling = () => {
       )}
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-      <HiringCTA />
+      <AvailabilityCTA />
     </main>
   );
 };

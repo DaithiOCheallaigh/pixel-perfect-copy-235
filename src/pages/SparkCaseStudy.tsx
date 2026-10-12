@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import HiringCTA from "../components/HiringCTA";
+import AvailabilityCTA from "../components/AvailabilityCTA";
 import CaseStudyVideo from "../components/CaseStudyVideo";
 import walkthroughVideo from "../assets/spark-walkthrough.mp4.asset.json";
 import claudeLogo from "@/assets/logos/claude.png";
@@ -15,7 +15,6 @@ import { projects } from "../data/projects";
 import { Branches, Exploded, Riffle } from "@lucasmarkes/hairline/react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { SEO } from "@/components/SEO";
 
 const roleBreakdown = [
   {
@@ -134,7 +133,6 @@ const SparkCaseStudy = () => {
 
   return (
     <main className="pt-24 overflow-x-hidden">
-      <SEO title="Case Study — MedEd Workspace" description="Private Elsevier MedEd Workspace case study by Dave Kelly." url="/work/spark" noindex />
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -379,6 +377,29 @@ const SparkCaseStudy = () => {
         </div>
       </section>
 
+      {/* 6. PROCESS IMAGE PLACEHOLDER */}
+      <section className="px-6 py-8 md:px-12 lg:px-24">
+        <div className="mx-auto max-w-5xl">
+          <ScrollReveal>
+            <SectionLabel>Process Artefacts</SectionLabel>
+            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
+              Placeholder for workflow diagrams, design-pit artefacts, or the internal workbench tool
+              interface.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div className="overflow-hidden rounded-xl border border-border">
+              <div className="flex aspect-[16/10] w-full items-center justify-center bg-muted/50">
+                <span className="font-mono-label text-center px-6 text-muted-foreground">
+                  [Placeholder — Faculty insights dashboard screenshot]
+                </span>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+
       {/* 8. OUTCOMES */}
       <section className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">
@@ -431,7 +452,7 @@ const SparkCaseStudy = () => {
       </section>
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-      <HiringCTA />
+      <AvailabilityCTA />
     </main>
   );
 };

@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import HiringCTA from "../components/HiringCTA";
+import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
-import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
+import { SEO } from "../components/SEO";
 import { ShineBorder } from "../components/ui/shine-border";
 import DesignHandoffCarousel from "../components/DesignHandoffCarousel";
 import tipdirectPricing from "../assets/images/tipdirect-pricing.webp";
@@ -1636,7 +1636,7 @@ const CaseStudy = () => {
       }
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-      <HiringCTA />
+      <AvailabilityCTA />
 
       {/* Lightbox overlay */}
       <AnimatePresence>

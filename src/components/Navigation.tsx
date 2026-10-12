@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { ShineBorder } from "./ui/shine-border";
-import { CV_URL } from "@/data/profile";
 import avatarImg from "@/assets/avatar.jpeg";
 
 const Navigation = ({ visible }: { visible: boolean }) => {
@@ -11,17 +10,13 @@ const Navigation = ({ visible }: { visible: boolean }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const links = [
-    { label: "Work", to: "/work" },
-    { label: "Skills", to: "/skills" },
+    { label: "My Work", to: "/work" },
+    { label: "Skill Set", to: "/skills" },
     { label: "About", to: "/about" },
     { label: "Blog", to: "/blog" },
-    { label: "AI Process", to: "/ai-design-process" },
-    { label: "Contact", to: "/about#contact" },
   ];
 
-  const isActive = (path: string) => path === "/about#contact"
-    ? location.pathname === "/about" && location.hash === "#contact"
-    : location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <motion.header
@@ -41,10 +36,10 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               className="rounded-full"
             />
           </div>
-          <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="hidden sm:inline text-muted-foreground font-normal">| Senior Product Designer</span></span>
+          <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="text-muted-foreground font-normal">| AI Designer</span></span>
         </Link>
 
-        <nav className="hidden items-center gap-4 lg:gap-6 xl:gap-8 lg:flex">
+        <nav className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
             <Link
               key={link.to}
@@ -57,17 +52,15 @@ const Navigation = ({ visible }: { visible: boolean }) => {
             </Link>
           ))}
           <ThemeToggle />
-          <a
-            href={CV_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/start-project"
             className="group inline-flex items-center gap-1.5 rounded-sm bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:gap-2.5"
           >
-            Download CV <span>↓</span>
-          </a>
+            Get Started <span>→</span>
+          </Link>
         </nav>
 
-        <div className="flex items-center gap-3 lg:hidden">
+        <div className="flex items-center gap-3 md:hidden">
           <ThemeToggle />
           <button
             className="flex flex-col gap-1.5"
@@ -82,7 +75,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
       </div>
 
       <motion.div
-        className="border-t border-border lg:hidden"
+        className="border-t border-border md:hidden"
         initial={false}
         animate={{ height: mobileOpen ? "auto" : 0, opacity: mobileOpen ? 1 : 0 }}
         transition={{ duration: 0.3 }}
@@ -99,15 +92,20 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               {link.label}
             </Link>
           ))}
-          <a
-            href={CV_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/ai-design-process"
+            onClick={() => setMobileOpen(false)}
+            className={`text-lg font-semibold transition-colors ${isActive("/ai-design-process") ? "text-primary" : "text-foreground"}`}
+          >
+            AI Process
+          </Link>
+          <Link
+            to="/start-project"
             onClick={() => setMobileOpen(false)}
             className="inline-flex items-center gap-2 text-lg font-semibold text-primary"
           >
-            Download CV <span>↓</span>
-          </a>
+            Get Started →
+          </Link>
         </nav>
       </motion.div>
     </motion.header>

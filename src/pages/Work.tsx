@@ -1,21 +1,11 @@
 import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import HiringCTA from "../components/HiringCTA";
+import AvailabilityCTA from "../components/AvailabilityCTA";
 import { projects } from "../data/projects";
 import { ShineBorder } from "../components/ui/shine-border";
-import { PortfolioSEO as SEO } from "../components/PortfolioSEO";
+import { SEO } from "../components/SEO";
 import { LockKeyhole } from "lucide-react";
-
-export const WORK_ORDER = ["marsh-design-system", "marsh-internal-tooling", "spark", "ai-reviews", "digital-tipping", "whitelabel", "admin-dashboard", "tipdirect-app", "booking-app", "website-tipdirect", "spotify"];
-
-export function orderVisibleProjects<T extends { id: string; comingSoon?: boolean }>(items: readonly T[]): T[] {
-  const rank = (id: string) => {
-    const index = WORK_ORDER.indexOf(id);
-    return index < 0 ? WORK_ORDER.length : index;
-  };
-  return items.filter((project) => !project.comingSoon).sort((a, b) => rank(a.id) - rank(b.id));
-}
 
 const Work = () => (
   <main className="pt-24">
@@ -28,13 +18,38 @@ const Work = () => (
             My Work
           </h1>
           <p className="mb-16 max-w-xl text-lg text-muted-foreground">
-            Selected case studies across enterprise tools, design systems and consumer products.
+            A selection of projects spanning UI/UX design, product strategy, and digital transformation.
           </p>
         </ScrollReveal>
 
         <div className="grid gap-8 sm:grid-cols-2 [&>*]:h-full">
-          {orderVisibleProjects(projects).map((project, i) => (
+          {projects.map((project, i) => (
             <ScrollReveal key={project.id} delay={i * 0.08}>
+              {project.comingSoon ? (
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card opacity-50">
+                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+                  <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
+                    <img
+                      src={project.pillImage}
+                      alt={project.title}
+                      className="no-lightbox h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="text-lg font-bold text-foreground md:text-xl">{project.title}</h3>
+                    <p className="mt-1 flex-1 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
+                    <div className="mt-4 flex items-center justify-between">
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="font-mono-label text-xs text-muted-foreground">{tag}</span>
+                        ))}
+                      </div>
+                      <span className="font-mono-label text-muted-foreground">Coming Soon</span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
                 <Link
                   to={project.id === "marsh-internal-tooling" ? "/work/marsh-internal-tooling" : project.id === "marsh-design-system" ? "/work/marsh-design-system" : project.id === "spark" ? "/work/spark" : `/case/${project.id}`}
                   className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
@@ -67,6 +82,7 @@ const Work = () => (
                     </div>
                   </div>
                 </Link>
+              )}
             </ScrollReveal>
           ))}
         </div>
@@ -74,7 +90,7 @@ const Work = () => (
     </section>
 
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-    <HiringCTA />
+    <AvailabilityCTA />
   </main>
 );
 
