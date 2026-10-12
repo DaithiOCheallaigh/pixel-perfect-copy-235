@@ -35,3 +35,9 @@
 - [x] Update homepage, featured work, About experience and recruiter password contact using supplied copy.
 - [x] Replace portfolio availability sections and remove commercial links and dependencies.
 - [x] Run 180 passing tests, confirm error-free preview build, audit protected files and verify desktop/mobile portfolio and contact navigation.
+
+# Portfolio skills, writing and project accuracy
+- [x] Update supplied skills, author sign-off and portfolio sitemap.
+- [x] Correct project attribution, Marsh roles and visible work ordering.
+- [x] Preserve deleted blog URLs with tested redirects; retained writing contains no prohibited sales passages.
+- [x] Run 190 passing tests and desktop/mobile preview checks; clean build and backend unchanged. Literal audit exceptions are existing asset URLs containing LacunaPortfolioSite and tour-booking availability prose, not commercial offers.

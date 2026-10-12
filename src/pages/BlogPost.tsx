@@ -1,3 +1,4 @@
+import { LINKEDIN_URL } from "@/data/profile";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -124,6 +125,10 @@ const BlogPost = () => {
           </motion.div>
         </div>
       </article>
+
+      <p className="mx-auto mt-12 max-w-3xl px-6 text-sm text-muted-foreground">
+        Dave Kelly is a senior product designer in Dublin working across design systems, product strategy and AI-assisted delivery. Read his <Link to="/work" className="text-primary">case studies</Link> or find him on <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="text-primary">LinkedIn</a>.
+      </p>
 
       {/* ─── Separator ─── */}
       <div className="mx-auto my-16 max-w-3xl px-6">

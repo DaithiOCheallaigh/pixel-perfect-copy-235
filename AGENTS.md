@@ -15,3 +15,5 @@
 - Generate public/llms.txt pricing with scripts/generate-llms.ts from the shared catalogue; this keeps the static discovery document aligned with frontend prices.
 - Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
 - Portfolio pages use PortfolioSEO and HiringCTA, while commercial pages retain SEO and AvailabilityCTA; this isolates metadata branding and hiring contact from commercial offers.
+
+- Work filters and sorts a copy of the project catalogue independently of catalogue order; this preserves other consumers while prioritising recruiter case studies.
