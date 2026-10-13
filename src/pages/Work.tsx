@@ -9,7 +9,7 @@ import { LockKeyhole } from "lucide-react";
 
 const Work = () => (
   <main className="pt-24">
-    <SEO title="Work" description="Selected product design case studies by Dave Kelly: enterprise tools and design systems for Marsh, healthcare education for Elsevier, and TipDirect consumer apps." />
+    <SEO title="Work" description="Product design case studies by Dave Kelly: enterprise tools and design systems for Marsh, healthcare education for Elsevier, and TipDirect consumer apps." />
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>
