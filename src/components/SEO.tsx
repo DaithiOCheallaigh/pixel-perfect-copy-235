@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { CONTACT_EMAIL } from '@/data/pricing';
@@ -24,6 +25,13 @@ export function SEO({
   noindex,
 }: SEOProps) {
   const { pathname } = useLocation();
+  // index.html carries static fallback tags for non-JS link unfurlers; once a page renders its own
+  // managed tags, drop the static copies so crawlers that run JS see exactly one of each.
+  useEffect(() => {
+    document.head
+      .querySelectorAll('meta[name="description"]:not([data-rh]), meta[name="robots"]:not([data-rh]), meta[property^="og:"]:not([data-rh]), meta[name^="twitter:"]:not([data-rh])')
+      .forEach(tag => tag.remove());
+  }, []);
   const isServices = pathname === '/services' || pathname.startsWith('/services/');
   const fullTitle = isServices ? `${title} | Lacuna Digital` : title === 'Home' ? 'Dave Kelly — Senior Product Designer' : `${title} | Dave Kelly`;
   const siteName = isServices ? 'Lacuna Digital' : 'Dave Kelly';
@@ -44,10 +52,10 @@ export function SEO({
   }] : [];
 
   return (
-    <Helmet>
+    <Helmet defer={false}>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      {noindex && <meta name="robots" content="noindex,nofollow" />}
+      <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
       <link rel="canonical" href={canonicalUrl} />
       {/* Open Graph */}
       <meta property="og:type" content={type} />

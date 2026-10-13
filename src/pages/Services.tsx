@@ -367,7 +367,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Services" description="I help small businesses get found online and run smarter — websites, AI tools, automations, and more." url="/services" />
+      <SEO title="Websites, AI & Automation for Irish SMEs" description="Lacuna Digital builds fixed-quote websites, booking systems, AI tools and automations for Irish small businesses, designed and built by Dave Kelly in Dublin." />
 
       {/* ── Hero ── */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-16 md:px-12 lg:px-24">
@@ -382,7 +382,7 @@ const Services = () => {
               LACUNA DIGITAL — SERVICES
             </span>
             <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl">
-              Get found, get booked,
+              Get found, get booked,{" "}
               <br />
               <span className="text-primary">get paid.</span>
             </h1>

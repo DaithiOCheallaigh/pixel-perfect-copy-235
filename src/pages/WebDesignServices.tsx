@@ -34,11 +34,11 @@ const extras = [
   ["Extra work", `${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks`],
 ];
 const WebDesignServices = () => {
-  const description = `Professional business websites from ${eur(webLadder[0]?.price ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery.`;
+  const description = `Professional business websites from ${eur(webLadder[0]?.price ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery from Dublin, for clinics, trades, salons and more.`;
   usePageDescription(description);
   return (
   <main className="bg-background pt-24 text-foreground">
-    <SEO title="Websites for professional services & other businesses" description={description} url="/services/web-design" />
+    <SEO title="Business Website Design in Dublin" description={description} />
     <section className="px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Web Design</SectionLabel>

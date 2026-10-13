@@ -8,7 +8,7 @@ import { SEO } from "../components/SEO";
 
 const Blog = () => (
   <main className="pt-24">
-    <SEO title="Blog" description="Thoughts on design, AI workflows, freelance consulting, and building digital products for SMEs." url="/blog" />
+    <SEO title="Blog" description="Writing by Dave Kelly on product design, fluid interfaces, design systems, AI-assisted design workflows and how the role of the designer is changing in 2026." />
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>

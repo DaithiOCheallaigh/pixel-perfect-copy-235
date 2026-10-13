@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -175,6 +176,7 @@ const ShowcaseAdmin = () => {
   if (!authenticated) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background px-6">
+      <SEO title="Showcase Admin" description="Private Lacuna Digital admin panel for creating client showcase entries, tracking their status and reviewing interested leads. Not for search engines." noindex />
         <form onSubmit={handleLogin} className="w-full max-w-sm space-y-4">
           <div className="flex items-center gap-2 mb-6">
             <Lock className="h-5 w-5 text-muted-foreground" />
@@ -199,6 +201,7 @@ const ShowcaseAdmin = () => {
 
   return (
     <div className="min-h-screen bg-background px-6 py-8">
+      <SEO title="Showcase Admin" description="Private Lacuna Digital admin panel for creating client showcase entries, tracking their status and reviewing interested leads. Not for search engines." noindex />
       <div className="mx-auto max-w-5xl">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-xl font-semibold text-foreground">Showcase Admin</h1>

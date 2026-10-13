@@ -5,6 +5,7 @@ import { useState } from "react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
+import { SEO } from "@/components/SEO";
 import { projects } from "../data/projects";
 import { CpuArchitecture } from "../components/ui/cpu-architecture";
 
@@ -101,6 +102,7 @@ const MarshInternalTooling = () => {
 
   return (
     <main className="pt-24 overflow-x-hidden">
+      <SEO title="Marsh Internal Tooling" description="Three Marsh internal enterprise tools designed and shipped in parallel by Dave Kelly, using an AI-accelerated workflow and the shared CORE component library." image={`https://www.lacunadigital.io${project?.pillImage ?? "/images/work/marsh-core.webp"}`} />
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">

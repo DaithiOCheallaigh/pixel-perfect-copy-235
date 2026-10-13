@@ -47,11 +47,11 @@ const faqs = [
 ];
 
 const ProductStudio = () => {
-  const description = `Fixed-fee AI audits (${eur(entry.aiAudit.price)}), automation sprints, UX audits and AI-built prototypes — senior, designer-led.`;
+  const description = `Fixed-fee AI audits (${eur(entry.aiAudit.price)}), automation sprints, UX audits and AI-built prototypes for product teams and growing firms, senior and designer-led from Dublin.`;
   usePageDescription(description);
   return (
   <main className="bg-background pt-24 text-foreground">
-    <SEO title="Product Studio" description={description} url="/services/product-studio" />
+    <SEO title="Product Studio: AI Audits & Prototypes" description={description} />
     <section className="relative px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Product Studio</SectionLabel>

@@ -90,7 +90,7 @@ const capabilities: { category: string; items: { label: string; id: string }[] }
 
 const Skills = () => (
   <main className="pt-24">
-    <SEO title="Skills" description="UI/UX design, AI-assisted workflows, design systems, and digital strategy — the full stack of what I bring to a project." url="/skills" />
+    <SEO title="Skills" description="Dave Kelly's product design skill set: UX research, UI and interaction design, design systems, prototyping, AI-assisted workflows and front-end collaboration." />
     <section className="px-6 py-24 md:px-12 lg:px-24">
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { ExternalLink } from "lucide-react";
 
@@ -39,7 +40,7 @@ const BioPage = () => {
   if (loading) return <div className="flex min-h-screen items-center justify-center bg-background"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>;
   if (notFound || !bio) return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center text-foreground">
-      <Helmet><meta name="robots" content="noindex,nofollow" /></Helmet>
+      <SEO title="Page not found" description="This link-in-bio page doesn't exist or has been removed. Check the address you were given, or create your own free link page with Lacuna Digital." noindex />
       <h1 className="text-2xl font-bold">Page not found</h1>
       <p className="mt-2 text-muted-foreground">This link page doesn't exist.</p>
       <Link to="/services/tools/link-in-bio" className="mt-4 text-sm font-medium text-primary underline">Create your own →</Link>
@@ -51,8 +52,9 @@ const BioPage = () => {
 
   return (
     <>
-      <Helmet>
+      <Helmet defer={false}>
         <title>{bio.name}</title>
+        <meta name="robots" content="noindex,nofollow" />
         <meta name="description" content={bio.tagline || bio.name} />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:type" content="website" />

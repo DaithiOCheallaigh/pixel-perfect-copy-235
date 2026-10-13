@@ -6,7 +6,7 @@ const GetStarted = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-foreground">
-      <SEO title="Get Started" description="Tell us about your business and get a personalised recommendation in minutes." url="/services/get-started" />
+      <SEO title="Get Started" description="Answer a few quick questions about your business and Lacuna Digital will recommend the right website, booking or automation package for you in minutes." />
 
       <section className="flex min-h-screen flex-col items-center justify-center px-6 pb-12 pt-24">
         <motion.div

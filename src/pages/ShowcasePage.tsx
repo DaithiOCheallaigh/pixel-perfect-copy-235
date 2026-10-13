@@ -5,6 +5,8 @@ import ShowcaseInterestBar from "@/components/showcase/ShowcaseInterestBar";
 import ShowcaseInterestModal from "@/components/showcase/ShowcaseInterestModal";
 import ShowcaseNotFound from "@/components/showcase/ShowcaseNotFound";
 import { Loader2 } from "lucide-react";
+import { SEO } from "@/components/SEO";
+import { fitDescription } from "@/lib/seoDescription";
 
 // Registry of showcase mockup components by slug
 const MOCKUP_REGISTRY: Record<string, React.LazyExoticComponent<React.ComponentType>> = {
@@ -67,25 +69,6 @@ const ShowcasePage = () => {
     fetchEntry();
   }, [slug]);
 
-  // Set document title
-  useEffect(() => {
-    if (entry) {
-      document.title = entry.business_name;
-      // Add noindex meta
-      let meta = document.querySelector('meta[name="robots"]');
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.setAttribute("name", "robots");
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute("content", "noindex, nofollow");
-    }
-    return () => {
-      document.title = "Lacuna Digital";
-      const meta = document.querySelector('meta[name="robots"]');
-      if (meta) meta.setAttribute("content", "");
-    };
-  }, [entry]);
 
   if (loading) return (
     <div className="flex min-h-screen items-center justify-center bg-background">
@@ -116,6 +99,7 @@ const ShowcasePage = () => {
 
   return (
     <div className={`min-h-screen bg-background ${slug !== "dc-woodworks" ? "pb-24" : ""}`}>
+      <SEO title={entry.business_name} description={fitDescription(`A private website concept prepared by Lacuna Digital for ${entry.business_name}.`, "Have a look through the design and let us know if you would like to take it further.")} noindex />
       {MockupComponent ? (
         <Suspense fallback={
           <div className="flex items-center justify-center min-h-[60vh]">

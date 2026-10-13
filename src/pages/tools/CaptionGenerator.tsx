@@ -78,8 +78,8 @@ const CaptionGenerator = () => {
     <ToolLayout
       title="Social Caption Generator"
       description="AI writes captions with hashtags for any platform, in your tone."
-      metaTitle="Free Social Caption Generator — Lacuna Digital"
-      metaDescription="Generate social media captions with AI. Tailored to your platform, tone, and business. Free."
+      metaTitle="Free Social Caption Generator"
+      metaDescription="Generate ready-to-post social media captions with AI, tailored to your platform, tone and business. A free Lacuna Digital tool for busy small business owners."
     >
       {captions.length === 0 ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">

@@ -4,6 +4,7 @@ import { ArrowRight } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
+import { SEO } from "@/components/SEO";
 import { projects } from "../data/projects";
 import claudeLogo from "@/assets/logos/claude.png";
 
@@ -39,6 +40,7 @@ const MarshDesignSystem = () => {
 
   return (
     <main className="pt-24 overflow-x-hidden">
+      <SEO title="Marsh Design System" description="How Dave Kelly rebuilt the Marsh McLennan design system: tokens, a Figma component library and Storybook documentation for consistent enterprise products." image={`https://www.lacunadigital.io${project?.pillImage ?? "/images/work/marsh-design-system.webp"}`} />
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">

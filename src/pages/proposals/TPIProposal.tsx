@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -152,12 +152,6 @@ const whyPoints = [
 const TPIProposal = () => {
   const [activeSection, setActiveSection] = useState("summary");
 
-  useEffect(() => {
-    document.title = "AI Integration Proposal — The Printed Image | Lacuna Digital";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", "AI Operations Hub proposal for The Printed Image — five modular AI solutions connecting your existing systems.");
-  }, []);
-
   /* intersection observer for sticky nav highlight */
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -186,7 +180,7 @@ const TPIProposal = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet><meta name="robots" content="noindex,nofollow" /></Helmet>
+      <SEO title="AI Integration Proposal: The Printed Image" description="Private AI Operations Hub proposal for The Printed Image from Lacuna Digital: five modular AI solutions that connect your existing systems and cut manual admin." noindex />
       {/* ── sticky section nav ── */}
       <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center gap-1 overflow-x-auto px-4 py-3 scrollbar-hide md:justify-center md:gap-2">
