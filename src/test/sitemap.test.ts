@@ -22,7 +22,7 @@ describe("public sitemap boundaries", () => {
 
   it("caps all services priorities at 0.6", () => {
     const services = entries.filter(entry => entry.getElementsByTagName("loc")[0].textContent?.includes("/services"));
-    expect(services.length).toBe(42);
+    expect(services.length).toBe(45);
     for (const entry of services) {
       expect(Number(entry.getElementsByTagName("priority")[0].textContent)).toBeLessThanOrEqual(0.6);
     }
@@ -34,10 +34,10 @@ describe("public sitemap boundaries", () => {
     }
   });
 
-  it("uses the owner's supplied fixed content-change date", () => {
-    expect(entries.length).toBe(66);
+  it("omits uniform lastmod dates", () => {
+    expect(entries.length).toBe(69);
     for (const entry of entries) {
-      expect(entry.getElementsByTagName("lastmod")[0].textContent).toBe("2026-10-12");
+      expect(entry.getElementsByTagName("lastmod")).toHaveLength(0);
     }
   });
 

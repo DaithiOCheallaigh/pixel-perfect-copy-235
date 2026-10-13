@@ -137,6 +137,18 @@
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://www.lacunadigital.io/services/tools/link-in-bio</loc>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.lacunadigital.io/services/tools/review-link</loc>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.lacunadigital.io/services/tools/caption-generator</loc>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://www.lacunadigital.io/services/get-started</loc>
     <priority>0.4</priority>
   </url>
