@@ -125,7 +125,7 @@ const LinkInBio = () => {
       title="Link-in-Bio Builder"
       description="Build a beautiful mobile-optimised link page — free."
       metaTitle="Free Link-in-Bio Builder"
-      metaDescription="Build a free, mobile-optimised link-in-bio page for your business with your logo, links and colour theme, then share it on Instagram, TikTok and Google profiles."
+      metaDescription="Build a free, mobile-optimised link-in-bio page for your business with your logo, links and colour theme, then share it on Instagram, TikTok and Google."
     >
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Inputs */}

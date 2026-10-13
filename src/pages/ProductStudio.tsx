@@ -47,7 +47,7 @@ const faqs = [
 ];
 
 const ProductStudio = () => {
-  const description = `Fixed-fee AI audits (${eur(entry.aiAudit.price)}), automation sprints, UX audits and AI-built prototypes for product teams and growing businesses, senior and designer-led from Dublin.`;
+  const description = `Fixed-fee AI audits (${eur(entry.aiAudit.price)}), automation sprints, UX audits and AI-built prototypes for product teams and growing firms, senior and designer-led from Dublin.`;
   usePageDescription(description);
   return (
   <main className="bg-background pt-24 text-foreground">

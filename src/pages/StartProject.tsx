@@ -299,7 +299,7 @@ const StartProject = () => {
 
   return (
     <div className="min-h-screen">
-      <SEO title="Start a Project" description="Tell Lacuna Digital about your project in three short steps and get a fixed quote for your website, booking system, AI tool or automation within two working days." />
+      <SEO title="Start a Project" description="Tell Lacuna Digital about your project in three short steps and get a fixed quote for your website, booking system, AI tool or automation in two working days." />
       {/* Top accent border */}
       <div className="h-[2px] w-full bg-gradient-to-r from-[#8b4513] via-[#a0522d] to-[#8b4513]" />
 

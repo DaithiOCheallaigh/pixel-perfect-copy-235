@@ -367,7 +367,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Websites, AI & Automation for Irish SMEs" description="Lacuna Digital builds fixed-quote websites, booking systems, AI tools and automations for Irish small businesses, designed and delivered by Dave Kelly in Dublin." />
+      <SEO title="Websites, AI & Automation for Irish SMEs" description="Lacuna Digital builds fixed-quote websites, booking systems, AI tools and automations for Irish small businesses, designed and built by Dave Kelly in Dublin." />
 
       {/* ── Hero ── */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-16 md:px-12 lg:px-24">
