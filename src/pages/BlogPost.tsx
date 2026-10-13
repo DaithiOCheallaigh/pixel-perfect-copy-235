@@ -6,6 +6,7 @@ import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
+import { fitDescription } from "@/lib/seoDescription";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,17 +35,17 @@ const BlogPost = () => {
     <main className="pt-24">
       <SEO
         title={post.title}
-        description={post.excerpt}
+        description={fitDescription(post.excerpt, "Written by Dave Kelly, senior product designer in Dublin.")}
         image={`https://www.lacunadigital.io${post.image}`}
-        url={`/blog/${post.id}`}
         type="article"
         jsonLd={{
           "@context": "https://schema.org",
-          "@type": "Article",
+          "@type": "BlogPosting",
           headline: post.title,
           description: post.excerpt,
           image: `https://www.lacunadigital.io${post.image}`,
-          datePublished: post.date,
+          datePublished: post.dateISO,
+          dateModified: post.dateISO,
           author: { "@type": "Person", name: "Dave Kelly" },
           publisher: {
             "@type": "Organization",
@@ -90,7 +91,7 @@ const BlogPost = () => {
             </h1>
 
             <p className="font-mono text-sm text-muted-foreground">
-              First published: {post.date} · {post.readTime}
+              First published: <time dateTime={post.dateISO}>{post.date}</time> · {post.readTime}
             </p>
           </motion.div>
         </div>

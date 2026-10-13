@@ -13,6 +13,8 @@ export interface BlogPost {
   id: string;
   title: string;
   date: string;
+  /** ISO 8601 publication date used for <time> and structured data. */
+  dateISO: string;
   readTime: string;
   image: string;
   excerpt: string;
@@ -24,6 +26,7 @@ export const blogPosts: BlogPost[] = [
     id: "8-principles-fluid-interfaces",
     title: "8 Principles for Crafting Fluid Interfaces",
     date: "March 20, 2026",
+    dateISO: "2026-03-20",
     readTime: "13 min read",
     image: "/images/blog/fluid-interfaces.jpg",
     excerpt:
@@ -144,6 +147,7 @@ export const blogPosts: BlogPost[] = [
     id: "2026-new-norm-designers",
     title: "2026: The New Norm For Designers",
     date: "March 3, 2026",
+    dateISO: "2026-03-03",
     readTime: "12 min read",
     image: "/images/blog/2026-new-norm-designers.webp",
     excerpt: "The year the design process stopped being a process. Engineers spin up coding agents, prototype in hours, and ship before designers finish exploring. Here's what that means.",
@@ -278,6 +282,7 @@ export const blogPosts: BlogPost[] = [
     id: "navigating-design-2025",
     title: "Navigating Design in 2025: Challenges and Opportunities in a Transformed Industry",
     date: "October 22, 2025",
+    dateISO: "2025-10-22",
     readTime: "5 min read",
     image: "/images/blog/navigating-design-2025.webp",
     excerpt: "The design industry stands at a fascinating crossroads in 2025. Exploring the perfect storm of 5 challenges and 8 strategies for designers to thrive.",
@@ -349,6 +354,7 @@ export const blogPosts: BlogPost[] = [
     id: "strategic-ux",
     title: 'Why Strategic UX Design Matters More Than Making Things "Look Good"',
     date: "October 22, 2025",
+    dateISO: "2025-10-22",
     readTime: "7 min read",
     image: "/images/blog/strategic-ux.webp",
     excerpt: "Most SMEs treat design as decoration. Here's why strategic UX design is the difference between a product people use and one they love — and how to tell if you need it.",
@@ -392,6 +398,7 @@ export const blogPosts: BlogPost[] = [
     id: "design-trends-2025",
     title: "Design Trends to Watch in 2025: Shaping the Future of Digital Aesthetics",
     date: "November 21, 2024",
+    dateISO: "2024-11-21",
     readTime: "8 min read",
     image: "/images/blog/design-trends-2025.webp",
     excerpt: "As we approach 2025, design evolves at an unprecedented pace. Exploring 9 key trends from immersive 3D experiences to ethical and inclusive design.",
@@ -446,6 +453,7 @@ export const blogPosts: BlogPost[] = [
     id: "partner-for-agencies",
     title: "Why Lacuna Digital is the Perfect Partner for Agencies",
     date: "November 21, 2024",
+    dateISO: "2024-11-21",
     readTime: "6 min read",
     image: "/images/blog/partner-for-agencies.webp",
     excerpt: "8 reasons Lacuna Digital is ideal for agency partnerships — from comprehensive digital expertise to dedicated support and continuous innovation.",
@@ -488,6 +496,7 @@ export const blogPosts: BlogPost[] = [
     id: "benefits-digital-agency",
     title: "The Benefits of Using A Digital Agency",
     date: "November 19, 2024",
+    dateISO: "2024-11-19",
     readTime: "6 min read",
     image: "/images/blog/benefits-digital-agency.webp",
     excerpt: "Lacuna Digital is an end-to-end digital agency offering comprehensive solutions, local expertise with a global perspective, and scalable solutions for growing businesses.",

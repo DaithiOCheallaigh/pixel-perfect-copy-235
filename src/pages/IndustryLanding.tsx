@@ -5,6 +5,7 @@ import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import { SEO } from "@/components/SEO";
+import { fitDescription } from "@/lib/seoDescription";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CALENDLY_URL, carePlans, careTerms, eur, priceLabel, monthlyLabel, restaurantPayback, segments, vatFootnote } from "@/data/pricing";
@@ -18,7 +19,7 @@ const IndustryLanding = () => {
   const key = getSegmentKey(slug);
   if (!key) return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6 text-foreground">
-      <SEO title="Page not found" description="This industry page is not available." url={`/services/${slug ?? ""}`} noindex />
+      <SEO title="Page not found" description="This Lacuna Digital industry page isn't available. Browse the services overview for websites, booking systems and automation built for Irish small businesses." noindex />
       <div className="text-center"><h1 className="text-2xl font-bold">Page not found</h1><Button asChild variant="link" className="mt-4"><Link to="/services"><ArrowLeft />Back to Services</Link></Button></div>
     </main>
   );
@@ -29,7 +30,7 @@ const IndustryLanding = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title={segment.title} description={`${content.metaCategory} from ${lowest ? priceLabel(lowest) : "a fixed quote"}. ${segment.tagline}`} url={`/services/${segment.slug}`} />
+      <SEO title={`${segment.title} Websites in Dublin`} description={fitDescription(`${content.metaCategory} from ${lowest ? priceLabel(lowest) : "a fixed quote"}.`, segment.tagline, "Fixed scope, clear payment terms and a free 20-minute call with Dave Kelly in Dublin.")} />
       <main>
         <section className="relative px-6 pb-16 pt-32 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">

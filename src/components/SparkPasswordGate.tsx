@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SEO } from '@/components/SEO';
 import { supabase } from '@/integrations/supabase/client';
-import { Helmet } from 'react-helmet-async';
 
 const storageKey = 'spark-project-access';
 
@@ -64,8 +63,7 @@ export default function SparkPasswordGate({ children }: { children: ReactNode })
   if (authorized) return <>{children}</>;
   return (
     <main className="flex min-h-screen items-center justify-center px-6 pt-24 text-foreground">
-      <SEO title="MedEd Workspace — Password protected" description="Private MedEd Workspace case study by Lacuna Digital." url="/work/spark" />
-      <Helmet><meta name="robots" content="noindex, nofollow" /></Helmet>
+      <SEO title="MedEd Workspace (password protected)" description="Password-protected case study by Dave Kelly on MedEd Workspace, a healthcare-education product for Elsevier. Enter the password you were sent to view it." noindex />
       <div className="w-full max-w-sm py-24">
         <LockKeyhole className="mb-6 h-8 w-8 text-primary" aria-hidden="true" />
         <h1 className="mb-4 text-4xl font-black">MedEd Workspace</h1>

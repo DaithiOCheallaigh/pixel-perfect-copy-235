@@ -5,11 +5,11 @@ import { workingTerms } from "@/data/workingTerms";
 import { usePageDescription } from "@/hooks/usePageDescription";
 
 const Terms = () => {
-  const description = "Plain-English project terms: payment, care plans, revisions, content deadlines and third-party services.";
+  const description = "Lacuna Digital's plain-English project terms covering payment stages, care plans, revisions, content deadlines, AI disclosure and third-party services.";
   usePageDescription(description);
   return (
     <main className="px-6 pb-24 pt-32 md:px-12">
-      <SEO title="Terms" description={description} url="/services/terms" />
+      <SEO title="Project Terms" description={description} />
       <div className="mx-auto max-w-3xl">
         <SectionLabel>Working together</SectionLabel>
         <h1 className="mt-4 text-4xl font-extrabold md:text-6xl">Terms</h1>

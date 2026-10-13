@@ -1,4 +1,5 @@
 import { SEO } from "@/components/SEO";
+import { fitDescription } from "@/lib/seoDescription";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
@@ -17,7 +18,7 @@ const ServicePage = () => {
   if (!service) {
     return (
       <main className="flex min-h-screen items-center justify-center pt-24">
-        <SEO title="Page not found" description="This page doesn't exist." noindex />
+        <SEO title="Page not found" description="This Lacuna Digital service page doesn't exist or has moved. Browse the services overview to find websites, AI tools and automation for small businesses." noindex />
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground">Service not found</h1>
           <Link to="/services" className="mt-4 inline-block text-primary">← All services</Link>
@@ -32,7 +33,7 @@ const ServicePage = () => {
 
   return (
     <main className="pt-24">
-      <SEO title={service.title} description={service.metaDescription ?? service.intro.slice(0, 155)} url={`/services/expertise/${service.id}`} />
+      <SEO title={/dublin/i.test(service.title) ? service.title : `${service.title} Services in Dublin`} description={fitDescription(service.metaDescription, service.intro)} />
       {/* Hero */}
       <section className="px-6 pt-12 pb-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-4xl">

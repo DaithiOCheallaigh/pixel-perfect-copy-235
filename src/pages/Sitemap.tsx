@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { SEO } from "@/components/SEO";
 import { blogPosts } from "@/data/blogPosts";
 import { projects } from "@/data/projects";
 
@@ -24,16 +24,11 @@ const dedicatedRoutes: Record<string, string> = {
 };
 
 const Sitemap = () => {
-  useEffect(() => {
-    document.title = "Sitemap — Lacuna Digital";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", "Full sitemap of Lacuna Digital — browse all pages, services, case studies, and blog posts.");
-    return () => { document.title = "Lacuna Digital"; };
-  }, []);
 
 
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
+      <SEO title="Sitemap" description="Every page on Dave Kelly's product design portfolio in one place: the home page, work, about, skills, AI design process, case studies and all blog posts." />
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Sitemap</h1>
         <p className="text-muted-foreground mb-12 text-sm">All pages on lacunadigital.io</p>

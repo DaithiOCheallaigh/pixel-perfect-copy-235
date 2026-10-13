@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
@@ -133,6 +134,7 @@ const SparkCaseStudy = () => {
 
   return (
     <main className="pt-24 overflow-x-hidden">
+      <SEO title="MedEd Workspace" description="Private case study: designing MedEd Workspace, a healthcare-education product for Elsevier, with shared components, parallel squads and faster design handoff." image={`https://www.lacunadigital.io${project?.pillImage ?? "/images/work/spark-pill.webp"}`} noindex />
       {/* 1. HERO */}
       <section className="px-6 pb-8 md:px-12 lg:px-24">
         <div className="mx-auto max-w-5xl">

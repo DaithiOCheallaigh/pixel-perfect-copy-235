@@ -61,7 +61,7 @@ const Refer = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Refer a Friend" description={`Refer a friend to Lacuna Digital: you get ${eur(terms.referral)} off your next invoice and they get ${eur(terms.referral)} off their package when they pay their deposit.`} url="/services/refer" />
+      <SEO title="Refer a Friend" description={`Refer a business to Lacuna Digital: you get ${eur(terms.referral)} off your next invoice and they get ${eur(terms.referral)} off their package once their deposit is paid.`} />
 
       {/* Hero */}
       <section className="px-6 pb-12 pt-32 md:px-12 lg:px-24">

@@ -60,8 +60,8 @@ const ReviewLink = () => {
     <ToolLayout
       title="Google Review Link Generator"
       description="Get a direct Google review link + QR code to share with customers."
-      metaTitle="Free Google Review Link Generator — Lacuna Digital"
-      metaDescription="Generate a Google Maps link and QR code for your business. Free."
+      metaTitle="Free Google Review Link Generator"
+      metaDescription="Create a direct Google review link and printable QR code for your business in seconds, so happy customers can leave a review in one tap. Free from Lacuna Digital."
     >
       {!reviewLink ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">

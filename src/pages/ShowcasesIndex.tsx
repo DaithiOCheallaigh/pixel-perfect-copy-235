@@ -28,15 +28,6 @@ const ShowcasesIndex = () => {
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = "Showcases — Internal";
-    let meta = document.querySelector('meta[name="robots"]');
-    if (!meta) {
-      meta = document.createElement("meta");
-      meta.setAttribute("name", "robots");
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute("content", "noindex, nofollow");
-
     const fetchEntries = async () => {
       const { data, error } = await supabase
         .from("showcase_entries")
@@ -57,6 +48,7 @@ const ShowcasesIndex = () => {
 
   return (
     <div className="min-h-screen bg-background px-6 py-16 md:py-24">
+      <SEO title="Showcases (internal)" description="Internal index of Lacuna Digital client showcase mockups with their status and shareable links. This page is private and is not intended for search engines." noindex />
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

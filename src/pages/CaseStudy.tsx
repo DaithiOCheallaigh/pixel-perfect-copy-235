@@ -7,6 +7,7 @@ import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
 import { SEO } from "../components/SEO";
+import { fitDescription } from "@/lib/seoDescription";
 import { ShineBorder } from "../components/ui/shine-border";
 import DesignHandoffCarousel from "../components/DesignHandoffCarousel";
 import tipdirectPricing from "../assets/images/tipdirect-pricing.webp";
@@ -179,11 +180,11 @@ const CaseStudy = () => {
     "ai-reviews": "How I designed an AI-powered review tool that helps businesses capture and showcase authentic customer feedback.",
     "digital-tipping": "Designing TipDirect — a frictionless digital tipping experience for hospitality and service workers.",
   };
-  const seoDescription = caseDescriptions[project.id] || project.subtitle || `Case study: ${project.title}`;
+  const seoDescription = fitDescription(caseDescriptions[project.id] || project.subtitle, project.workDescription, project.description.replace(/^Situation:\s*/, ""));
 
   return (
     <main className="pt-24" onClick={handleMainClick}>
-      <SEO title={`Case Study — ${project.title}`} description={seoDescription} url={`/case/${project.id}`} />
+      <SEO title={project.title} description={seoDescription} image={project.pillImage.startsWith("http") ? project.pillImage : `https://www.lacunadigital.io${project.pillImage}`} />
       {/* Whitelabel / Digital Tipping: Full-width hero image */}
       {(project.id === "whitelabel" || project.id === "digital-tipping" || project.id === "admin-dashboard") &&
       <section className="px-6 pb-8 md:px-12 lg:px-24">
