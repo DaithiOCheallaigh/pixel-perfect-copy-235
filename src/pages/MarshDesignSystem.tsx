@@ -75,7 +75,7 @@ const MarshDesignSystem = () => {
               translated into a production-ready design system pushed to GitHub before the rebrand launched.
             </p>
             <img
-              src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Design%20System%20Rebrand/MarshLogo_NewWhite.png"
+              src="/images/work/marsh-logo-new-white.png"
               alt="Marsh"
               className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full"
             />
@@ -132,7 +132,7 @@ const MarshDesignSystem = () => {
           <ScrollReveal>
             <div className="overflow-hidden rounded-xl border border-border">
               <img
-                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Design%20System%20Rebrand/NewMarshStylingProject.webp"
+                src="/images/work/new-marsh-styling-project.webp"
                 alt="Marsh Design System — Notifications Hub Dashboard"
                 className="w-full"
               />
