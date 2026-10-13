@@ -51,8 +51,9 @@ const BioPage = () => {
 
   return (
     <>
-      <Helmet>
+      <Helmet defer={false}>
         <title>{bio.name}</title>
+        <meta name="robots" content="noindex,nofollow" />
         <meta name="description" content={bio.tagline || bio.name} />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:type" content="website" />

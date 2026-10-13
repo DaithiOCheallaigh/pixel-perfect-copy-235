@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import TitleSlide from "@/components/elsevier/TitleSlide";
@@ -117,7 +117,7 @@ const ElsevierUXAudit = () => {
       className="min-h-screen bg-[#2D2D2D] text-white selection:bg-[#FF6B00]/30"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
-      <Helmet><meta name="robots" content="noindex,nofollow" /></Helmet>
+      <SEO title="UX Audit: Healthcare Education" description="Private UX audit presentation for a healthcare-education platform: context, methodology, personas, findings, scorecard and recommended next steps." noindex />
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"

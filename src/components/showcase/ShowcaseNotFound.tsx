@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
+import { SEO } from "@/components/SEO";
 
 const ShowcaseNotFound = () => (
   <div className="flex min-h-screen items-center justify-center bg-background px-6">
+    <SEO title="Page not found" description="This showcase link isn't available. It may have expired or been mistyped, so please check the address you were sent or contact Lacuna Digital directly." noindex />
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
