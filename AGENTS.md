@@ -18,3 +18,5 @@
 - Portfolio pages use HiringCTA while commercial pages retain AvailabilityCTA; this isolates hiring contact from commercial offers.
 
 - Work filters and sorts a copy of the project catalogue independently of catalogue order; this preserves other consumers while prioritising recruiter case studies.
+- Portfolio images live under public/images with lowercase-kebab names, at most 1600px wide, and their pixel sizes are recorded in src/data/imageDimensions.ts for <img> width/height; regenerate that map after adding or resizing images so layout space stays reserved.
+- Pages are lazy-loaded route chunks in App.tsx while layouts, LegacyRedirect and NotFound stay eager; this keeps the first download small.
