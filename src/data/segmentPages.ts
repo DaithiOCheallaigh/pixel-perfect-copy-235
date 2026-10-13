@@ -13,10 +13,10 @@ export const segmentPages: Record<SegmentKey, SegmentPage> = {
     supporting: "I turn your finished projects into a clear, photo-led website that brings quote enquiries straight to you.",
     metaCategory: "Kitchen and joinery websites",
     proof: [
-      { name: "Nicholas Moody Kitchens", description: "A website for a bespoke kitchen design studio.", image: "/images/work/nicholas-moody-kitchens.png", alt: "Nicholas Moody Kitchens website" },
-      { name: "Savvy Kitchens", description: "A contemporary kitchen design and project showcase.", image: "/images/work/savvy-kitchens.png", alt: "Savvy Kitchens website" },
-      { name: "Appliance Showcase", description: "An appliance range showcase for a kitchen retailer.", image: "/images/work/appliance-showcase.png", alt: "Appliance Showcase website", href: "https://appliances.savvykitchens.ie/" },
-      { name: "KBB Digital", description: "A website for a kitchen, bedroom and bathroom digital agency.", image: "/images/work/kbb-digital.png", alt: "KBB Digital website" },
+      { name: "Nicholas Moody Kitchens", description: "A website for a bespoke kitchen design studio.", image: "/images/work/nicholas-moody-kitchens.png", alt: "Nicholas Moody Kitchens website", href: "https://nicholasmoodykitchens.com" },
+      { name: "Savvy Kitchens", description: "A contemporary kitchen design and project showcase.", image: "/images/work/savvy-kitchens.png", alt: "Savvy Kitchens website", href: "https://savvykitchens.ie" },
+      { name: "Appliance Showcase", description: "An SEO-optimised appliance showcase subdomain for Savvy Kitchens.", image: "/images/work/appliance-showcase.png", alt: "Appliance Showcase website", href: "https://appliances.savvykitchens.ie/" },
+      { name: "KBB Digital", description: "Interior design photography and digital marketing studio.", image: "/images/work/kbb-digital.png", alt: "KBB Digital website", href: "https://www.kbbdigital.ie/" },
     ],
     faqs: [
       tierFaq,
@@ -30,8 +30,8 @@ export const segmentPages: Record<SegmentKey, SegmentPage> = {
     supporting: "I build a clear practice website around your own booking system, with practice sign-off and non-clinical boundaries built into the scope.",
     metaCategory: "Practice websites and booking",
     proof: [
-      { name: "Ease Dental", description: "A website for a Dublin dental clinic.", image: "/images/work/ease-dental.png", alt: "Ease Dental website" },
-      { name: "Glimmers mental-health practice forms", description: "Website and enquiry-form work for a mental-health practice.", image: "/images/work/glimmers-mhs.png", alt: "Glimmers mental-health practice website" },
+      { name: "Ease Dental", description: "A website for a Dublin dental clinic.", image: "/images/work/ease-dental.png", alt: "Ease Dental website", href: "https://easedental.ie" },
+      { name: "Glimmers mental-health practice forms", description: "Website and enquiry-form work for a mental-health practice.", image: "/images/work/glimmers-mhs.png", alt: "Glimmers mental-health practice website", href: "https://glimmersmhs.com" },
     ],
     faqs: [
       tierFaq,
