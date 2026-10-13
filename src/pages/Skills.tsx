@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
@@ -133,9 +132,9 @@ const Skills = () => (
                 <ul className="space-y-2">
                   {cap.items.map((item) => (
                     <li key={item.id}>
-                      <Link to={`/services/expertise/${item.id}`} className="text-sm text-foreground transition-colors hover:text-primary">
+                      <span className="text-sm text-foreground">
                         {item.label}
-                      </Link>
+                      </span>
                     </li>
                   ))}
                 </ul>
