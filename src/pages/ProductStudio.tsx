@@ -6,16 +6,23 @@ import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { availability, CALENDLY_URL, entry, eur, studio, vatFootnote, YEARS_EXPERIENCE } from "@/data/pricing";
-import figmaLogo from "@/assets/logos/figma.svg";
+import { projects } from "@/data/projects";
+import { imgDims } from "@/data/imageDimensions";
 import { usePageDescription } from "@/hooks/usePageDescription";
 
-const proof = [
-  { name: "TripAdmit white-label booking", image: "/images/work/wl-design-overview.webp", link: "/case/whitelabel" },
-  { name: "TipDirect tipping", image: "/images/work/tipping-header.webp", link: "/case/digital-tipping" },
-  { name: "AI-assisted reviews", image: "/images/work/ai-pill.webp", link: "/case/ai-reviews" },
-  { name: "Therapie", image: "/images/work/therapie-booking.webp", link: "/case/booking-app" },
-  { name: "Marsh design system", image: "/images/work/marsh-design-system.webp", link: "/work/marsh-design-system", figma: true },
+const proofIds = [
+  { id: "marsh-design-system", name: "Marsh Design System", link: "/work/marsh-design-system", image: "/images/work/marsh-design-system.webp", client: "Marsh McLennan" },
+  { id: "marsh-internal-tooling", name: "Marsh Internal Tooling", link: "/work/marsh-internal-tooling", image: "/images/work/marsh-internal-tools-poster.webp", client: "Marsh McLennan" },
+  { id: "admin-dashboard", name: "TipDirect Admin Dashboard", link: "/case/admin-dashboard" },
+  { id: "tipdirect-app", name: "TipDirect App", link: "/case/tipdirect-app" },
+  { id: "digital-tipping", name: "Digital Tipping", link: "/case/digital-tipping", image: "/images/work/tipping-header.webp" },
+  { id: "ai-reviews", name: "AI-Assisted Reviews", link: "/case/ai-reviews" },
 ];
+/** Outcomes, clients and missing hero images come from the projects catalogue. */
+const proof = proofIds.map((item) => {
+  const project = projects.find((p) => p.id === item.id);
+  return { ...item, client: item.client ?? project?.client ?? "", outcome: project?.subtitle ?? "", image: item.image ?? project?.headerImage ?? "" };
+});
 const offers = [
   { name: "Day rate", price: `${eur(studio.dayRate)}/day`, scope: "Senior product design, directly with me." },
   { name: "Agency white-label", price: `${eur(studio.agencyDayRate)}/day`, scope: `${studio.agencyMinDays}-day minimum. I work as an extension of your agency team.` },
@@ -64,9 +71,13 @@ const ProductStudio = () => {
     </section>
     <section className="px-6 py-12 md:px-12 lg:px-24"><div className="mx-auto max-w-6xl">
       <SectionLabel>Selected Product Work</SectionLabel>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{proof.map(item => <Link key={item.name} to={item.link} className="group overflow-hidden rounded-lg border border-border bg-card md:hover:border-primary/40">
-        <img src={item.image} alt={item.name} className="aspect-video w-full object-cover object-top" loading="lazy" />
-        <h2 className="flex items-center gap-2 p-5 text-base font-bold">{item.figma && <img src={figmaLogo} alt="Figma" className="h-5 w-5" />}{item.name} <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-primary" /></h2>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{proof.map(item => <Link key={item.id} to={item.link} className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card md:hover:border-primary/40">
+        <img src={item.image} alt={item.name} className="aspect-video w-full object-cover object-top" loading="lazy" decoding="async" {...imgDims(item.image)} />
+        <div className="flex flex-1 flex-col p-5">
+          <p className="font-mono-label text-muted-foreground">{item.client}</p>
+          <h2 className="mt-2 flex items-center gap-2 text-base font-bold">{item.name}<ArrowRight className="ml-auto h-4 w-4 shrink-0 text-primary" /></h2>
+          <p className="mt-2 text-sm text-muted-foreground">{item.outcome}</p>
+        </div>
       </Link>)}</div>
     </div></section>
     <section className="px-6 py-12 md:px-12 lg:px-24"><div className="mx-auto max-w-6xl">
