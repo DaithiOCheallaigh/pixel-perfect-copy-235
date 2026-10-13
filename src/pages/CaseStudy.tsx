@@ -216,7 +216,7 @@ const CaseStudy = () => {
           {/* Full-width header image for tipdirect-app and spotify */}
           {(project.id === "tipdirect-app" || project.id === "spotify") && project.headerImage &&
           <motion.div className="mb-8 overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.7 }}>
-              <img src={project.id === "spotify" ? "/images/SpotifyHeader_Web-4.webp" : project.headerImage} alt={project.title} className="w-full object-cover" />
+              <img src={project.id === "spotify" ? "/images/spotify-header-web-4.webp" : project.headerImage} alt={project.title} className="w-full object-cover" />
             </motion.div>
           }
 
@@ -830,7 +830,7 @@ const CaseStudy = () => {
               {project.id === "tipdirect-app" && findImage("Information architecture") &&
             <ScrollReveal>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src="/images/Arch_TipDirect.webp" alt="Platform analysis" className="w-full object-cover" loading="lazy" />
+                    <img src="/images/arch-tip-direct.webp" alt="Platform analysis" className="w-full object-cover" loading="lazy" />
                   </div>
                 </ScrollReveal>
             }
@@ -843,8 +843,8 @@ const CaseStudy = () => {
                     {/* TipDirect App: App visual paired with engagement section */}
                     {project.id === "tipdirect-app" && (() => {
                       const engagementImages = [
-                        { src: "/images/Resources.webp", alt: "TipDirect Resources" },
-                        { src: "/images/Tech.webp", alt: "TipDirect Tech" },
+                        { src: "/images/resources.webp", alt: "TipDirect Resources" },
+                        { src: "/images/tech.webp", alt: "TipDirect Tech" },
                       ];
                       return (
                         <div className="mb-8">
@@ -1551,7 +1551,7 @@ const CaseStudy = () => {
                     </div>
                   </div>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src="/images/TipDirect_App.webp" alt="TipDirect App" className="w-full object-cover" loading="lazy" />
+                    <img src="/images/tip-direct-app.webp" alt="TipDirect App" className="w-full object-cover" loading="lazy" />
                   </div>
                 </div>
               :
