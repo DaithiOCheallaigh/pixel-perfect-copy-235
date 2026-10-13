@@ -7,6 +7,8 @@ import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
 import { CONTACT_EMAIL, entry } from "@/data/pricing";
 import { BUDGET_OPTIONS, BUDGET_LABEL, INDUSTRIES } from "@/data/projectIntake";
+import { SELECTION_STORAGE_KEY, selectionItems, selectionSummary, selectionTotals } from "@/data/serviceEstimates";
+import { eur, VAT_REGISTERED } from "@/data/pricing";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://lgdjivhyveowybzhbqum.supabase.co";
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZGppdmh5dmVvd3liemhicXVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMjMyNDMsImV4cCI6MjA4Nzg5OTI0M30.ThNz5RF9Pco9Up0nIn_gaMIUSV_yc2WINGBXpuvF-A0";
@@ -166,6 +168,15 @@ const StartProject = () => {
     return () => window.clearTimeout(t);
   }, [step]);
   const { toast } = useToast();
+  // Package chosen on /services: IDs only, re-priced from the catalogue here.
+  const [selection] = useState(() => {
+    try {
+      const raw = JSON.parse(sessionStorage.getItem(SELECTION_STORAGE_KEY) ?? "[]");
+      return Array.isArray(raw) ? selectionItems(raw.filter((id): id is string => typeof id === "string").map((id) => ({ id }))) : [];
+    } catch { return []; }
+  });
+  const selectionText = selectionSummary(selection);
+  const withSelection = (text: string) => (selectionText ? `${selectionText}\n\n${text}` : text).slice(0, 5000);
 
   const set = useCallback(
     <K extends keyof FormData>(key: K, value: FormData[K]) => {
@@ -240,7 +251,7 @@ const StartProject = () => {
     if (!validate()) return;
     setSubmitting(true);
     try {
-      await invokeFunction("send-consultation", { formData: { ...form, company_website: honeypot } });
+      await invokeFunction("send-consultation", { formData: { ...form, projectDescription: withSelection(form.projectDescription.trim()), company_website: honeypot } });
       if (!honeypot) {
         void submitLead({
           name: form.fullName.trim(),
@@ -250,9 +261,10 @@ const StartProject = () => {
           website: form.websiteUrl.trim() || undefined,
           service: form.projectTypes.join(", "),
           budget: form.budgetRange,
-          message: form.projectDescription.trim(),
+          message: withSelection(form.projectDescription.trim()),
         }).catch(() => {});
       }
+      sessionStorage.removeItem(SELECTION_STORAGE_KEY);
       setSubmitted(true);
     } catch (e: any) {
       console.error(e);
@@ -316,6 +328,16 @@ const StartProject = () => {
       </div>
 
       <div className="mx-auto max-w-2xl px-6 pb-32 pt-32">
+        {selection.length > 0 && (
+          <section aria-label="Your selected package" className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5">
+            <p className="font-mono-label text-muted-foreground">Your package</p>
+            <ul className="mt-3 space-y-1.5">
+              {selection.map((s) => <li key={s.id} className="flex justify-between gap-4 text-sm"><span className="text-foreground">{s.title}</span><span className="text-muted-foreground">{s.price}</span></li>)}
+            </ul>
+            <p className="mt-3 text-sm font-semibold text-foreground">Setup {eur(selectionTotals(selection).oneOff)}{VAT_REGISTERED ? " + VAT" : ""}{selectionTotals(selection).monthly ? ` · Monthly ${eur(selectionTotals(selection).monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}` : ""}</p>
+            <p className="mt-1 text-xs text-muted-foreground">This selection is sent with your brief.</p>
+          </section>
+        )}
         {/* Step label */}
         <div className="mb-12">
           <p className="font-mono-label text-muted-foreground">
