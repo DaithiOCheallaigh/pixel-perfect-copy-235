@@ -382,7 +382,7 @@ const Services = () => {
               LACUNA DIGITAL — SERVICES
             </span>
             <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl">
-              Get found, get booked,
+              Get found, get booked,{" "}
               <br />
               <span className="text-primary">get paid.</span>
             </h1>

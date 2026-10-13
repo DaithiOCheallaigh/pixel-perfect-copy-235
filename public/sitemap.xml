@@ -2,332 +2,266 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.lacunadigital.io/</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/work</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/work/marsh-design-system</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/work/marsh-internal-tooling</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/case/ai-reviews</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/case/digital-tipping</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/case/admin-dashboard</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/case/website-tipdirect</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/case/tipdirect-app</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/case/spotify</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/case/whitelabel</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/case/booking-app</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/about</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/skills</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/ai-design-process</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/blog</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/blog/8-principles-fluid-interfaces</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/blog/2026-new-norm-designers</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/blog/navigating-design-2025</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/blog/strategic-ux</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/blog/design-trends-2025</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/blog/partner-for-agencies</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/blog/benefits-digital-agency</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/sitemap</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/kitchens-joinery</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/clinics-practices</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/trades-home</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/salons-barbers</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/tours-experiences</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/restaurants-cafes</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/product-studio</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/web-design</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/tools</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/get-started</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/start-project</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/refer</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/terms</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/user-interface-design</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/user-experience-design</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/design-strategy</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/prototypes</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/logo-design</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/brand-identity</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/branding-guidelines</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/creative-direction</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/cms-content-platforms</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/shopify</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/ai-front-end-development</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/funnel-optimisation</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/digital-marketing-strategy</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/social-media-management</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/email-marketing</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/content-marketing</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/keyword-research</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/technical-seo</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/local-seo</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/link-building</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/component-libraries</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/style-guides</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/advanced-prototyping</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/development-alignment</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/domain-email</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/reservations</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/chatbots</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/expertise/crm</loc>
-    <lastmod>2026-10-12</lastmod>
     <priority>0.3</priority>
   </url>
 </urlset>
