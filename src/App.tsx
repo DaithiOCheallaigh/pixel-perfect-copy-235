@@ -3,47 +3,47 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, useLocation, useRoutes, type RouteObject } from "react-router-dom";
-import { useEffect, Component, type ReactNode, type ErrorInfo } from "react";
-import Index from "./pages/Index";
-import Work from "./pages/Work";
-import About from "./pages/About";
-import Skills from "./pages/Skills";
-import Blog from "./pages/Blog";
-import CaseStudy from "./pages/CaseStudy";
-import SparkCaseStudy from "./pages/SparkCaseStudy";
-import SparkPasswordGate from "./components/SparkPasswordGate";
-import ServicePage from "./pages/ServicePage";
-import WebDesignServices from "./pages/WebDesignServices";
-import AIDesignProcess from "./pages/AIDesignProcess";
-import ProductStudio from "./pages/ProductStudio";
-import Terms from "./pages/Terms";
-import BlogPost from "./pages/BlogPost";
-import StartProject from "./pages/StartProject";
-import MarshInternalTooling from "./pages/MarshInternalTooling";
-import MarshDesignSystem from "./pages/MarshDesignSystem";
+import { useEffect, Component, lazy, Suspense, type ReactNode, type ErrorInfo } from "react";
+const Index = lazy(() => import("./pages/Index"));
+const Work = lazy(() => import("./pages/Work"));
+const About = lazy(() => import("./pages/About"));
+const Skills = lazy(() => import("./pages/Skills"));
+const Blog = lazy(() => import("./pages/Blog"));
+const CaseStudy = lazy(() => import("./pages/CaseStudy"));
+const SparkCaseStudy = lazy(() => import("./pages/SparkCaseStudy"));
+const SparkPasswordGate = lazy(() => import("./components/SparkPasswordGate"));
+const ServicePage = lazy(() => import("./pages/ServicePage"));
+const WebDesignServices = lazy(() => import("./pages/WebDesignServices"));
+const AIDesignProcess = lazy(() => import("./pages/AIDesignProcess"));
+const ProductStudio = lazy(() => import("./pages/ProductStudio"));
+const Terms = lazy(() => import("./pages/Terms"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const StartProject = lazy(() => import("./pages/StartProject"));
+const MarshInternalTooling = lazy(() => import("./pages/MarshInternalTooling"));
+const MarshDesignSystem = lazy(() => import("./pages/MarshDesignSystem"));
 import NotFound from "./pages/NotFound";
-import Sitemap from "./pages/Sitemap";
-import Services from "./pages/Services";
-import ShowcasePage from "./pages/ShowcasePage";
-import ShowcaseAdmin from "./pages/ShowcaseAdmin";
-import ShowcasesIndex from "./pages/ShowcasesIndex";
-import ShowcaseNotFound from "./components/showcase/ShowcaseNotFound";
-import IndustryLanding from "./pages/IndustryLanding";
-import GetStarted from "./pages/GetStarted";
-import ToolsIndex from "./pages/ToolsIndex";
-import LinkInBio from "./pages/tools/LinkInBio";
-import ReviewLink from "./pages/tools/ReviewLink";
-import CaptionGenerator from "./pages/tools/CaptionGenerator";
-import BioPage from "./pages/tools/BioPage";
-import Refer from "./pages/Refer";
-import TPIProposal from "./pages/proposals/TPIProposal";
-import ElsevierUXAudit from "./pages/proposals/ElsevierUXAudit";
+const Sitemap = lazy(() => import("./pages/Sitemap"));
+const Services = lazy(() => import("./pages/Services"));
+const ShowcasePage = lazy(() => import("./pages/ShowcasePage"));
+const ShowcaseAdmin = lazy(() => import("./pages/ShowcaseAdmin"));
+const ShowcasesIndex = lazy(() => import("./pages/ShowcasesIndex"));
+const ShowcaseNotFound = lazy(() => import("./components/showcase/ShowcaseNotFound"));
+const IndustryLanding = lazy(() => import("./pages/IndustryLanding"));
+const GetStarted = lazy(() => import("./pages/GetStarted"));
+const ToolsIndex = lazy(() => import("./pages/ToolsIndex"));
+const LinkInBio = lazy(() => import("./pages/tools/LinkInBio"));
+const ReviewLink = lazy(() => import("./pages/tools/ReviewLink"));
+const CaptionGenerator = lazy(() => import("./pages/tools/CaptionGenerator"));
+const BioPage = lazy(() => import("./pages/tools/BioPage"));
+const Refer = lazy(() => import("./pages/Refer"));
+const TPIProposal = lazy(() => import("./pages/proposals/TPIProposal"));
+const ElsevierUXAudit = lazy(() => import("./pages/proposals/ElsevierUXAudit"));
 
 import LegacyRedirect from "./components/LegacyRedirect";
 import PortfolioLayout from "./components/layouts/PortfolioLayout";
 import ServicesLayout from "./components/layouts/ServicesLayout";
-import ServicesNotFound from "./pages/ServicesNotFound";
-import ClientNotFound from "./components/ClientNotFound";
+const ServicesNotFound = lazy(() => import("./pages/ServicesNotFound"));
+const ClientNotFound = lazy(() => import("./components/ClientNotFound"));
 import { routeTable, type RouteDef } from "./routing/routeTable";
 
 
@@ -182,6 +182,9 @@ function buildRoutes(defs: RouteDef[]): RouteObject[] {
 const routes = buildRoutes(routeTable);
 const AppRoutes = () => useRoutes(routes);
 
+// Blank page-coloured placeholder while a route chunk loads (no intro loader animation).
+const RouteFallback = () => <div className="min-h-screen bg-background" aria-busy="true" />;
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -191,7 +194,9 @@ const App = () => (
       <AppErrorBoundary>
         <BrowserRouter>
           <ScrollToTop />
-          <AppRoutes />
+          <Suspense fallback={<RouteFallback />}>
+            <AppRoutes />
+          </Suspense>
         </BrowserRouter>
       </AppErrorBoundary>
     </TooltipProvider>
