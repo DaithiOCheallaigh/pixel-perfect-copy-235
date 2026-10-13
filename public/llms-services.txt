@@ -9,13 +9,10 @@ Senior product design and AI-assisted build: fixed-price launches from 5 working
 - [Services](https://www.lacunadigital.io/services)
 - [Kitchens & Joinery](https://www.lacunadigital.io/services/kitchens-joinery)
 - [Clinics & Practices](https://www.lacunadigital.io/services/clinics-practices)
-- [Trades & Home services](https://www.lacunadigital.io/services/trades-home)
 - [Salons & Barbers](https://www.lacunadigital.io/services/salons-barbers)
 - [Tours & Experiences](https://www.lacunadigital.io/services/tours-experiences)
-- [Restaurants & Cafés](https://www.lacunadigital.io/services/restaurants-cafes)
 - [Web Design](https://www.lacunadigital.io/services/web-design)
 - [Product Studio](https://www.lacunadigital.io/services/product-studio)
-- [Free tools](https://www.lacunadigital.io/services/tools)
 - [Refer](https://www.lacunadigital.io/services/refer)
 - [Terms](https://www.lacunadigital.io/services/terms)
 - [Get Started](https://www.lacunadigital.io/services/get-started)
@@ -26,44 +23,29 @@ Senior product design and AI-assisted build: fixed-price launches from 5 working
 Prices + VAT at 23% unless shown as incl. VAT.
 Free intro call and fixed written quote within 48 hours. Digital Health Check €250 (+€100 on site), half credited against custom work.
 
-### Kitchens & Joinery
-
-- Joinery Pro: €3,000 + VAT. Live in 4–5 weeks from site visit.
-- Showroom: €5,750 + VAT. Live in 6–8 weeks.
-
-### Clinics & Practices
-
-- Practitioner: €1,550 incl. VAT; or €148/mo × 12 incl. VAT. Live in 2 weeks.
-- Clinic: €4,300 incl. VAT. Live in 4–6 weeks.
-- Clinic Plus: €7,400 incl. VAT. Live in 6–8 weeks.
-
-### Trades & Home services
-
-- Trade Launch: €1,170 incl. VAT; or €111/mo × 12 incl. VAT. Live in 7 working days.
-- Trade Site: €2,150 incl. VAT; or €209/mo × 12 incl. VAT. Live in 3 weeks.
-
-### Salons & Barbers
-
-- Booking Fix: €360 incl. VAT. Live in 5 working days.
-- Switch & Save: €800 incl. VAT. Live in 5 working days from your service list and rota.
-- Salon Site: €2,350 incl. VAT; or €221/mo × 12 incl. VAT. Live in 3 weeks.
-
-### Tours & Experiences
-
-- Direct Booking: €2,000 + VAT. Live in 3 weeks.
-- Conversion Revamp: €5,500 + VAT. Live in 6–8 weeks.
-
-### Restaurants & Cafés
-
-- Menu & Google Kit: €550 incl. VAT. Live in 5 working days.
-- Order Direct (Flipdish route): €600 + VAT. Live in 2 weeks + Flipdish onboarding.
-
-### Web ladder
+### Website tiers (one ladder for every business)
 
 - Launch: €750 + VAT; or €70/mo + VAT × 12. Live in 7 working days.
 - Business Site: €2,500 + VAT. Live in 3–4 weeks.
 - Business Plus: €5,000 + VAT. Live in 5–6 weeks.
-- Bespoke: from €7,500 + VAT. Live in 8–12 weeks.
+Need more? Bespoke builds from €7,500 + VAT, quoted in writing.
+Industry pages (Kitchens & Joinery, Clinics & Practices, Salons & Barbers, Tours & Experiences) reuse these tiers.
+
+### Add-ons
+
+- Extra page: €150 per page + VAT.
+- Google Business Profile setup: €350 setup + VAT.
+- Online booking setup: €350 setup + VAT.
+- Stripe checkout: €450 setup + VAT.
+- Email setup: €150 setup + VAT.
+- Brand starter: €1,000 setup + VAT.
+- Copywriting: €100 per page + VAT.
+- AI website assistant: €600 setup + €100/mo + VAT.
+- Missed-call text-back: €50/mo + VAT.
+- AI receptionist: €950 setup + €250/mo + VAT.
+- CRM starter: €1,200 setup + VAT.
+- Social media: €350 setup + €200/mo + VAT.
+- Extra email inbox €40; migration €75 per mailbox; licences billed directly. Extra work €100/hour in 30-minute blocks.
 
 ### Care plans
 
@@ -71,16 +53,6 @@ Free intro call and fixed written quote within 48 hours. Digital Health Check �
 - Growth: €200/month. Everything in Care; 60 minutes of edits a month; Review-request flow (asks every customer); Monthly report; One module for your industry.
 - Growth + AI: €350/month. Everything in Growth; AI website assistant (up to 200 conversations, says it is an AI); Missed-call text-back; Quarterly 30-minute call.
 3-month minimum for salons and restaurants, 6 months for others. Pay a year upfront, get 1 month free. Your domain, your content, your code. Export any time; no exit fee after the minimum term.
-
-### Key add-ons
-
-- Extra page €150; Google profile €350; booking €350; Stripe checkout €450.
-- Email setup €150 (2 inboxes); extra inbox €40; migration €75 per mailbox; licences billed directly.
-- Social setup €350; posting €200/month (6 posts).
-- Delivery listing tune-up €250 per approved platform.
-- AI assistant €600 + €100/month (200 conversations); missed-call text-back €50/month.
-- AI receptionist €950 + €250/month (300 minutes).
-- CRM starter €1,200; brand starter €1,000; copy €100 per page; extra work €100/hour in 30-minute blocks.
 
 ### Product Studio
 
