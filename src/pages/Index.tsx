@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { imgDims } from "@/data/imageDimensions";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
@@ -91,9 +92,7 @@ const Index = () => {
                   <img
                     src="/images/work/ai-pill.webp"
                     alt="AI Assisted Reviews"
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                    loading="lazy"
-                  />
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]" {...imgDims("/images/work/ai-pill.webp")} loading="lazy" decoding="async" />
                 </div>
                 <div className="flex flex-col justify-center p-8 md:p-12">
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
@@ -142,9 +141,7 @@ const Index = () => {
                   <img
                     src="/images/work/tipping-mobile.webp"
                     alt="Digital Tipping"
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    loading="lazy"
-                  />
+                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" {...imgDims("/images/work/tipping-mobile.webp")} loading="lazy" decoding="async" />
                 </div>
               </Link>
             </ScrollReveal>

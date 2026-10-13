@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { imgDims } from "@/data/imageDimensions";
 import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
@@ -77,8 +78,7 @@ const MarshDesignSystem = () => {
             <img
               src="/images/work/marsh-logo-new-white.png"
               alt="Marsh"
-              className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full"
-            />
+              className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" {...imgDims("/images/work/marsh-logo-new-white.png")} loading="eager" fetchpriority="high" decoding="async" />
             <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
               <span>
                 <span className="uppercase tracking-wider">Role:</span>{" "}
@@ -91,7 +91,7 @@ const MarshDesignSystem = () => {
             </div>
             <div className="mt-4 flex items-center gap-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card">
-                <img src={claudeLogo} alt="Claude" className="h-5 w-5 rounded-full object-cover" />
+                <img src={claudeLogo} alt="Claude" className="h-5 w-5 rounded-full object-cover" width={640} height={640} loading="lazy" decoding="async" />
               </div>
               <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card">
                 <svg viewBox="0 0 16 16" className="h-4 w-4 fill-foreground" aria-label="GitHub">
@@ -134,8 +134,7 @@ const MarshDesignSystem = () => {
               <img
                 src="/images/work/new-marsh-styling-project.webp"
                 alt="Marsh Design System — Notifications Hub Dashboard"
-                className="w-full"
-              />
+                className="w-full" {...imgDims("/images/work/new-marsh-styling-project.webp")} loading="lazy" decoding="async" />
             </div>
           </ScrollReveal>
         </div>
@@ -165,9 +164,7 @@ const MarshDesignSystem = () => {
               <img
                 src="/images/work/marsh-storybook-prototype.png"
                 alt="Notifications Hub Prototype"
-                className="md:hidden w-full"
-                loading="lazy"
-              />
+                className="md:hidden w-full" {...imgDims("/images/work/marsh-storybook-prototype.png")} loading="lazy" decoding="async" />
             </div>
           </ScrollReveal>
         </div>
@@ -206,9 +203,7 @@ const MarshDesignSystem = () => {
                   <img
                     src="/images/work/marsh-storybook-logo.png"
                     alt="Logo Documentation"
-                    className="md:hidden w-full"
-                    loading="lazy"
-                  />
+                    className="md:hidden w-full" {...imgDims("/images/work/marsh-storybook-logo.png")} loading="lazy" decoding="async" />
                 </div>
               </div>
             </ScrollReveal>
@@ -233,9 +228,7 @@ const MarshDesignSystem = () => {
                   <img
                     src="/images/work/marsh-storybook-colours.png"
                     alt="Colour Tokens Documentation"
-                    className="md:hidden w-full"
-                    loading="lazy"
-                  />
+                    className="md:hidden w-full" {...imgDims("/images/work/marsh-storybook-colours.png")} loading="lazy" decoding="async" />
                 </div>
               </div>
             </ScrollReveal>
@@ -260,9 +253,7 @@ const MarshDesignSystem = () => {
                   <img
                     src="/images/work/marsh-storybook-buttons.png"
                     alt="Button Components Documentation"
-                    className="md:hidden w-full"
-                    loading="lazy"
-                  />
+                    className="md:hidden w-full" {...imgDims("/images/work/marsh-storybook-buttons.png")} loading="lazy" decoding="async" />
                 </div>
               </div>
             </ScrollReveal>

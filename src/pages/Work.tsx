@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { imgDims } from "@/data/imageDimensions";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
@@ -32,9 +33,7 @@ const Work = () => (
                     <img
                       src={project.pillImage}
                       alt={project.title}
-                      className="no-lightbox h-full w-full object-cover"
-                      loading="lazy"
-                    />
+                      className="no-lightbox h-full w-full object-cover" {...imgDims(project.pillImage)} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="text-lg font-bold text-foreground md:text-xl">{project.title}</h3>
@@ -59,9 +58,7 @@ const Work = () => (
                     <img
                       src={project.pillImage}
                       alt={project.title}
-                      className="no-lightbox h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
+                      className="no-lightbox h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" {...imgDims(project.pillImage)} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="text-lg font-bold text-foreground transition-colors group-hover:text-primary md:text-xl">

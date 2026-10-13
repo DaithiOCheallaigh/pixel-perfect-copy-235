@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { imgDims } from "@/data/imageDimensions";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
@@ -107,8 +108,7 @@ const BlogPost = () => {
             <img
               src={post.image}
               alt={post.title}
-              className="w-full object-cover"
-            />
+              className="w-full object-cover" {...imgDims(post.image)} loading="eager" fetchpriority="high" decoding="async" />
           </div>
         </motion.div>
 
