@@ -247,7 +247,7 @@ const SelectableServiceCard = ({
         type="button"
         onClick={onToggle}
         aria-pressed={selected}
-        className={`group relative flex h-full w-full items-start whitespace-normal flex-col rounded-xl border p-6 text-left transition-all ${
+        className={`group relative flex h-full w-full items-start whitespace-normal flex-col rounded-xl border p-6 text-left transition-all hover:bg-primary/15 dark:hover:bg-accent ${
           selected
             ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
             : service.featured
@@ -267,18 +267,18 @@ const SelectableServiceCard = ({
           <TickCircle
             variant={selected ? "Bulk" : "TwoTone"}
             className={`h-6 w-6 transition-all ${
-              selected ? "text-primary" : "text-border"
-            }`}
+              selected ? "text-foreground dark:text-primary" : "text-border"
+            } group-hover:text-foreground dark:group-hover:text-accent-foreground`}
           />
         </div>
 
-        <Icon variant="TwoTone" className={`h-7 w-7 text-primary ${service.featured ? "mt-4" : ""}`} />
-        <h3 className="mt-4 text-base font-bold">{service.title}</h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+        <Icon variant="TwoTone" className={`h-7 w-7 text-primary group-hover:text-foreground dark:group-hover:text-accent-foreground ${service.featured ? "mt-4" : ""}`} />
+        <h3 className="mt-4 text-base font-bold group-hover:text-foreground dark:group-hover:text-accent-foreground">{service.title}</h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground group-hover:text-foreground dark:group-hover:text-accent-foreground">{service.desc}</p>
 
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-2">
-          <p className="text-xs font-semibold text-primary">{service.price}</p>
-          <span className="shrink-0 whitespace-nowrap rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+          <p className={`text-xs font-semibold ${selected ? "text-foreground dark:text-primary" : "text-primary"} group-hover:text-foreground dark:group-hover:text-accent-foreground`}>{service.price}</p>
+          <span className="shrink-0 whitespace-nowrap rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary group-hover:bg-accent-foreground/10 group-hover:text-foreground dark:group-hover:text-accent-foreground">
             AI-assisted
           </span>
         </div>
