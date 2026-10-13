@@ -17,7 +17,7 @@ const ToolLayout = ({ title, description, metaTitle, metaDescription, children }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title={metaTitle.replace(/ — Lacuna Digital$/, "")} description={metaDescription} url={location.pathname} />
+      <SEO title={metaTitle.replace(/ — Lacuna Digital$/, "")} description={metaDescription} url={location.pathname} noindex />
 
       <section className="px-6 pb-8 pt-32 md:px-12 lg:px-24">
         <div className="mx-auto max-w-3xl">
