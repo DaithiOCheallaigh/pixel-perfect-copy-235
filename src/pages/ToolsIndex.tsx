@@ -36,7 +36,7 @@ const ToolsIndex = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Free Business Tools" description="Free tools from Lacuna Digital for small businesses: a Google review link and QR generator, a link-in-bio page builder and an AI social caption writer." />
+      <SEO title="Free Business Tools" description="Free tools from Lacuna Digital for small businesses: a Google review link and QR generator, a link-in-bio page builder and an AI social caption writer." noindex />
 
       <section className="px-6 pb-12 pt-32 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">

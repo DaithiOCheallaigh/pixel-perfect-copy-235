@@ -1,4 +1,4 @@
-import { addOns, carePlans, entry, eur, priceLabel, segments, studio, VAT_REGISTERED, webLadder, YEARS_EXPERIENCE } from "@/data/pricing";
+import { addOns, bespokeFrom, carePlans, entry, eur, priceLabel, studio, tiers, VAT_REGISTERED, webLadder, YEARS_EXPERIENCE } from "@/data/pricing";
 
 export interface Service {
   id: string;
@@ -295,7 +295,7 @@ export const services: Service[] = [
   },
   {
     id: "shopify",
-    priceLine: priceLabel(webLadder[3]),
+    priceLine: `from ${eur(bespokeFrom)}${VAT_REGISTERED ? " + VAT" : ""}`,
     title: "Shopify & E-Commerce Design in Dublin",
     category: "Web",
     intro: "Shopify powers millions of online stores worldwide, and for good reason. It's a robust, user-friendly e-commerce platform that handles everything from product management to payment processing. But a Shopify store is only as good as its design and setup.\n\nThe difference between a Shopify store that converts and one that doesn't often comes down to user experience: clear product presentation, intuitive navigation, streamlined checkout, and a design that builds trust with first-time visitors.\n\nAt Lacuna Digital, I design Shopify stores that balance visual appeal with conversion optimisation. Every store I build is mobile-responsive, brand-aligned, and structured to guide shoppers naturally from browsing to purchase.\n\nMy process covers store setup, theme customisation, product page design, checkout optimisation, and app integration. I also provide training so you can manage your store confidently after launch — adding products, running promotions, and fulfilling orders without ongoing support costs.\n\nWith hands-on experience setting up and optimising Shopify stores for Irish businesses across fashion, food, beauty, and professional services, I understand what makes e-commerce work in the Irish market. You get a store that looks premium without the premium agency price tag.",
@@ -697,7 +697,7 @@ export const services: Service[] = [
   },
   {
     id: "reservations", title: "Booking & Reservation Setup", category: "Web",
-    priceLine: `${eur(addOns.booking)} setup${VAT_REGISTERED ? " + VAT" : ""} (salons from ${priceLabel(segments.salons.packages.find(pkg => pkg.id === "booking-fix")!)})`,
+    priceLine: `${eur(addOns.booking)} setup${VAT_REGISTERED ? " + VAT" : ""} (websites from ${priceLabel(tiers[0])})`,
     intro: "I connect your existing booking system and check the appointment links your customers use. Software licences are billed directly to you.",
     expertBio: `I bring ${YEARS_EXPERIENCE} years of product design experience to clear, practical booking journeys.`, relatedServices: ["local-seo"],
   },

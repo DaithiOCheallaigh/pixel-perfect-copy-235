@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getServiceById, services } from "@/data/services";
-import { addOns, carePlans, segments, studio, terms, webLadder } from "@/data/pricing";
+import { addOns, carePlans, studio, terms, webLadder } from "@/data/pricing";
 
 describe("detail-page pricing rules", () => {
   it("does not use broken WordPress image proxy URLs", () => {
@@ -27,9 +27,8 @@ describe("detail-page pricing rules", () => {
     expect(addOns.gbp).toBe(350);
     expect(carePlans.find(plan => plan.id === "growth")?.monthly).toBe(200);
   });
-  it("starts salon booking fixes at 295 alongside 350 general booking", () => {
+  it("prices general booking setup at 350", () => {
     expect(addOns.booking).toBe(350);
-    expect(segments.salons.packages.find(pkg => pkg.id === "booking-fix")?.price).toBe(295);
   });
   it("requires 3 months and 30 days notice for AI operations", () => {
     expect(studio.aiOps.minMonths).toBe(3);

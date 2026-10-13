@@ -8,7 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ToolLayout from "@/components/tools/ToolLayout";
 import ServiceUpsellCard from "@/components/tools/ServiceUpsellCard";
-import { CALENDLY_URL, segments, webLadder, priceLabel } from "@/data/pricing";
+import { CALENDLY_URL, webLadder, priceLabel } from "@/data/pricing";
 
 const themes = [
   { value: "dark", label: "Dark", bg: "bg-[hsl(0,0%,4%)]", text: "text-white" },
@@ -249,7 +249,7 @@ const LinkInBio = () => {
           </div>
           <ServiceUpsellCard
             title="Your link page is live. Ready for a full website?"
-            description={`Keep this page free forever, or put it on your own domain with Booking Fix (${priceLabel(segments.salons.packages[0])}) or a one-page site from ${priceLabel(webLadder[0])}.`}
+            description={`Keep this page free forever, or put it on your own domain with a one-page Launch site from ${priceLabel(webLadder[0])}.`}
             linkTo="/services#packages"
           />
         </motion.div>

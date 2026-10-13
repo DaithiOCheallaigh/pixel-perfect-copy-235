@@ -1,38 +1,31 @@
 import { describe, expect, it } from "vitest";
-import { getSegmentKey, legacySegmentRedirects, lowestPackage, RESERVED_SERVICE_PATHS, segmentPages } from "@/data/segmentPages";
-import { restaurantPayback, segments } from "@/data/pricing";
+import { getSegmentKey, legacySegmentRedirects, RESERVED_SERVICE_PATHS, segmentPages } from "@/data/segmentPages";
+import { segments } from "@/data/pricing";
+
+const BRANDS = /flipdish|deliveroo|uber eats|just eat|fresha|booksy|phorest|treatwell|cliniko|fareharbor|bokun|checkfront|calendly/i;
 
 describe("industry pages", () => {
-  it.each([
-    ["kitchens-joinery", "kitchens", 3000], ["clinics-practices", "clinics", 1250],
-    ["trades-home", "trades", 950], ["salons-barbers", "salons", 295],
-    ["tours-experiences", "tours", 2000], ["restaurants-cafes", "food", 450],
-  ] as const)("resolves %s with its lowest package price", (slug, key, amount) => {
+  it.each([["kitchens-joinery", "kitchens"], ["clinics-practices", "clinics"], ["salons-barbers", "salons"], ["tours-experiences", "tours"]] as const)("resolves %s with real proof", (slug, key) => {
     expect(getSegmentKey(slug)).toBe(key);
-    expect(lowestPackage(segments[key].packages)?.price).toBe(amount);
     expect(segmentPages[key].proof.length).toBeGreaterThan(0);
   });
+  it("has exactly four industry segments", () => expect(Object.keys(segments)).toEqual(["kitchens", "clinics", "salons", "tours"]));
   it.each([
-    ["beauty-wellness", "/services/salons-barbers"], ["food-hospitality", "/services/restaurants-cafes"],
+    ["beauty-wellness", "/services/salons-barbers"], ["food-hospitality", "/services/web-design"],
     ["startup-bootstrap", "/services/product-studio"], ["startup", "/services/product-studio"],
+    ["trades-home", "/services/web-design"], ["restaurants-cafes", "/services/web-design"],
   ])("redirects %s to %s", (slug, destination) => {
     expect(legacySegmentRedirects[slug]).toBe(destination);
   });
-  it("offers the grant note only to the four specified segments", () => {
-    expect(Object.entries(segments).filter(([, s]) => s.growDigital).map(([key]) => key)).toEqual(["kitchens", "clinics", "trades", "salons"]);
+  it("offers the grant note to kitchens, clinics and salons", () => {
+    expect(Object.entries(segments).filter(([, s]) => s.growDigital).map(([key]) => key)).toEqual(["kitchens", "clinics", "salons"]);
   });
-  it("uses the requested monthly app orders and direct-order share", () => {
-    expect(restaurantPayback.appOrdersMonthly).toBe(4000);
-    expect(restaurantPayback.directShare).toBe(0.2);
+  it("names no third-party platform brands in segment copy or FAQs", () => {
+    expect(JSON.stringify(segments)).not.toMatch(BRANDS);
+    expect(JSON.stringify(segmentPages)).not.toMatch(BRANDS);
   });
-  it("uses the specified illustrative savings range", () => {
-    expect(restaurantPayback.savingsMonthly).toEqual([85, 105]);
-  });
-  it("uses the specified payback months", () => {
-    expect(restaurantPayback.paybackMonths).toEqual([6, 7]);
-  });
-  it("uses the specified Flipdish fee range", () => {
-    expect(restaurantPayback.flipdishMonthly).toEqual([119, 139]);
+  it("shows no showcase mock as proof", () => {
+    for (const page of Object.values(segmentPages)) for (const proof of page.proof) expect(proof.name).not.toMatch(/DC Wood/);
   });
   it("does not resolve an unknown industry", () => {
     expect(getSegmentKey("not-an-industry")).toBeUndefined();

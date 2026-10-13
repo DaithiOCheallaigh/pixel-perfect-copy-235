@@ -13,7 +13,6 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
     { label: "Services", to: "/services" },
     { label: "Web Design", to: "/services/web-design" },
     { label: "Product Studio", to: "/services/product-studio" },
-    { label: "Free Tools", to: "/services/tools" },
   ];
 
   const isActive = (path: string) => path === "/services" ? location.pathname === path : location.pathname.startsWith(path);

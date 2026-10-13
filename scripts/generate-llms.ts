@@ -1,4 +1,4 @@
-import { monthlyLabel, segments, webLadder, carePlans, careTerms, addOns, studio, entry, terms, eur, priceLabel, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
+import { monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, studio, entry, terms, eur, priceLabel, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
 import { writeFileSync } from "node:fs";
 import { projects } from "../src/data/projects";
 import { YEARS_EXPERIENCE, CV_URL, PORTFOLIO_EMAIL, LINKEDIN_URL } from "../src/data/profile";
@@ -38,7 +38,7 @@ ${caseStudies.join("\n")}
 }
 
 export function buildServicesLlms() {
-  const packageLine = (p: (typeof webLadder)[number]) => `- ${p.name}: ${priceLabel(p)}${p.monthly ? `; ${monthlyLabel(p)}` : ""}. Live in ${p.live}.`;
+  const packageLine = (p: (typeof tiers)[number]) => `- ${p.name}: ${priceLabel(p)}${p.monthly ? `; ${monthlyLabel(p)}` : ""}. Live in ${p.live}.`;
   const studioRows = [
     `Day rate ${eur(studio.dayRate)}; agency white-label ${eur(studio.agencyDayRate)}/day (${studio.agencyMinDays}-day minimum).`,
     `Fractional Product Designer ${eur(studio.fractional.monthly)}/month for ${studio.fractional.days} days (${studio.fractional.minMonths}-month minimum).`,
@@ -61,7 +61,6 @@ Senior product design and AI-assisted build: fixed-price launches from 5 working
 ${Object.values(segments).map(s => `- [${s.title}](${BASE_URL}/services/${s.slug})`).join("\n")}
 - [Web Design](${BASE_URL}/services/web-design)
 - [Product Studio](${BASE_URL}/services/product-studio)
-- [Free tools](${BASE_URL}/services/tools)
 - [Refer](${BASE_URL}/services/refer)
 - [Terms](${BASE_URL}/services/terms)
 - [Get Started](${BASE_URL}/services/get-started)
@@ -72,26 +71,21 @@ ${Object.values(segments).map(s => `- [${s.title}](${BASE_URL}/services/${s.slug
 ${vatFootnote()}
 Free intro call and fixed written quote within ${entry.introCall.quoteWithin}. Digital Health Check ${eur(entry.healthCheck.price)} (+${eur(entry.healthCheck.onSiteExtra)} on site), half credited against custom work.
 
-${Object.values(segments).map(s => `### ${s.title}\n\n${s.packages.filter(p => !p.addOn).map(packageLine).join("\n")}`).join("\n\n")}
+### Website tiers (one ladder for every business)
 
-### Web ladder
+${tiers.map(packageLine).join("\n")}
+Need more? Bespoke builds from ${eur(bespokeFrom)} + VAT, quoted in writing.
+Industry pages (${Object.values(segments).map(s => s.title).join(", ")}) reuse these tiers.
 
-${webLadder.map(packageLine).join("\n")}
+### Add-ons
+
+${addOnCatalogue.map(a => `- ${a.name}: ${addOnPriceLabel(a)}.`).join("\n")}
+- Extra email inbox ${eur(addOns.email.extraInbox)}; migration ${eur(addOns.email.migrationPerMailbox)} per mailbox; licences billed directly. Extra work ${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks.
 
 ### Care plans
 
 ${carePlans.map(p => `- ${p.name}: ${eur(p.monthly)}/month. ${p.includes.join("; ")}.`).join("\n")}
 ${careTerms.minimums}. ${careTerms.annualPrepay}. ${careTerms.exit}
-
-### Key add-ons
-
-- Extra page ${eur(addOns.extraPage)}; Google profile ${eur(addOns.gbp)}; booking ${eur(addOns.booking)}; Stripe checkout ${eur(addOns.stripe)}.
-- Email setup ${eur(addOns.email.setup)} (${addOns.email.inboxesIncluded} inboxes); extra inbox ${eur(addOns.email.extraInbox)}; migration ${eur(addOns.email.migrationPerMailbox)} per mailbox; licences billed directly.
-- Social setup ${eur(addOns.socialSetup)}; posting ${eur(addOns.socialPosting.monthly)}/month (${addOns.socialPosting.posts} posts).
-- Delivery listing tune-up ${eur(addOns.listingTuneup)} per approved platform.
-- AI assistant ${eur(addOns.aiAssistant.setup)} + ${eur(addOns.aiAssistant.monthly)}/month (${addOns.aiAssistant.conversations} conversations); missed-call text-back ${eur(addOns.missedCall.monthly)}/month.
-- AI receptionist ${eur(addOns.aiReceptionist.setup)} + ${eur(addOns.aiReceptionist.monthly)}/month (${addOns.aiReceptionist.minutes} minutes).
-- CRM starter ${eur(addOns.crmStarter)}; brand starter ${eur(addOns.brandStarter)}; copy ${eur(addOns.copyPerPage)} per page; extra work ${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks.
 
 ### Product Studio
 

@@ -109,19 +109,11 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.lacunadigital.io/services/trades-home</loc>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://www.lacunadigital.io/services/salons-barbers</loc>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/tours-experiences</loc>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.lacunadigital.io/services/restaurants-cafes</loc>
     <priority>0.5</priority>
   </url>
   <url>
@@ -131,22 +123,6 @@
   <url>
     <loc>https://www.lacunadigital.io/services/web-design</loc>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.lacunadigital.io/services/tools</loc>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://www.lacunadigital.io/services/tools/link-in-bio</loc>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://www.lacunadigital.io/services/tools/review-link</loc>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://www.lacunadigital.io/services/tools/caption-generator</loc>
-    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.lacunadigital.io/services/get-started</loc>
