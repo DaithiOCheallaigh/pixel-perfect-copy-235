@@ -4,6 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, useLocation, useRoutes, type RouteObject } from "react-router-dom";
 import { useEffect, Component, lazy, Suspense, type ReactNode, type ErrorInfo } from "react";
+import NotFound from "./pages/NotFound";
+import LegacyRedirect from "./components/LegacyRedirect";
+import PortfolioLayout from "./components/layouts/PortfolioLayout";
+import ServicesLayout from "./components/layouts/ServicesLayout";
+import { routeTable, type RouteDef } from "./routing/routeTable";
+
 const Index = lazy(() => import("./pages/Index"));
 const Work = lazy(() => import("./pages/Work"));
 const About = lazy(() => import("./pages/About"));
@@ -21,7 +27,6 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const StartProject = lazy(() => import("./pages/StartProject"));
 const MarshInternalTooling = lazy(() => import("./pages/MarshInternalTooling"));
 const MarshDesignSystem = lazy(() => import("./pages/MarshDesignSystem"));
-import NotFound from "./pages/NotFound";
 const Sitemap = lazy(() => import("./pages/Sitemap"));
 const Services = lazy(() => import("./pages/Services"));
 const ShowcasePage = lazy(() => import("./pages/ShowcasePage"));
@@ -38,14 +43,8 @@ const BioPage = lazy(() => import("./pages/tools/BioPage"));
 const Refer = lazy(() => import("./pages/Refer"));
 const TPIProposal = lazy(() => import("./pages/proposals/TPIProposal"));
 const ElsevierUXAudit = lazy(() => import("./pages/proposals/ElsevierUXAudit"));
-
-import LegacyRedirect from "./components/LegacyRedirect";
-import PortfolioLayout from "./components/layouts/PortfolioLayout";
-import ServicesLayout from "./components/layouts/ServicesLayout";
 const ServicesNotFound = lazy(() => import("./pages/ServicesNotFound"));
 const ClientNotFound = lazy(() => import("./components/ClientNotFound"));
-import { routeTable, type RouteDef } from "./routing/routeTable";
-
 
 const queryClient = new QueryClient();
 
