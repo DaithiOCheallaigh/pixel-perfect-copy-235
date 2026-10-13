@@ -4,7 +4,7 @@ import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { monthlyLabel, addOns, availability, carePlans, careTerms, eur, priceLabel, terms, vatFootnote, webLadder } from "@/data/pricing";
+import { bespokeLine, monthlyLabel, addOns, availability, carePlans, careTerms, eur, priceLabel, terms, vatFootnote, webLadder } from "@/data/pricing";
 import { usePageDescription } from "@/hooks/usePageDescription";
 
 interface RecentProject {
@@ -62,7 +62,7 @@ const WebDesignServices = () => {
     <section id="pricing" className="px-6 py-12 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Website Packages</SectionLabel>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-3">
           {webLadder.map(tier => <article key={tier.id} className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
             <h2 className="text-xl font-bold">{tier.name}</h2><p className="mt-3 text-2xl font-bold">{priceLabel(tier)}</p>
             {tier.monthly && <p className="mt-2 text-sm text-primary">{monthlyLabel(tier)}</p>}
@@ -71,6 +71,7 @@ const WebDesignServices = () => {
             <Button asChild variant="outline" className="mt-6"><Link to="/services/start-project">Get a fixed quote <ArrowRight /></Link></Button>
           </article>)}
         </div>
+        <p className="mt-6 text-sm"><Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link></p>
         <p className="mt-6 text-sm text-muted-foreground">A revision round is one consolidated written list within 5 working days; new work after design sign-off is {eur(addOns.hourly)}/hour.</p>
         <div className="mt-12">
           <SectionLabel>Add-ons</SectionLabel>
