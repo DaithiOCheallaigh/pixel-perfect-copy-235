@@ -108,7 +108,7 @@ const BlogPost = () => {
             <img
               src={post.image}
               alt={post.title}
-              className="w-full object-cover" {...imgDims(post.image)} loading="eager" fetchpriority="high" decoding="async" />
+              className="w-full object-cover" {...imgDims(post.image)} loading="eager" fetchPriority="high" decoding="async" />
           </div>
         </motion.div>
 

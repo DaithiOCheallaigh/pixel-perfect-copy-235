@@ -137,7 +137,7 @@ const MarshInternalTooling = () => {
               Three enterprise internal tools designed and shipped simultaneously —
               powered by an AI-accelerated workflow and a unified component library.
             </p>
-            <img src="/images/work/marsh-logo-new-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" {...imgDims("/images/work/marsh-logo-new-white.png")} loading="eager" fetchpriority="high" decoding="async" />
+            <img src="/images/work/marsh-logo-new-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" {...imgDims("/images/work/marsh-logo-new-white.png")} loading="eager" fetchPriority="high" decoding="async" />
             <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
               <span>
                 <span className="uppercase tracking-wider">Role:</span>{" "}

@@ -201,7 +201,7 @@ const CaseStudy = () => {
           }
           </div>
           <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <img src={project.headerImage} alt={project.title} className="w-full object-cover" {...imgDims(project.headerImage)} loading="eager" fetchpriority="high" decoding="async" />
+            <img src={project.headerImage} alt={project.title} className="w-full object-cover" {...imgDims(project.headerImage)} loading="eager" fetchPriority="high" decoding="async" />
           </motion.div>
         </section>
       }
@@ -217,7 +217,7 @@ const CaseStudy = () => {
           {/* Full-width header image for tipdirect-app and spotify */}
           {(project.id === "tipdirect-app" || project.id === "spotify") && project.headerImage &&
           <motion.div className="mb-8 overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.7 }}>
-              <img src={project.id === "spotify" ? "/images/spotify-header-web-4.webp" : project.headerImage} alt={project.title} className="w-full object-cover" {...imgDims(project.id === "spotify" ? "/images/spotify-header-web-4.webp" : project.headerImage)} loading="eager" fetchpriority="high" decoding="async" />
+              <img src={project.id === "spotify" ? "/images/spotify-header-web-4.webp" : project.headerImage} alt={project.title} className="w-full object-cover" {...imgDims(project.id === "spotify" ? "/images/spotify-header-web-4.webp" : project.headerImage)} loading="eager" fetchPriority="high" decoding="async" />
             </motion.div>
           }
 
