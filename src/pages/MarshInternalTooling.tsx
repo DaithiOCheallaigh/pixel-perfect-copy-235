@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { imgDims } from "@/data/imageDimensions";
 import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
 import { useState } from "react";
@@ -136,7 +137,7 @@ const MarshInternalTooling = () => {
               Three enterprise internal tools designed and shipped simultaneously —
               powered by an AI-accelerated workflow and a unified component library.
             </p>
-            <img src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Design%20System%20Rebrand/MarshLogo_NewWhite.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" />
+            <img src="/images/work/marsh-logo-new-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" {...imgDims("/images/work/marsh-logo-new-white.png")} loading="eager" fetchpriority="high" decoding="async" />
             <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
               <span>
                 <span className="uppercase tracking-wider">Role:</span>{" "}
@@ -147,7 +148,7 @@ const MarshInternalTooling = () => {
                 <span className="text-foreground">3 Products + Design System</span>
               </span>
             </div>
-            <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100 max-w-full" />
+            <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100 max-w-full" {...imgDims("/images/work/marsh-tools.webp")} loading="lazy" decoding="async" />
           </motion.div>
         </div>
       </section>
@@ -185,8 +186,11 @@ const MarshInternalTooling = () => {
                 muted
                 loop
                 playsInline
+                preload="none"
+                width={1920}
+                height={1080}
                 className="w-full"
-                poster=""
+                poster="/images/work/marsh-internal-tools-poster.webp"
               />
             </div>
           </ScrollReveal>
@@ -221,9 +225,7 @@ const MarshInternalTooling = () => {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="absolute inset-0 w-full h-full object-cover object-top block"
-                      loading="lazy"
-                    />
+                      className="absolute inset-0 w-full h-full object-cover object-top block" {...imgDims(product.image)} loading="lazy" decoding="async" />
                   </div>
 
                   {/* View Prototype link */}

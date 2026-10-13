@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { imgDims } from "@/data/imageDimensions";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
@@ -30,9 +31,7 @@ const Blog = () => (
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    loading="lazy"
-                  />
+                    className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" {...imgDims(post.image)} loading="lazy" decoding="async" />
                 </div>
                 <div className="flex flex-1 flex-col p-8">
                   <span className="font-mono-label mb-2 text-muted-foreground">

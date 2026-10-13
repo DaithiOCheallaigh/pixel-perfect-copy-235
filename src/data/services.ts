@@ -87,7 +87,7 @@ export const services: Service[] = [
     category: "Product",
     intro: `Design strategy is the deliberate planning that connects your business objectives with user needs. It answers the critical questions — what should I build, who is it for, and why will it succeed — before a single pixel is placed. Without strategy, design is decoration. With it, design becomes a competitive advantage.\n\nFor SMEs in Dublin and across Ireland, investing in design strategy means every euro spent on digital development delivers measurable returns. Rather than redesigning on instinct, you make decisions grounded in user research, market analysis, and clear success metrics.\n\nAt Lacuna Digital, I bring ${YEARS_EXPERIENCE} years of strategic design experience working with Irish and international businesses. My approach starts with deep discovery — stakeholder interviews, competitor analysis, and user research — then translates findings into actionable roadmaps with clear milestones and KPIs.\n\nWhat sets my process apart is the integration of AI tools into the strategy workflow. I use AI to rapidly generate and test design concepts, validate hypotheses faster, and explore more solutions in less time. This means you get the rigour of traditional strategic consulting with the speed and efficiency of modern tools.\n\nWhether you need a complete design strategy for a new product or a strategic review of an existing one, I provide the expert guidance that transforms design from a cost centre into a growth driver.`,
     metaDescription: "Strategic design consulting for Irish SMEs. Align your digital products with business goals through research-driven UX strategy from Lacuna Digital.",
-    image: "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Spotify%20Tipping%20Integration%20/spotify-mobile.webp",
+    image: "/images/work/spotify-mobile.webp",
     benefitsTitle: "Why Design Strategy Matters",
     benefits: [
       { title: "Creates Competitive Advantage", desc: "Differentiates your brand and products in crowded markets through thoughtful, user-centred approaches." },
@@ -147,7 +147,7 @@ export const services: Service[] = [
     title: "Logo Design",
     category: "Branding",
     intro: "Your logo is the face of your business—it's often the first impression potential customers have of your brand. I create distinctive, memorable logos that perfectly capture your brand's essence and help you stand out in today's competitive marketplace.",
-    image: "/images/services/LogoDesign.webp",
+    image: "/images/services/logo-design.webp",
     processTitle: "Logo Design Process",
     process: [
       { title: "Discovery", desc: "I begin with an in-depth consultation to understand your business, values, target audience, and vision for your brand." },
@@ -202,7 +202,7 @@ export const services: Service[] = [
     category: "Branding",
     intro: `Branding guidelines are the rulebook that ensures your brand looks, sounds, and feels consistent wherever it appears. They document everything from logo usage and colour specifications to typography hierarchy, imagery style, and tone of voice — giving anyone who represents your brand clear direction.\n\nFor SMEs, branding guidelines are an investment that pays for itself. They eliminate the costly cycle of correcting off-brand work, speed up content creation, and ensure that new team members, agencies, or freelancers can produce on-brand output from day one.\n\nAt Lacuna Digital, I create branding guidelines that are genuinely useful — not PDF documents that gather dust. My guidelines are comprehensive yet accessible, covering brand strategy, visual identity, voice and tone, digital standards, and practical application examples.\n\nEach guideline document includes precise specifications — RGB, CMYK, HEX, and Pantone colour values; exact font weights and sizes; clear space requirements; and do/don't examples that prevent common misuse. I also provide digital templates that make implementation straightforward.\n\nWith ${YEARS_EXPERIENCE} years of experience developing brand standards for organisations ranging from ambitious startups to established enterprises across Ireland, I create guidelines that balance aspiration with practicality — ambitious enough to elevate your brand, practical enough to be used every day.`,
     metaDescription: "Comprehensive brand guidelines for Irish businesses. Lacuna Digital creates practical brand standards that ensure consistency everywhere.",
-    image: "/images/services/BrandingGuidelines.webp",
+    image: "/images/services/branding-guidelines.webp",
     processTitle: "Branding Process",
     process: [
       { title: "Discovery Phase", desc: "Researching the market, audience, and competition to understand positioning opportunities." },
@@ -271,7 +271,7 @@ export const services: Service[] = [
     category: "Web",
     intro: `A content management system gives your team the power to update your website without touching code. Whether it's publishing blog posts, updating product pages, or managing an online store, the right CMS transforms your website from a static brochure into a dynamic business tool.\n\nChoosing the wrong CMS — or implementing the right one poorly — leads to frustration, workarounds, and a website your team avoids updating. The result is stale content that hurts both user experience and search rankings.\n\nAt Lacuna Digital, I help Irish SMEs select, set up, and optimise the right CMS for their needs — whether that's WordPress, Shopify, or a headless solution like Contentful. My approach starts with understanding your content workflows, team capabilities, and growth plans, then recommends and implements a solution that fits.\n\nBeyond setup, I design CMS experiences that your team actually enjoys using. Custom templates ensure brand consistency, structured content types make publishing intuitive, and training ensures your team is confident managing content independently.\n\nWith ${YEARS_EXPERIENCE} years of experience implementing CMS solutions for businesses of all sizes across Ireland, I provide the expertise to get your content platform right from the start.`,
     metaDescription: "Expert CMS setup and management for Irish SMEs. Lacuna Digital helps you choose, design, and maintain the right content platform.",
-    image: "/images/services/CMS_Lacuna.webp",
+    image: "/images/services/cms-lacuna.webp",
     benefitsTitle: "Benefits of a CMS",
     benefits: [
       { title: "Simplified Content Creation", desc: "Non-technical staff can create and publish content without knowing HTML or coding." },
@@ -410,7 +410,7 @@ export const services: Service[] = [
     title: "Social Media Management",
     category: "Marketing",
     intro: "In today's digital landscape, effective social media management is crucial for brands looking to establish a meaningful online presence and connect with their target audience. I offer expert social media management services designed to elevate your brand's digital footprint and drive measurable results.\n\nI partner with KBB Digital to deliver exceptional social media management solutions that combine strategic thinking with creative execution. I produce high-quality still and moving content that authentically tells your brand's story across all relevant platforms.",
-    image: "/images/services/Social-Media-Management.webp",
+    image: "/images/services/social-media-management.webp",
     benefitsTitle: "Benefits of Social Media Management",
     benefits: [
       { title: "Enhanced Brand Visibility", desc: "Consistent, high-quality posting increases your brand's visibility and recognition in crowded digital spaces." },

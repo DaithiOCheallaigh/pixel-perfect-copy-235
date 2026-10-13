@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { imgDims } from "@/data/imageDimensions";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
@@ -89,11 +90,9 @@ const Index = () => {
                 <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                 <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
                   <img
-                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Ai%20Assisted%20Reviews/AIPill-2.webp"
+                    src="/images/work/ai-pill.webp"
                     alt="AI Assisted Reviews"
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                    loading="lazy"
-                  />
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]" {...imgDims("/images/work/ai-pill.webp")} loading="lazy" decoding="async" />
                 </div>
                 <div className="flex flex-col justify-center p-8 md:p-12">
                   <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
@@ -140,11 +139,9 @@ const Index = () => {
                 </div>
                 <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-r-xl md:rounded-l-none md:order-2">
                   <img
-                    src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Digital%20Tipping/Tipping%20Profile.webp"
+                    src="/images/work/tipping-mobile.webp"
                     alt="Digital Tipping"
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    loading="lazy"
-                  />
+                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" {...imgDims("/images/work/tipping-mobile.webp")} loading="lazy" decoding="async" />
                 </div>
               </Link>
             </ScrollReveal>

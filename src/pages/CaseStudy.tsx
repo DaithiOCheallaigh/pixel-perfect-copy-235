@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { imgDims } from "@/data/imageDimensions";
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -21,7 +22,7 @@ const EngagementCarousel = ({ images }: { images: { src: string; alt: string }[]
   return (
     <div className="md:hidden">
       <div className="overflow-hidden rounded-xl shadow-md">
-        <img src={images[activeIndex].src} alt={images[activeIndex].alt} className="w-full object-cover" loading="lazy" />
+        <img src={images[activeIndex].src} alt={images[activeIndex].alt} className="w-full object-cover" {...imgDims(images[activeIndex].src)} loading="lazy" decoding="async" />
       </div>
       <div className="flex items-center justify-center gap-3 mt-4">
         {images.map((_, i) => (
@@ -200,7 +201,7 @@ const CaseStudy = () => {
           }
           </div>
           <motion.div className="mx-auto max-w-5xl overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}>
-            <img src={project.headerImage} alt={project.title} className="w-full object-cover" />
+            <img src={project.headerImage} alt={project.title} className="w-full object-cover" {...imgDims(project.headerImage)} loading="eager" fetchpriority="high" decoding="async" />
           </motion.div>
         </section>
       }
@@ -216,7 +217,7 @@ const CaseStudy = () => {
           {/* Full-width header image for tipdirect-app and spotify */}
           {(project.id === "tipdirect-app" || project.id === "spotify") && project.headerImage &&
           <motion.div className="mb-8 overflow-hidden rounded-2xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.7 }}>
-              <img src={project.id === "spotify" ? "/images/SpotifyHeader_Web-4.webp" : project.headerImage} alt={project.title} className="w-full object-cover" />
+              <img src={project.id === "spotify" ? "/images/spotify-header-web-4.webp" : project.headerImage} alt={project.title} className="w-full object-cover" {...imgDims(project.id === "spotify" ? "/images/spotify-header-web-4.webp" : project.headerImage)} loading="eager" fetchpriority="high" decoding="async" />
             </motion.div>
           }
 
@@ -269,9 +270,9 @@ const CaseStudy = () => {
               {project.toolsImage &&
               <div className="mb-6">
                   <span className="font-mono-label mb-2 block text-muted-foreground">Tools</span>
-                  <img src={project.toolsImage} alt="Tools used" className={`max-w-[200px] ${project.toolsUsedImage ? 'hidden md:block' : ''}`} loading="lazy" />
+                  <img src={project.toolsImage} alt="Tools used" className={`max-w-[200px] ${project.toolsUsedImage ? 'hidden md:block' : ''}`} {...imgDims(project.toolsImage)} loading="lazy" decoding="async" />
                   {project.toolsUsedImage &&
-                    <img src={project.toolsUsedImage} alt="Tools used" className="max-w-[200px] md:hidden" loading="lazy" />
+                    <img src={project.toolsUsedImage} alt="Tools used" className="max-w-[200px] md:hidden" {...imgDims(project.toolsUsedImage)} loading="lazy" decoding="async" />
                   }
                 </div>
               }
@@ -290,8 +291,7 @@ const CaseStudy = () => {
                   <img
                   src={project.mobileImage}
                   alt={`${project.title} mobile mockup`}
-                  className="max-h-[520px] w-auto rounded-xl object-contain shadow-lg"
-                  loading="lazy" />
+                  className="max-h-[520px] w-auto rounded-xl object-contain shadow-lg" {...imgDims(project.mobileImage)} loading="lazy" decoding="async" />
                 </div>
               </div>
             }
@@ -313,8 +313,8 @@ const CaseStudy = () => {
               <div className="flex flex-col">
                 {project.clientLogo &&
               <div className="mb-8">
-                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
-                    {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" loading="lazy" />}
+                    <img src={project.clientLogo} alt={project.client || "Client"} className={`max-h-20 w-auto object-contain ${project.clientLogoDark ? 'dark:hidden' : project.clientLogo?.includes('tripadmit') ? 'dark:brightness-0 dark:invert' : ''}`} {...imgDims(project.clientLogo)} loading="lazy" decoding="async" />
+                    {project.clientLogoDark && <img src={project.clientLogoDark} alt={project.client || "Client"} className="max-h-20 w-auto object-contain hidden dark:block" {...imgDims(project.clientLogoDark)} loading="lazy" decoding="async" />}
                   </div>
               }
                 {project.whatIWorkedOn &&
@@ -349,7 +349,7 @@ const CaseStudy = () => {
                 {project.toolsImage &&
               <div>
                     <span className="text-sm font-bold text-foreground mb-3 block">Tools:</span>
-                    <img src={project.toolsImage} alt="Tools used" className="max-w-md" loading="lazy" />
+                    <img src={project.toolsImage} alt="Tools used" className="max-w-md" {...imgDims(project.toolsImage)} loading="lazy" decoding="async" />
                   </div>
               }
               </div>
@@ -390,7 +390,7 @@ const CaseStudy = () => {
                     {project.challengeImage ?
                 <div className={`grid gap-12 md:grid-cols-2 items-start ${project.challengeImageRight ? 'md:[&>*:first-child]:order-2' : ''}`}>
                       <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src={project.challengeImage} alt="Challenge" className="w-full object-cover" loading="lazy" />
+                        <img src={project.challengeImage} alt="Challenge" className="w-full object-cover" {...imgDims(project.challengeImage)} loading="lazy" decoding="async" />
                       </div>
                       <div className="space-y-4">
                         {project.challenge.split("\n\n").map((p, i) =>
@@ -430,7 +430,7 @@ const CaseStudy = () => {
                       </div>
                       {findImage("App screens") &&
                   <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("App screens")!.src} alt="App screens" className="w-full object-cover" loading="lazy" />
+                          <img src={findImage("App screens")!.src} alt="App screens" className="w-full object-cover" {...imgDims(findImage("App screens")!.src)} loading="lazy" decoding="async" />
                         </div>
                   }
                     </div>
@@ -449,7 +449,7 @@ const CaseStudy = () => {
                         <div className="grid gap-8 md:grid-cols-2 items-start">
                           {explorationImg &&
                             <div className="overflow-hidden rounded-xl shadow-md">
-                              <img src={explorationImg.src} alt={explorationImg.alt} className="w-full object-cover" loading="lazy" />
+                              <img src={explorationImg.src} alt={explorationImg.alt} className="w-full object-cover" {...imgDims(explorationImg.src)} loading="lazy" decoding="async" />
                             </div>
                           }
                           <div className="space-y-4">
@@ -487,7 +487,7 @@ const CaseStudy = () => {
               {project.id === "whitelabel" && findImage("Passenger journey map") &&
             <ScrollReveal>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src={findImage("Passenger journey map")!.src} alt="Passenger journey map" className="w-full object-cover" loading="lazy" />
+                    <img src={findImage("Passenger journey map")!.src} alt="Passenger journey map" className="w-full object-cover" {...imgDims(findImage("Passenger journey map")!.src)} loading="lazy" decoding="async" />
                   </div>
                 </ScrollReveal>
             }
@@ -527,7 +527,7 @@ const CaseStudy = () => {
                     <SectionLabel>An Atomic Design System</SectionLabel>
                     {findImage("Atomic design system") &&
                 <div className="mb-10 overflow-hidden rounded-xl shadow-md">
-                        <img src={findImage("Atomic design system")!.src} alt="Atomic design system" className="w-full object-cover" loading="lazy" />
+                        <img src={findImage("Atomic design system")!.src} alt="Atomic design system" className="w-full object-cover" {...imgDims(findImage("Atomic design system")!.src)} loading="lazy" decoding="async" />
                       </div>
                 }
                     <div className="grid gap-12 md:grid-cols-2 items-start">
@@ -562,7 +562,7 @@ const CaseStudy = () => {
                       </div>
                       {findImage("Displaying tours") &&
                   <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("Displaying tours")!.src} alt="Displaying tours" className="w-full object-cover" loading="lazy" />
+                          <img src={findImage("Displaying tours")!.src} alt="Displaying tours" className="w-full object-cover" {...imgDims(findImage("Displaying tours")!.src)} loading="lazy" decoding="async" />
                         </div>
                   }
                     </div>
@@ -578,7 +578,7 @@ const CaseStudy = () => {
                     <div className="grid gap-12 md:grid-cols-2 items-start">
                       {findImage("Tour option UI") &&
                   <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("Tour option UI")!.src} alt="Tour option UI" className="w-full object-cover" loading="lazy" />
+                          <img src={findImage("Tour option UI")!.src} alt="Tour option UI" className="w-full object-cover" {...imgDims(findImage("Tour option UI")!.src)} loading="lazy" decoding="async" />
                         </div>
                   }
                       <div className="space-y-4">
@@ -595,7 +595,7 @@ const CaseStudy = () => {
               {project.id === "whitelabel" && findImage("Design overview") &&
             <ScrollReveal>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src={findImage("Design overview")!.src} alt="Design overview" className="w-full object-cover" loading="lazy" />
+                    <img src={findImage("Design overview")!.src} alt="Design overview" className="w-full object-cover" {...imgDims(findImage("Design overview")!.src)} loading="lazy" decoding="async" />
                   </div>
                 </ScrollReveal>
             }
@@ -654,7 +654,7 @@ const CaseStudy = () => {
                     <SectionLabel>Improving the Product</SectionLabel>
                     <div className="grid gap-12 md:grid-cols-2 items-start">
                       <div className="overflow-hidden rounded-xl shadow-md">
-                        <img src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/public/images/Pill6-1.webp" alt="White Label UX & Consumer Psychology Report" className="w-full object-cover" loading="lazy" />
+                        <img src="/images/work/pill6-1.webp" alt="White Label UX & Consumer Psychology Report" className="w-full object-cover" {...imgDims("/images/work/pill6-1.webp")} loading="lazy" decoding="async" />
                       </div>
                       <div>
                         <div className="space-y-4 text-[15px] leading-[1.7] text-muted-foreground mb-6" dangerouslySetInnerHTML={{
@@ -727,7 +727,7 @@ const CaseStudy = () => {
                   return (
                     <ScrollReveal key={i} delay={i * 0.1}>
                           <div className="overflow-hidden rounded-xl shadow-md">
-                            <img src={img.src} alt={item.alt} className="w-full object-cover" loading="lazy" />
+                            <img src={img.src} alt={item.alt} className="w-full object-cover" {...imgDims(img.src)} loading="lazy" decoding="async" />
                           </div>
                         </ScrollReveal>);
 
@@ -745,7 +745,7 @@ const CaseStudy = () => {
                     {inlineImages.filter((img) => img.alt === "AI Review Steps").map((img, i) =>
                 <div key={i} className="relative overflow-hidden rounded-2xl">
                         <div className="absolute -inset-4 rounded-3xl bg-primary/20 blur-2xl pointer-events-none" />
-                        <img src={img.src} alt={img.alt} className="relative w-full object-cover rounded-2xl" loading="lazy" />
+                        <img src={img.src} alt={img.alt} className="relative w-full object-cover rounded-2xl" {...imgDims(img.src)} loading="lazy" decoding="async" />
                       </div>
                 )}
                   </div>
@@ -756,7 +756,7 @@ const CaseStudy = () => {
               {project.id === "digital-tipping" && findImage("User flow") &&
             <ScrollReveal>
                   <div className="overflow-hidden rounded-xl shadow-md bg-muted/30">
-                    <img src={findImage("User flow")!.src} alt="User flow" className="w-full object-cover" loading="lazy" />
+                    <img src={findImage("User flow")!.src} alt="User flow" className="w-full object-cover" {...imgDims(findImage("User flow")!.src)} loading="lazy" decoding="async" />
                   </div>
                 </ScrollReveal>
             }
@@ -774,7 +774,7 @@ const CaseStudy = () => {
                     )}
                         </div>
                         <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={project.images?.find(img => img.alt === "Tipping flow desktop")?.src || ""} alt="Spotify tipping flow" className="w-full object-contain" loading="lazy" />
+                          <img src={project.images?.find(img => img.alt === "Tipping flow desktop")?.src || ""} alt="Spotify tipping flow" className="w-full object-contain" {...imgDims(project.images?.find(img => img.alt === "Tipping flow desktop")?.src || "")} loading="lazy" decoding="async" />
                         </div>
                       </div> :
 
@@ -786,7 +786,7 @@ const CaseStudy = () => {
                         </div>
                         {project.tippingFlowGif &&
                   <div className="overflow-hidden rounded-xl shadow-md">
-                            <img src={project.tippingFlowGif} alt="Tipping flow" className="w-full object-contain" loading="lazy" />
+                            <img src={project.tippingFlowGif} alt="Tipping flow" className="w-full object-contain" {...imgDims(project.tippingFlowGif)} loading="lazy" decoding="async" />
                           </div>
                   }
                       </div>
@@ -830,7 +830,7 @@ const CaseStudy = () => {
               {project.id === "tipdirect-app" && findImage("Information architecture") &&
             <ScrollReveal>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src="/images/Arch_TipDirect.webp" alt="Platform analysis" className="w-full object-cover" loading="lazy" />
+                    <img src="/images/arch-tip-direct.webp" alt="Platform analysis" className="w-full object-cover" {...imgDims("/images/arch-tip-direct.webp")} loading="lazy" decoding="async" />
                   </div>
                 </ScrollReveal>
             }
@@ -843,8 +843,8 @@ const CaseStudy = () => {
                     {/* TipDirect App: App visual paired with engagement section */}
                     {project.id === "tipdirect-app" && (() => {
                       const engagementImages = [
-                        { src: "/images/Resources.webp", alt: "TipDirect Resources" },
-                        { src: "/images/Tech.webp", alt: "TipDirect Tech" },
+                        { src: "/images/resources.webp", alt: "TipDirect Resources" },
+                        { src: "/images/tech.webp", alt: "TipDirect Tech" },
                       ];
                       return (
                         <div className="mb-8">
@@ -852,7 +852,7 @@ const CaseStudy = () => {
                           <div className="hidden md:grid md:grid-cols-2 gap-4" style={{ height: '500px' }}>
                             {engagementImages.map((img, i) => (
                               <div key={i} className="overflow-hidden rounded-xl shadow-md h-full">
-                                <img src={img.src} alt={img.alt} className={`w-full h-full object-cover ${i === 1 ? 'object-bottom' : ''}`} loading="lazy" />
+                                <img src={img.src} alt={img.alt} className={`w-full h-full object-cover ${i === 1 ? 'object-bottom' : ''}`} {...imgDims(img.src)} loading="lazy" decoding="async" />
                               </div>
                             ))}
                           </div>
@@ -878,7 +878,7 @@ const CaseStudy = () => {
               {project.id === "admin-dashboard" &&
             <ScrollReveal>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src="/images/admin-dashboard-components.webp" alt="Admin Dashboard Components" className="w-full object-cover" loading="lazy" />
+                    <img src="/images/admin-dashboard-components.webp" alt="Admin Dashboard Components" className="w-full object-cover" {...imgDims("/images/admin-dashboard-components.webp")} loading="lazy" decoding="async" />
                   </div>
                 </ScrollReveal>
             }
@@ -894,18 +894,18 @@ const CaseStudy = () => {
                   <div className="space-y-4">
                         {findImage("Components overview") &&
                       <div className="overflow-hidden rounded-xl shadow-md">
-                            <img src={findImage("Components overview")!.src} alt="Design system overview" className="w-full object-cover" loading="lazy" />
+                            <img src={findImage("Components overview")!.src} alt="Design system overview" className="w-full object-cover" {...imgDims(findImage("Components overview")!.src)} loading="lazy" decoding="async" />
                           </div>
                       }
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {findImage("Colour system") &&
                         <div className="overflow-hidden rounded-xl shadow-md">
-                              <img src={findImage("Colour system")!.src} alt="Colour palette" className="w-full object-cover" loading="lazy" />
+                              <img src={findImage("Colour system")!.src} alt="Colour palette" className="w-full object-cover" {...imgDims(findImage("Colour system")!.src)} loading="lazy" decoding="async" />
                             </div>
                         }
                           {findImage("Typography system") &&
                         <div className="overflow-hidden rounded-xl shadow-md">
-                              <img src={findImage("Typography system")!.src} alt="Typography" className="w-full object-cover" loading="lazy" />
+                              <img src={findImage("Typography system")!.src} alt="Typography" className="w-full object-cover" {...imgDims(findImage("Typography system")!.src)} loading="lazy" decoding="async" />
                             </div>
                         }
                         </div>
@@ -924,7 +924,7 @@ const CaseStudy = () => {
                     <div className="flex flex-wrap justify-center gap-3 mb-12">
                       {project.designSystemLinks.map((link) =>
                   <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:opacity-90">
-                          {link.label === "Design System" ? "🖥 " : <><img src={figmaLogo} alt="Figma" className="inline h-4 w-4" /> </>}{link.label}
+                          {link.label === "Design System" ? "🖥 " : <><img src={figmaLogo} alt="Figma" className="inline h-4 w-4" width={200} height={300} loading="lazy" decoding="async" /> </>}{link.label}
                         </a>
                   )}
                     </div>
@@ -995,7 +995,7 @@ const CaseStudy = () => {
                         <DesignHandoffCarousel />
                       ) : phase.image ? (
                         <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={phase.image} alt={phase.title} className="w-full object-cover" loading="lazy" />
+                          <img src={phase.image} alt={phase.title} className="w-full object-cover" {...imgDims(phase.image)} loading="lazy" decoding="async" />
                         </div>
                       ) : null}
                     </div>
@@ -1017,7 +1017,7 @@ const CaseStudy = () => {
                         <div className="flex h-full flex-col rounded-xl bg-card overflow-hidden">
                           {stepImages[i] &&
                     <div className="overflow-hidden bg-card">
-                              <img src={stepImages[i].src} alt={stepImages[i].alt} className="w-full object-cover" loading="lazy" />
+                              <img src={stepImages[i].src} alt={stepImages[i].alt} className="w-full object-cover" {...imgDims(stepImages[i].src)} loading="lazy" decoding="async" />
                             </div>
                     }
                           <div className="p-6">
@@ -1061,10 +1061,10 @@ const CaseStudy = () => {
                 <ScrollReveal>
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="overflow-hidden rounded-2xl border border-border">
-                      <img src={tipdirectPricing} alt="TipDirect pricing plans" className="w-full object-contain" loading="lazy" />
+                      <img src={tipdirectPricing} alt="TipDirect pricing plans" className="w-full object-contain" width={1920} height={1813} loading="lazy" decoding="async" />
                     </div>
                     <div className="overflow-hidden rounded-2xl border border-border">
-                      <img src={tipdirectComponents} alt="TipDirect components overview" className="w-full object-contain" loading="lazy" />
+                      <img src={tipdirectComponents} alt="TipDirect components overview" className="w-full object-contain" width={1920} height={1813} loading="lazy" decoding="async" />
                     </div>
                   </div>
                 </ScrollReveal>
@@ -1076,7 +1076,7 @@ const CaseStudy = () => {
                   <div className="space-y-4">
                     {[findImage("Design artboard"), findImage("Architecture wireframes")].filter(Boolean).map((img, i) =>
                 <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                        <img src={img!.src} alt={img!.alt} className="w-full object-cover" loading="lazy" />
+                        <img src={img!.src} alt={img!.alt} className="w-full object-cover" {...imgDims(img!.src)} loading="lazy" decoding="async" />
                       </div>
                 )}
                   </div>
@@ -1091,7 +1091,7 @@ const CaseStudy = () => {
                     <div className="grid gap-8 md:grid-cols-2 items-start">
                       {findImage("iOS Style Guide") &&
                   <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("iOS Style Guide")!.src} alt="iOS Style Guide" className="w-full object-contain" loading="lazy" />
+                          <img src={findImage("iOS Style Guide")!.src} alt="iOS Style Guide" className="w-full object-contain" {...imgDims(findImage("iOS Style Guide")!.src)} loading="lazy" decoding="async" />
                         </div>
                   }
                       <div className="space-y-4">
@@ -1108,7 +1108,7 @@ const CaseStudy = () => {
               {project.id === "booking-app" && findImage("Booking system") &&
             <ScrollReveal>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src={findImage("Booking system")!.src} alt="Booking system" className="w-full object-cover" loading="lazy" />
+                    <img src={findImage("Booking system")!.src} alt="Booking system" className="w-full object-cover" {...imgDims(findImage("Booking system")!.src)} loading="lazy" decoding="async" />
                   </div>
                 </ScrollReveal>
             }
@@ -1126,7 +1126,7 @@ const CaseStudy = () => {
                       </div>
                       {findImage("High definition renders") &&
                   <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("High definition renders")!.src} alt="High definition renders" className="w-full object-cover" loading="lazy" />
+                          <img src={findImage("High definition renders")!.src} alt="High definition renders" className="w-full object-cover" {...imgDims(findImage("High definition renders")!.src)} loading="lazy" decoding="async" />
                         </div>
                   }
                     </div>
@@ -1142,7 +1142,7 @@ const CaseStudy = () => {
                     <div className="grid gap-8 md:grid-cols-2 items-start">
                       {findImage("Shop integration") &&
                   <div className="overflow-hidden rounded-xl shadow-md">
-                          <img src={findImage("Shop integration")!.src} alt="Shop integration" className="w-full object-contain" loading="lazy" />
+                          <img src={findImage("Shop integration")!.src} alt="Shop integration" className="w-full object-contain" {...imgDims(findImage("Shop integration")!.src)} loading="lazy" decoding="async" />
                         </div>
                   }
                       <div className="space-y-4">
@@ -1209,7 +1209,7 @@ const CaseStudy = () => {
                   </div>
                   {project.id === "spotify" && project.images?.filter((img) => img.alt === "Spotify UI placement").map((img, i) =>
                 <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                      <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                      <img src={img.src} alt={img.alt} className="w-full object-cover" {...imgDims(img.src)} loading="lazy" decoding="async" />
                     </div>
                 )}
                 </div>
@@ -1327,7 +1327,7 @@ const CaseStudy = () => {
                         <div className="relative overflow-hidden rounded-2xl bg-card h-full border border-primary/30 flex flex-col">
                           {feature.image && (
                             <div className="overflow-hidden">
-                              <img src={feature.image} alt={feature.title} className="w-full object-contain" loading="lazy" />
+                              <img src={feature.image} alt={feature.title} className="w-full object-contain" {...imgDims(feature.image)} loading="lazy" decoding="async" />
                             </div>
                           )}
                           <div className="p-5">
@@ -1349,7 +1349,7 @@ const CaseStudy = () => {
                       <div className="rounded-xl bg-card overflow-hidden">
                         {featurePillImages && featurePillImages.length > 0 &&
                       <div className="overflow-hidden">
-                            <img src={featurePillImages[0].src} alt={feature.title} className="w-full object-cover" loading="lazy" />
+                            <img src={featurePillImages[0].src} alt={feature.title} className="w-full object-cover" {...imgDims(featurePillImages[0].src)} loading="lazy" decoding="async" />
                           </div>
                       }
                         <div className="p-5">
@@ -1397,7 +1397,7 @@ const CaseStudy = () => {
                   }
                   {lastPhase.image &&
                     <div className="overflow-hidden rounded-xl shadow-md">
-                      <img src={lastPhase.image} alt={lastPhase.title} className="w-full object-cover" loading="lazy" />
+                      <img src={lastPhase.image} alt={lastPhase.title} className="w-full object-cover" {...imgDims(lastPhase.image)} loading="lazy" decoding="async" />
                     </div>
                   }
                 </div>
@@ -1419,7 +1419,7 @@ const CaseStudy = () => {
               <ScrollReveal key={i} delay={i * 0.1}>
                     <div className="group flex h-full flex-col overflow-hidden rounded-xl bg-card">
                       <div className="overflow-hidden">
-                        <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
+                        <img src={alt.image} alt={alt.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" {...imgDims(alt.image)} loading="lazy" decoding="async" />
                       </div>
                       <div className="flex flex-1 flex-col p-5">
                         <h3 className="text-base font-bold text-foreground">{alt.title}</h3>
@@ -1491,7 +1491,7 @@ const CaseStudy = () => {
               <div className="grid gap-4 md:grid-cols-2">
                 {project.images.filter((img) => ["Stats overview", "Stats detail 1", "Stats detail 2", "Stats detail 3"].includes(img.alt)).map((img, i) =>
               <div key={i} className="overflow-hidden rounded-xl shadow-md">
-                    <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                    <img src={img.src} alt={img.alt} className="w-full object-cover" {...imgDims(img.src)} loading="lazy" decoding="async" />
                   </div>
               )}
               </div>
@@ -1505,7 +1505,7 @@ const CaseStudy = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div className="overflow-hidden rounded-xl shadow-md">
-                <img src={img.src} alt={img.alt} className="w-full object-cover" loading="lazy" />
+                <img src={img.src} alt={img.alt} className="w-full object-cover" {...imgDims(img.src)} loading="lazy" decoding="async" />
               </div>
             </ScrollReveal>
           </div>
@@ -1551,7 +1551,7 @@ const CaseStudy = () => {
                     </div>
                   </div>
                   <div className="overflow-hidden rounded-xl shadow-md">
-                    <img src="/images/TipDirect_App.webp" alt="TipDirect App" className="w-full object-cover" loading="lazy" />
+                    <img src="/images/tip-direct-app.webp" alt="TipDirect App" className="w-full object-cover" {...imgDims("/images/tip-direct-app.webp")} loading="lazy" decoding="async" />
                   </div>
                 </div>
               :
@@ -1618,8 +1618,7 @@ const CaseStudy = () => {
                   <img
                   src={nextProject.headerImage}
                   alt={nextProject.title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy" />
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" {...imgDims(nextProject.headerImage)} loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-8">
                     <span className="font-mono-label mb-2 block text-white/70">Up Next</span>
