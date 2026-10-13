@@ -45,8 +45,8 @@ describe("section-aware SEO rules", () => {
     expect(head?.script.toString()).not.toContain("ProfessionalService");
   });
 
-  it("marks private pages noindex and leaves public pages without a robots override", () => {
+  it("marks private pages noindex and marks public pages index,follow", () => {
     expect(headFor("/nope", { title: "Page not found", description: "Test", noindex: true })?.meta.toString()).toContain('content="noindex,nofollow"');
-    expect(headFor("/work", { title: "Work", description: "Test" })?.meta.toString()).not.toContain('name="robots"');
+    expect(headFor("/work", { title: "Work", description: "Test" })?.meta.toString()).toContain('content="index,follow"');
   });
 });
