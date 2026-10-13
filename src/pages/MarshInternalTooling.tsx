@@ -185,8 +185,11 @@ const MarshInternalTooling = () => {
                 muted
                 loop
                 playsInline
+                preload="none"
+                width={1920}
+                height={1080}
                 className="w-full"
-                poster=""
+                poster="/images/work/marsh-internal-tools-poster.webp"
               />
             </div>
           </ScrollReveal>
