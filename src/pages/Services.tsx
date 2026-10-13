@@ -247,7 +247,7 @@ const SelectableServiceCard = ({
         type="button"
         onClick={onToggle}
         aria-pressed={selected}
-        className={`group relative flex h-full w-full items-start whitespace-normal flex-col rounded-xl border p-6 text-left transition-all ${
+        className={`group relative flex h-full w-full items-start whitespace-normal flex-col rounded-xl border p-6 text-left transition-all hover:bg-primary/15 dark:hover:bg-accent ${
           selected
             ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
             : service.featured
