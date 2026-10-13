@@ -90,7 +90,7 @@ const WebDesignServices = () => {
       <p>Professional email licences are billed to you directly.</p>
       <p>Under {eur(terms.upfrontBelow)}: {terms.upTo1000}. Up to {eur(terms.splitThrough)}: {terms.to3000}. Above: {terms.over3000}.</p>
       <p>{terms.payMonthlyNote}.</p><p>{vatFootnote()}</p>
-      <Link to="/services#packages" className="block text-primary">Looking for an industry package? Kitchens &amp; Joinery · Clinics &amp; Practices · Trades · Salons &amp; Barbers · Tours · Restaurants →</Link>
+      <Link to="/services#packages" className="block text-primary">Built for your industry: Kitchens &amp; Joinery · Clinics &amp; Practices · Salons &amp; Barbers · Tours &amp; Experiences →</Link>
       <Button asChild variant="outline"><Link to="/services/product-studio">Explore Product Studio <ArrowRight /></Link></Button>
     </div></section>
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" /><SocialProof />  </main>
