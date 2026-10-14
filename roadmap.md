@@ -57,3 +57,4 @@
 - [x] Remove visible portfolio placeholders and seven broken service images; correct Shopify pricing.
 - [x] Make the services CTA commercial-only and label package cards/estimates with VAT.
 - [x] Run 213 passing tests and preview acceptance checks; clean build, backend and password gate unchanged, nothing published.
+- [x] Remove TipDirect App YouTube placeholder embed

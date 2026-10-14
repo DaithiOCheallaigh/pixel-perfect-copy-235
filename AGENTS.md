@@ -1,11 +1,10 @@
 # Architecture rules
 
-- MedEd Workspace's route gate validates the password and signed, expiring access tokens in an edge function; never embed the password or trust a client-only unlock flag. This keeps access checks out of the public client bundle.
-- This is a display gate for a client-rendered portfolio, not confidential document storage; truly sensitive content must be served by an authorized backend rather than bundled client code.
+- MedEd Workspace's route gate validates the password and signed, expiring access tokens in an edge function; never embed the password or trust a client-only unlock flag; it is a display gate only, so truly sensitive content needs an authorized backend.
 - Keep the supplied MedEd Workspace student prototype unchanged as a public standalone HTML document; mount its iframe only after a desktop visitor clicks to load it, avoiding an automatic large download.
 - User-supplied self-contained HTML animations are copied into public/embeds byte-for-byte and never edited, then mounted as transparent-background iframes; their own theme and transparency handling must stay intact so they blend into whatever surface hosts them.
-- Lead-form edge functions validate, HTML-escape and send through supabase/functions/_shared/email-utils.ts, and send-service-selection prices services from its own server-side map; client-sent titles and prices are never trusted. The frontend-only pricing overhaul leaves that map unchanged until a separately authorized backend update.
-- All new or migrated frontend pricing reads src/data/pricing.ts and its formatting helpers; this prevents duplicated prices and keeps VAT handling consistent while existing pages migrate in subsequent steps.
+- Lead-form edge functions validate, HTML-escape and send through supabase/functions/_shared/email-utils.ts, and send-service-selection prices services from its own server-side map; client-sent titles and prices are never trusted.
+- All new or migrated frontend pricing reads src/data/pricing.ts and its formatting helpers; this prevents duplicated prices and keeps VAT consistent.
 - One tier ladder (`tiers` in src/data/pricing.ts, with `addOnCatalogue` and care plans) is the only website pricing; industry pages are landing pages that reuse it, with editorial proof and FAQs in src/data/segmentPages.ts and retired industry URLs redirected by React Router. This keeps scopes, VAT and care terms consistent without per-segment ladders.
 - Pricing, segment copy and FAQs never name third-party platform brands; they say "your own booking system" or "your ordering provider", so the offer stays vendor-neutral.
 - Free tools are unlisted and noindex (absent from navigation, sitemap and llms files) but their routes and BioPage stay live, so existing client links keep working.
@@ -19,9 +18,8 @@
 - Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
 - SEO derives section branding, default sharing image and fallback service schema from the current pathname; PortfolioSEO is a compatibility re-export and layouts do not set page metadata, avoiding competing head tags.
 - Portfolio pages use HiringCTA while commercial pages retain AvailabilityCTA; this isolates hiring contact from commercial offers.
-
 - Work filters and sorts a copy of the project catalogue independently of catalogue order; this preserves other consumers while prioritising recruiter case studies.
 - Portfolio images live under public/images with lowercase-kebab names, at most 1600px wide, and their pixel sizes are recorded in src/data/imageDimensions.ts for <img> width/height; regenerate that map after adding or resizing images so layout space stays reserved.
 - Pages are lazy-loaded route chunks in App.tsx while layouts, LegacyRedirect and NotFound stay eager; this keeps the first download small.
 - Portfolio pages do not link to /services (the Skills expertise list is intentionally plain text, not links); the only cross-link is from the services footer back to the portfolio, so recruiters are not sent into the Lacuna Digital services site.
-- Case studies share src/components/case-study/CaseLayout.tsx and CaseImage (natural-ratio content images; tall screens height-capped, wide strips scroll) and follow one seven-stage story order; data-driven pages place images by `stage`/`with` in projects.ts and the next project follows /work order via src/data/caseStudies.ts, so layouts stay consistent without per-project hacks.
+- Case studies share src/components/case-study/CaseLayout.tsx and CaseImage and follow one seven-stage story order; data-driven pages place images by `stage`/`with` in projects.ts and the next project follows /work order via src/data/caseStudies.ts to avoid per-project layout hacks.
