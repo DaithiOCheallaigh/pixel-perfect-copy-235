@@ -7,7 +7,7 @@ const Letter = ({ char, i, n, progress, reduced }: { char: string; i: number; n:
   const start = 0.3 + (i / n) * 0.45;
   const range = [start, start + 0.3];
   const y = useTransform(progress, range, ["60%", "0%"], { ease });
-  const opacity = useTransform(progress, range, [0, 1], { ease });
+  const opacity = useTransform(progress, range, [0, 1]);
   const text = char === " " ? "\u00A0" : char;
   if (reduced) return <span className="inline-block">{text}</span>;
   return (
@@ -24,7 +24,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
   const [fontSize, setFontSize] = useState(100);
   const reduced = !!useReducedMotion();
   const { scrollYProgress } = useScroll({ target: footerRef, offset: ["start end", "end end"] });
-  const progress = useSpring(scrollYProgress, { stiffness: 45, damping: 20, mass: 1.2, restDelta: 0.001 });
+  const progress = useSpring(scrollYProgress, { stiffness: 28, damping: 18, mass: 1.2, restDelta: 0.001 });
   const letters = Array.from(wordmark);
 
   useLayoutEffect(() => {
