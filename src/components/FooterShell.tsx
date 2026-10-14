@@ -4,7 +4,7 @@ import { motion, useReducedMotion, useScroll, useSpring, useTransform, MotionVal
 const ease = cubicBezier(0.16, 1, 0.3, 1);
 
 const Letter = ({ char, i, n, progress, reduced }: { char: string; i: number; n: number; progress: MotionValue<number>; reduced: boolean }) => {
-  const start = 0.3 + (i / n) * 0.45;
+  const start = 0.3 + (i / Math.max(n - 1, 1)) * 0.4;
   const range = [start, start + 0.3];
   const y = useTransform(progress, range, ["60%", "0%"], { ease });
   const opacity = useTransform(progress, range, [0, 1]);
