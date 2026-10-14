@@ -242,12 +242,12 @@ export const CaseHero = ({
 );
 
 /** Tools strip shown in the hero meta row, at natural ratio with sideways scroll if needed. */
-export const ToolsStrip = ({ src, alt = "Tools used" }: { src: string; alt?: string }) => {
+export const ToolsStrip = ({ src, alt = "Tools used", mono }: { src: string; alt?: string; mono?: boolean }) => {
   const d = imgDims(src);
   const strip = imageShape(d.width, d.height) === "strip";
   return (
     <div className={strip ? "overflow-x-auto" : ""}>
-      <img src={src} alt={alt} className="no-lightbox block h-8 w-auto max-w-none brightness-0 dark:brightness-100" {...d} loading="lazy" decoding="async" />
+      <img src={src} alt={alt} className={`no-lightbox block h-8 w-auto max-w-none ${mono ? "brightness-0 dark:brightness-100" : ""}`} {...d} loading="lazy" decoding="async" />
     </div>
   );
 };
