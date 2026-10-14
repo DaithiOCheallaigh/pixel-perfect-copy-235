@@ -1,8 +1,9 @@
+import FooterShell from "@/components/FooterShell";
 import { Link } from "react-router-dom";
 
 const Footer = () => (
-  <footer className="border-t border-border bg-background px-6 py-12 md:px-12">
-    <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
+  <FooterShell wordmark="Dave Kelly">
+    <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
       <p className="text-sm text-muted-foreground">
         © 2026 Lacuna Digital — David Kelly
       </p>
@@ -35,7 +36,7 @@ const Footer = () => (
         </a>
       </nav>
     </div>
-  </footer>
+  </FooterShell>
 );
 
 export default Footer;

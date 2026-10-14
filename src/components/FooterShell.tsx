@@ -31,8 +31,8 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
       // Measure at 100px, then scale to fill container width (with a small safety margin).
       text.style.fontSize = "100px";
       const w = text.scrollWidth;
-      const avail = box.clientWidth * 0.98;
-      if (w > 0) setFontSize(Math.min((avail / w) * 100, window.innerWidth * 0.24 * (10 / Math.max(letters.length, 1)) * 10));
+      const avail = box.clientWidth * 0.94;
+      if (w > 0) setFontSize((avail / w) * 100);
       text.style.fontSize = "";
     };
     fit();
