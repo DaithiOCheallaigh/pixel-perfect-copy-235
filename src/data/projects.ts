@@ -16,14 +16,18 @@ export interface Project {
   challengeImageRight?: boolean;
   stats?: { value: string; label: string }[];
   quote?: { text: string; author: string };
-  images?: { src: string; alt: string; wide?: boolean }[];
+  /**
+   * Case-study images. `stage` places an image in the story arc (it renders at the end of that
+   * stage); `with` pairs it with a named text block inside the stage instead.
+   */
+  images?: CaseImageEntry[];
   whatIWorkedOn?: string[];
   nextProject?: string;
   comingSoon?: boolean;
   client?: string;
   clientLogo?: string;
   researchFindings?: string[];
-  howItWorks?: { step: string; title: string; text: string }[];
+  howItWorks?: { step: string; title: string; text: string; image?: string }[];
   features?: { title: string; desc: string; image?: string }[];
   designProcess?: { num: string; title: string; desc: string }[];
   designProcessDetails?: { num: string; title: string; text: string; outcomes?: string; image?: string }[];
@@ -84,6 +88,23 @@ export interface Project {
   improvingProduct?: string;
   improvingProductReportLink?: string;
   scalingVideo?: string;
+  /** Closing result paragraph (e.g. the "Result" of a STAR summary). */
+  result?: string;
+  /** Short closing reflection, drawn only from content already in the case study. */
+  reflection?: string;
+  /** One headline figure shown above the outcome stats. */
+  headlineStat?: { value: string; label: string };
+}
+
+export type CaseStage = "overview" | "problem" | "research" | "exploration" | "solution" | "build" | "outcome";
+
+export interface CaseImageEntry {
+  src: string;
+  alt: string;
+  wide?: boolean;
+  stage?: CaseStage;
+  with?: string;
+  caption?: string;
 }
 
 export const projects: Project[] = [
