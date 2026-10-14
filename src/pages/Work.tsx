@@ -4,6 +4,7 @@ import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
+import { caseStudyPath } from "../data/caseStudies";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SEO } from "../components/SEO";
 import { LockKeyhole } from "lucide-react";
@@ -50,7 +51,7 @@ const Work = () => (
                 </div>
               ) : (
                 <Link
-                  to={project.id === "marsh-internal-tooling" ? "/work/marsh-internal-tooling" : project.id === "marsh-design-system" ? "/work/marsh-design-system" : project.id === "spark" ? "/work/spark" : `/case/${project.id}`}
+                  to={caseStudyPath(project.id)}
                   className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
                 >
                   <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />

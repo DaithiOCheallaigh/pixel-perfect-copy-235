@@ -206,9 +206,9 @@ function buildStory(project: Project) {
   flip = false;
   const appFeatures = project.features?.map((f) => ({ ...f, image: f.image ?? paired(`feature:${f.title}`)[0]?.src }));
   push("solution", "The Solution", [
-    (project.solutionIntro || project.howItWorks) && (
+    project.solutionIntro && (
       <CaseBlock key="solutionIntro" title="How it works" flip={alt()} media={paired("solutionIntro")}>
-        {project.solutionIntro && <Prose text={project.solutionIntro} />}
+        <Prose text={project.solutionIntro} />
       </CaseBlock>
     ),
     project.howItWorks && (
