@@ -143,7 +143,7 @@ export const CaseBlock = ({
   const items = Array.isArray(media) ? (media as MediaItem[]) : null;
   const hasMedia = items ? items.length > 0 : !!media;
   const side = hasMedia && items ? items.length === 1 && !isWideMedia(items[0]) : false;
-  const mediaNode = items ? <MediaGroup items={items} /> : media;
+  const mediaNode: ReactNode = items ? <MediaGroup items={items} /> : (media as ReactNode);
   const text = (
     <div className={side ? "min-w-0" : "max-w-3xl"}>
       {title && <h3 className="mb-4 text-xl font-bold tracking-tight text-foreground md:text-2xl">{title}</h3>}
