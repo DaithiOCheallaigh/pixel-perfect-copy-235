@@ -1,17 +1,24 @@
 import { ReactNode, useLayoutEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform, MotionValue, cubicBezier } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
-const ease = cubicBezier(0.16, 1, 0.3, 1);
+const SPRING = { type: "spring", stiffness: 58, damping: 12.5, mass: 1 } as const;
+const STAGGER = 0.08;
 
-const Letter = ({ char, i, n, progress, reduced }: { char: string; i: number; n: number; progress: MotionValue<number>; reduced: boolean }) => {
-  const start = 0.3 + (i / Math.max(n - 1, 1)) * 0.4;
-  const range = [start, start + 0.3];
-  const y = useTransform(progress, range, ["60%", "0%"], { ease });
-  const opacity = useTransform(progress, range, [0, 1]);
+const Letter = ({ char, i, inView, reduced }: { char: string; i: number; inView: boolean; reduced: boolean }) => {
   const text = char === " " ? "\u00A0" : char;
   if (reduced) return <span className="inline-block">{text}</span>;
   return (
-    <motion.span className="inline-block" style={{ y, opacity, transformOrigin: "bottom center" }}>
+    <motion.span
+      className="inline-block"
+      style={{ transformOrigin: "bottom center" }}
+      initial={{ y: "40%", opacity: 0 }}
+      animate={inView ? { y: "0%", opacity: 1 } : { y: "40%", opacity: 0 }}
+      transition={
+        inView
+          ? { y: { ...SPRING, delay: i * STAGGER }, opacity: { duration: 0, delay: i * STAGGER + 0.2 } }
+          : { y: SPRING, opacity: { duration: 0, delay: 0.13 } }
+      }
+    >
       {text}
     </motion.span>
   );
@@ -23,8 +30,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
   const textRef = useRef<HTMLDivElement>(null);
   const [fontSize, setFontSize] = useState(100);
   const reduced = !!useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: footerRef, offset: ["start end", "end end"] });
-  const progress = useSpring(scrollYProgress, { stiffness: 28, damping: 12, mass: 1.2, restDelta: 0.001 });
+  const inView = useInView(boxRef, { amount: "some" });
   const letters = Array.from(wordmark);
 
   useLayoutEffect(() => {
@@ -75,7 +81,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
           }}
         >
           {letters.map((c, i) => (
-            <Letter key={i} char={c} i={i} n={letters.length} progress={progress} reduced={reduced} />
+            <Letter key={i} char={c} i={i} inView={inView} reduced={reduced} />
           ))}
         </div>
       </div>
