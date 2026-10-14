@@ -316,7 +316,7 @@ function buildStory(project: Project) {
         <div className="flex flex-wrap gap-3">
           {project.designSystemLinks.map((link) => (
             <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary">
-              {link.label !== "Design System" && <img src={figmaLogo} alt="" className="no-lightbox h-4 w-4" width={200} height={300} loading="lazy" decoding="async" />}
+              {link.label !== "Design System" && <img src={figmaLogo} alt="" className="no-lightbox h-4 w-4 object-contain" width={16} height={16} loading="lazy" decoding="async" />}
               {link.label} ↗
             </a>
           ))}
