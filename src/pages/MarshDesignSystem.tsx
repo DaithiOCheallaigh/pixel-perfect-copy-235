@@ -1,13 +1,12 @@
-import { Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
-import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
-import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { SEO } from "@/components/SEO";
+import CaseImage from "../components/CaseImage";
 import { projects } from "../data/projects";
 import claudeLogo from "@/assets/logos/claude.png";
+import { CaseBlock, CaseHero, CaseSection, CardGrid, NextProject, Prose, Reflection, StatGrid } from "../components/case-study/CaseLayout";
 
 const approaches = [
   {
@@ -33,384 +32,148 @@ const stats = [
   { value: "↑", label: "Library shipped to GitHub before rebrand launch" },
 ];
 
+const docs = [
+  {
+    title: "Logo",
+    text: "The cornerstone of the rebrand. The updated Marsh logo was codified as a sub-atomic token — available in multiple colour variants, with clear-space rules and minimum-size constraints enforced at the component level.",
+    src: "https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-logo--docs&globals=backgrounds.grid:!false",
+    image: "/images/work/marsh-storybook-logo.png",
+  },
+  {
+    title: "Colour Tokens",
+    text: "The full colour palette was rebuilt from Marsh's new brand guidelines — primary, secondary, semantic, and neutral scales translated into design tokens that propagate across every component automatically. Each swatch includes contrast ratios and WCAG accessibility grades.",
+    src: "https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-colours--docs&globals=backgrounds.grid:!false",
+    image: "/images/work/marsh-storybook-colours.png",
+  },
+  {
+    title: "Button Components",
+    text: "Buttons are the most frequently used interactive element across all three Marsh products. The rebranded variants — primary, secondary, ghost, destructive — were documented with size matrices, icon placement rules, loading states, and disabled treatments, ensuring pixel-perfect consistency at every touchpoint.",
+    src: "https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/components-button--docs&globals=backgrounds.grid:!false",
+    image: "/images/work/marsh-storybook-buttons.png",
+  },
+];
+
+/** Live Storybook on desktop; a static screenshot at natural ratio on mobile. */
+const StoryEmbed = ({ src, title, image }: { src: string; title: string; image: string }) => (
+  <>
+    <div className="hidden overflow-hidden rounded-2xl border border-border md:block">
+      <iframe src={src} title={title} className="block aspect-[16/10] w-full border-0" loading="lazy" allow="clipboard-read; clipboard-write" />
+    </div>
+    <CaseImage src={image} alt={title} className="md:hidden" />
+  </>
+);
+
+const LinkCard = ({ href, eyebrow, title }: { href: string; eyebrow: string; title: string }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-6 transition-colors md:hover:border-primary/40">
+    <div className="min-w-0">
+      <span className="mb-1 block font-mono-label text-xs text-muted-foreground">{eyebrow}</span>
+      <span className="text-lg font-bold text-foreground transition-colors md:group-hover:text-primary">{title}</span>
+    </div>
+    <ArrowRight size={24} className="shrink-0 text-muted-foreground transition-colors md:group-hover:text-primary" />
+  </a>
+);
+
 const MarshDesignSystem = () => {
   const project = projects.find((p) => p.id === "marsh-design-system");
-  const nextProject = project?.nextProject
-    ? projects.find((p) => p.id === project.nextProject)
-    : null;
 
   return (
-    <main className="pt-24 overflow-x-hidden">
+    <main className="overflow-x-hidden pt-24">
       <SEO title="Marsh Design System" description="How Dave Kelly rebuilt the Marsh McLennan design system: tokens, a Figma component library and Storybook documentation for consistent enterprise products." image={`https://www.lacunadigital.io${project?.pillImage ?? "/images/work/marsh-design-system.webp"}`} />
-      {/* 1. HERO */}
-      <section className="px-6 pb-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <Link
-              to="/work"
-              className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary"
-            >
-              ← Back to Work
-            </Link>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05, duration: 0.6 }}
-          >
-            <div className="mb-4 flex flex-wrap items-center gap-2 font-mono-label text-muted-foreground">
-              <span>Marsh</span>
-              <span className="text-border">|</span>
-              <span>Design Systems · Brand Implementation · AI-Led Workflow</span>
-            </div>
-            <h1 className="mb-4 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">
-              Marsh Design System Rebrand
-            </h1>
-            <p className="mb-8 max-w-3xl text-lg text-muted-foreground md:text-xl">
-              A new brand identity, an existing component library, and an AI-first workflow —
-              translated into a production-ready design system pushed to GitHub before the rebrand launched.
-            </p>
-            <img
-              src="/images/work/marsh-logo-new-white.png"
-              alt="Marsh"
-              className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" {...imgDims("/images/work/marsh-logo-new-white.png")} loading="eager" fetchPriority="high" decoding="async" />
-            <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
-              <span>
-                <span className="uppercase tracking-wider">Role:</span>{" "}
-                <span className="text-foreground">Freelance Product Designer</span>
+      <CaseHero
+        client={<img src="/images/work/marsh-logo-new-white.png" alt="Marsh" className="no-lightbox h-6 w-auto max-w-full brightness-0 dark:brightness-100" {...imgDims("/images/work/marsh-logo-new-white.png")} loading="eager" decoding="async" />}
+        title="Marsh Design System Rebrand"
+        summary="A new brand identity, an existing component library, and an AI-first workflow — translated into a production-ready design system pushed to GitHub before the rebrand launched."
+        meta={[
+          { label: "Role", value: "Freelance Product Designer" },
+          { label: "Timeline", value: project?.timeline ?? "2 months" },
+          {
+            label: "Tools",
+            value: (
+              <span className="flex items-center gap-3">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card">
+                  <img src={claudeLogo} alt="Claude" className="no-lightbox h-5 w-5 rounded-full object-cover" width={640} height={640} loading="lazy" decoding="async" />
+                </span>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card">
+                  <svg viewBox="0 0 16 16" className="h-4 w-4 fill-foreground" aria-label="GitHub" role="img">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                  </svg>
+                </span>
+                <span className="text-muted-foreground">Claude · GitHub · Storybook</span>
               </span>
-              <span>
-                <span className="uppercase tracking-wider">Deliverable:</span>{" "}
-                <span className="text-foreground">Atomic Design Component Library + Storybook Documentation</span>
-              </span>
-            </div>
-            <div className="mt-4 flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card">
-                <img src={claudeLogo} alt="Claude" className="h-5 w-5 rounded-full object-cover" width={640} height={640} loading="lazy" decoding="async" />
-              </div>
-              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card">
-                <svg viewBox="0 0 16 16" className="h-4 w-4 fill-foreground" aria-label="GitHub">
-                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-                </svg>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            ),
+          },
+        ]}
+        media={<CaseImage src="/images/work/new-marsh-styling-project.webp" alt="Marsh Design System — Notifications Hub Dashboard" eager />}
+      />
 
-      {/* 2. THE BRIEF */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>The Brief</SectionLabel>
-            <div className="max-w-3xl space-y-4">
-              <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                Marsh was undergoing a company-wide rebrand. The existing CORE design system — tokens,
-                components, and documentation — needed to be updated to reflect the new brand identity.
-                The challenge: deliver the fully rebranded component library to GitHub before the official
-                launch date, with zero visual regressions across the product suite.
-              </p>
-              <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                Working as the sole designer on the rebrand implementation, I used Claude as an
-                AI co-pilot to accelerate token translation, component updates, Storybook documentation,
-                and accessibility validation — compressing what would typically be a multi-sprint effort
-                into a focused, high-velocity engagement.
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <CaseSection label="Overview">
+        <CaseBlock title="What it is">
+          <Prose text={"Marsh was undergoing a company-wide rebrand. The existing CORE design system — tokens, components, and documentation — needed to be updated to reflect the new brand identity.\n\nDeliverable: an atomic design component library with Storybook documentation."} />
+        </CaseBlock>
+      </CaseSection>
 
-      {/* 3. HERO IMAGE */}
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <div className="overflow-hidden rounded-xl border border-border">
-              <img
-                src="/images/work/new-marsh-styling-project.webp"
-                alt="Marsh Design System — Notifications Hub Dashboard"
-                className="w-full" {...imgDims("/images/work/new-marsh-styling-project.webp")} loading="lazy" decoding="async" />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <CaseSection label="The Challenge">
+        <CaseBlock>
+          <Prose text="Deliver the fully rebranded component library to GitHub before the official launch date, with zero visual regressions across the product suite." />
+        </CaseBlock>
+      </CaseSection>
 
-      {/* 4. LIVE PROTOTYPE */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Working Prototype</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              A fully interactive prototype of the Notifications Hub, built inside Storybook
-              to validate layout, navigation, and data-density decisions before a single line
-              of production code was written. Stakeholders could click through real flows
-              and leave feedback directly against the living artefact.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <div className="overflow-hidden rounded-xl border border-border">
-              <iframe
-                src="https://daithiocheallaigh.github.io/MarshDesign2//iframe.html?globals=backgrounds.grid%3A!false&args=&id=prototypes-notifications-hub--default&viewMode=story"
-                title="Notifications Hub Prototype"
-                className="hidden md:block w-full aspect-[16/10] border-0"
-                loading="lazy"
-                allow="clipboard-read; clipboard-write"
-              />
-              <img
-                src="/images/work/marsh-storybook-prototype.png"
-                alt="Notifications Hub Prototype"
-                className="md:hidden w-full" {...imgDims("/images/work/marsh-storybook-prototype.png")} loading="lazy" decoding="async" />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* 5. DESIGN SYSTEM EMBEDS */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Rebranded Component Library</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              Every component in the CORE library was updated to reflect the new brand identity —
-              colour tokens, typography scales, border radii, elevation shadows, and icon treatments.
-              The full library was documented in Storybook with interactive variant previews and
-              usage guidelines, then shipped to GitHub as the single source of truth for engineering.
-            </p>
-          </ScrollReveal>
-
-          <div className="space-y-12">
-            {/* Logo */}
-            <ScrollReveal delay={0.08}>
-              <div>
-                <h3 className="mb-2 text-lg font-bold text-foreground">Logo</h3>
-                <p className="mb-4 max-w-2xl text-[15px] leading-[1.7] text-muted-foreground">
-                  The cornerstone of the rebrand. The updated Marsh logo was codified as a
-                  sub-atomic token — available in multiple colour variants, with clear-space
-                  rules and minimum-size constraints enforced at the component level.
-                </p>
-                <div className="overflow-hidden rounded-xl border border-border">
-                  <iframe
-                    src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-logo--docs&globals=backgrounds.grid:!false"
-                    title="Logo Documentation"
-                    className="hidden md:block w-full aspect-[16/10] border-0"
-                    loading="lazy"
-                  />
-                  <img
-                    src="/images/work/marsh-storybook-logo.png"
-                    alt="Logo Documentation"
-                    className="md:hidden w-full" {...imgDims("/images/work/marsh-storybook-logo.png")} loading="lazy" decoding="async" />
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Colours */}
-            <ScrollReveal delay={0.08}>
-              <div>
-                <h3 className="mb-2 text-lg font-bold text-foreground">Colour Tokens</h3>
-                <p className="mb-4 max-w-2xl text-[15px] leading-[1.7] text-muted-foreground">
-                  The full colour palette was rebuilt from Marsh's new brand guidelines —
-                  primary, secondary, semantic, and neutral scales translated into
-                  design tokens that propagate across every component automatically.
-                  Each swatch includes contrast ratios and WCAG accessibility grades.
-                </p>
-                <div className="overflow-hidden rounded-xl border border-border">
-                  <iframe
-                    src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/sub-atomic-colours--docs&globals=backgrounds.grid:!false"
-                    title="Colour Tokens Documentation"
-                    className="hidden md:block w-full aspect-[16/10] border-0"
-                    loading="lazy"
-                  />
-                  <img
-                    src="/images/work/marsh-storybook-colours.png"
-                    alt="Colour Tokens Documentation"
-                    className="md:hidden w-full" {...imgDims("/images/work/marsh-storybook-colours.png")} loading="lazy" decoding="async" />
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Buttons */}
-            <ScrollReveal delay={0.08}>
-              <div>
-                <h3 className="mb-2 text-lg font-bold text-foreground">Button Components</h3>
-                <p className="mb-4 max-w-2xl text-[15px] leading-[1.7] text-muted-foreground">
-                  Buttons are the most frequently used interactive element across all three
-                  Marsh products. The rebranded variants — primary, secondary, ghost, destructive —
-                  were documented with size matrices, icon placement rules, loading states,
-                  and disabled treatments, ensuring pixel-perfect consistency at every touchpoint.
-                </p>
-                <div className="overflow-hidden rounded-xl border border-border">
-                  <iframe
-                    src="https://daithiocheallaigh.github.io/MarshDesign2//?path=/docs/components-button--docs&globals=backgrounds.grid:!false"
-                    title="Button Components Documentation"
-                    className="hidden md:block w-full aspect-[16/10] border-0"
-                    loading="lazy"
-                  />
-                  <img
-                    src="/images/work/marsh-storybook-buttons.png"
-                    alt="Button Components Documentation"
-                    className="md:hidden w-full" {...imgDims("/images/work/marsh-storybook-buttons.png")} loading="lazy" decoding="async" />
-                </div>
-              </div>
-            </ScrollReveal>
+      <CaseSection label="Exploration & Approach">
+        <CaseBlock title="AI-accelerated brand implementation">
+          <Prose text="Working as the sole designer on the rebrand implementation, I used Claude as an AI co-pilot to accelerate token translation, component updates, Storybook documentation, and accessibility validation — compressing what would typically be a multi-sprint effort into a focused, high-velocity engagement." />
+          <div className="mt-8">
+            <CardGrid items={approaches.map((a) => ({ eyebrow: a.num, title: a.title, desc: a.text }))} />
           </div>
+        </CaseBlock>
+      </CaseSection>
 
-          {/* Storybook external link */}
-          <ScrollReveal delay={0.1}>
-            <a
-              href="https://daithiocheallaigh.github.io/MarshDesign2/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group mt-12 flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
-            >
-              <div>
-                <span className="font-mono-label mb-1 block text-xs text-muted-foreground">
-                  Explore the Full Library
-                </span>
-                <span className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
-                  CORE Design System — Storybook Documentation
-                </span>
+      <CaseSection label="The Solution">
+        <CaseBlock title="Rebranded component library">
+          <Prose text="Every component in the CORE library was updated to reflect the new brand identity — colour tokens, typography scales, border radii, elevation shadows, and icon treatments. The full library was documented in Storybook with interactive variant previews and usage guidelines, then shipped to GitHub as the single source of truth for engineering." />
+        </CaseBlock>
+        {docs.map((d) => (
+          <CaseBlock key={d.title} title={d.title} media={<StoryEmbed src={d.src} title={`${d.title} documentation`} image={d.image} />}>
+            <Prose text={d.text} />
+          </CaseBlock>
+        ))}
+        <ScrollReveal>
+          <LinkCard href="https://daithiocheallaigh.github.io/MarshDesign2/" eyebrow="Explore the Full Library" title="CORE Design System — Storybook Documentation" />
+        </ScrollReveal>
+        <CaseBlock
+          title="Brand UI showcase"
+          media={
+            <>
+              <div className="hidden overflow-hidden rounded-2xl border border-border md:block">
+                <iframe src="https://marsh-clarity-code.lovable.app" title="Marsh Brand UI Showcase" className="block aspect-[16/10] w-full border-0" loading="lazy" allow="clipboard-read; clipboard-write" />
               </div>
-              <ArrowRight
-                size={24}
-                className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
-              />
-            </a>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* BRAND UI SHOWCASE */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Brand UI Showcase</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              A standalone splash page I built to demonstrate how the new Marsh brand identity
-              translates into real UI — applying the rebranded tokens, typography, and visual
-              language beyond the component library into a cohesive, designed experience.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <div className="overflow-hidden rounded-xl border border-border">
-              <iframe
-                src="https://marsh-clarity-code.lovable.app"
-                title="Marsh Brand UI Showcase"
-                className="hidden md:block w-full aspect-[16/10] border-0"
-                loading="lazy"
-                allow="clipboard-read; clipboard-write"
-              />
-              <a
-                href="https://marsh-clarity-code.lovable.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="md:hidden block"
-              >
-                <div className="flex items-center justify-center bg-muted/50 p-12 text-center">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Tap to view the Brand UI Showcase →
-                  </span>
-                </div>
-              </a>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.15}>
-            <a
-              href="https://marsh-clarity-code.lovable.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group mt-6 flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
-            >
-              <div>
-                <span className="font-mono-label mb-1 block text-xs text-muted-foreground">
-                  View Live
-                </span>
-                <span className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
-                  Marsh Brand UI — Splash Page
-                </span>
+              <div className="mt-6">
+                <LinkCard href="https://marsh-clarity-code.lovable.app" eyebrow="View Live" title="Marsh Brand UI — Splash Page" />
               </div>
-              <ArrowRight
-                size={24}
-                className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
-              />
-            </a>
-          </ScrollReveal>
-        </div>
-      </section>
+            </>
+          }
+        >
+          <Prose text="A standalone splash page I built to demonstrate how the new Marsh brand identity translates into real UI — applying the rebranded tokens, typography, and visual language beyond the component library into a cohesive, designed experience." />
+        </CaseBlock>
+      </CaseSection>
 
-      {/* 5. APPROACH */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>AI-Accelerated Brand Implementation</SectionLabel>
-          </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
-            {approaches.map((col, i) => (
-              <ScrollReveal key={col.num} delay={i * 0.08}>
-                <div>
-                  <span className="font-mono-label mb-2 block text-xs text-muted-foreground">
-                    {col.num}
-                  </span>
-                  <h3 className="mb-3 text-lg font-bold text-foreground">{col.title}</h3>
-                  <p className="text-[15px] leading-[1.7] text-muted-foreground">{col.text}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CaseSection label="Build, Test & Launch">
+        <CaseBlock
+          title="Working prototype"
+          media={<StoryEmbed src="https://daithiocheallaigh.github.io/MarshDesign2//iframe.html?globals=backgrounds.grid%3A!false&args=&id=prototypes-notifications-hub--default&viewMode=story" title="Notifications Hub Prototype" image="/images/work/marsh-storybook-prototype.png" />}
+        >
+          <Prose text="A fully interactive prototype of the Notifications Hub, built inside Storybook to validate layout, navigation, and data-density decisions before a single line of production code was written. Stakeholders could click through real flows and leave feedback directly against the living artefact." />
+        </CaseBlock>
+      </CaseSection>
 
-      {/* 6. OUTCOMES */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Outcomes</SectionLabel>
-          </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
-            {stats.map((stat, i) => (
-              <ScrollReveal key={i} delay={i * 0.08}>
-                <div className="text-center">
-                  <span className="block text-5xl font-black tracking-tighter text-foreground md:text-6xl">
-                    {stat.value}
-                  </span>
-                  <span className="mt-2 block text-sm text-muted-foreground">{stat.label}</span>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CaseSection label="Outcome & Reflection">
+        <ScrollReveal>
+          <StatGrid stats={stats} />
+        </ScrollReveal>
+        <Reflection text="Translating the brand into tokens first meant the rebrand propagated through every existing component, and shipping the library to GitHub ahead of launch let engineering pull the latest tokens and components directly — no handoff decks, no ambiguity, no lag." />
+      </CaseSection>
 
-      {/* 7. NEXT PROJECT */}
-      {nextProject && (
-        <section className="px-6 py-16 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <Link
-                to={nextProject.id === "marsh-internal-tooling" ? "/work/marsh-internal-tooling" : `/case/${nextProject.id}`}
-                className="group flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
-              >
-                <div>
-                  <span className="font-mono-label mb-1 block text-xs text-muted-foreground">
-                    Next Project
-                  </span>
-                  <span className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
-                    {nextProject.title}
-                  </span>
-                </div>
-                <ArrowRight
-                  size={24}
-                  className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
-                />
-              </Link>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
+      <NextProject currentId="marsh-design-system" />
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <HiringCTA />

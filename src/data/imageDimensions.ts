@@ -212,6 +212,10 @@ export const imageDimensions: Record<string, [number, number]> = {
   "/images/work/wl-pill.webp": [1600, 1481],
   "/images/work/wl-ticketing-slider.webp": [1600, 333],
   "/images/work/wl-tour-option.webp": [1600, 1214],
+  "/images/work/chatgpt-brainstorm-poster.webp": [1600, 1042],
+  "/images/work/trip-admit-reel-vistara-poster.webp": [720, 1280],
+  "/images/work/tipdirect-pricing.webp": [1600, 1511],
+  "/images/work/tipdirect-components.webp": [1600, 1511],
 };
 
 /** width/height attributes for a public image path; empty when unknown (e.g. external URLs). */
