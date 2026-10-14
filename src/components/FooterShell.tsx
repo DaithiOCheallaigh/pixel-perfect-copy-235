@@ -1,11 +1,13 @@
 import { ReactNode, useLayoutEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform, MotionValue } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform, MotionValue, cubicBezier } from "framer-motion";
+
+const ease = cubicBezier(0.16, 1, 0.3, 1);
 
 const Letter = ({ char, i, n, progress, reduced }: { char: string; i: number; n: number; progress: MotionValue<number>; reduced: boolean }) => {
-  const start = 0.35 + (i / n) * 0.45;
-  const range = [start, start + 0.2];
-  const y = useTransform(progress, range, ["60%", "0%"]);
-  const opacity = useTransform(progress, range, [0, 1]);
+  const start = 0.3 + (i / n) * 0.45;
+  const range = [start, start + 0.3];
+  const y = useTransform(progress, range, ["60%", "0%"], { ease });
+  const opacity = useTransform(progress, range, [0, 1], { ease });
   const text = char === " " ? "\u00A0" : char;
   if (reduced) return <span className="inline-block">{text}</span>;
   return (
@@ -22,7 +24,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
   const [fontSize, setFontSize] = useState(100);
   const reduced = !!useReducedMotion();
   const { scrollYProgress } = useScroll({ target: footerRef, offset: ["start end", "end end"] });
-  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22, mass: 0.8, restDelta: 0.001 });
+  const progress = useSpring(scrollYProgress, { stiffness: 45, damping: 20, mass: 1.2, restDelta: 0.001 });
   const letters = Array.from(wordmark);
 
   useLayoutEffect(() => {
