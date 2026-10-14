@@ -24,7 +24,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
   const [fontSize, setFontSize] = useState(100);
   const reduced = !!useReducedMotion();
   const { scrollYProgress } = useScroll({ target: footerRef, offset: ["start end", "end end"] });
-  const progress = useSpring(scrollYProgress, { stiffness: 28, damping: 18, mass: 1.2, restDelta: 0.001 });
+  const progress = useSpring(scrollYProgress, { stiffness: 28, damping: 12, mass: 1.2, restDelta: 0.001 });
   const letters = Array.from(wordmark);
 
   useLayoutEffect(() => {
