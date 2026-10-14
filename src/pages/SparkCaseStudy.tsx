@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { SEO } from "@/components/SEO";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowRight } from "iconsax-react";
 import ScrollReveal from "../components/ScrollReveal";
-import SectionLabel from "../components/SectionLabel";
+import { CaseBlock, CaseHero, CaseSection, CardGrid, NextProject, Prose, Reflection } from "../components/case-study/CaseLayout";
 import HiringCTA from "../components/HiringCTA";
 import CaseStudyVideo from "../components/CaseStudyVideo";
 import walkthroughVideo from "../assets/spark-walkthrough.mp4.asset.json";
@@ -128,193 +125,106 @@ const SparkCaseStudy = () => {
   const [prototypeLoaded, setPrototypeLoaded] = useState(false);
   const isMobile = useIsMobile();
   const project = projects.find((p) => p.id === "spark");
-  const nextProject = project?.nextProject
-    ? projects.find((p) => p.id === project.nextProject)
-    : null;
 
   return (
-    <main className="pt-24 overflow-x-hidden">
+    <main className="overflow-x-hidden pt-24">
       <SEO title="MedEd Workspace" description="Private case study: designing MedEd Workspace, a healthcare-education product for Elsevier, with shared components, parallel squads and faster design handoff." image={`https://www.lacunadigital.io${project?.pillImage ?? "/images/work/spark-pill.webp"}`} noindex />
-      {/* 1. HERO */}
-      <section className="px-6 pb-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <Link
-              to="/work"
-              className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary"
-            >
-              ← Back to Work
-            </Link>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05, duration: 0.6 }}
-          >
-            <div className="mb-4 flex flex-wrap items-center gap-2 font-mono-label text-muted-foreground">
-              <span>Elsevier</span>
-              <span className="text-border">|</span>
-              <span>Healthcare Education · Design Systems · AI Workflow</span>
-            </div>
-            <h1 className="mb-4 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">
-              MedEd Workspace
-            </h1>
-            <p className="mb-8 max-w-3xl text-lg text-muted-foreground md:text-xl">
-              A self-guided study companion for nursing and health-sciences students, and an
-              LMS-companion for the faculty who teach them — designed on and extended into Elsevier's
-              Leyden design system.
-            </p>
-            <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
-              <span>
-                <span className="uppercase tracking-wider">Role:</span>{" "}
-                <span className="text-foreground">Contract UI/UX Designer</span>
-              </span>
-              <span>
-                <span className="uppercase tracking-wider">Deliverable:</span>{" "}
-                <span className="text-foreground">
-                  Student + Faculty Experience, Design System Contributions, Dev-Ready Figma Files
-                </span>
-              </span>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* TOOLS */}
-      <section className="px-6 pb-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Tools</SectionLabel>
-            <ul className="flex flex-wrap items-center gap-x-8 gap-y-4">
-              {tools.map((tool) => (
-                <li key={tool.name} className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-card">
-                    <img
-                      src={tool.icon}
-                      alt=""
-                      aria-hidden="true"
-                      className="h-4 w-4 object-contain"
-                    />
-                  </span>
-                  <span className="font-mono-label text-muted-foreground">{tool.name}</span>
-                </li>
-              ))}
-            </ul>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* INTRO VIDEO */}
-      <section className="px-6 pb-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <div className="aspect-video overflow-hidden rounded-xl border border-border bg-black">
+      <CaseHero
+        client="Elsevier"
+        title="MedEd Workspace"
+        summary="A self-guided study companion for nursing and health-sciences students, and an LMS-companion for the faculty who teach them — designed on and extended into Elsevier's Leyden design system."
+        meta={[
+          { label: "Role", value: "Contract UI/UX Designer" },
+          { label: "Timeline", value: project?.timeline ?? "Contract" },
+          {
+            label: "Tools",
+            value: (
+              <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                {tools.map((tool) => (
+                  <li key={tool.name} className="flex items-center gap-2">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card">
+                      <img src={tool.icon} alt="" aria-hidden="true" className="h-4 w-4 object-contain" width={16} height={16} />
+                    </span>
+                    <span className="font-mono-label text-xs text-muted-foreground">{tool.name}</span>
+                  </li>
+                ))}
+              </ul>
+            ),
+          },
+        ]}
+        media={
+          <>
+            <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-card">
               <video
                 src={walkthroughVideo.url}
                 controls
                 playsInline
                 preload="none"
                 poster="/images/work/spark-walkthrough-poster.jpg"
+                width={1600}
+                height={900}
                 aria-label="Spark walkthrough: two curricula, one experience (narrated, 3 minutes)"
-                className="block h-full w-full"
+                className="block h-full w-full object-contain"
               />
             </div>
-            <p className="mt-3 font-mono-label text-xs text-muted-foreground">
-              Narrated walkthrough · 3 min · sound on
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
+            <p className="mt-3 font-mono-label text-xs text-muted-foreground">Narrated walkthrough · 3 min · sound on</p>
+          </>
+        }
+      />
 
-      {/* 2. THE BRIEF */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>The Brief</SectionLabel>
-            <div className="max-w-3xl space-y-4">
-              <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                MedEd Workspace is a two-sided learning product built on Elsevier's existing content and design
-                system rather than as a green-field build. For students, it's a self-guided exam-prep
-                companion built around spiral learning — spaced, repeated exposure to concepts rather
-                than one-and-done review — combined with AI-supported study assistance and mock exams
-                designed to build genuine exam readiness. For faculty, MedEd Workspace complements the LMS rather
-                than replacing it: instructors build and assign study content and get visibility into
-                class performance, so struggling students can be identified before an exam rather than
-                after.
-              </p>
-              <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                Elsevier runs comparable learning products across other health-science markets —
-                nursing among them — so every design decision on MedEd Workspace had to hold up as a reusable
-                pattern across that wider portfolio, not just as a one-off solution for a single
-                product.
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <CaseSection label="Overview">
+        <CaseBlock title="What it is">
+          <Prose text="MedEd Workspace is a two-sided learning product built on Elsevier's existing content and design system rather than as a green-field build. For students, it's a self-guided exam-prep companion built around spiral learning — spaced, repeated exposure to concepts rather than one-and-done review — combined with AI-supported study assistance and mock exams designed to build genuine exam readiness. For faculty, MedEd Workspace complements the LMS rather than replacing it: instructors build and assign study content and get visibility into class performance, so struggling students can be identified before an exam rather than after." />
+        </CaseBlock>
+      </CaseSection>
 
-      {/* 3b. FEATURE HIGHLIGHTS */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Feature Highlights</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              Short loops of the features I designed end to end, captured from the prototype rather
-              than mocked up as static comps.
-            </p>
-          </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featureVideos.map((feature, i) => (
-              <ScrollReveal key={feature.title} delay={i * 0.08}>
-                <div>
-                  <CaseStudyVideo src={feature.src} ariaLabel={feature.alt} />
-                  <h3 className="mt-4 mb-2 text-lg font-bold text-foreground">{feature.title}</h3>
-                  <p className="text-[15px] leading-[1.7] text-muted-foreground">{feature.text}</p>
-                </div>
-              </ScrollReveal>
+      <CaseSection label="The Challenge">
+        <CaseBlock>
+          <Prose text="Elsevier runs comparable learning products across other health-science markets — nursing among them — so every design decision on MedEd Workspace had to hold up as a reusable pattern across that wider portfolio, not just as a one-off solution for a single product." />
+        </CaseBlock>
+      </CaseSection>
+
+      <CaseSection label="Exploration & Approach">
+        <CaseBlock title="My role">
+          <Prose text="As contract UI/UX designer on MedEd Workspace, I worked across both the student and faculty experiences, embedded in cross-functional squads alongside product, engineering, and content teams." />
+          <div className="mt-8">
+            <CardGrid items={roleBreakdown.map((r) => ({ title: r.title, desc: r.text }))} columns={2} />
+          </div>
+        </CaseBlock>
+      </CaseSection>
+
+      <CaseSection label="The Solution">
+        <CaseBlock title="Feature highlights">
+          <Prose text="Short loops of the features I designed end to end, captured from the prototype rather than mocked up as static comps." />
+          <div className="mt-8 grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {featureVideos.map((feature) => (
+              <div key={feature.title}>
+                <CaseStudyVideo src={feature.src} ariaLabel={feature.alt} className="rounded-2xl" />
+                <h4 className="mb-2 mt-4 text-lg font-bold text-foreground">{feature.title}</h4>
+                <p className="text-[15px] leading-[1.7] text-muted-foreground">{feature.text}</p>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* INTERACTIVE STUDENT PROTOTYPE */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Try the Prototype</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              The working Alpha prototype, live in the page. Click through the student dashboard,
-              open a topic in the Study Guide, start a quiz and ask the AI Coach. It runs in your
-              browser with sample data, so nothing is saved.
-            </p>
-          </ScrollReveal>
+        </CaseBlock>
+        <CaseBlock title="Try the prototype">
+          <Prose text="The working Alpha prototype, live in the page. Click through the student dashboard, open a topic in the Study Guide, start a quiz and ask the AI Coach. It runs in your browser with sample data, so nothing is saved." />
           {!isMobile && (
-            <ScrollReveal delay={0.1}>
-              <div className="overflow-hidden rounded-xl border border-border bg-background">
-                {prototypeLoaded ? (
-                  <iframe
-                    src="/embeds/spark-student.html#screen=home"
-                    title="MedEd Workspace student prototype (interactive)"
-                    loading="lazy"
-                    className="block aspect-[16/10] w-full border-0"
-                  />
-                ) : (
-                  <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-4">
-                    <Button onClick={() => setPrototypeLoaded(true)}>
-                      Load interactive prototype
-                    </Button>
-                    <span className="font-mono-label text-xs text-muted-foreground">
-                      ~2 MB · opens the student dashboard
-                    </span>
-                  </div>
-                )}
-              </div>
-            </ScrollReveal>
+            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-background">
+              {prototypeLoaded ? (
+                <iframe
+                  src="/embeds/spark-student.html#screen=home"
+                  title="MedEd Workspace student prototype (interactive)"
+                  loading="lazy"
+                  className="block aspect-[16/10] w-full border-0"
+                />
+              ) : (
+                <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-4">
+                  <Button onClick={() => setPrototypeLoaded(true)}>Load interactive prototype</Button>
+                  <span className="font-mono-label text-xs text-muted-foreground">~2 MB · opens the student dashboard</span>
+                </div>
+              )}
+            </div>
           )}
           <div className="mt-4 flex justify-end">
             <Button
@@ -327,131 +237,37 @@ const SparkCaseStudy = () => {
               </a>
             </Button>
           </div>
-        </div>
-      </section>
+        </CaseBlock>
+      </CaseSection>
 
-      {/* 4. MY ROLE */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>My Role</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              As contract UI/UX designer on MedEd Workspace, I worked across both the student and faculty
-              experiences, embedded in cross-functional squads alongside product, engineering, and
-              content teams.
-            </p>
-          </ScrollReveal>
+      <CaseSection label="Build, Test & Launch">
+        <CaseBlock title="Process & ways of working">
+          <CardGrid items={processSteps.map((p) => ({ eyebrow: p.num, title: p.title, desc: p.text }))} />
+        </CaseBlock>
+      </CaseSection>
 
-          <div className="space-y-12">
-            {roleBreakdown.map((item, i) => (
-              <ScrollReveal key={item.title} delay={i * 0.08}>
-                <div>
-                  <h3 className="mb-2 text-lg font-bold text-foreground">{item.title}</h3>
-                  <p className="max-w-2xl text-[15px] leading-[1.7] text-muted-foreground">
-                    {item.text}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. PROCESS & WAYS OF WORKING */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Process & Ways of Working</SectionLabel>
-          </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
-            {processSteps.map((col, i) => (
-              <ScrollReveal key={col.num} delay={i * 0.08}>
-                <div>
-                  <span className="font-mono-label mb-2 block text-xs text-muted-foreground">
-                    {col.num}
-                  </span>
-                  <h3 className="mb-3 text-lg font-bold text-foreground">{col.title}</h3>
-                  <p className="text-[15px] leading-[1.7] text-muted-foreground">{col.text}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. PROCESS IMAGE PLACEHOLDER */}
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Process Artefacts</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              Placeholder for workflow diagrams, design-pit artefacts, or the internal workbench tool
-              interface.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <div className="overflow-hidden rounded-xl border border-border">
-              <div className="flex aspect-[16/10] w-full items-center justify-center bg-muted/50">
-                <span className="font-mono-label text-center px-6 text-muted-foreground">
-                  [Placeholder — Faculty insights dashboard screenshot]
+      <CaseSection label="Outcome & Reflection">
+        <div className="grid gap-8 md:grid-cols-3">
+          {stats.map((stat, i) => (
+            <ScrollReveal key={i} delay={i * 0.08}>
+              <div className="text-center">
+                <stat.figure
+                  theme="auto"
+                  aria-label={stat.figureAlt}
+                  className="mx-auto mb-4 w-full max-w-[240px] [--hairline-plate:hsl(var(--background))] [--hairline-stroke:1]"
+                />
+                <span className="block min-h-[2.1em] text-3xl font-black leading-[1.05] tracking-tighter text-foreground md:text-4xl">
+                  {stat.title}
                 </span>
+                <span className="mt-2 block text-sm text-muted-foreground">{stat.label}</span>
               </div>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          ))}
         </div>
-      </section>
+        {project?.reflection && <Reflection text={project.reflection} />}
+      </CaseSection>
 
-
-      {/* 8. OUTCOMES */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Outcomes</SectionLabel>
-          </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
-            {stats.map((stat, i) => (
-              <ScrollReveal key={i} delay={i * 0.08}>
-                <div className="text-center">
-                  <stat.figure
-                    theme="auto"
-                    aria-label={stat.figureAlt}
-                    className="mx-auto mb-4 w-full max-w-[240px] [--hairline-plate:hsl(var(--background))] [--hairline-stroke:1]"
-                  />
-                  <span className="block min-h-[2.1em] text-3xl font-black leading-[1.05] tracking-tighter text-foreground md:text-4xl">
-                    {stat.title}
-                  </span>
-                  <span className="mt-2 block text-sm text-muted-foreground">{stat.label}</span>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 9. NEXT PROJECT */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <Link
-              to={nextProject ? `/case/${nextProject.id}` : "/work"}
-              className="group flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
-            >
-              <div>
-                <span className="font-mono-label mb-1 block text-xs text-muted-foreground">
-                  Next Project
-                </span>
-                <span className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
-                  {nextProject ? nextProject.title : "Back to Work"}
-                </span>
-              </div>
-              <ArrowRight
-                size={24}
-                className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
-              />
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
+      <NextProject currentId="spark" />
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <HiringCTA />
