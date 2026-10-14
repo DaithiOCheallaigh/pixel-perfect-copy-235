@@ -31,7 +31,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
       // Measure at 100px, then scale to fill container width (with a small safety margin).
       text.style.fontSize = "100px";
       const w = text.scrollWidth;
-      const avail = box.clientWidth * 0.94;
+      const avail = box.clientWidth * 0.96;
       if (w > 0) setFontSize((avail / w) * 100);
       text.style.fontSize = "";
     };
@@ -53,7 +53,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
       >
         <div
           ref={textRef}
-          className="absolute inset-x-0 bottom-0 flex justify-center whitespace-nowrap"
+          className="absolute bottom-0 left-1/2 flex w-max whitespace-nowrap"
           style={{
             fontFamily: "'Mona Sans', sans-serif",
             fontWeight: 800,
@@ -61,7 +61,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
             lineHeight: 0.8,
             fontSize: `${fontSize}px`,
             color: "hsl(var(--secondary))",
-            transform: "translateY(8%)",
+            transform: "translate(-50%, 8%)",
           }}
         >
           {letters.map((c, i) => (
