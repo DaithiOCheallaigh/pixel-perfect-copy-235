@@ -1,9 +1,10 @@
 import { ReactNode, useLayoutEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform, MotionValue } from "framer-motion";
 
 const Letter = ({ char, i, n, progress, reduced }: { char: string; i: number; n: number; progress: MotionValue<number>; reduced: boolean }) => {
-  const range = [0.45 + (i / n) * 0.35, 0.75 + (i / n) * 0.25];
-  const y = useTransform(progress, range, ["100%", "0%"]);
+  const start = 0.35 + (i / n) * 0.45;
+  const range = [start, start + 0.2];
+  const y = useTransform(progress, range, ["60%", "0%"]);
   const opacity = useTransform(progress, range, [0, 1]);
   const text = char === " " ? "\u00A0" : char;
   if (reduced) return <span className="inline-block">{text}</span>;
@@ -21,6 +22,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
   const [fontSize, setFontSize] = useState(100);
   const reduced = !!useReducedMotion();
   const { scrollYProgress } = useScroll({ target: footerRef, offset: ["start end", "end end"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22, mass: 0.8, restDelta: 0.001 });
   const letters = Array.from(wordmark);
 
   useLayoutEffect(() => {
@@ -71,7 +73,7 @@ const FooterShell = ({ wordmark, children }: { wordmark: string; children: React
           }}
         >
           {letters.map((c, i) => (
-            <Letter key={i} char={c} i={i} n={letters.length} progress={scrollYProgress} reduced={reduced} />
+            <Letter key={i} char={c} i={i} n={letters.length} progress={progress} reduced={reduced} />
           ))}
         </div>
       </div>
