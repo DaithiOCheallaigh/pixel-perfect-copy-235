@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
 import { motion } from "framer-motion";
 import { ArrowRight } from "iconsax-react";
 import { useState } from "react";
 import ScrollReveal from "../components/ScrollReveal";
-import SectionLabel from "../components/SectionLabel";
+import CaseImage from "../components/CaseImage";
+import { CaseBlock, CaseHero, CaseSection, CardGrid, NextProject, Prose, Reflection, StatGrid, ToolsStrip } from "../components/case-study/CaseLayout";
 import HiringCTA from "../components/HiringCTA";
 import { SEO } from "@/components/SEO";
 import { projects } from "../data/projects";
@@ -97,264 +97,106 @@ const PrototypeLink = ({ href }: { href: string }) => {
 
 const MarshInternalTooling = () => {
   const project = projects.find((p) => p.id === "marsh-internal-tooling");
-  const nextProject = project?.nextProject
-    ? projects.find((p) => p.id === project.nextProject)
-    : null;
 
   return (
-    <main className="pt-24 overflow-x-hidden">
+    <main className="overflow-x-hidden pt-24">
       <SEO title="Marsh Internal Tooling" description="Three Marsh internal enterprise tools designed and shipped in parallel by Dave Kelly, using an AI-accelerated workflow and the shared CORE component library." image={`https://www.lacunadigital.io${project?.pillImage ?? "/images/work/marsh-core.webp"}`} />
-      {/* 1. HERO */}
-      <section className="px-6 pb-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <Link
-              to="/work"
-              className="font-mono-label mb-8 inline-block text-muted-foreground transition-colors hover:text-primary"
-            >
-              ← Back to Work
-            </Link>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05, duration: 0.6 }}
-          >
-            <div className="mb-4 flex flex-wrap items-center gap-2 font-mono-label text-muted-foreground">
-              <span>Marsh</span>
-              <span className="text-border">|</span>
-              <span>Product Design · Design Systems · AI-Led Workflow</span>
-            </div>
-            <h1 className="mb-4 text-4xl font-black tracking-tighter text-foreground md:text-5xl lg:text-6xl">
-              Marsh Internal Tooling
-            </h1>
-            <p className="mb-8 max-w-3xl text-lg text-muted-foreground md:text-xl">
-              Three enterprise internal tools designed and shipped simultaneously —
-              powered by an AI-accelerated workflow and a unified component library.
-            </p>
-            <img src="/images/work/marsh-logo-new-white.png" alt="Marsh" className="h-6 mb-4 brightness-0 dark:brightness-100 max-w-full" {...imgDims("/images/work/marsh-logo-new-white.png")} loading="eager" fetchPriority="high" decoding="async" />
-            <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono-label text-xs text-muted-foreground">
-              <span>
-                <span className="uppercase tracking-wider">Role:</span>{" "}
-                <span className="text-foreground">Freelance Product Designer</span>
-              </span>
-              <span>
-                <span className="uppercase tracking-wider">Deliverable:</span>{" "}
-                <span className="text-foreground">3 Products + Design System</span>
-              </span>
-            </div>
-            <img src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" className="mt-4 h-8 brightness-0 dark:brightness-100 max-w-full" {...imgDims("/images/work/marsh-tools.webp")} loading="lazy" decoding="async" />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 2. PROJECT OVERVIEW */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>The Brief</SectionLabel>
-            <div className="max-w-3xl space-y-4">
-              <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                Contracted to Marsh via Expleo to design and ship three internal enterprise tools
-                in parallel — a Colleague Profile & Work Queue, a Client Milestones tracker, and
-                a Notifications Hub. Working across all three products simultaneously, the engagement
-                demanded a single, scalable design system to ensure consistency at pace.
-              </p>
-              <p className="text-[15px] leading-[1.7] text-muted-foreground">
-                Rather than treating each product in isolation, I built CORE — a shared component
-                library of tokens, patterns, and UI components designed to serve all three products
-                and scale across Marsh's wider digital estate.
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* VIDEO SHOWREEL */}
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <div className="overflow-hidden rounded-xl border border-border">
-              <video
-                src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Internatl%20Tooling/MarshInternalTools.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="none"
-                width={1920}
-                height={1080}
-                className="w-full"
-                poster="/images/work/marsh-internal-tools-poster.webp"
-              />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* 3. PRODUCT SHOWCASE — THREE LIVE PROTOTYPE EMBEDS */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Live Prototypes</SectionLabel>
-          </ScrollReveal>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3 overflow-hidden">
-            {products.map((product, i) => (
-              <ScrollReveal key={product.num} delay={i * 0.1} distance={0}>
-                <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm md:transition-transform md:duration-200 md:ease-out md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-primary/5">
-                  {/* Numbered label */}
-                  <div className="px-5 pt-5">
-                    <span className="font-mono-label text-xs text-muted-foreground">
-                      {product.num}
-                    </span>
-                  </div>
-
-                  {/* Title + description */}
-                  <div className="px-5 pb-4">
-                    <h3 className="mt-1 text-lg font-bold text-foreground">{product.name}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{product.description}</p>
-                  </div>
-
-                  {/* Product image */}
-                  <div className="relative mx-3 mb-3 overflow-hidden rounded-lg border border-border aspect-[16/10] max-w-full">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="absolute inset-0 w-full h-full object-cover object-top block" {...imgDims(product.image)} loading="lazy" decoding="async" />
-                  </div>
-
-                  {/* View Prototype link */}
-                  <PrototypeLink href={product.link} />
-                </div>
-              </ScrollReveal>
-            ))}
+      <CaseHero
+        client={<img src="/images/work/marsh-logo-new-white.png" alt="Marsh" className="no-lightbox h-6 w-auto max-w-full brightness-0 dark:brightness-100" {...imgDims("/images/work/marsh-logo-new-white.png")} loading="eager" decoding="async" />}
+        title="Marsh Internal Tooling"
+        summary="Three enterprise internal tools designed and shipped simultaneously — powered by an AI-accelerated workflow and a unified component library."
+        meta={[
+          { label: "Role", value: "Freelance Product Designer" },
+          { label: "Timeline", value: project?.timeline ?? "Ongoing" },
+          { label: "Tools", value: <ToolsStrip src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" mono /> },
+        ]}
+        media={
+          <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-card">
+            <video
+              src="https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Internatl%20Tooling/MarshInternalTools.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="none"
+              width={1920}
+              height={1080}
+              aria-label="Showreel of the three Marsh internal tools"
+              className="block h-full w-full object-contain"
+              poster="/images/work/marsh-internal-tools-poster.webp"
+            />
           </div>
-        </div>
-      </section>
+        }
+      />
 
-      {/* 4. THE CORE DESIGN SYSTEM */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>CORE — A Shared Design System</SectionLabel>
-            <p className="mb-8 max-w-3xl text-[15px] leading-[1.7] text-muted-foreground">
-              To move quickly without sacrificing consistency, I built CORE — a token-based
-              component library spanning buttons, forms, data tables, navigation patterns, status
-              indicators, and notification primitives. Designed in Figma, documented in Storybook,
-              and built to serve all three products simultaneously — with enough rigour to scale
-              across Marsh's broader product estate.
-            </p>
-          </ScrollReveal>
+      <CaseSection label="Overview">
+        <CaseBlock title="What it is">
+          <Prose text="Contracted to Marsh via Expleo to design and ship three internal enterprise tools in parallel — a Colleague Profile & Work Queue, a Client Milestones tracker, and a Notifications Hub." />
+        </CaseBlock>
+      </CaseSection>
 
-          <ScrollReveal delay={0.1}>
-            <a
-              href="https://daithiocheallaigh.github.io/MarshDesign//?path=/docs/components-button--docs"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
-            >
-              <div>
-                <span className="font-mono-label mb-1 block text-xs text-muted-foreground">
-                  Explore the Component Library
-                </span>
-                <span className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
-                  CORE Design System — Storybook Documentation
-                </span>
+      <CaseSection label="The Challenge">
+        <CaseBlock>
+          <Prose text="Working across all three products simultaneously, the engagement demanded a single, scalable design system to ensure consistency at pace." />
+        </CaseBlock>
+      </CaseSection>
+
+      <CaseSection label="Exploration & Approach">
+        <CaseBlock title="AI-led design at enterprise scale">
+          <Prose text="Rather than treating each product in isolation, I built CORE — a shared component library of tokens, patterns, and UI components designed to serve all three products and scale across Marsh's wider digital estate." />
+          <div className="mt-8">
+            <CardGrid items={approaches.map((a) => ({ eyebrow: a.num, title: a.title, desc: a.text }))} />
+          </div>
+        </CaseBlock>
+        <ScrollReveal>
+          <div className="flex justify-center">
+            <CpuArchitecture text="AI" className="max-w-2xl" />
+          </div>
+        </ScrollReveal>
+      </CaseSection>
+
+      <CaseSection label="The Solution">
+        <CaseBlock title="Three live prototypes">
+          <div className="grid items-start gap-6 md:grid-cols-3">
+            {products.map((product) => (
+              <div key={product.num} className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card">
+                <div className="px-5 pt-5">
+                  <span className="font-mono-label text-xs text-primary">{product.num}</span>
+                  <h4 className="mt-1 text-lg font-bold text-foreground">{product.name}</h4>
+                  <p className="mt-1 text-sm text-muted-foreground">{product.description}</p>
+                </div>
+                <CaseImage src={product.image} alt={product.name} className="m-3" />
+                <PrototypeLink href={product.link} />
               </div>
-              <ArrowRight
-                size={24}
-                className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
-              />
-            </a>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* AI Architecture Animation */}
-      <section className="px-6 py-8 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <div className="flex justify-center">
-              <CpuArchitecture text="AI" className="max-w-2xl" />
+            ))}
+          </div>
+        </CaseBlock>
+        <CaseBlock title="CORE — a shared design system">
+          <Prose text="To move quickly without sacrificing consistency, I built CORE — a token-based component library spanning buttons, forms, data tables, navigation patterns, status indicators, and notification primitives. Designed in Figma, documented in Storybook, and built to serve all three products simultaneously — with enough rigour to scale across Marsh's broader product estate." />
+          <a
+            href="https://daithiocheallaigh.github.io/MarshDesign//?path=/docs/components-button--docs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-8 flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-6 transition-colors md:hover:border-primary/40"
+          >
+            <div className="min-w-0">
+              <span className="mb-1 block font-mono-label text-xs text-muted-foreground">Explore the Component Library</span>
+              <span className="text-lg font-bold text-foreground transition-colors md:group-hover:text-primary">CORE Design System — Storybook Documentation</span>
             </div>
-          </ScrollReveal>
-        </div>
-      </section>
+            <ArrowRight size={24} className="shrink-0 text-muted-foreground transition-colors md:group-hover:text-primary" />
+          </a>
+        </CaseBlock>
+      </CaseSection>
 
-      {/* 5. APPROACH — HOW I WORKED */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>AI-Led Design at Enterprise Scale</SectionLabel>
-          </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
-            {approaches.map((col, i) => (
-              <ScrollReveal key={col.num} delay={i * 0.08}>
-                <div>
-                  <span className="font-mono-label mb-2 block text-xs text-muted-foreground">
-                    {col.num}
-                  </span>
-                  <h3 className="mb-3 text-lg font-bold text-foreground">{col.title}</h3>
-                  <p className="text-[15px] leading-[1.7] text-muted-foreground">{col.text}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CaseSection label="Outcome & Reflection">
+        <ScrollReveal>
+          <StatGrid stats={stats} />
+        </ScrollReveal>
+        <Reflection text="Consistency wasn't retrofitted; it was the starting point. Building one shared system first, then pairing Claude and Lovable with a Figma MCP loop, is what made it possible to design and ship three products in parallel." />
+      </CaseSection>
 
-      {/* 6. OUTCOMES */}
-      <section className="px-6 py-16 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-5xl">
-          <ScrollReveal>
-            <SectionLabel>Outcomes</SectionLabel>
-          </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
-            {stats.map((stat, i) => (
-              <ScrollReveal key={i} delay={i * 0.08}>
-                <div className="text-center">
-                  <span className="block text-5xl font-black tracking-tighter text-foreground md:text-6xl">
-                    {stat.value}
-                  </span>
-                  <span className="mt-2 block text-sm text-muted-foreground">{stat.label}</span>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. NEXT PROJECT NAVIGATION */}
-      {nextProject && (
-        <section className="px-6 py-16 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <Link
-                to={`/case/${nextProject.id}`}
-                className="group flex items-center justify-between rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
-              >
-                <div>
-                  <span className="font-mono-label mb-1 block text-xs text-muted-foreground">
-                    Next Project
-                  </span>
-                  <span className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
-                    {nextProject.title}
-                  </span>
-                </div>
-                <ArrowRight
-                  size={24}
-                  className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
-                />
-              </Link>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
+      <NextProject currentId="marsh-internal-tooling" />
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <HiringCTA />
