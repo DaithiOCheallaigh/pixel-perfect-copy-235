@@ -58,3 +58,7 @@
 - [x] Make the services CTA commercial-only and label package cards/estimates with VAT.
 - [x] Run 213 passing tests and preview acceptance checks; clean build, backend and password gate unchanged, nothing published.
 - [x] Remove TipDirect App YouTube placeholder embed
+
+# Services Hairline chain
+- [x] Replace the unused orbit with a standalone connected-services Hairline embed.
+- [x] Verify motion, selection/resume, looping and both themes at phone/desktop widths; 197 existing tests pass.
