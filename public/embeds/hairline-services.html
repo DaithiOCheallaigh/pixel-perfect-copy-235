@@ -826,9 +826,11 @@ function mount({stage, svg, read}) {
   bag.on(window,'pagehide',bag.dispose);
   // Same-origin host theme changes are observed without changing or reloading the host page.
   try {
-    const doc=parent.document;
+    const doc=parent===window?null:parent.document;
+    if(doc) {
     const theme=()=>{const r=doc.documentElement;const bg=getComputedStyle(r).getPropertyValue('--background').trim();const lightness=parseFloat(bg.split(/\s+/).at(-1));const primary=getComputedStyle(r).getPropertyValue('--primary').trim();if(primary)stage.style.setProperty('--site-primary',`hsl(${primary})`);document.documentElement.dataset.theme=r.dataset.theme|| (Number.isFinite(lightness)?lightness>50?'light':'dark':r.classList.contains('dark')?'dark':'light');};
     const observer=new MutationObserver(theme);observer.observe(doc.documentElement,{attributes:true,attributeFilter:['class','data-theme','style']});bag.add(()=>observer.disconnect());theme();
+    }
   } catch {}
   bag.add(()=>svg.replaceChildren());
   return {set:()=>{},destroy:bag.dispose};
