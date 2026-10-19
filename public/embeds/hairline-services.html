@@ -56,7 +56,9 @@
   .plate { border: none !important; border-radius: 0 !important; }
   .tag, .controls, #means, #rules, #error { display: none !important; }
   :root[data-theme="dark"] #stage { --hl-plate: #080808; --hl-hi: #f2f0ec; --hl-edge: #9a9ca3; --hl-mid: #7c7e86; --hl-lo: #55575d; --hairline-stroke: 1.2; }
-  #stage text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: var(--hl-lo); }
+  #stage { --hairline-stroke: 1.2; }
+  :root[data-theme="light"] #stage { --hl-lo: var(--hl-edge); }
+  #stage text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: var(--hl-lo); stroke: none; }
   #stage text.hi { fill: var(--hl-hi); }
   #stage [role="button"] { cursor: pointer; }
   #stage [role="button"]:focus-visible { outline: none; }
@@ -733,7 +735,7 @@ var HL = (() => {
 })();
 </script>
 <script type="module" id="hl-figure">
-const { Cam, fit, proj, facing, circ, prism, solid, put, seg, poly, open, flatDot, place, mk, register, pointer, disposer, spring, stepS, reducedMotion, clamp, EASE_LIFT } = HL;
+const { Cam, fit, proj, facing, circ, prism, solid, put, seg, open, flatDot, place, mk, register, pointer, disposer, spring, stepS, reducedMotion, clamp, EASE_LIFT } = HL;
 const NAMES = ['Local SEO', 'AI Assistant', 'CRM & Leads', 'Website', 'Reservations'];
 const mod = i => ((i % 5) + 5) % 5;
 const circle = (x, y, r) => Array.from({length: 33}, (_, i) => [x + r * Math.cos(i / 32 * Math.PI * 2), y + r * Math.sin(i / 32 * Math.PI * 2)]);
@@ -775,7 +777,9 @@ function mount({stage, svg, read}) {
     stepS(pan,dt);
     // Rebase an identical repeated chain only once the camera lands: no reverse sweep or visible seam.
     if (!rm && (active>=5 || active<0) && Math.abs(pan.x-active)<.001) {
-      const shift=active-mod(active); active-=shift; pan.x-=shift; pan.t-=shift;
+      const shift=active-mod(active), poses=new Map(nodes.map(n=>[n.i,{...n.lift}]));
+      nodes.forEach(n=>{const pose=poses.get(n.i+shift);if(pose)Object.assign(n.lift,pose);});
+      active-=shift; pan.x-=shift; pan.t-=shift;
     }
     if(rm) active=mod(active);
     const spacing=rm?72:114, centre=rm?2:pan.x, scale=rm?.57:1;
@@ -786,7 +790,7 @@ function mount({stage, svg, read}) {
       n.g.style.display=visible?'':'none'; n.g.setAttribute('tabindex',visible?'0':'-1');
       if(!visible)return;
       n.lift.t=on&&!rm?7:0; stepS(n.lift,dt);
-      const [cx,cy]=world(n.i), Q=(x,y,z)=>{const p=P(x,y,z);return [200+(p[0]-200)-centre*114,p[1]];};
+      const [cx,cy]=world(n.i);
       // Ground world spacing projects to 114px; reduced motion uses smaller, fixed local figures.
       const local=(x,y,z)=>{const p=P(x+cx,y+cy,z);return [200+(n.i-centre)*spacing+(p[0]-200-n.i*114)*scale, 183+(p[1]-183)*scale];};
       const ring=circ(19,64), inner=circ(17.6,64);
@@ -797,9 +801,10 @@ function mount({stage, svg, read}) {
       n.icon.setAttribute('class',on?'nf hi':'nf lo'); n.plate.sil.setAttribute('class',on?'sil hi':'sil lo');
       n.label.setAttribute('class',on?'hi':'lo'); n.label.setAttribute('x',200+(n.i-centre)*spacing); n.label.setAttribute('y',rm?219:235);
       n.label.setAttribute('font-size',rm?7:9); n.g.setAttribute('aria-pressed',String(on));
-      n.g.setAttribute('opacity',rm||on?1:clamp(1-Math.abs(n.i-pan.x)*.3,.15,.7));
+      const distance=Math.abs((n.i-pan.x)*spacing), edge=clamp((200-distance-42)/32,0,1);
+      n.g.setAttribute('opacity',rm||on?1:clamp(1-Math.abs(n.i-pan.x)*.22,.15,.78)*edge);
     });
-    const t=clamp(phase/2.4,0,1), from=t<.5?active-1:active, to=from+1;
+    const t=clamp(phase/2.4,0,1), from=t<.5?active-1:active;
     place(pulse,screen(from+EASE_LIFT((t% .5)*2)));
     pulse.setAttribute('opacity',rm||held||resume>0?0:Math.sin((t% .5)*Math.PI*2));
     stage.dataset.active=NAMES[mod(active)]; stage.dataset.paused=String(held||resume>0); stage.dataset.pan=String(pan.x);
@@ -812,7 +817,7 @@ function mount({stage, svg, read}) {
     return p[1]>100&&p[1]<250&&(!rm||i>=0&&i<5)&&Math.abs(p[0]-(200+(i-centre)*spacing))<48?i:null;
   };
   const leave=()=>{held=false;resume=3;L.wake();};
-  bag.add(pointer(stage,{move:p=>{const i=hit(p);if(i!==null&&!held)select(i);},down:(p,e)=>{const i=hit(p);if(i!==null){select(i);if(e.pointerType!=='mouse'){held=false;resume=3;}}},leave}));
+  bag.add(pointer(stage,{move:p=>{const i=hit(p);if(i!==null&&(!held||i!==active))select(i);else if(i===null&&held)leave();},down:(p,e)=>{const i=hit(p);if(i!==null){select(i);if(e.pointerType!=='mouse'){held=false;resume=3;}}},leave}));
   bag.on(svg,'keydown',e=>{if(['Enter',' '].includes(e.key)){const i=Number(e.target.closest('[data-index]')?.dataset.index);if(Number.isFinite(i)){e.preventDefault();select(i);}}});
   bag.on(stage,'keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select(active+(e.key==='ArrowRight'?1:-1));}});
   bag.on(stage,'focusout',e=>{if(!stage.contains(e.relatedTarget))leave();});
