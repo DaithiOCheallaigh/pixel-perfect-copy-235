@@ -1,18 +1,16 @@
-import { addOnCatalogue, addOnPriceLabel, carePlans, eur, priceLabel, tiers, VAT_REGISTERED } from "./pricing";
+import { carePlans, eur, priceLabel, tiers, VAT_REGISTERED } from "./pricing";
 
 /** Setup and recurring fees are separate; optional website instalments are not added to setup. */
 export type Fee = { oneOff: number; monthly: number };
-export type SelectionKind = "tier" | "addon" | "care";
+export type SelectionKind = "tier" | "care";
 export type SelectionItem = { id: string; kind: SelectionKind; title: string; price: string } & Fee;
 
 export const SELECTION_STORAGE_KEY = "lacuna-services-selection";
 
-/** Price a tier, add-on or care plan by its catalogue ID; unknown IDs return undefined. */
+/** Price a tier or care plan by its catalogue ID; unknown IDs return undefined. */
 export function selectionItem(id: string): SelectionItem | undefined {
   const tier = tiers.find((t) => t.id === id);
   if (tier) return { id, kind: "tier", title: `${tier.name} website`, price: priceLabel(tier), oneOff: tier.price ?? 0, monthly: 0 };
-  const addOn = addOnCatalogue.find((a) => a.id === id);
-  if (addOn) return { id, kind: "addon", title: addOn.name, price: addOnPriceLabel(addOn), oneOff: addOn.setup ?? 0, monthly: addOn.monthly ?? 0 };
   const care = carePlans.find((c) => c.id === id);
   if (care) return { id, kind: "care", title: `${care.name} care plan`, price: `${eur(care.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`, oneOff: 0, monthly: care.monthly };
   return undefined;

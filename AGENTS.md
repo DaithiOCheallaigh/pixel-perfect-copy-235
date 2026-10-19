@@ -13,7 +13,7 @@
 - Individual service price lines are defined in the service catalogue using the shared pricing exports and rendered by ServicePage; this keeps every detail page priced without duplicating amounts in presentation code.
 - Pages using usePageDescription synchronise the static description fallback with their managed SEO description and restore it on unmount; this avoids conflicting descriptions without changing the site's static head globally.
 - Intake options and plain-English working terms are shared data modules using the pricing catalogue; this makes numeric rules testable without duplicating page values.
-- Selection estimates derive setup and recurring fees by service ID from the pricing catalogue, never by parsing labels or trusting stored price totals; this keeps monthly fees separate and stale session prices out of quotes.
+- The services picker has two steps (tier, optional care); selection estimates accept only tier/care IDs from the pricing catalogue, never stored totals or add-on IDs, keeping retired add-ons out of bars and briefs while other pages retain the add-on catalogue.
 - Generate portfolio public/llms.txt from projects/profile and public/llms-services.txt pricing from the shared catalogue using scripts/generate-llms.ts; this separates recruiter discovery from commercial pricing without creating a services directory.
 - Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
 - SEO derives section branding, default sharing image and fallback service schema from the current pathname; PortfolioSEO is a compatibility re-export and layouts do not set page metadata, avoiding competing head tags.

@@ -1,7 +1,7 @@
 import { SEO } from "@/components/SEO";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
@@ -14,26 +14,14 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Global,
   Setting2,
-  Monitor,
-  Sms,
-  Instagram,
-  Location,
-  ShoppingCart,
-  MessageText,
-  Calendar1,
-  People,
-  
-  Cpu,
-  Link1,
   Star1,
-  MessageEdit,
   Clock,
   Receipt1,
   TickCircle,
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { Button } from "@/components/ui/button";
-import { addOnCatalogue, addOnMonthlyLabel, addOnSetupLabel, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, segments, terms, tiers, vatFootnote } from "@/data/pricing";
+import { bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, segments, terms, tiers, vatFootnote } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
@@ -136,22 +124,13 @@ const StepHeading = ({ n, title, body }: { n: number; title: string; body: strin
 
 const Services = () => {
   const [tierId, setTierId] = useState<string | null>(null);
-  const [addOnIds, setAddOnIds] = useState<Set<string>>(new Set());
   const [careId, setCareId] = useState<string | null>(null);
-
-  const toggleAddOn = (id: string) =>
-    setAddOnIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
 
   // Broadcast IDs only; the selection bar prices them from the catalogue.
   useEffect(() => {
-    const ids = tierId ? [tierId, ...addOnCatalogue.filter((a) => addOnIds.has(a.id)).map((a) => a.id), ...(careId ? [careId] : [])] : [];
+    const ids = tierId ? [tierId, ...(careId ? [careId] : [])] : [];
     window.dispatchEvent(new CustomEvent("service-selection-change", { detail: ids.length ? ids.map((id) => ({ id })) : null }));
-  }, [tierId, addOnIds, careId]);
+  }, [tierId, careId]);
 
   // Clear the floating selection bar when leaving the page
   useEffect(() => {
@@ -293,7 +272,7 @@ const Services = () => {
             <SectionLabel>Build Your Package</SectionLabel>
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Choose your package</h2>
             <p className="mt-4 max-w-2xl text-muted-foreground">
-              Pick a website tier, add what you need, then choose how it's looked after. Every price is fixed and published.
+              Pick a website tier, then choose how it's looked after. Every price is fixed and published.
             </p>
           </ScrollReveal>
 
@@ -322,36 +301,7 @@ const Services = () => {
               <Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link>
             </p>
 
-            <AnimatePresence initial={false}>
-              {tierId && (
-                <motion.div
-                  key="addons"
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 24 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <StepHeading n={2} title="Add what you need" body="Optional extras, priced individually. Setup is one-off; monthly fees are shown separately." />
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {addOnCatalogue.map((addOn, i) => {
-                      const selected = addOnIds.has(addOn.id);
-                      return (
-                        <SelectableCard key={addOn.id} index={i} selected={selected} label={addOn.name} onToggle={() => toggleAddOn(addOn.id)}>
-                          <h4 className={`pr-6 text-base font-bold ${HOVER_TEXT}`}>{addOn.name}</h4>
-                          <p className={`mt-2 flex-1 text-sm leading-relaxed text-muted-foreground ${HOVER_TEXT}`}>{addOn.desc}</p>
-                          <div className="mt-4 space-y-0.5">
-                            {addOnSetupLabel(addOn) && <p className={`text-xs font-semibold ${accentText(selected)}`}>{addOnSetupLabel(addOn)}</p>}
-                            {addOnMonthlyLabel(addOn) && <p className={`text-xs font-semibold ${accentText(selected)}`}>{addOnMonthlyLabel(addOn)}</p>}
-                          </div>
-                        </SelectableCard>
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <StepHeading n={3} title="Keep it running" body="Optional care after launch. Choose one plan, or none." />
+            <StepHeading n={2} title="Keep it running" body="Optional care after launch. Choose one plan, or none." />
             <div className="grid gap-6 md:grid-cols-3">
               {carePlans.map((plan, i) => {
                 const selected = careId === plan.id;

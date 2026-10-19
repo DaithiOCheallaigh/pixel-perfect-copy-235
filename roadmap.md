@@ -62,3 +62,7 @@
 # Services Hairline chain
 - [x] Replace the unused orbit with a standalone connected-services Hairline embed.
 - [x] Verify motion, selection/resume, looping and both themes at phone/desktop widths; 197 existing tests pass.
+
+# Two-step services picker
+- [ ] Remove add-on picker/state and exclude add-ons from selection estimates and briefs.
+- [ ] Verify tier/care handoff and tests without changing other pages.
