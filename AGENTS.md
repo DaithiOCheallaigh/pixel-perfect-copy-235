@@ -2,7 +2,7 @@
 
 - MedEd Workspace's route gate validates the password and signed, expiring access tokens in an edge function; never embed the password or trust a client-only unlock flag; it is a display gate only, so truly sensitive content needs an authorized backend.
 - Keep the supplied MedEd Workspace student prototype unchanged as a public standalone HTML document; mount its iframe only after a desktop visitor clicks to load it, avoiding an automatic large download.
-- User-supplied self-contained HTML animations are copied into public/embeds byte-for-byte and never edited, then mounted as transparent-background iframes; their own theme and transparency handling must stay intact so they blend into whatever surface hosts them.
+- User-supplied HTML animations stay byte-identical in public/embeds and mount as transparent iframes, preserving their theme handling.
 - Lead-form edge functions validate, HTML-escape and send through supabase/functions/_shared/email-utils.ts, and send-service-selection prices services from its own server-side map; client-sent titles and prices are never trusted.
 - All new or migrated frontend pricing reads src/data/pricing.ts and its formatting helpers; this prevents duplicated prices and keeps VAT consistent.
 - One tier ladder (`tiers` in src/data/pricing.ts, with `addOnCatalogue` and care plans) is the only website pricing; industry pages are landing pages that reuse it, with editorial proof and FAQs in src/data/segmentPages.ts and retired industry URLs redirected by React Router. This keeps scopes, VAT and care terms consistent without per-segment ladders.
@@ -23,3 +23,4 @@
 - Pages are lazy-loaded route chunks in App.tsx while layouts, LegacyRedirect and NotFound stay eager; this keeps the first download small.
 - Portfolio pages do not link to /services (the Skills expertise list is intentionally plain text, not links); the only cross-link is from the services footer back to the portfolio, so recruiters are not sent into the Lacuna Digital services site.
 - Case studies share src/components/case-study/CaseLayout.tsx and CaseImage and follow one seven-stage story order; data-driven pages place images by `stage`/`with` in projects.ts and the next project follows /work order via src/data/caseStudies.ts to avoid per-project layout hacks.
+- The services chain uses an aspect-reserved, lazy Hairline iframe with unchanged inline kernel/bench blocks; the figure owns theme sync and reduced motion, without npm.
