@@ -56,7 +56,7 @@
   .plate { border: none !important; border-radius: 0 !important; }
   .tag, .controls, #means, #rules, #error { display: none !important; }
   :root[data-theme="dark"] #stage { --hl-plate: #080808; --hl-hi: var(--site-primary, hsl(310 100% 92%)); --hl-edge: #9a9ca3; --hl-mid: #7c7e86; --hl-lo: #55575d; --hairline-stroke: 1.2; }
-  #stage { --hairline-stroke: 1.2; }
+  #stage { --hairline-stroke: 1.2; aspect-ratio: 20 / 11; }
   :root[data-theme="light"] #stage { --hl-hi: var(--site-primary, hsl(310 60% 50%)); --hl-lo: var(--hl-edge); }
   #stage [data-top].hi { fill: var(--hl-hi); fill-opacity: 0.08; }
   #stage text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: var(--hl-lo); stroke: none; }
@@ -739,17 +739,26 @@ var HL = (() => {
 const { Cam, fit, proj, facing, rings, ringAt, poly, prism, solid, put, seg, open, flatDot, place, mk, register, pointer, disposer, spring, stepS, reducedMotion, clamp, EASE_LIFT } = HL;
 const NAMES = ['Local SEO', 'AI Assistant', 'CRM & Leads', 'Website', 'Reservations'];
 const mod = i => ((i % 5) + 5) % 5;
-const circle = (x, y, r) => Array.from({length: 33}, (_, i) => [x + r * Math.cos(i / 32 * Math.PI * 2), y + r * Math.sin(i / 32 * Math.PI * 2)]);
+// All glyphs share a 24-unit drawing grid; circles have 64 smooth samples.
+const arc = (x, y, rx, ry, start=0, end=Math.PI*2) => Array.from({length:65},(_,i)=>{const a=start+(end-start)*i/64;return [x+rx*Math.cos(a),y+ry*Math.sin(a)];});
+const circle = (x,y,r) => arc(x,y,r,r);
+const rounded = (x0,y0,x1,y1,r) => [
+  ...arc(x1-r,y0+r,r,r,-Math.PI/2,0),
+  ...arc(x1-r,y1-r,r,r,0,Math.PI/2),
+  ...arc(x0+r,y1-r,r,r,Math.PI/2,Math.PI),
+  ...arc(x0+r,y0+r,r,r,Math.PI,Math.PI*1.5),[x1-r,y0]
+];
 const ICONS = [
-  [circle(10, 10, 7), [[15,15],[22,22]]],
-  [[[4,7],[20,7],[20,21],[4,21],[4,7]], [[12,7],[12,3]], circle(12,2,1), [[1,11],[1,17]], [[23,11],[23,17]], [[8,12],[8,14]], [[16,12],[16,14]], [[8,18],[16,18]]],
-  [circle(8,7,4), circle(18,8,3), [[1,22],[1,18],[3,15],[13,15],[15,18],[15,22]], [[17,15],[21,15],[23,18],[23,22]]],
-  [circle(12,12,10), Array.from({length:33},(_,i)=>[12+4*Math.cos(i/32*Math.PI*2),12+10*Math.sin(i/32*Math.PI*2)]), [[2,12],[22,12]], [[4,6],[20,6]], [[4,18],[20,18]]],
-  [[[3,5],[21,5],[21,22],[3,22],[3,5]], [[3,10],[21,10]], [[7,2],[7,7]], [[17,2],[17,7]], [[7,14],[9,14]], [[15,14],[17,14]], [[7,18],[9,18]], [[15,18],[17,18]]]
+  [circle(9,9,7), [[14,14],[21,21]], [[7,9],[8.5,10.5],[11,7.5]]],
+  [rounded(2,3,22,19,3), [[8,19],[8,22],[12,19]], [[12,6],[13.5,10.5],[18,12],[13.5,13.5],[12,18],[10.5,13.5],[6,12],[10.5,10.5],[12,6]]],
+  [circle(15.5,6,3.5), arc(15.5,18,6.5,7,-Math.PI/2,0), circle(8.5,9,3.5), arc(8.5,21,6.5,7,Math.PI,Math.PI*2)],
+  [circle(12,12,10), arc(12,12,4,10), [[2,12],[22,12]], arc(12,8,Math.sqrt(84),2.5,0,Math.PI)],
+  [rounded(2,5,22,22,2.5), [[2,10],[22,10]], rounded(6,2,8,7,1), rounded(16,2,18,7,1), ...[7,17].flatMap(x=>[14,18.5].map(y=>circle(x,y,.65)))]
 ];
 function mount({stage, svg, read}) {
   const bag = disposer(), C = Cam(45, .65, 1.35);
-  fit(C, [[-85,-85,0],[85,85,0],[0,0,45]], 200, 160);
+  svg.setAttribute('viewBox','0 0 400 220');
+  fit(C, [[-85,-85,0],[85,85,0],[0,0,45]], 200, 118);
   const P = proj(C), front = facing(C), root = mk('g', {}, svg);
   const grid = mk('g', {opacity:.3}, root), wires = mk('g', {}, root);
   for(let v=-80;v<=80;v+=16) {
@@ -792,8 +801,9 @@ function mount({stage, svg, read}) {
       put(n.plate,prism(P,front,n.ring,n.inner,z,z+4));
       n.top.setAttribute('d',poly(ringAt(P,n.ring,z+4)));
       n.top.setAttribute('class',on?'nf hi':'nf lo');
-      const stand=(x,y)=>P(n.x+(x-12)/Math.SQRT2,n.y-(x-12)/Math.SQRT2,z+6+(24-y));
-      n.icon.setAttribute('d',ICONS[n.i].map(path=>open(path.map(([x,y])=>stand(x,y)))).join(' '));
+      // Engraved on the top plane: 22 grid units span 55% of the 26-unit tile.
+      const inlay=(x,y)=>P(n.x+(x-12)*.65,n.y+(y-12)*.65,z+4.1);
+      n.icon.setAttribute('d',ICONS[n.i].map(path=>open(path.map(([x,y])=>inlay(x,y)))).join(' '));
       n.icon.setAttribute('class',on?'nf hi':'nf lo');
       n.plate.sil.setAttribute('class',on?'sil hi':'sil lo');
       n.plate.cr.setAttribute('class',on?'nf hi':'nf lo');

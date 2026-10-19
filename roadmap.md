@@ -66,3 +66,7 @@
 # Two-step services picker
 - [x] Remove add-on picker/state and exclude add-ons from selection estimates and briefs.
 - [x] Verify tier/care handoff and tests without changing other pages.
+
+# Services Hub inlays and spacing
+- [ ] Replace upright icons with flat geometric inlays and trim figure/section whitespace.
+- [ ] Check both themes, mobile/desktop, every glyph and interaction; run existing tests.

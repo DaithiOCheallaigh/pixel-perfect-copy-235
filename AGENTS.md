@@ -23,4 +23,4 @@
 - Pages are lazy-loaded route chunks in App.tsx while layouts, LegacyRedirect and NotFound stay eager; this keeps the first download small.
 - Portfolio pages do not link to /services (the Skills expertise list is intentionally plain text, not links); the only cross-link is from the services footer back to the portfolio, so recruiters are not sent into the Lacuna Digital services site.
 - Case studies share src/components/case-study/CaseLayout.tsx and CaseImage and follow one seven-stage story order; data-driven pages place images by `stage`/`with` in projects.ts and the next project follows /work order via src/data/caseStudies.ts to avoid per-project layout hacks.
-- The services hub uses an aspect-reserved, lazy Hairline iframe with unchanged inline kernel/bench blocks; the figure owns parent-token pink highlights, theme sync, tile interaction and reduced motion, without npm.
+- The services Hub uses a cropped, aspect-reserved lazy Hairline iframe with flat projected inlays; preserve kernel/bench blocks, parent-token pink, themes, tile controls and reduced motion; no npm.
