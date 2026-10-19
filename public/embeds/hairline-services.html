@@ -55,9 +55,10 @@
   main { max-width: none !important; }
   .plate { border: none !important; border-radius: 0 !important; }
   .tag, .controls, #means, #rules, #error { display: none !important; }
-  :root[data-theme="dark"] #stage { --hl-plate: #080808; --hl-hi: #f2f0ec; --hl-edge: #9a9ca3; --hl-mid: #7c7e86; --hl-lo: #55575d; --hairline-stroke: 1.2; }
+  :root[data-theme="dark"] #stage { --hl-plate: #080808; --hl-hi: var(--site-primary, hsl(310 100% 92%)); --hl-edge: #9a9ca3; --hl-mid: #7c7e86; --hl-lo: #55575d; --hairline-stroke: 1.2; }
   #stage { --hairline-stroke: 1.2; }
-  :root[data-theme="light"] #stage { --hl-lo: var(--hl-edge); }
+  :root[data-theme="light"] #stage { --hl-hi: var(--site-primary, hsl(310 60% 50%)); --hl-lo: var(--hl-edge); }
+  #stage [data-top].hi { fill: var(--hl-hi); fill-opacity: 0.08; }
   #stage text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: var(--hl-lo); stroke: none; }
   #stage text.hi { fill: var(--hl-hi); }
   #stage [role="button"] { cursor: pointer; }
@@ -735,7 +736,7 @@ var HL = (() => {
 })();
 </script>
 <script type="module" id="hl-figure">
-const { Cam, fit, proj, facing, circ, prism, solid, put, seg, open, flatDot, place, mk, register, pointer, disposer, spring, stepS, reducedMotion, clamp, EASE_LIFT } = HL;
+const { Cam, fit, proj, facing, rings, ringAt, poly, prism, solid, put, seg, open, flatDot, place, mk, register, pointer, disposer, spring, stepS, reducedMotion, clamp, EASE_LIFT } = HL;
 const NAMES = ['Local SEO', 'AI Assistant', 'CRM & Leads', 'Website', 'Reservations'];
 const mod = i => ((i % 5) + 5) % 5;
 const circle = (x, y, r) => Array.from({length: 33}, (_, i) => [x + r * Math.cos(i / 32 * Math.PI * 2), y + r * Math.sin(i / 32 * Math.PI * 2)]);
@@ -747,91 +748,94 @@ const ICONS = [
   [[[3,5],[21,5],[21,22],[3,22],[3,5]], [[3,10],[21,10]], [[7,2],[7,7]], [[17,2],[17,7]], [[7,14],[9,14]], [[15,14],[17,14]], [[7,18],[9,18]], [[15,18],[17,18]]]
 ];
 function mount({stage, svg, read}) {
-  const bag = disposer(), C = Cam(45, .5, 1.5);
-  fit(C, [[-20,-20,0],[20,20,0],[0,0,54]], 200, 168);
-  const P = proj(C), front = facing(C), root = mk('g', {}, svg), wires = mk('g', {}, root);
-  const pan = spring(0, {k:48,c:15,m:1,eps:.001});
-  let active = 0, phase = 0, held = false, resume = 0, wasReduced = reducedMotion();
-  const nodes = Array.from({length:15}, (_, j) => {
-    const i = j - 5, kind = mod(i), g = mk('g', {'data-service':NAMES[kind], 'data-index':i, role:'button', 'aria-label':NAMES[kind], tabindex:-1}, root);
-    const plate = solid(g), icon = mk('path', {class:'nf lo'}, g);
-    const label = mk('text', {class:'lo', 'text-anchor':'middle'}, g); label.textContent = NAMES[kind];
-    const lift = spring(0, {k:75,c:18});
-    return {i,kind,g,plate,icon,label,lift};
-  });
-  const wire = mk('path', {class:'nf lo'}, wires), pulse = flatDot(wires,C,1.7,'dot');
-  stage.setAttribute('role','group'); stage.setAttribute('tabindex','0');
-  svg.removeAttribute('aria-hidden'); svg.setAttribute('role','group');
-  const world = (i, z=0) => [i * 76 / Math.SQRT2, -i * 76 / Math.SQRT2, z];
-  function select(i, pause=true) {
-    active=i; pan.t=i; phase=0; held=pause; resume=0; read.textContent=NAMES[mod(i)]; L.wake();
+  const bag = disposer(), C = Cam(45, .65, 1.35);
+  fit(C, [[-85,-85,0],[85,85,0],[0,0,45]], 200, 160);
+  const P = proj(C), front = facing(C), root = mk('g', {}, svg);
+  const grid = mk('g', {opacity:.3}, root), wires = mk('g', {}, root);
+  for(let v=-80;v<=80;v+=16) {
+    mk('path', {class:'nf lo dash', d:seg(P(v,-80,0),P(v,80,0))+seg(P(-80,v,0),P(80,v,0))}, grid);
   }
-  const L = register(stage, (dt) => {
-    const rm = reducedMotion();
-    if (rm !== wasReduced) { active=mod(active); pan.x=active; pan.t=active; pan.v=0; wasReduced=rm; }
-    if (!held) {
-      if (resume>0) { resume-=dt; if(resume<=0) phase=rm?5:2.4; }
+  let active=0, phase=0, held=false, resume=0;
+  const positions=NAMES.map((_,i)=>{const a=(-135+i*72)*Math.PI/180;return [70*Math.cos(a),70*Math.sin(a)];});
+  const links=positions.map(([x,y])=>mk('path',{class:'nf lo dash',d:seg(P(0,0,0),P(x,y,0))},wires));
+  const pulse=flatDot(wires,C,1.7,'dot');
+  const objects=mk('g',{},root);
+  const nodes=positions.map(([x,y],i)=>{
+    const g=mk('g',{'data-service':NAMES[i],'data-index':i,role:'button','aria-label':NAMES[i],tabindex:0},objects);
+    const plate=solid(g), top=mk('path',{'data-top':'',class:'nf lo'},g), icon=mk('path',{class:'nf lo'},g);
+    const label=mk('text',{class:'lo','text-anchor':'middle','font-size':8.5},g);label.textContent=NAMES[i];
+    const [ring,inner]=rings(x-13,y-13,x+13,y+13,3,1.2);
+    return {i,x,y,g,plate,top,icon,label,ring,inner,lift:spring(0,{k:75,c:18})};
+  });
+  const hub=solid(objects), [hubRing,hubInner]=rings(-21,-21,21,21,3,1.2);
+  put(hub,prism(P,front,hubRing,hubInner,0,12));
+  const [inset]=rings(-7,-7,7,7,1,1);
+  mk('path',{class:'nf hi',d:poly(ringAt(P,inset,12.1))},hub.g);
+  [...nodes.map(n=>({g:n.g,depth:n.x+n.y})),{g:hub.g,depth:0}].sort((a,b)=>a.depth-b.depth).forEach(o=>objects.appendChild(o.g));
+  stage.setAttribute('role','group');stage.setAttribute('tabindex','0');
+  svg.removeAttribute('aria-hidden');svg.setAttribute('role','group');
+  function select(i,pause=true) {
+    active=mod(i);phase=0;held=pause;resume=0;read.textContent=NAMES[active];L.wake();
+  }
+  const L=register(stage,dt=>{
+    const rm=reducedMotion();
+    if(!held) {
+      if(resume>0) {resume=Math.max(0,resume-dt);if(resume===0)phase=rm?5:2.2;}
       else phase+=dt;
-      if(phase >= (rm?5:2.4)) { active++; pan.t=active; phase=0; }
+      if(phase>=(rm?5:2.2)) {active=mod(active+1);phase=0;}
     }
-    stepS(pan,dt);
-    // Rebase an identical repeated chain only once the camera lands: no reverse sweep or visible seam.
-    if (!rm && (active>=5 || active<0) && Math.abs(pan.x-active)<.001) {
-      const shift=active-mod(active), poses=new Map(nodes.map(n=>[n.i,{...n.lift}]));
-      nodes.forEach(n=>{const pose=poses.get(n.i+shift);if(pose)Object.assign(n.lift,pose);});
-      active-=shift; pan.x-=shift; pan.t-=shift;
-    }
-    if(rm) active=mod(active);
-    const spacing=rm?72:114, centre=rm?2:pan.x, scale=rm?.57:1;
-    const screen=(i,z=0) => { const q=P(...world(i,z)); return [200+(i-centre)*spacing, q[1]]; };
-    wire.setAttribute('d',seg(screen(rm?0:-5),screen(rm?4:9)));
     nodes.forEach(n=>{
-      const on=n.i===active, visible=rm?n.i>=0&&n.i<5:Math.abs(n.i-pan.x)<2.3;
-      n.g.style.display=visible?'':'none'; n.g.setAttribute('tabindex',visible?'0':'-1');
-      if(!visible)return;
-      n.lift.t=on&&!rm?7:0; stepS(n.lift,dt);
-      const [cx,cy]=world(n.i);
-      // Ground world spacing projects to 114px; reduced motion uses smaller, fixed local figures.
-      const local=(x,y,z)=>{const p=P(x+cx,y+cy,z);return [200+(n.i-centre)*spacing+(p[0]-200-n.i*114)*scale, 183+(p[1]-183)*scale];};
-      const ring=circ(19,64), inner=circ(17.6,64);
-      put(n.plate,prism(local,front,ring,inner,n.lift.x,n.lift.x+4));
-      // Upright paths face the viewer while retaining the isometric ground projection.
-      const stand=(x,y)=>local((x-12)*1.7/Math.SQRT2,-(x-12)*1.7/Math.SQRT2, n.lift.x+7+(24-y)*1.7);
-      n.icon.setAttribute('d',ICONS[n.kind].map(path=>open(path.map(([x,y])=>stand(x,y)))).join(' '));
-      n.icon.setAttribute('class',on?'nf hi':'nf lo'); n.plate.sil.setAttribute('class',on?'sil hi':'sil lo');
-      n.label.setAttribute('class',on?'hi':'lo'); n.label.setAttribute('x',200+(n.i-centre)*spacing); n.label.setAttribute('y',rm?219:235);
-      n.label.setAttribute('font-size',rm?7:9); n.g.setAttribute('aria-pressed',String(on));
-      const distance=Math.abs((n.i-pan.x)*spacing), edge=clamp((200-distance-42)/32,0,1);
-      n.g.setAttribute('opacity',rm||on?1:clamp(1-Math.abs(n.i-pan.x)*.22,.15,.78)*edge);
+      const on=n.i===active;
+      n.lift.t=on&&!rm?9:0;stepS(n.lift,dt);
+      // Reduced motion keeps every plate grounded, including during a preference change.
+      const z=rm?0:n.lift.x;
+      put(n.plate,prism(P,front,n.ring,n.inner,z,z+4));
+      n.top.setAttribute('d',poly(ringAt(P,n.ring,z+4)));
+      n.top.setAttribute('class',on?'nf hi':'nf lo');
+      const stand=(x,y)=>P(n.x+(x-12)/Math.SQRT2,n.y-(x-12)/Math.SQRT2,z+6+(24-y));
+      n.icon.setAttribute('d',ICONS[n.i].map(path=>open(path.map(([x,y])=>stand(x,y)))).join(' '));
+      n.icon.setAttribute('class',on?'nf hi':'nf lo');
+      n.plate.sil.setAttribute('class',on?'sil hi':'sil lo');
+      n.plate.cr.setAttribute('class',on?'nf hi':'nf lo');
+      const q=P(n.x,n.y,0), outward=q[0]-200;
+      n.label.setAttribute('x',q[0]+outward*.07);
+      n.label.setAttribute('y',q[1]+(n.x+n.y < -15?-48:27));
+      n.label.setAttribute('class',on?'hi':'lo');n.g.setAttribute('aria-pressed',String(on));
+      links[n.i].setAttribute('class',on?'nf hi':'nf lo dash');
     });
-    const t=clamp(phase/2.4,0,1), from=t<.5?active-1:active;
-    place(pulse,screen(from+EASE_LIFT((t% .5)*2)));
-    pulse.setAttribute('opacity',rm||held||resume>0?0:Math.sin((t% .5)*Math.PI*2));
-    stage.dataset.active=NAMES[mod(active)]; stage.dataset.paused=String(held||resume>0); stage.dataset.pan=String(pan.x);
+    const t=clamp(phase/1.15,0,1), [x,y]=positions[active];
+    place(pulse,P(x*EASE_LIFT(t),y*EASE_LIFT(t),0));
+    pulse.setAttribute('opacity',rm||held||resume>0||t>=1?0:Math.sin(t*Math.PI));
+    stage.dataset.active=NAMES[active];stage.dataset.paused=String(held||resume>0);
+    read.textContent=NAMES[active];
     return true;
   });
   bag.add(L.unregister);
   const hit=p=>{
-    const rm=reducedMotion(), spacing=rm?72:114, centre=rm?2:pan.x;
-    const i=Math.round((p[0]-200)/spacing+centre);
-    return p[1]>100&&p[1]<250&&(!rm||i>=0&&i<5)&&Math.abs(p[0]-(200+(i-centre)*spacing))<48?i:null;
+    for(const n of nodes) {
+      const q=P(n.x,n.y,reducedMotion()?4:n.lift.x+4);
+      if(Math.abs(p[0]-q[0])<27&&p[1]>q[1]-37&&p[1]<q[1]+17)return n.i;
+    }
+    return null;
   };
   const leave=()=>{held=false;resume=3;L.wake();};
   bag.add(pointer(stage,{move:p=>{const i=hit(p);if(i!==null&&(!held||i!==active))select(i);else if(i===null&&held)leave();},down:(p,e)=>{const i=hit(p);if(i!==null){select(i);if(e.pointerType!=='mouse'){held=false;resume=3;}}},leave}));
-  bag.on(svg,'keydown',e=>{if(['Enter',' '].includes(e.key)){const i=Number(e.target.closest('[data-index]')?.dataset.index);if(Number.isFinite(i)){e.preventDefault();select(i);}}});
-  bag.on(stage,'keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select(active+(e.key==='ArrowRight'?1:-1));}});
+  bag.on(svg,'keydown',e=>{if(['Enter',' '].includes(e.key)){const value=e.target.closest('[data-index]')?.dataset.index;if(value!==undefined){e.preventDefault();select(Number(value));}}});
+  bag.on(stage,'keydown',e=>{if(['ArrowRight','ArrowLeft','ArrowDown','ArrowUp'].includes(e.key)){e.preventDefault();select(active+(['ArrowRight','ArrowDown'].includes(e.key)?1:-1));}});
   bag.on(stage,'focusout',e=>{if(!stage.contains(e.relatedTarget))leave();});
   bag.on(window,'pagehide',bag.dispose);
   // Same-origin host theme changes are observed without changing or reloading the host page.
   try {
-    const doc=parent.document;
-    const theme=()=>{const r=doc.documentElement;const bg=getComputedStyle(r).getPropertyValue('--background').trim();const lightness=parseFloat(bg.split(/\s+/).at(-1));document.documentElement.dataset.theme=r.dataset.theme|| (Number.isFinite(lightness)?lightness>50?'light':'dark':r.classList.contains('dark')?'dark':'light');};
+    const doc=parent===window?null:parent.document;
+    if(doc) {
+    const theme=()=>{const r=doc.documentElement;const bg=getComputedStyle(r).getPropertyValue('--background').trim();const lightness=parseFloat(bg.split(/\s+/).at(-1));const primary=getComputedStyle(r).getPropertyValue('--primary').trim();if(primary)stage.style.setProperty('--site-primary',`hsl(${primary})`);document.documentElement.dataset.theme=r.dataset.theme|| (Number.isFinite(lightness)?lightness>50?'light':'dark':r.classList.contains('dark')?'dark':'light');};
     const observer=new MutationObserver(theme);observer.observe(doc.documentElement,{attributes:true,attributeFilter:['class','data-theme','style']});bag.add(()=>observer.disconnect());theme();
+    }
   } catch {}
   bag.add(()=>svg.replaceChildren());
   return {set:()=>{},destroy:bag.dispose};
 }
-hairline({name:'services',means:'A connected chain of five services: Local SEO, AI Assistant, CRM and Leads, Website, and Reservations. Each service lifts and brightens in turn as a pulse travels along the wire.',rules:[1,4,5,9],range:[1,1,1],mount});
+hairline({name:'services',means:'An isometric hub connects five service tiles: Local SEO, AI Assistant, CRM and Leads, Website, and Reservations. Each tile highlights in clockwise order, with a pulse from the central hub. Select a tile with the pointer, tap, arrow keys or Enter.',rules:[1,4,5,9],range:[1,1,1],mount});
 </script>
 </body>
 </html>
