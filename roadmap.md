@@ -60,5 +60,5 @@
 - [x] Remove TipDirect App YouTube placeholder embed
 
 # Services Hairline chain
-- [ ] Replace the unused orbit with a standalone connected-services Hairline embed.
-- [ ] Verify motion, selection/resume, looping and both themes at phone/desktop widths; run existing tests.
+- [x] Replace the unused orbit with a standalone connected-services Hairline embed.
+- [x] Verify motion, selection/resume, looping and both themes at phone/desktop widths; 197 existing tests pass.
