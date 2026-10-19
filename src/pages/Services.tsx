@@ -2,8 +2,7 @@ import { SEO } from "@/components/SEO";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import { ArrowRight, Check, Globe, Calendar, Search, Bot, Users } from "lucide-react";
-import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -260,7 +259,7 @@ const Services = () => {
       {/* ── Social Proof ── */}
       <SocialProof />
 
-      {/* ── Orbital System ── */}
+      {/* ── Connected Services ── */}
       <section className="relative px-6 py-16 md:px-12 lg:px-24 overflow-hidden">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
@@ -275,64 +274,12 @@ const Services = () => {
             </div>
           </ScrollReveal>
 
-          <RadialOrbitalTimeline
-            timelineData={[
-              {
-                id: 1,
-                title: "Website",
-                date: "Foundation",
-                content: "Your digital home base. A fast, conversion-focused website that makes your business look credible and gets people to act.",
-                category: "Visibility",
-                icon: Globe,
-                relatedIds: [3, 4],
-                status: "completed" as const,
-                energy: 95,
-              },
-              {
-                id: 3,
-                title: "Reservations",
-                date: "Automation",
-                content: "Ditch the phone bookings. An online reservation system that works while you sleep and plugs into everything else.",
-                category: "Efficiency",
-                icon: Calendar,
-                relatedIds: [1, 5],
-                status: "in-progress" as const,
-                energy: 70,
-              },
-              {
-                id: 4,
-                title: "Local SEO",
-                date: "Visibility",
-                content: "Get found on Google Maps and local search. I make sure customers searching for what you do can actually find you.",
-                category: "Visibility",
-                icon: Search,
-                relatedIds: [1],
-                status: "completed" as const,
-                energy: 85,
-              },
-              {
-                id: 5,
-                title: "AI Assistant",
-                date: "Intelligence",
-                content: "An AI employee for your business — handling FAQs, booking queries, and follow-ups around the clock so you don't have to.",
-                category: "Efficiency",
-                icon: Bot,
-                relatedIds: [1, 3],
-                status: "in-progress" as const,
-                energy: 90,
-              },
-              {
-                id: 6,
-                title: "CRM & Leads",
-                date: "Growth",
-                content: "Know your customers, track every interaction, and never lose a lead. The connective tissue that ties the whole system together.",
-                category: "Efficiency",
-                icon: Users,
-                relatedIds: [1, 5],
-                status: "pending" as const,
-                energy: 75,
-              },
-            ]}
+          <iframe
+            src="/embeds/hairline-services.html"
+            title="Connected services: Local SEO, AI Assistant, CRM & Leads, Website and Reservations"
+            loading="lazy"
+            scrolling="no"
+            className="mx-auto block aspect-[5/4] w-full max-w-[800px] border-0 bg-transparent"
           />
 
         </div>
