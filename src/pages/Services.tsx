@@ -239,7 +239,7 @@ const Services = () => {
       <SocialProof />
 
       {/* ── Connected Services ── */}
-      <section className="relative px-6 py-16 md:px-12 lg:px-24 overflow-hidden">
+      <section className="relative px-6 pt-16 pb-0 md:px-12 lg:px-24 overflow-hidden">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
             <div className="text-center mb-8">
@@ -258,14 +258,14 @@ const Services = () => {
             title="Connected services: Local SEO, AI Assistant, CRM & Leads, Website and Reservations"
             loading="lazy"
             scrolling="no"
-            className="mx-auto block aspect-[5/4] w-full max-w-[800px] border-0 bg-transparent"
+            className="mx-auto block aspect-[40/23] w-full max-w-[800px] border-0 bg-transparent"
           />
 
         </div>
       </section>
 
       {/* ── Choose your package ── */}
-      <section id="packages" className="px-6 py-24 md:px-12 lg:px-24">
+      <section id="packages" className="px-6 pt-4 pb-24 md:px-12 lg:px-24">
         <span id="services" className="block scroll-mt-24" aria-hidden="true" />
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
