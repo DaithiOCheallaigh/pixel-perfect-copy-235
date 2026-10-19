@@ -4,16 +4,16 @@
 - Keep the supplied MedEd Workspace student prototype unchanged as a public standalone HTML document; mount its iframe only after a desktop visitor clicks to load it, avoiding an automatic large download.
 - User-supplied HTML animations stay byte-identical in public/embeds and mount as transparent iframes, preserving their theme handling.
 - Lead-form edge functions validate, HTML-escape and send through supabase/functions/_shared/email-utils.ts, and send-service-selection prices services from its own server-side map; client-sent titles and prices are never trusted.
-- All new or migrated frontend pricing reads src/data/pricing.ts and its formatting helpers; this prevents duplicated prices and keeps VAT consistent.
+- New/migrated frontend pricing uses src/data/pricing.ts and its formatters to avoid duplicated prices and inconsistent VAT.
 - One tier ladder (`tiers` in src/data/pricing.ts, with `addOnCatalogue` and care plans) is the only website pricing; industry pages are landing pages that reuse it, with editorial proof and FAQs in src/data/segmentPages.ts and retired industry URLs redirected by React Router. This keeps scopes, VAT and care terms consistent without per-segment ladders.
 - Pricing, segment copy and FAQs never name third-party platform brands; they say "your own booking system" or "your ordering provider", so the offer stays vendor-neutral.
 - Free tools are unlisted and noindex (absent from navigation, sitemap and llms files) but their routes and BioPage stay live, so existing client links keep working.
 - The services selection bar sends catalogue IDs to /services/start-project via sessionStorage, where they are re-priced and added as a readable summary to the consultation brief; the unchanged send-service-selection function only knows the old IDs, so the bar no longer posts to it.
 - ProductStudio owns the product-team and business-automation offers; legacy AI Integration URLs redirect there, keeping one current offer page rather than competing pricing pages.
-- Individual service price lines are defined in the service catalogue using the shared pricing exports and rendered by ServicePage; this keeps every detail page priced without duplicating amounts in presentation code.
+- Service catalogue price lines use shared pricing exports and render through ServicePage, avoiding duplicated amounts on detail pages.
 - Pages using usePageDescription synchronise the static description fallback with their managed SEO description and restore it on unmount; this avoids conflicting descriptions without changing the site's static head globally.
 - Intake options and plain-English working terms are shared data modules using the pricing catalogue; this makes numeric rules testable without duplicating page values.
-- Selection estimates derive setup and recurring fees by service ID from the pricing catalogue, never by parsing labels or trusting stored price totals; this keeps monthly fees separate and stale session prices out of quotes.
+- The services picker has two steps (tier, optional care); selection estimates accept only tier/care IDs from the pricing catalogue, never stored totals or add-on IDs, keeping retired add-ons out of bars and briefs while other pages retain the add-on catalogue.
 - Generate portfolio public/llms.txt from projects/profile and public/llms-services.txt pricing from the shared catalogue using scripts/generate-llms.ts; this separates recruiter discovery from commercial pricing without creating a services directory.
 - Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
 - SEO derives section branding, default sharing image and fallback service schema from the current pathname; PortfolioSEO is a compatibility re-export and layouts do not set page metadata, avoiding competing head tags.
