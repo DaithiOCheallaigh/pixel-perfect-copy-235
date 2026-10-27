@@ -111,18 +111,13 @@ const About = () => (
           <ScrollReveal delay={0.1}>
             <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
               <p>
-                Throughout my career, I've had the privilege of being at the forefront of delivering high-quality,
-                comprehensive design solutions. With a keen eye for detail and a deep understanding of user
-                experience, I consistently produce innovative and effective designs across various digital platforms.
+                I'm a senior product designer based in Dublin with over 10 years of experience across SaaS platforms, native apps and design systems.
               </p>
               <p>
-                I bring both creativity and technical expertise to create tailored solutions that not only meet but
-                exceed expectations. From web design to mobile applications, my commitment to excellence has earned
-                me a reputation as a trusted partner in the digital design landscape.
+                Most recently I designed MedEd Workspace for Elsevier, a two-sided study and faculty product built on their Leyden design system, and three internal enterprise tools for Marsh on CORE, a component library I built and documented in Storybook. Before that I spent several years at TripAdmit taking TipDirect from a pivot idea to a tipping platform used by 10,000 guides a day.
               </p>
               <p>
-                I look forward to hearing about your digital aspirations and beginning the process of bringing them
-                to life, together.
+                I work close to engineering: spec-driven design, Figma MCP and AI-assisted prototyping mean I hand over components rather than pictures of components.
               </p>
             </div>
           </ScrollReveal>

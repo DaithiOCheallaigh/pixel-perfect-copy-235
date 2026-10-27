@@ -9,6 +9,8 @@ import { ShineBorder } from "../components/ui/shine-border";
 import { SEO } from "../components/SEO";
 import { LockKeyhole } from "lucide-react";
 
+const listedProjects = projects.filter((p) => p.listed !== false && !p.comingSoon);
+
 const Work = () => (
   <main className="pt-24">
     <SEO title="Work" description="Product design case studies by Dave Kelly: enterprise tools and design systems for Marsh, healthcare education for Elsevier, and TipDirect consumer apps." />
@@ -20,36 +22,13 @@ const Work = () => (
             My Work
           </h1>
           <p className="mb-16 max-w-xl text-lg text-muted-foreground">
-            A selection of projects spanning UI/UX design, product strategy, and digital transformation.
+            Enterprise tools and design systems for Marsh, healthcare education for Elsevier, and the TipDirect tipping platform from first sketch to 10,000 daily users.
           </p>
         </ScrollReveal>
 
         <div className="grid gap-8 sm:grid-cols-2 [&>*]:h-full">
-          {projects.map((project, i) => (
+          {listedProjects.map((project, i) => (
             <ScrollReveal key={project.id} delay={i * 0.08}>
-              {project.comingSoon ? (
-                <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card opacity-50">
-                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                  <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
-                    <img
-                      src={project.pillImage}
-                      alt={project.title}
-                      className="no-lightbox h-full w-full object-cover" {...imgDims(project.pillImage)} loading={i < 2 ? "eager" : "lazy"} decoding="async" />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="text-lg font-bold text-foreground md:text-xl">{project.title}</h3>
-                    <p className="mt-1 flex-1 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</p>
-                    <div className="mt-4 flex items-center justify-between">
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <span key={tag} className="font-mono-label text-xs text-muted-foreground">{tag}</span>
-                        ))}
-                      </div>
-                      <span className="font-mono-label text-muted-foreground">Coming Soon</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
                 <Link
                   to={caseStudyPath(project.id)}
                   className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
@@ -73,14 +52,13 @@ const Work = () => (
                         ))}
                       </div>
                       {project.id === "spark" ? (
-                        <span className="inline-flex shrink-0 items-center gap-2 text-xs text-muted-foreground"><LockKeyhole className="h-4 w-4" />Password protected</span>
+                        <span className="inline-flex shrink-0 items-center gap-2 text-xs text-muted-foreground"><LockKeyhole className="h-4 w-4" />Password protected · request access</span>
                       ) : (
                         <span className="text-lg text-muted-foreground transition-colors group-hover:text-primary">→</span>
                       )}
                     </div>
                   </div>
                 </Link>
-              )}
             </ScrollReveal>
           ))}
         </div>

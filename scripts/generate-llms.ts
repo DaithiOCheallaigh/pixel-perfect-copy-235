@@ -6,7 +6,7 @@ import { YEARS_EXPERIENCE, CV_URL, PORTFOLIO_EMAIL, LINKEDIN_URL } from "../src/
 const BASE_URL = "https://www.lacunadigital.io";
 
 export function buildPortfolioLlms() {
-  const caseStudies = projects.filter(project => !project.comingSoon).map(project => {
+  const caseStudies = projects.filter(project => !project.comingSoon && project.listed !== false).map(project => {
     if (project.id === "spark") return `- [MedEd Workspace (Elsevier)](${BASE_URL}/work/spark): password-protected`;
     const path = project.id === "marsh-design-system" || project.id === "marsh-internal-tooling"
       ? `/work/${project.id}` : `/case/${project.id}`;
@@ -110,5 +110,5 @@ Book a free call: ${CALENDLY_URL}
 
 if (process.argv[1]?.endsWith("generate-llms.ts")) {
   writeFileSync("public/llms.txt", buildPortfolioLlms());
-  writeFileSync("public/llms-services.txt", buildServicesLlms());
+  if (!process.argv.includes("--portfolio-only")) writeFileSync("public/llms-services.txt", buildServicesLlms());
 }

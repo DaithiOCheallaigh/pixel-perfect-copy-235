@@ -18,7 +18,7 @@
 - Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
 - SEO derives section branding, default sharing image and fallback service schema from the current pathname; PortfolioSEO is a compatibility re-export and layouts do not set page metadata, avoiding competing head tags.
 - Portfolio pages use HiringCTA while commercial pages retain AvailabilityCTA; this isolates hiring contact from commercial offers.
-- Work filters and sorts a copy of the project catalogue independently of catalogue order; this preserves other consumers while prioritising recruiter case studies.
+- /work and next-project links show only `listed !== false`, non-coming-soon projects; unlisted case studies keep live routes, so old links still work.
 - Portfolio images live under public/images with lowercase-kebab names, at most 1600px wide, and their pixel sizes are recorded in src/data/imageDimensions.ts for <img> width/height; regenerate that map after adding or resizing images so layout space stays reserved.
 - Pages are lazy-loaded route chunks in App.tsx while layouts, LegacyRedirect and NotFound stay eager; this keeps the first download small.
 - Portfolio pages do not link to /services (the Skills expertise list is intentionally plain text, not links); the only cross-link is from the services footer back to the portfolio, so recruiters are not sent into the Lacuna Digital services site.

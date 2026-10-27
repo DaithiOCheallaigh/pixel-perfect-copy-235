@@ -375,7 +375,7 @@ export const blogPosts: BlogPost[] = [
           <li><strong>Poor retention</strong> — users who struggle with your product won't come back, and they certainly won't recommend it</li>
           <li><strong>Expensive rework</strong> — fixing usability problems after development is 10x more costly than addressing them during the design phase</li>
         </ul>
-        <p>I've seen this pattern repeatedly working with clients in the travel-tech and financial services sectors. One project — a digital tipping platform — saw a 45% increase in 5-star reviews not because we made the interface prettier, but because we removed three unnecessary steps from the core user flow.</p>
+        <p>I've seen this pattern repeatedly working with clients in the travel-tech and financial services sectors. One project — a digital tipping platform — saw far more 5-star reviews not because we made the interface prettier, but because we removed three unnecessary steps from the core user flow.</p>
 
         <h2>What to Look for in a UX Design Consultancy</h2>
         <p>If you're an SME evaluating design partners, here are the signals that separate strategic UX consultancies from purely visual ones:</p>
@@ -413,7 +413,7 @@ export const blogPosts: BlogPost[] = [
 
         <h2>2. Sustainable and Eco-Friendly Design</h2>
         <p>As environmental concerns continue to gain prominence, sustainable design practices will become increasingly important in the digital realm. This trend will manifest in various ways, including the adoption of eco-friendly color palettes that evoke nature and promote a sense of environmental consciousness.</p>
-        <p>Furthermore, there will be a growing emphasis on designs that promote energy efficiency in digital products, such as optimizing layouts and graphics to reduce power consumption on devices. This shift towards sustainable design not only aligns with global environmental goals but also resonates with environmentally-conscious consumers.</p>
+        <p>Furthermore, there will be a growing emphasis on designs that promote energy efficiency in digital products, such as optimising layouts and graphics to reduce power consumption on devices. This shift towards sustainable design not only aligns with global environmental goals but also resonates with environmentally-conscious consumers.</p>
 
         <h2>3. AI-Powered Personalization</h2>
         <p>Artificial Intelligence will play a pivotal role in revolutionizing user experiences through hyper-personalization. As AI algorithms become more sophisticated, they will analyze vast amounts of user data in real-time, including browsing history, interaction patterns, and contextual information.</p>
@@ -425,7 +425,7 @@ export const blogPosts: BlogPost[] = [
 
         <h2>5. Micro-Interactions and Animations</h2>
         <p>Subtle animations and micro-interactions will evolve into more sophisticated and purposeful design elements in 2025. These refined visual cues will play a crucial role in enhancing user engagement and providing a more intuitive navigation experience.</p>
-        <p>Importantly, this evolution in design will prioritize performance optimization, ensuring that these enhanced interactive features do not compromise loading times or overall system responsiveness.</p>
+        <p>Importantly, this evolution in design will prioritize performance optimisation, ensuring that these enhanced interactive features do not compromise loading times or overall system responsiveness.</p>
 
         <h2>6. Voice User Interfaces (VUI)</h2>
         <p>As voice-activated devices become increasingly ubiquitous in our daily lives, designers are shifting their focus towards creating seamless and intuitive voice user interfaces (VUIs). This evolving design paradigm goes beyond mere voice recognition, encompassing a holistic approach that harmoniously blends auditory and visual elements.</p>
