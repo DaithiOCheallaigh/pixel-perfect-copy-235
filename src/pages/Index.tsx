@@ -132,14 +132,14 @@ const Index = () => {
                   >
                     <ShineBorder shineColor={SHINE} />
                     <div
-                      className={`overflow-hidden rounded-t-xl md:rounded-t-none ${
+                      className={`overflow-hidden bg-card rounded-t-xl md:rounded-t-none ${
                         flipped ? "md:order-2 md:rounded-r-xl" : "md:rounded-l-xl"
                       }`}
                     >
                       <img
                         src={card.image}
                         alt={card.alt}
-                        className="h-full w-full object-cover transition-transform duration-500 md:group-hover:scale-[1.04]"
+                        className="h-full w-full object-cover scale-[1.06] transition-transform duration-500 md:group-hover:scale-[1.1]"
                         {...imgDims(card.image)}
                         loading="lazy"
                         decoding="async"
