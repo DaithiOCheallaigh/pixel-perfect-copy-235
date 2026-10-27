@@ -70,7 +70,7 @@ const entries: { name: string; year: string; note: string; demo: ReactNode }[] =
       <div className="grid gap-6">
         {embeds.map((e) => (
           <div key={e.src} className="aspect-[16/10] overflow-hidden rounded-xl border border-border bg-card">
-            <iframe src={e.src} title={e.title} loading="lazy" className="h-full w-full border-0 bg-transparent" style={{ colorScheme: "normal" }} allowTransparency />
+            <iframe src={e.src} title={e.title} loading="lazy" className="h-full w-full border-0 bg-transparent" />
           </div>
         ))}
       </div>
