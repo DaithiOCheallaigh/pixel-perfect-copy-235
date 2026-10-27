@@ -1,55 +1,98 @@
 import { Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
 import { motion } from "framer-motion";
+import { LockKeyhole } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal";
-import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
-import SocialProof from "../components/SocialProof";
-import { projects } from "../data/projects";
+import { caseStudyPath } from "../data/caseStudies";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SpiralAnimation } from "../components/ui/spiral-animation";
 import { SEO } from "../components/SEO";
-import { Laptop, Loupe, Sieve } from "@lucasmarkes/hairline/react";
 
-const featured = projects.filter(p => !p.comingSoon).slice(0, 2);
+const SHINE = ["#A07CFE", "#FE8FB5", "#FFBE7B"];
+const MARSH_SHOWREEL =
+  "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Internatl%20Tooling/MarshInternalTools.mp4";
+
+type FeaturedCard = {
+  to: string;
+  image: string;
+  alt: string;
+  title: string;
+  tags: string[];
+  body?: string;
+  quote?: { text: string; author: string; role: string };
+  locked?: boolean;
+};
+
+const featured: FeaturedCard[] = [
+  {
+    to: caseStudyPath("spark"),
+    image: "/images/work/spark-pill.webp",
+    alt: "MedEd Workspace for Elsevier",
+    title: "A two-sided learning product for nursing and health-science students and their faculty",
+    tags: ["Healthcare Education", "Design Systems", "AI Workflow"],
+    body: "Contract UI/UX design on Elsevier's Leyden design system: student self-study with AI coaching and exam readiness, plus an LMS companion for faculty.",
+    locked: true,
+  },
+  {
+    to: "/work/marsh-internal-tooling",
+    image: "/images/work/marsh-core.webp",
+    alt: "Marsh Internal Tooling",
+    title: "Three enterprise tools and one design system, shipped in parallel",
+    tags: ["Product Design", "Design Systems", "AI Workflow"],
+    body: "Colleague Profile, Client Milestones and a Notifications Hub for Marsh, built on CORE, a token-based component library documented in Storybook, with a Claude + Figma MCP workflow.",
+  },
+  {
+    to: "/case/ai-reviews",
+    image: "/images/work/ai-pill.webp",
+    alt: "AI Assisted Reviews for TipDirect",
+    title: "Turning a tip into a 5-star review with AI-assisted prompts",
+    tags: ["UI/UX", "Interaction Design", "Analytics"],
+    quote: {
+      text: "Leveraging the power of AI & expanding our product to attract a new type of user could only have been possible with Dave on our team",
+      author: "Andrew Kelly",
+      role: "CTO, TipDirect",
+    },
+  },
+];
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const Index = () => {
   return (
     <main>
       <SEO title="Home" description="Dave Kelly is a senior product designer in Dublin with over 10 years designing SaaS platforms, mobile apps and design systems for Marsh, Elsevier and TipDirect." />
       {/* Hero */}
-      <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-32 md:px-12 lg:px-24">
-        {/* Animated gradient orbs */}
+      <section className="relative overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pb-16 pt-32 md:px-12 md:pb-24 lg:px-24">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <SpiralAnimation />
         </div>
         <div className="pointer-events-none absolute inset-0 grid-background opacity-50" />
 
-        <div className="relative mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl flex-col items-center justify-center text-center">
+        <div className="relative mx-auto flex max-w-5xl flex-col items-center justify-center pt-4 text-center md:pt-8">
           <motion.h1
-            className="mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl lg:text-8xl"
+            className="mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ delay: 0.3, duration: 0.8, ease }}
           >
-            Hi, I'm Dave — <span className="block md:inline">AI-Powered Product Designer for SMEs</span>
+            Senior product designer for complex products
           </motion.h1>
 
           <motion.p
-            className="mx-auto mb-12 max-w-2xl text-lg leading-[1.75] tracking-[-0.01em] text-muted-foreground md:text-xl"
+            className="mx-auto mb-10 max-w-2xl text-lg leading-[1.75] tracking-[-0.01em] text-muted-foreground md:text-xl"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ delay: 0.45, duration: 0.8, ease }}
           >
-            I am a versatile AI driven creative professional combining strategic
-            thinking with hands-on design expertise to deliver impactful results.
+            Over 10 years designing SaaS platforms, mobile apps and design systems. Most recently MedEd Workspace for Elsevier, three internal tools and the CORE design system for Marsh, and TipDirect's tipping platform.
           </motion.p>
 
           <motion.div
             className="flex flex-wrap justify-center gap-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ delay: 0.6, duration: 0.8, ease }}
           >
             <a
               href="/docs/DavidKelly_CV_2026.pdf"
@@ -60,91 +103,110 @@ const Index = () => {
               ↓ Download my CV
             </a>
             <Link
-              to="/ai-design-process"
+              to="/work"
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:gap-3"
             >
-              <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} className="opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              AI Design Process <span className="transition-all">→</span>
+              <ShineBorder shineColor={SHINE} className="opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              See my work <span className="transition-all">→</span>
             </Link>
           </motion.div>
         </div>
+
+        <motion.figure
+          className="relative mx-auto mt-12 max-w-6xl md:mt-16"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75, duration: 0.9, ease }}
+        >
+          <Link
+            to="/work/marsh-internal-tooling"
+            className="block overflow-hidden rounded-2xl border border-border bg-card"
+          >
+            <video
+              src={MARSH_SHOWREEL}
+              poster="/images/work/marsh-internal-tools-poster.webp"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Showreel of three enterprise tools designed for Marsh"
+              className="block aspect-video w-full object-cover"
+            />
+          </Link>
+          <figcaption className="mt-4 text-center font-mono-label text-muted-foreground">
+            Marsh · three enterprise tools and a shared design system, shipped in parallel
+          </figcaption>
+        </motion.figure>
       </section>
 
-      {/* Explore My Work — Featured Projects */}
+      {/* Selected work */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <ScrollReveal>
             <h2 className="mb-16 text-center text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
-              Explore my work
+              Selected work
             </h2>
           </ScrollReveal>
 
-          {/* Featured project cards — side by side image + text like old site */}
           <div className="space-y-8">
-            {/* AI Reviews — image left, text right */}
-            <ScrollReveal>
-              <Link
-                to="/case/ai-reviews"
-                className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
-              >
-                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                <div className="overflow-hidden rounded-l-xl md:rounded-l-xl md:rounded-r-none rounded-t-xl md:rounded-t-none">
-                  <img
-                    src="/images/work/ai-pill.webp"
-                    alt="AI Assisted Reviews"
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]" {...imgDims("/images/work/ai-pill.webp")} loading="lazy" decoding="async" />
-                </div>
-                <div className="flex flex-col justify-center p-8 md:p-12">
-                  <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
-                    Leveraging AI to increase 5-star reviews by 45% on average
-                  </h3>
-                   <div className="mb-8 flex flex-wrap gap-2">
-                     {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
-                       <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
-                    ))}
-                  </div>
-                  <blockquote className="mb-4 text-sm italic text-muted-foreground">
-                    "Leveraging the power of AI & expanding our product to attract a new type of user could only have been possible with Dave on our team"
-                  </blockquote>
-                  <p className="text-sm font-semibold text-foreground">Andrew Kelly <span className="font-normal text-muted-foreground">- CTO, TipDirect</span></p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
-                    View Project <span>→</span>
-                  </span>
-                </div>
-              </Link>
-            </ScrollReveal>
-
-            {/* Digital Tipping — text left, image right */}
-            <ScrollReveal delay={0.1}>
-              <Link
-                to="/case/digital-tipping"
-                className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
-              >
-                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                <div className="flex flex-col justify-center p-8 md:order-1 md:p-12">
-                  <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
-                    Enabling tour guides to receive an average tip of $25 through digital tipping
-                  </h3>
-                   <div className="mb-8 flex flex-wrap gap-2">
-                     {["UI/UX", "Project Planning", "Interaction Design", "Analytics"].map((tag) => (
-                       <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Increasingly, people are not carrying cash with them in person. We worked with TripAdmit to pivot their entire business in a new direction by creating a brand centered around digital tipping, TipDirect.
-                  </p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
-                    View Project <span>→</span>
-                  </span>
-                </div>
-                <div className="order-first overflow-hidden rounded-t-xl md:rounded-t-none md:rounded-r-xl md:rounded-l-none md:order-2">
-                  <img
-                    src="/images/work/tipping-mobile.webp"
-                    alt="Digital Tipping"
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" {...imgDims("/images/work/tipping-mobile.webp")} loading="lazy" decoding="async" />
-                </div>
-              </Link>
-            </ScrollReveal>
+            {featured.map((card, i) => {
+              const flipped = i % 2 === 1;
+              return (
+                <ScrollReveal key={card.to} delay={i * 0.1}>
+                  <Link
+                    to={card.to}
+                    className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
+                  >
+                    <ShineBorder shineColor={SHINE} />
+                    <div
+                      className={`overflow-hidden rounded-t-xl md:rounded-t-none ${
+                        flipped ? "md:order-2 md:rounded-r-xl" : "md:rounded-l-xl"
+                      }`}
+                    >
+                      <img
+                        src={card.image}
+                        alt={card.alt}
+                        className="h-full w-full object-cover transition-transform duration-500 md:group-hover:scale-[1.04]"
+                        {...imgDims(card.image)}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className={`flex flex-col justify-center p-8 md:p-12 ${flipped ? "md:order-1" : ""}`}>
+                      <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
+                        {card.title}
+                      </h3>
+                      <div className="mb-8 flex flex-wrap gap-2">
+                        {card.tags.map((tag) => (
+                          <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
+                        ))}
+                      </div>
+                      {card.body && <p className="text-sm text-muted-foreground">{card.body}</p>}
+                      {card.quote && (
+                        <>
+                          <blockquote className="mb-4 text-sm italic text-muted-foreground">"{card.quote.text}"</blockquote>
+                          <p className="text-sm font-semibold text-foreground">
+                            {card.quote.author} <span className="font-normal text-muted-foreground">- {card.quote.role}</span>
+                          </p>
+                        </>
+                      )}
+                      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
+                          View project <span>→</span>
+                        </span>
+                        {card.locked && (
+                          <span className="inline-flex items-center gap-2 text-xs text-muted-foreground">
+                            <LockKeyhole className="h-4 w-4" aria-hidden="true" />
+                            Password protected · request access
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                </ScrollReveal>
+              );
+            })}
           </div>
 
           <ScrollReveal delay={0.2}>
@@ -162,78 +224,6 @@ const Index = () => {
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
 
-      {/* Design Philosophy */}
-      <section className="px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto max-w-7xl">
-          <ScrollReveal>
-            <SectionLabel>Process</SectionLabel>
-            <h2 className="mb-16 text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
-              My Design Philosophy
-            </h2>
-          </ScrollReveal>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {[
-              {
-                num: "01",
-                title: "Discovery",
-                figure: Loupe,
-                figureAlt: "A magnifier sliding across a ruled sheet",
-                text: "Every project begins with understanding your vision. I take pride in exploring creative possibilities that not only bring ideas to life but also drive business growth.",
-              },
-              {
-                num: "02",
-                title: "Selection",
-                figure: Sieve,
-                figureAlt: "Stacked sieves, one lifted clear of the rest",
-                text: "I focus on developing solutions that stand out in today's competitive landscape. My approach combines strategic thinking with cutting-edge design practices.",
-              },
-              {
-                num: "03",
-                title: "Implementation",
-                figure: Laptop,
-                figureAlt: "A laptop opening on its hinge",
-                text: "I believe in creating purpose-driven designs that resonate with target audiences. Each project is carefully crafted to ensure maximum impact and meaningful connections with users.",
-              },
-            ].map((step, i) => (
-              <ScrollReveal key={step.num} delay={i * 0.15} className="h-full">
-                <div className="group flex h-full flex-col rounded-xl bg-white dark:bg-card p-4">
-                  <div className="mb-4">
-                    <step.figure
-                      theme="auto"
-                      aria-label={step.figureAlt}
-                      className="mx-auto w-full max-w-[260px] [--hairline-plate:#ffffff] dark:[--hairline-plate:hsl(var(--card))] [--hairline-stroke:1]"
-                    />
-                  </div>
-                  <span className="font-mono-label text-primary">{step.num}</span>
-                  <h3 className="mt-2 text-xl font-bold text-foreground">{step.title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          <ScrollReveal delay={0.2}>
-            <div className="mt-12 text-center">
-              <Link
-                to="/about#philosophy"
-                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
-              >
-                Explore My Philosophy <span>→</span>
-              </Link>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-
-      {/* Testimonials */}
-      <SocialProof />
-
-      <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-
-      {/* Availability */}
       <HiringCTA />
     </main>
   );
