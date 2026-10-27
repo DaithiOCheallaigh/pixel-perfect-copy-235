@@ -82,10 +82,9 @@ const Work = () => {
           <p className="max-w-xl text-lg text-muted-foreground">
             Enterprise tools and design systems for Marsh, healthcare education for Elsevier, and the TipDirect tipping platform from first sketch to 10,000 daily users.
           </p>
-          <hr className="mb-0 mt-16 border-border" />
         </ScrollReveal>
 
-        <div>
+        <div className="mt-16">
           {listedProjects.map((project, i) => (
             <ProjectRow key={project.id} project={project} n={i + 1} last={!showMore && i === listedProjects.length - 1} />
           ))}
