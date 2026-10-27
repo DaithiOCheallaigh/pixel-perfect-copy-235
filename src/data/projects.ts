@@ -187,7 +187,7 @@ export const projects: Project[] = [
     featureImpact: [
       { period: "Short term", value: "26%", label: "of all tipping guests left a positive review", description: "The initial success was significant: over a quarter of guests left reviews using the AI review feature, creating an immediate positive impact on review volume." },
       { period: "Medium term", value: "96%", label: "of guests left a 5 star review", description: "The hypothesis that guests who tip are more likely to leave a positive review was validated, with nearly 100% of these guests providing 5-star ratings." },
-      { period: "Long term", value: "Bookings++", label: "reports of increased bookings", description: "The increased social proof has proven highly successful, with feature users reporting a rise in online bookings." },
+      { period: "Long term", value: "↑", label: "Bookings reported up by feature users", description: "The increased social proof has proven highly successful, with feature users reporting a rise in online bookings." },
     ],
     designSystemLinks: [
       { label: "Design System", url: "https://tipdirect-design.com/" },

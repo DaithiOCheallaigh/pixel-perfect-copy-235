@@ -118,12 +118,12 @@ function buildStory(project: Project) {
       <CaseBlock key="research" title="What we learned">
         {project.researchIntro && <Prose text={project.researchIntro} className="mb-8" />}
         {project.researchFindings && (
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className={`grid gap-4 md:gap-6 ${project.researchFindings.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
             {project.researchFindings.map((finding) => {
               const [heading, ...rest] = finding.split(": ");
               const points = rest.join(": ").split(". ").filter(Boolean).map((pt) => (pt.endsWith(".") ? pt : `${pt}.`));
               return (
-                <div key={heading}>
+                <div key={heading} className="rounded-2xl border border-border bg-card p-6">
                   <h4 className="mb-3 text-base font-bold text-foreground">{heading}</h4>
                   <BulletList items={points} />
                 </div>
@@ -344,12 +344,12 @@ function buildStory(project: Project) {
     project.launchAnalytics && (
       <CaseBlock key="launch" title="Launch & analytics" media={paired("launch")}>
         {project.launchAnalytics.intro && <Prose text={project.launchAnalytics.intro} className="mb-8" />}
-        <div className="grid gap-8 md:grid-cols-2">
-          <div>
+        <div className="grid gap-4 md:grid-cols-2 md:gap-6">
+          <div className="rounded-2xl border border-border bg-card p-6">
             <h4 className="mb-3 text-base font-bold text-foreground">Documentation & outreach</h4>
             <BulletList items={project.launchAnalytics.documentation} />
           </div>
-          <div>
+          <div className="rounded-2xl border border-border bg-card p-6">
             <h4 className="mb-3 text-base font-bold text-foreground">Analytics</h4>
             <BulletList items={project.launchAnalytics.analytics} />
           </div>
@@ -409,7 +409,7 @@ function buildStory(project: Project) {
     ),
     project.quote && (
       <CaseBlock key="quote">
-        <blockquote className="border-l-2 border-primary pl-6">
+        <blockquote className="max-w-3xl border-l-2 border-primary pl-6">
           <p className="text-lg italic text-foreground md:text-xl">"{project.quote.text}"</p>
           <cite className="mt-4 block text-sm font-semibold not-italic text-muted-foreground">— {project.quote.author}</cite>
         </blockquote>

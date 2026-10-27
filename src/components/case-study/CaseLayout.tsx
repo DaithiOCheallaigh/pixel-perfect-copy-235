@@ -23,7 +23,7 @@ const renderInline = (text: string) =>
 
 /** Paragraphs split on blank lines; lines starting with "- " become bullets; **bold** supported. */
 export const Prose = ({ text, className = "" }: { text: string; className?: string }) => (
-  <div className={`space-y-4 text-[15px] leading-[1.7] text-muted-foreground ${className}`}>
+  <div className={`max-w-3xl space-y-4 text-[15px] leading-[1.7] text-muted-foreground ${className}`}>
     {text.split(/\n\n+/).map((block, i) => {
       const lines = block.split("\n").filter(Boolean);
       const bullets = lines.filter((l) => l.startsWith("- "));
@@ -145,8 +145,8 @@ export const CaseBlock = ({
   const side = hasMedia && items ? items.length === 1 && !isWideMedia(items[0]) : false;
   const mediaNode: ReactNode = items ? <MediaGroup items={items} /> : (media as ReactNode);
   const text = (
-    <div className={side ? "min-w-0" : "max-w-3xl"}>
-      {title && <h3 className="mb-4 text-xl font-bold tracking-tight text-foreground md:text-2xl">{title}</h3>}
+    <div className="min-w-0">
+      {title && <h3 className="mb-4 max-w-3xl text-xl font-bold tracking-tight text-foreground md:text-2xl">{title}</h3>}
       {children}
     </div>
   );
@@ -172,10 +172,10 @@ export const CardGrid = ({ items, columns = 3 }: { items: { title: string; desc:
   <div className={`grid items-start gap-4 md:gap-6 ${columns === 2 ? "md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3"}`}>
     {items.map((item) => (
       <div key={item.title} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6">
+        {item.image && <CaseImage src={item.image} alt={item.title} className="mb-6" />}
         {item.eyebrow && <span className="mb-2 font-mono-label text-primary">{item.eyebrow}</span>}
         <h4 className="mb-2 text-base font-bold text-foreground">{item.title}</h4>
         <p className="text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
-        {item.image && <CaseImage src={item.image} alt={item.title} className="mt-6" />}
       </div>
     ))}
   </div>
@@ -186,7 +186,7 @@ export const StatGrid = ({ stats }: { stats: { value: string; label: string; eye
     {stats.map((stat, i) => (
       <div key={i} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 md:p-8">
         {stat.eyebrow && <span className="font-mono-label text-muted-foreground">{stat.eyebrow}</span>}
-        <div className="mt-2 break-words text-4xl font-black tracking-tighter text-primary md:text-5xl">{stat.value}</div>
+        <div className={`mt-2 break-words font-black tracking-tighter text-primary ${stat.value.length > 5 ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{stat.value}</div>
         <p className="mt-3 text-sm font-semibold text-foreground">{stat.label}</p>
         {stat.desc && <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{stat.desc}</p>}
       </div>
