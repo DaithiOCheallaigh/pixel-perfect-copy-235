@@ -3,7 +3,6 @@ import { imgDims } from "@/data/imageDimensions";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
-import { ShineBorder } from "../components/ui/shine-border";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
 
@@ -25,8 +24,7 @@ const Blog = () => (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post, i) => (
             <ScrollReveal key={post.id} delay={i * 0.08}>
-              <Link to={`/blog/${post.id}`} className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-card">
-                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+              <Link to={`/blog/${post.id}`} className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card">
                 <div className="overflow-hidden">
                   <img
                     src={post.image}

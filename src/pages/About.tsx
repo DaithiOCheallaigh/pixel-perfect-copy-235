@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
-import { ShineBorder } from "../components/ui/shine-border";
 import { SearchNormal1, Calendar, Bezier, TaskSquare, Code1, Chart2 } from "iconsax-react";
 import { type ReactNode } from "react";
 import avatarImg from "@/assets/avatar.jpeg";
@@ -92,12 +91,6 @@ const About = () => (
                   alt="Dave Kelly"
                   className="h-full w-full object-cover"
                 />
-                <ShineBorder
-                  shineColor={["#A855F7", "#EC4899", "#F97316"]}
-                  duration={10}
-                  borderWidth={2}
-                  className="rounded-full"
-                />
               </div>
               <div>
                 <SectionLabel>About</SectionLabel>
@@ -122,6 +115,24 @@ const About = () => (
             </div>
           </ScrollReveal>
         </div>
+
+        <ScrollReveal>
+          <dl className="mt-16 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-5">
+            {[
+              ["10+", "years designing products"],
+              ["10,000+", "daily active users on TipDirect"],
+              ["€8M+", "in tips through the admin platform"],
+              ["60+", "components in the CORE design system"],
+              ["17", "airlines launched on the white-label"],
+            ].map(([value, label]) => (
+              <div key={label}>
+                <dt className="sr-only">{label}</dt>
+                <dd className="text-3xl font-black tracking-tighter text-foreground md:text-4xl">{value}</dd>
+                <dd className="font-mono-label mt-2 text-muted-foreground">{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </ScrollReveal>
 
         {/* Interests / Facts / Hobbies */}
         <div className="mt-24 grid gap-8 md:grid-cols-3">
@@ -152,7 +163,7 @@ const About = () => (
             },
           ].map((section, i) => (
             <ScrollReveal key={section.title} delay={i * 0.1}>
-              <div className="rounded-sm bg-card p-6">
+              <div className="h-full rounded-xl border border-border bg-card p-6">
                 <h2 className="mb-4 text-lg font-bold text-foreground">{section.title}</h2>
                 <ul className="space-y-3">
                   {section.items.map((item, j) => (
@@ -184,7 +195,7 @@ const About = () => (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {lifecycleSteps.map((step, i) => (
             <ScrollReveal key={step.num} delay={i * 0.08}>
-              <div className="rounded-sm bg-card p-6">
+              <div className="h-full rounded-xl border border-border bg-card p-6">
                 <div className="mb-4">{step.icon}</div>
                 <h3 className="mb-3 text-lg font-bold text-foreground">
                   {step.num}. {step.title}
@@ -206,7 +217,7 @@ const About = () => (
           <div className="mt-12 text-center">
             <Link
               to="/work"
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary"
             >
               Explore projects which use this methodology <span>→</span>
             </Link>

@@ -7,7 +7,6 @@ import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { projects } from "../data/projects";
 import { caseStudyPath } from "../data/caseStudies";
-import { ShineBorder } from "../components/ui/shine-border";
 import { SEO } from "../components/SEO";
 import { LockKeyhole } from "lucide-react";
 
@@ -20,7 +19,6 @@ const CARD = "group relative flex h-full flex-col overflow-hidden rounded-xl bor
 
 const ComingSoonCard = ({ project }: { project: Project }) => (
   <div className={`${CARD} opacity-50`}>
-    <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
     <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-card">
       <img src={project.pillImage} alt={project.title} className="no-lightbox h-full w-full object-cover scale-[1.06]" {...imgDims(project.pillImage)} loading="lazy" decoding="async" />
     </div>
@@ -42,9 +40,8 @@ const ComingSoonCard = ({ project }: { project: Project }) => (
 const ProjectCard = ({ project, i }: { project: Project; i: number }) => (
                 <Link
                   to={caseStudyPath(project.id)}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300"
                 >
-                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                   <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-card">
                     <img
                       src={project.pillImage}
@@ -103,7 +100,7 @@ const Work = () => {
             onClick={() => setShowMore((v) => !v)}
             aria-expanded={showMore}
             aria-controls="more-work"
-            className="group inline-flex items-center gap-2 rounded-lg border border-border px-8 py-3 text-sm font-semibold text-primary transition-all hover:gap-3 hover:border-primary/40"
+            className="group inline-flex items-center gap-2 rounded-lg border border-border px-8 py-3 text-sm font-semibold text-primary transition-colors hover:text-primary"
           >
             {showMore ? "Show fewer" : "See more work"} <span>{showMore ? "↑" : "→"}</span>
           </button>
