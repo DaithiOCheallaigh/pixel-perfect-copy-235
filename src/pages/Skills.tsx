@@ -71,7 +71,7 @@ const Skills = () => (
         <ScrollReveal>
           <SectionLabel>Capabilities</SectionLabel>
           <h2 className="mb-12 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
-            Full-Spectrum Expertise
+            Capabilities
           </h2>
         </ScrollReveal>
 
