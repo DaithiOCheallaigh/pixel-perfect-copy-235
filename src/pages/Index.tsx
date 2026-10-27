@@ -5,11 +5,9 @@ import { LockKeyhole } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal";
 import HiringCTA from "../components/HiringCTA";
 import { caseStudyPath } from "../data/caseStudies";
-import { ShineBorder } from "../components/ui/shine-border";
-import { SpiralAnimation } from "../components/ui/spiral-animation";
+import FitText from "../components/FitText";
+import { CV_URL } from "../data/profile";
 import { SEO } from "../components/SEO";
-
-const SHINE = ["#A07CFE", "#FE8FB5", "#FFBE7B"];
 
 type FeaturedCard = {
   to: string;
@@ -61,55 +59,34 @@ const Index = () => {
     <main>
       <SEO title="Home" description="Dave Kelly is a senior product designer in Dublin with over 10 years designing SaaS platforms, mobile apps and design systems for Marsh, Elsevier and TipDirect." />
       {/* Hero */}
-      <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-24 md:px-12 lg:px-24">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <SpiralAnimation />
-        </div>
-        <div className="pointer-events-none absolute inset-0 grid-background opacity-50" />
-
-        <div className="relative mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl flex-col items-center justify-center text-center">
-          <motion.h1
-            className="mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8, ease }}
-          >
-            Senior product designer for complex products
-          </motion.h1>
-
-          <motion.p
-            className="mx-auto mb-10 max-w-2xl text-lg leading-[1.75] tracking-[-0.01em] text-muted-foreground md:text-xl"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.8, ease }}
-          >
-            Over 10 years designing SaaS platforms, mobile apps and design systems. Most recently MedEd Workspace for Elsevier, three internal tools and the CORE design system for Marsh, and TipDirect's tipping platform.
-          </motion.p>
+      <section className="flex min-h-[85vh] flex-col justify-end px-6 pb-16 pt-24 md:px-12 lg:px-24">
+        <div className="mx-auto w-full max-w-7xl">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease }}>
+            <FitText
+              as="h1"
+              text="Dave Kelly"
+              className="w-full font-black leading-[0.8] tracking-[-0.05em] text-foreground"
+            />
+          </motion.div>
 
           <motion.div
-            className="flex flex-wrap justify-center gap-4"
-            initial={{ opacity: 0, y: 30 }}
+            className="mt-10 grid gap-8 border-t border-border pt-8 md:grid-cols-[1fr_2fr]"
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8, ease }}
+            transition={{ delay: 0.2, duration: 0.8, ease }}
           >
-            <a
-              href="/docs/DavidKelly_CV_2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-foreground px-8 py-3 text-sm font-semibold text-background transition-all hover:opacity-90"
-            >
-              ↓ Download my CV
-            </a>
-            <Link
-              to="/work"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:gap-3"
-            >
-              <ShineBorder shineColor={SHINE} className="opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              See my work <span className="transition-all">→</span>
-            </Link>
+            <p className="font-mono-label text-muted-foreground">Senior product designer · Dublin · Open to full-time roles</p>
+            <div>
+              <p className="max-w-2xl text-lg leading-[1.75] tracking-[-0.01em] text-muted-foreground md:text-xl">
+                Over 10 years designing SaaS platforms, mobile apps and design systems. Most recently MedEd Workspace for Elsevier, three internal tools and the CORE design system for Marsh, and TipDirect's tipping platform.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-sm font-semibold">
+                <Link to="/work" className="text-foreground underline underline-offset-4 transition-colors hover:text-primary">See my work →</Link>
+                <a href={CV_URL} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 transition-colors hover:text-primary">Download CV ↓</a>
+              </div>
+            </div>
           </motion.div>
         </div>
-
       </section>
 
       {/* Selected work */}
@@ -128,9 +105,8 @@ const Index = () => {
                 <ScrollReveal key={card.to} delay={i * 0.1}>
                   <Link
                     to={card.to}
-                    className="group relative grid gap-0 overflow-hidden rounded-xl bg-card md:grid-cols-2"
+                    className="group relative grid gap-0 overflow-hidden rounded-xl border border-border bg-card md:grid-cols-2"
                   >
-                    <ShineBorder shineColor={SHINE} />
                     <div
                       className={`overflow-hidden bg-card rounded-t-xl md:rounded-t-none ${
                         flipped ? "md:order-2 md:rounded-r-xl" : "md:rounded-l-xl"
@@ -149,11 +125,7 @@ const Index = () => {
                       <h3 className="mb-4 text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
                         {card.title}
                       </h3>
-                      <div className="mb-8 flex flex-wrap gap-2">
-                        {card.tags.map((tag) => (
-                          <span key={tag} className="rounded-md border border-border px-3 py-1 text-xs font-medium text-foreground">{tag}</span>
-                        ))}
-                      </div>
+                      <p className="font-mono-label mb-8 text-muted-foreground">{card.tags.join(" · ")}</p>
                       {card.body && <p className="text-sm text-muted-foreground">{card.body}</p>}
                       {card.quote && (
                         <>
@@ -164,7 +136,7 @@ const Index = () => {
                         </>
                       )}
                       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
-                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3">
+                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
                           View project <span>→</span>
                         </span>
                         {card.locked && (
@@ -185,7 +157,7 @@ const Index = () => {
             <div className="mt-12 text-center">
               <Link
                 to="/work"
-                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary"
               >
                 View All Work <span>→</span>
               </Link>
