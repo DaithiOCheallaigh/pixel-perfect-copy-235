@@ -1,7 +1,6 @@
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
-import { ShineBorder } from "../components/ui/shine-border";
 import { SEO } from "../components/SEO";
 
 const focusAreas = [
@@ -56,8 +55,7 @@ const Skills = () => (
         <div className="mb-24 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {focusAreas.map((area, i) => (
             <ScrollReveal key={area.title} delay={i * 0.08}>
-              <div className="relative flex h-full flex-col rounded-xl bg-card p-8 transition-transform duration-300 hover:-translate-y-1">
-                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+              <div className="relative flex h-full flex-col rounded-xl border border-border bg-card p-8">
                 <h3 className="mb-3 text-lg font-bold text-foreground">{area.title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground">{area.desc}</p>
               </div>

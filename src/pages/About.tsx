@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
-import { ShineBorder } from "../components/ui/shine-border";
 import { SearchNormal1, Calendar, Bezier, TaskSquare, Code1, Chart2 } from "iconsax-react";
 import { type ReactNode } from "react";
 import avatarImg from "@/assets/avatar.jpeg";
@@ -91,12 +90,6 @@ const About = () => (
                   src={avatarImg}
                   alt="Dave Kelly"
                   className="h-full w-full object-cover"
-                />
-                <ShineBorder
-                  shineColor={["#A855F7", "#EC4899", "#F97316"]}
-                  duration={10}
-                  borderWidth={2}
-                  className="rounded-full"
                 />
               </div>
               <div>
@@ -206,7 +199,7 @@ const About = () => (
           <div className="mt-12 text-center">
             <Link
               to="/work"
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary"
             >
               Explore projects which use this methodology <span>→</span>
             </Link>
