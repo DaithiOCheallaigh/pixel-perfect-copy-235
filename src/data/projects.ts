@@ -533,6 +533,7 @@ export const projects: Project[] = [
   },
   {
     id: "booking-app",
+    listed: false,
     title: "Booking App & Site",
     subtitle: "Digital transformation of Therapie Clinic — £13m in online sales in first year",
     heroSubtitle: "I led the digital transformation of an international beauty chain by developing and implementing online booking and ecommerce solutions",

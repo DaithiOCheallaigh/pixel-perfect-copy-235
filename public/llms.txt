@@ -22,7 +22,6 @@
 - [Admin Dashboard](https://www.lacunadigital.io/case/admin-dashboard)
 - [TipDirect App](https://www.lacunadigital.io/case/tipdirect-app)
 - [Airline Tour & Activity White-label](https://www.lacunadigital.io/case/whitelabel)
-- [Booking App & Site](https://www.lacunadigital.io/case/booking-app)
 
 ## Contact
 

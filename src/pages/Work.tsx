@@ -12,7 +12,7 @@ import { SEO } from "../components/SEO";
 import { LockKeyhole } from "lucide-react";
 
 const listedProjects = projects.filter((p) => p.listed !== false && !p.comingSoon);
-const moreProjects = ["spotify", "website-tipdirect", "ticketing"]
+const moreProjects = ["booking-app", "spotify", "website-tipdirect", "ticketing"]
   .map((id) => projects.find((p) => p.id === id))
   .filter((p): p is Project => Boolean(p));
 
