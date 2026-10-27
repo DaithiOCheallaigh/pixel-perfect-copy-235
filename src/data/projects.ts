@@ -634,4 +634,16 @@ export const projects: Project[] = [
     reflection: "The player was already crowded, so the answer was to work with what Spotify already encourages — the second-fold modules for lyrics, videos, artist info and tickets — rather than add more to the first viewport. Each alternative placement followed the same principle.",
     nextProject: "whitelabel",
   },
+  {
+    id: "ticketing",
+    listed: false,
+    title: "Ticketing System",
+    subtitle: "Ticketing System for the tours and activity sector",
+    tags: ["UI/UX", "Product Research"],
+    timeline: "TBC",
+    pillImage: "/images/work/ticketing-system.webp",
+    headerImage: "/images/work/ticketing-system.webp",
+    description: "Ticketing System developed for the tours and activity sector.",
+    comingSoon: true,
+  },
 ];

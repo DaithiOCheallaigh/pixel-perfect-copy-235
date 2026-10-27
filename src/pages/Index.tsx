@@ -10,8 +10,6 @@ import { SpiralAnimation } from "../components/ui/spiral-animation";
 import { SEO } from "../components/SEO";
 
 const SHINE = ["#A07CFE", "#FE8FB5", "#FFBE7B"];
-const MARSH_SHOWREEL =
-  "https://raw.githubusercontent.com/DaithiOCheallaigh/lacuna/main/Desktop/Dev/LacunaPortfolioSite/images/Marsh%20Internatl%20Tooling/MarshInternalTools.mp4";
 
 type FeaturedCard = {
   to: string;
@@ -63,13 +61,13 @@ const Index = () => {
     <main>
       <SEO title="Home" description="Dave Kelly is a senior product designer in Dublin with over 10 years designing SaaS platforms, mobile apps and design systems for Marsh, Elsevier and TipDirect." />
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pb-16 pt-32 md:px-12 md:pb-24 lg:px-24">
+      <section className="relative min-h-screen overflow-hidden bg-[hsl(40,10%,97%)] dark:bg-background px-6 pt-24 md:px-12 lg:px-24">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <SpiralAnimation />
         </div>
         <div className="pointer-events-none absolute inset-0 grid-background opacity-50" />
 
-        <div className="relative mx-auto flex max-w-5xl flex-col items-center justify-center pt-4 text-center md:pt-8">
+        <div className="relative mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl flex-col items-center justify-center text-center">
           <motion.h1
             className="mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl"
             initial={{ opacity: 0, y: 40 }}
@@ -112,32 +110,6 @@ const Index = () => {
           </motion.div>
         </div>
 
-        <motion.figure
-          className="relative mx-auto mt-12 max-w-6xl md:mt-16"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.75, duration: 0.9, ease }}
-        >
-          <Link
-            to="/work/marsh-internal-tooling"
-            className="block overflow-hidden rounded-2xl border border-border bg-card"
-          >
-            <video
-              src={MARSH_SHOWREEL}
-              poster="/images/work/marsh-internal-tools-poster.webp"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label="Showreel of three enterprise tools designed for Marsh"
-              className="block aspect-video w-full object-cover"
-            />
-          </Link>
-          <figcaption className="mt-4 text-center font-mono-label text-muted-foreground">
-            Marsh · three enterprise tools and a shared design system, shipped in parallel
-          </figcaption>
-        </motion.figure>
       </section>
 
       {/* Selected work */}
