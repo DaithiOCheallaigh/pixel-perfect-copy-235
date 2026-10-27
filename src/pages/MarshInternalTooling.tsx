@@ -4,7 +4,24 @@ import { ArrowRight } from "iconsax-react";
 import { useState } from "react";
 import ScrollReveal from "../components/ScrollReveal";
 import CaseImage from "../components/CaseImage";
-import { CaseBlock, CaseHero, CaseSection, CardGrid, NextProject, Prose, Reflection, StatGrid, ToolsStrip } from "../components/case-study/CaseLayout";
+import { CaseBlock, CaseHero, CaseSection, CardGrid, MediaGroup, NextProject, Prose, Reflection, StatGrid } from "../components/case-study/CaseLayout";
+import figmaLogo from "@/assets/logos/figma.svg";
+import claudeLogo from "@/assets/logos/claude.png";
+import lovableLogo from "@/assets/logos/lovable.png";
+
+const tools: { name: string; icon?: string }[] = [
+  { name: "Figma", icon: figmaLogo },
+  { name: "Claude", icon: claudeLogo },
+  { name: "Lovable", icon: lovableLogo },
+  { name: "Storybook" },
+];
+
+const coreImages = [
+  { src: "/images/work/marsh-core.webp", alt: "CORE component overview" },
+  { src: "/images/work/marsh-storybook-buttons.png", alt: "Button variants documented in Storybook" },
+  { src: "/images/work/marsh-storybook-colours.png", alt: "CORE colour tokens in Storybook" },
+  { src: "/images/work/marsh-storybook-prototype.png", alt: "A prototype assembled from CORE components" },
+];
 import HiringCTA from "../components/HiringCTA";
 import { SEO } from "@/components/SEO";
 import { projects } from "../data/projects";
@@ -71,7 +88,7 @@ const PrototypeLink = ({ href }: { href: string }) => {
   };
 
   return (
-    <div className="relative mt-auto px-5 pb-5">
+    <div className="relative">
       <a
         href={href}
         target="_blank"
@@ -86,7 +103,7 @@ const PrototypeLink = ({ href }: { href: string }) => {
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          className="absolute bottom-full left-5 mb-2 rounded-lg bg-foreground px-3 py-1.5 text-sm text-background shadow-lg whitespace-nowrap"
+          className="absolute bottom-full left-0 mb-2 rounded-lg bg-foreground px-3 py-1.5 text-sm text-background shadow-lg whitespace-nowrap"
         >
           Web only I'm afraid 😌
         </motion.div>
@@ -109,7 +126,23 @@ const MarshInternalTooling = () => {
         meta={[
           { label: "Role", value: "Freelance Product Designer" },
           { label: "Timeline", value: project?.timeline ?? "Ongoing" },
-          { label: "Tools", value: <ToolsStrip src="/images/work/marsh-tools.webp" alt="Tools: Figma, Claude, Lovable, Storybook" mono /> },
+          {
+            label: "Tools",
+            value: (
+              <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                {tools.map((tool) => (
+                  <li key={tool.name} className="flex items-center gap-2">
+                    {tool.icon && (
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card">
+                        <img src={tool.icon} alt="" aria-hidden="true" className="h-4 w-4 object-contain" width={16} height={16} />
+                      </span>
+                    )}
+                    <span className="font-mono-label text-xs text-muted-foreground">{tool.name}</span>
+                  </li>
+                ))}
+              </ul>
+            ),
+          },
         ]}
         media={
           <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-card">
@@ -132,13 +165,13 @@ const MarshInternalTooling = () => {
 
       <CaseSection label="Overview">
         <CaseBlock title="What it is">
-          <Prose text="Contracted to Marsh via Expleo to design and ship three internal enterprise tools in parallel — a Colleague Profile & Work Queue, a Client Milestones tracker, and a Notifications Hub." />
+          <Prose text="Contracted to Marsh via Expleo: a Colleague Profile & Work Queue, a Client Milestones tracker and a Notifications Hub." />
         </CaseBlock>
       </CaseSection>
 
       <CaseSection label="The Challenge">
         <CaseBlock>
-          <Prose text="Working across all three products simultaneously, the engagement demanded a single, scalable design system to ensure consistency at pace." />
+          <Prose text="Designing three products at once meant consistency had to come from one scalable system, not from coordination." />
         </CaseBlock>
       </CaseSection>
 
@@ -157,23 +190,23 @@ const MarshInternalTooling = () => {
       </CaseSection>
 
       <CaseSection label="The Solution">
-        <CaseBlock title="Three live prototypes">
-          <div className="grid items-start gap-6 md:grid-cols-3">
-            {products.map((product) => (
-              <div key={product.num} className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card">
-                <div className="px-5 pt-5">
-                  <span className="font-mono-label text-xs text-primary">{product.num}</span>
-                  <h4 className="mt-1 text-lg font-bold text-foreground">{product.name}</h4>
-                  <p className="mt-1 text-sm text-muted-foreground">{product.description}</p>
-                </div>
-                <CaseImage src={product.image} alt={product.name} className="m-3" />
-                <PrototypeLink href={product.link} />
+        {products.map((product, i) => (
+          <CaseBlock key={product.num} media={<CaseImage src={product.image} alt={`${product.name} screen`} />} flip={i % 2 === 1}>
+            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2">
+              <div>
+                <span className="font-mono-label text-xs text-primary">{product.num}</span>
+                <h3 className="mt-1 text-xl font-bold tracking-tight text-foreground md:text-2xl">{product.name}</h3>
+                <p className="mt-2 text-[15px] leading-[1.7] text-muted-foreground">{product.description}</p>
               </div>
-            ))}
-          </div>
-        </CaseBlock>
+              <PrototypeLink href={product.link} />
+            </div>
+          </CaseBlock>
+        ))}
         <CaseBlock title="CORE — a shared design system">
           <Prose text="To move quickly without sacrificing consistency, I built CORE — a token-based component library spanning buttons, forms, data tables, navigation patterns, status indicators, and notification primitives. Designed in Figma, documented in Storybook, and built to serve all three products simultaneously — with enough rigour to scale across Marsh's broader product estate." />
+          <div className="mt-8">
+            <MediaGroup items={coreImages} />
+          </div>
           <a
             href="https://daithiocheallaigh.github.io/MarshDesign//?path=/docs/components-button--docs"
             target="_blank"
