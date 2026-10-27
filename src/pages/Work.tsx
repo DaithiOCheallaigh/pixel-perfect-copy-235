@@ -21,8 +21,8 @@ const CARD = "group relative flex h-full flex-col overflow-hidden rounded-xl bor
 const ComingSoonCard = ({ project }: { project: Project }) => (
   <div className={`${CARD} opacity-50`}>
     <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-    <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
-      <img src={project.pillImage} alt={project.title} className="no-lightbox h-full w-full object-cover" {...imgDims(project.pillImage)} loading="lazy" decoding="async" />
+    <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-card">
+      <img src={project.pillImage} alt={project.title} className="no-lightbox h-full w-full object-cover scale-[1.06]" {...imgDims(project.pillImage)} loading="lazy" decoding="async" />
     </div>
     <div className="flex flex-1 flex-col p-6">
       <h3 className="text-lg font-bold text-foreground md:text-xl">{project.title}</h3>
@@ -45,11 +45,11 @@ const ProjectCard = ({ project, i }: { project: Project; i: number }) => (
                   className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
                 >
                   <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                  <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
+                  <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-card">
                     <img
                       src={project.pillImage}
                       alt={project.title}
-                      className="no-lightbox h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" {...imgDims(project.pillImage)} loading={i < 2 ? "eager" : "lazy"} decoding="async" />
+                      className="no-lightbox h-full w-full object-cover scale-[1.06] transition-transform duration-500 md:group-hover:scale-[1.1]" {...imgDims(project.pillImage)} loading={i < 2 ? "eager" : "lazy"} decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="text-lg font-bold text-foreground transition-colors group-hover:text-primary md:text-xl">

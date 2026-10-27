@@ -275,8 +275,8 @@ export const NextProject = ({ currentId }: { currentId: string }) => {
             to={caseStudyPath(next.id)}
             className="group grid items-center gap-6 overflow-hidden rounded-2xl border border-border bg-card p-4 transition-colors md:grid-cols-[240px_1fr_auto] md:p-6 md:hover:border-primary/40"
           >
-            <div className="aspect-[4/3] overflow-hidden rounded-xl">
-              <img src={next.pillImage} alt="" className="no-lightbox h-full w-full object-cover" {...imgDims(next.pillImage)} loading="lazy" decoding="async" />
+            <div className="aspect-[4/3] overflow-hidden rounded-xl bg-card">
+              <img src={next.pillImage} alt="" className="no-lightbox h-full w-full object-cover scale-[1.06]" {...imgDims(next.pillImage)} loading="lazy" decoding="async" />
             </div>
             <div className="min-w-0">
               {next.client && <span className="mb-1 block font-mono-label text-xs text-muted-foreground">{next.client}</span>}
