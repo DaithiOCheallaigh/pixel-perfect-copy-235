@@ -63,6 +63,7 @@ export const routeTable: RouteDef[] = [
     { id: "case-study", path: "/case/:id" },
     { id: "marsh-internal-tooling", path: "/work/marsh-internal-tooling" },
     { id: "marsh-design-system", path: "/work/marsh-design-system" },
+    { id: "playground", path: "/playground" },
     { id: "about", path: "/about" },
     { id: "skills", path: "/skills" },
     { id: "blog", path: "/blog" },
