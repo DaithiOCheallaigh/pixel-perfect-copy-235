@@ -11,7 +11,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
 
   const links = [
     { label: "My Work", to: "/work" },
-    { label: "Skill Set", to: "/skills" },
+    { label: "Skills", to: "/skills" },
     { label: "About", to: "/about" },
     { label: "Blog", to: "/blog" },
   ];
@@ -36,7 +36,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               className="rounded-full"
             />
           </div>
-          <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="text-muted-foreground font-normal">| AI Designer</span></span>
+          <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="text-muted-foreground font-normal">| Senior Product Designer</span></span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">

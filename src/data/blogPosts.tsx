@@ -375,7 +375,7 @@ export const blogPosts: BlogPost[] = [
           <li><strong>Poor retention</strong> — users who struggle with your product won't come back, and they certainly won't recommend it</li>
           <li><strong>Expensive rework</strong> — fixing usability problems after development is 10x more costly than addressing them during the design phase</li>
         </ul>
-        <p>I've seen this pattern repeatedly working with clients in the travel-tech and financial services sectors. One project — a digital tipping platform — saw a 45% increase in 5-star reviews not because we made the interface prettier, but because we removed three unnecessary steps from the core user flow.</p>
+        <p>I've seen this pattern repeatedly working with clients in the travel-tech and financial services sectors. One project — a digital tipping platform — saw far more 5-star reviews not because we made the interface prettier, but because we removed three unnecessary steps from the core user flow.</p>
 
         <h2>What to Look for in a UX Design Consultancy</h2>
         <p>If you're an SME evaluating design partners, here are the signals that separate strategic UX consultancies from purely visual ones:</p>

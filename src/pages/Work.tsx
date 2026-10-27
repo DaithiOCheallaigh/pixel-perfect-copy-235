@@ -20,12 +20,12 @@ const Work = () => (
             My Work
           </h1>
           <p className="mb-16 max-w-xl text-lg text-muted-foreground">
-            A selection of projects spanning UI/UX design, product strategy, and digital transformation.
+            Enterprise tools and design systems for Marsh, healthcare education for Elsevier, and the TipDirect tipping platform from first sketch to 10,000 daily users.
           </p>
         </ScrollReveal>
 
         <div className="grid gap-8 sm:grid-cols-2 [&>*]:h-full">
-          {projects.map((project, i) => (
+          {projects.filter((p) => p.listed !== false && !p.comingSoon).map((project, i) => (
             <ScrollReveal key={project.id} delay={i * 0.08}>
               {project.comingSoon ? (
                 <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card opacity-50">
@@ -73,7 +73,7 @@ const Work = () => (
                         ))}
                       </div>
                       {project.id === "spark" ? (
-                        <span className="inline-flex shrink-0 items-center gap-2 text-xs text-muted-foreground"><LockKeyhole className="h-4 w-4" />Password protected</span>
+                        <span className="inline-flex shrink-0 items-center gap-2 text-xs text-muted-foreground"><LockKeyhole className="h-4 w-4" />Password protected · request access</span>
                       ) : (
                         <span className="text-lg text-muted-foreground transition-colors group-hover:text-primary">→</span>
                       )}
