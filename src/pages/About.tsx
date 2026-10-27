@@ -116,6 +116,24 @@ const About = () => (
           </ScrollReveal>
         </div>
 
+        <ScrollReveal>
+          <dl className="mt-16 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-5">
+            {[
+              ["10+", "years designing products"],
+              ["10,000+", "daily active users on TipDirect"],
+              ["€8M+", "in tips through the admin platform"],
+              ["60+", "components in the CORE design system"],
+              ["17", "airlines launched on the white-label"],
+            ].map(([value, label]) => (
+              <div key={label}>
+                <dt className="sr-only">{label}</dt>
+                <dd className="text-3xl font-black tracking-tighter text-foreground md:text-4xl">{value}</dd>
+                <dd className="font-mono-label mt-2 text-muted-foreground">{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </ScrollReveal>
+
         {/* Interests / Facts / Hobbies */}
         <div className="mt-24 grid gap-8 md:grid-cols-3">
           {[
@@ -145,7 +163,7 @@ const About = () => (
             },
           ].map((section, i) => (
             <ScrollReveal key={section.title} delay={i * 0.1}>
-              <div className="rounded-sm bg-card p-6">
+              <div className="h-full rounded-xl border border-border bg-card p-6">
                 <h2 className="mb-4 text-lg font-bold text-foreground">{section.title}</h2>
                 <ul className="space-y-3">
                   {section.items.map((item, j) => (
@@ -177,7 +195,7 @@ const About = () => (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {lifecycleSteps.map((step, i) => (
             <ScrollReveal key={step.num} delay={i * 0.08}>
-              <div className="rounded-sm bg-card p-6">
+              <div className="h-full rounded-xl border border-border bg-card p-6">
                 <div className="mb-4">{step.icon}</div>
                 <h3 className="mb-3 text-lg font-bold text-foreground">
                   {step.num}. {step.title}
