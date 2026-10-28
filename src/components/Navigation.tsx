@@ -12,7 +12,7 @@ const links = [
 ];
 
 const location = LOCATION_LINE.replace(/^Based in /, "");
-const meta = "font-mono-label transition-colors hover:text-primary";
+const meta = "whitespace-nowrap font-mono-label transition-colors hover:text-primary";
 
 const Navigation = ({ visible }: { visible: boolean }) => {
   const { pathname } = useLocation();
@@ -27,13 +27,13 @@ const Navigation = ({ visible }: { visible: boolean }) => {
       animate={{ y: visible ? 0 : -80 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-6 px-6 md:grid md:grid-cols-4 md:px-12">
-        <Link to="/" className="flex flex-col leading-tight">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-6 px-6 lg:grid lg:grid-cols-[auto_auto_auto_1fr] lg:gap-x-12 lg:px-12">
+        <Link to="/" className="flex flex-col whitespace-nowrap leading-tight">
           <span className="text-sm font-semibold text-foreground">Dave Kelly</span>
           <span className="font-mono-label text-muted-foreground">Senior Product Designer</span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-5 md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-5 lg:flex">
           {links.map((l) => (
             <Link
               key={l.to}
@@ -46,20 +46,20 @@ const Navigation = ({ visible }: { visible: boolean }) => {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-5 md:flex">
+        <div className="hidden items-center gap-5 lg:flex">
           <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={`${meta} text-muted-foreground`}>LinkedIn ↗</a>
           <a href={`mailto:${PORTFOLIO_EMAIL}`} className={`${meta} text-muted-foreground`}>Email ↗</a>
         </div>
 
-        <div className="hidden items-center justify-end gap-5 md:flex">
-          <span className="font-mono-label text-muted-foreground">{location}</span>
+        <div className="hidden items-center justify-end justify-self-end gap-5 lg:flex">
+          <span className="whitespace-nowrap font-mono-label text-muted-foreground">{location}</span>
           <a href={CV_URL} target="_blank" rel="noopener noreferrer" className={`${meta} text-foreground`}>CV ↓</a>
           <ThemeToggle />
         </div>
 
         <button
           type="button"
-          className="font-mono-label text-foreground md:hidden"
+          className="font-mono-label text-foreground lg:hidden"
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-controls="mobile-menu"
@@ -70,7 +70,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
 
       <motion.div
         id="mobile-menu"
-        className="border-t border-border md:hidden"
+        className="border-t border-border lg:hidden"
         initial={false}
         animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
         transition={{ duration: 0.3 }}
