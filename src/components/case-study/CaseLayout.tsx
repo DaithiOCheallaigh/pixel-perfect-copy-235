@@ -249,7 +249,7 @@ export const ToolsList = ({ tools }: { tools: string[] }) => (
       <li key={tool.name} className="flex items-center gap-2">
         {tool.icon && (
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card">
-            <img src={tool.icon} alt="" aria-hidden="true" className={`no-lightbox h-4 w-4 object-contain ${tool.invert ? "dark:invert" : ""}`} width={16} height={16} />
+            <img src={tool.icon} alt="" aria-hidden="true" className={`no-lightbox h-4 w-4 object-contain ${tool.invert ? "dark:invert" : ""} ${tool.whiteLogo ? "invert dark:invert-0" : ""}`} width={16} height={16} />
           </span>
         )}
         <span className="font-mono-label text-xs text-muted-foreground">{tool.name}</span>

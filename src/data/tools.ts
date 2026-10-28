@@ -14,14 +14,14 @@ import sketch from "@/assets/logos/sketch.svg";
 import adobecreativecloud from "@/assets/logos/adobecreativecloud.svg";
 import storybook from "@/assets/logos/storybook.svg";
 
-/** Tool logos for case-study heroes. `icon` empty = label only; `invert` = near-black logo that needs inverting in dark mode. */
-export const toolRegistry: Record<string, { name: string; icon: string; invert?: boolean }> = {
+/** Tool logos for case-study heroes. `icon` empty = label only; `invert` = near-black logo inverted in dark mode; `whiteLogo` = white logo inverted in light mode. */
+export const toolRegistry: Record<string, { name: string; icon: string; invert?: boolean; whiteLogo?: boolean }> = {
   claude: { name: "Claude", icon: claude },
   figma: { name: "Figma", icon: figma },
   lovable: { name: "Lovable", icon: lovable },
   confluence: { name: "Confluence", icon: confluence },
   jira: { name: "Jira", icon: jira },
-  github: { name: "GitHub", icon: github, invert: true },
+  github: { name: "GitHub", icon: github, whiteLogo: true },
   notion: { name: "Notion", icon: notion, invert: true },
   miro: { name: "Miro", icon: miro, invert: true },
   zeplin: { name: "Zeplin", icon: "" },
@@ -39,5 +39,5 @@ export const toolRegistry: Record<string, { name: string; icon: string; invert?:
 export const resolveTool = (entry: string) => {
   const [slug, label] = entry.split(/:(.*)/s);
   const known = toolRegistry[slug];
-  return { name: label || known?.name || slug, icon: known?.icon ?? "", invert: known?.invert ?? false };
+  return { name: label || known?.name || slug, icon: known?.icon ?? "", invert: known?.invert ?? false, whiteLogo: known?.whiteLogo ?? false };
 };
