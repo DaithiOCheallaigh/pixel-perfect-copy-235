@@ -224,7 +224,7 @@ export const CaseHero = ({
         <p className="mb-8 max-w-3xl text-lg text-muted-foreground md:text-xl">{summary}</p>
         <dl className="mb-8 grid gap-6 border-y border-border py-6 sm:grid-cols-2 md:grid-cols-3">
           {meta.map((m) => (
-            <div key={m.label} className="min-w-0">
+            <div key={m.label} className={`min-w-0 ${m.wide ? "sm:col-span-2" : ""}`}>
               <dt className="mb-2 font-mono-label text-xs text-muted-foreground">{m.label}</dt>
               <dd className="text-sm font-semibold text-foreground">{m.value}</dd>
             </div>
@@ -239,6 +239,22 @@ export const CaseHero = ({
       )}
     </div>
   </section>
+);
+
+/** Tool logos in small circles with mono labels; shared by every case-study hero. */
+export const ToolsList = ({ tools }: { tools: string[] }) => (
+  <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+    {tools.map(resolveTool).map((tool) => (
+      <li key={tool.name} className="flex items-center gap-2">
+        {tool.icon && (
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card">
+            <img src={tool.icon} alt="" aria-hidden="true" className={`no-lightbox h-4 w-4 object-contain ${tool.invert ? "dark:invert" : ""}`} width={16} height={16} />
+          </span>
+        )}
+        <span className="font-mono-label text-xs text-muted-foreground">{tool.name}</span>
+      </li>
+    ))}
+  </ul>
 );
 
 /** Tools strip shown in the hero meta row, at natural ratio with sideways scroll if needed. */
