@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { SEO } from "@/components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
-import { CaseBlock, CaseHero, CaseSection, CardGrid, NextProject, Prose, Reflection } from "../components/case-study/CaseLayout";
+import { CaseBlock, CaseHero, CaseSection, CardGrid, NextProject, Prose, Reflection, ToolsList } from "../components/case-study/CaseLayout";
 import HiringCTA from "../components/HiringCTA";
 import CaseStudyVideo from "../components/CaseStudyVideo";
 import walkthroughVideo from "../assets/spark-walkthrough.mp4.asset.json";
-import claudeLogo from "@/assets/logos/claude.png";
-import figmaLogo from "@/assets/logos/figma.svg";
-import confluenceLogo from "@/assets/logos/confluence.svg";
-import jiraLogo from "@/assets/logos/jira.svg";
 import { projects } from "../data/projects";
 import { Branches, Exploded, Riffle } from "@lucasmarkes/hairline/react";
 import { Button } from "@/components/ui/button";
@@ -114,13 +110,6 @@ const stats = [
   },
 ];
 
-const tools = [
-  { name: "Claude", icon: claudeLogo },
-  { name: "Figma (incl. MCP)", icon: figmaLogo },
-  { name: "Confluence", icon: confluenceLogo },
-  { name: "Jira", icon: jiraLogo },
-];
-
 const SparkCaseStudy = () => {
   const [prototypeLoaded, setPrototypeLoaded] = useState(false);
   const isMobile = useIsMobile();
@@ -137,21 +126,7 @@ const SparkCaseStudy = () => {
         meta={[
           { label: "Role", value: "Contract UI/UX Designer" },
           { label: "Timeline", value: project?.timeline ?? "Contract" },
-          {
-            label: "Tools",
-            value: (
-              <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                {tools.map((tool) => (
-                  <li key={tool.name} className="flex items-center gap-2">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card">
-                      <img src={tool.icon} alt="" aria-hidden="true" className="h-4 w-4 object-contain" width={16} height={16} />
-                    </span>
-                    <span className="font-mono-label text-xs text-muted-foreground">{tool.name}</span>
-                  </li>
-                ))}
-              </ul>
-            ),
-          },
+          { label: "Tools", value: <ToolsList tools={project?.tools ?? []} />, wide: (project?.tools?.length ?? 0) > 4 },
         ]}
         media={
           <>
