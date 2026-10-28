@@ -13,6 +13,8 @@ import elementor from "@/assets/logos/elementor.svg";
 import sketch from "@/assets/logos/sketch.svg";
 import adobecreativecloud from "@/assets/logos/adobecreativecloud.svg";
 import storybook from "@/assets/logos/storybook.svg";
+import zeplin from "@/assets/logos/zeplin.png";
+import nuclino from "@/assets/logos/nuclino.png";
 
 /** Tool logos for case-study heroes. `icon` empty = label only; `invert` = near-black logo inverted in dark mode; `whiteLogo` = white logo inverted in light mode. */
 export const toolRegistry: Record<string, { name: string; icon: string; invert?: boolean; whiteLogo?: boolean }> = {
@@ -24,14 +26,14 @@ export const toolRegistry: Record<string, { name: string; icon: string; invert?:
   github: { name: "GitHub", icon: github, whiteLogo: true },
   notion: { name: "Notion", icon: notion, invert: true },
   miro: { name: "Miro", icon: miro, invert: true },
-  zeplin: { name: "Zeplin", icon: "" },
+  zeplin: { name: "Zeplin", icon: zeplin },
   clickup: { name: "ClickUp", icon: clickup },
   mixpanel: { name: "Mixpanel", icon: mixpanel },
   wordpress: { name: "WordPress", icon: wordpress },
   elementor: { name: "Elementor", icon: elementor },
   sketch: { name: "Sketch", icon: sketch },
   adobecreativecloud: { name: "Adobe Creative Cloud", icon: adobecreativecloud },
-  nuclino: { name: "Nuclino", icon: "" },
+  nuclino: { name: "Nuclino", icon: nuclino },
   storybook: { name: "Storybook", icon: storybook },
 };
 
