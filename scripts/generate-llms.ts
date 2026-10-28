@@ -20,7 +20,6 @@ export function buildPortfolioLlms() {
 
 - [Home](${BASE_URL}/)
 - [Work](${BASE_URL}/work)
-- [Playground](${BASE_URL}/playground)
 - [About](${BASE_URL}/about)
 - [Skills](${BASE_URL}/skills)
 - [AI Design Process](${BASE_URL}/ai-design-process)

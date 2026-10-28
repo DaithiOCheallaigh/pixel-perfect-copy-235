@@ -1,5 +1,6 @@
 import ScrollReveal from "./ScrollReveal";
 import SectionLabel from "./SectionLabel";
+import { ShineBorder } from "./ui/shine-border";
 import {
   Carousel,
   CarouselContent,
@@ -45,7 +46,8 @@ const SocialProof = () => {
           <CarouselContent className="-ml-4">
             {testimonials.map((testimonial) => (
               <CarouselItem key={testimonial.name} className="pl-4 md:basis-1/3">
-                <div className="relative flex h-full flex-col rounded-xl border border-border bg-card p-8">
+                <div className="relative flex h-full flex-col rounded-xl bg-card p-8">
+                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
                   <p className="flex-1 text-sm leading-relaxed text-muted-foreground">
                     "{testimonial.text}"
                   </p>

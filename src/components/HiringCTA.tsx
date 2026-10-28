@@ -19,7 +19,7 @@ const HiringCTA = () => (
       </ScrollReveal>
       <ScrollReveal delay={0.2}>
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
-          <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90"><a href={CV_URL} target="_blank" rel="noopener noreferrer">Download CV ↓</a></Button>
+          <Button asChild size="lg"><a href={CV_URL} target="_blank" rel="noopener noreferrer">Download CV ↓</a></Button>
           <Button asChild size="lg" variant="outline"><a href={`mailto:${PORTFOLIO_EMAIL}`}>Email me →</a></Button>
           <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground transition-colors md:hover:text-primary">LinkedIn ↗</a>
           {CHAT_URL && <a href={CHAT_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground transition-colors md:hover:text-primary">Book a 30-min chat with Dave ↗</a>}

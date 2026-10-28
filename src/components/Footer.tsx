@@ -5,13 +5,12 @@ const Footer = () => (
   <FooterShell wordmark="Dave Kelly">
     <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
       <p className="text-sm text-muted-foreground">
-        © 2026 Dave Kelly · Dublin
+        © 2026 Lacuna Digital — David Kelly
       </p>
       <nav className="flex flex-wrap items-center justify-center gap-6">
         {[
-          { label: "Work", to: "/work" },
-          { label: "Playground", to: "/playground" },
-          { label: "Skills", to: "/skills" },
+          { label: "My Work", to: "/work" },
+          { label: "Skill Set", to: "/skills" },
           { label: "About", to: "/about" },
         ]
           .filter(
