@@ -4,18 +4,7 @@ import { ArrowRight } from "iconsax-react";
 import { useState } from "react";
 import ScrollReveal from "../components/ScrollReveal";
 import CaseImage from "../components/CaseImage";
-import { CaseBlock, CaseHero, CaseSection, CardGrid, MediaGroup, NextProject, Prose, Reflection, StatGrid } from "../components/case-study/CaseLayout";
-import figmaLogo from "@/assets/logos/figma.svg";
-import claudeLogo from "@/assets/logos/claude.png";
-import lovableLogo from "@/assets/logos/lovable.png";
-
-const tools: { name: string; icon?: string }[] = [
-  { name: "Figma", icon: figmaLogo },
-  { name: "Claude", icon: claudeLogo },
-  { name: "Lovable", icon: lovableLogo },
-  { name: "Storybook" },
-];
-
+import { CaseBlock, CaseHero, CaseSection, CardGrid, MediaGroup, NextProject, ToolsList, Prose, Reflection, StatGrid } from "../components/case-study/CaseLayout";
 const coreImages = [
   { src: "/images/work/marsh-core.webp", alt: "CORE component overview" },
   { src: "/images/work/marsh-storybook-buttons.png", alt: "Button variants documented in Storybook" },
@@ -126,23 +115,7 @@ const MarshInternalTooling = () => {
         meta={[
           { label: "Role", value: "Freelance Product Designer" },
           { label: "Timeline", value: project?.timeline ?? "Ongoing" },
-          {
-            label: "Tools",
-            value: (
-              <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                {tools.map((tool) => (
-                  <li key={tool.name} className="flex items-center gap-2">
-                    {tool.icon && (
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card">
-                        <img src={tool.icon} alt="" aria-hidden="true" className="h-4 w-4 object-contain" width={16} height={16} />
-                      </span>
-                    )}
-                    <span className="font-mono-label text-xs text-muted-foreground">{tool.name}</span>
-                  </li>
-                ))}
-              </ul>
-            ),
-          },
+          { label: "Tools", value: <ToolsList tools={project?.tools ?? []} />, wide: (project?.tools?.length ?? 0) > 4 },
         ]}
         media={
           <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-card">

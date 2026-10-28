@@ -36,6 +36,8 @@ export interface Project {
   sharingMethods?: string[];
   mobileImage?: string;
   toolsImage?: string;
+  /** Tool slugs from src/data/tools.ts; "slug:Label" overrides the name. */
+  tools?: string[];
   toolsUsedImage?: string;
   exploration?: string;
   explorationVideo?: string;
@@ -112,6 +114,7 @@ export interface CaseImageEntry {
 export const projects: Project[] = [
   {
     id: "spark",
+    tools: ["claude","figma:Figma (incl. MCP)","confluence","jira"],
     title: "MedEd Workspace",
     subtitle: "A self-guided study companion for nursing and health-sciences students, and an LMS-companion for faculty",
     workDescription: "Contract UI/UX design for a two-sided learning product — student self-study and faculty LMS companion — built on and extended into Elsevier's Leyden design system.",
@@ -126,6 +129,7 @@ export const projects: Project[] = [
   },
   {
     id: "marsh-internal-tooling",
+    tools: ["claude","figma","lovable","storybook"],
     title: "Marsh Internal Tooling",
     subtitle: "Three enterprise internal tools designed and shipped simultaneously",
     workDescription: "Three enterprise tools designed and shipped in parallel — built on a shared component library and an AI-accelerated design process.",
@@ -139,6 +143,7 @@ export const projects: Project[] = [
   },
   {
     id: "marsh-design-system",
+    tools: ["claude","figma","lovable","github","storybook"],
     title: "Marsh Design System Rebrand",
     subtitle: "Rebranding an enterprise component library with an AI-first workflow",
     workDescription: "A full rebrand of the CORE design system — 60+ components updated, documented in Storybook, and shipped to GitHub before the official launch.",
@@ -152,6 +157,7 @@ export const projects: Project[] = [
   },
   {
     id: "ai-reviews",
+    tools: ["figma","miro","notion","zeplin","clickup","mixpanel"],
     title: "AI Assisted Reviews",
     subtitle: "AI-assisted review prompts: 26% of tipping guests left a review, 96% of them 5-star",
     heroSubtitle: "Leveraging the power of AI to generate personalised reviews for tour and activity providers",
@@ -223,6 +229,7 @@ export const projects: Project[] = [
   },
   {
     id: "digital-tipping",
+    tools: ["figma","miro","notion","zeplin","clickup","mixpanel"],
     title: "Digital Tipping",
     subtitle: "Enabling tour guides to receive an average tip of $25 through digital tipping",
     workDescription: "This digital tipping solution enables tour guides to take tips on the go, receiving immediate remittance via their selected payout method.",
@@ -290,6 +297,7 @@ export const projects: Project[] = [
   },
   {
     id: "admin-dashboard",
+    tools: ["figma","miro","notion","zeplin","clickup","mixpanel"],
     title: "Admin Dashboard",
     subtitle: "A comprehensive admin platform processing €8,000,000+ in tips",
     heroSubtitle: "A case study on building the central management interface for TipDirect",
@@ -385,6 +393,7 @@ export const projects: Project[] = [
   },
   {
     id: "tipdirect-app",
+    tools: ["figma","miro","notion","zeplin","clickup","mixpanel"],
     title: "TipDirect App",
     subtitle: "Native mobile app serving 10,000+ daily active users across 2 continents",
     heroSubtitle: "An app for managing and collecting tips",
@@ -474,6 +483,7 @@ export const projects: Project[] = [
   },
   {
     id: "whitelabel",
+    tools: ["figma","miro","notion","zeplin","clickup","mixpanel"],
     title: "Airline Tour & Activity White-label",
     subtitle: "Lead designer on airline white-label product — 85 airlines approached, 17 launched",
     workDescription: "During my time at TripAdmit, I was the lead designer on the airline white label product.",
@@ -533,6 +543,7 @@ export const projects: Project[] = [
   },
   {
     id: "booking-app",
+    tools: ["sketch","adobecreativecloud","nuclino"],
     listed: false,
     title: "Booking App & Site",
     subtitle: "Digital transformation of Therapie Clinic — £13m in online sales in first year",
@@ -571,6 +582,7 @@ export const projects: Project[] = [
   },
   {
     id: "website-tipdirect",
+    tools: ["wordpress","elementor","notion","zeplin","clickup"],
     listed: false,
     title: "TipDirect Marketing Website — Travel-Tech UI/UX Case Study",
     subtitle: "Designing and developing a conversion-focused marketing website for a digital tipping platform",
@@ -605,6 +617,7 @@ export const projects: Project[] = [
   },
   {
     id: "spotify",
+    tools: ["figma","miro","notion"],
     listed: false,
     title: "Spotify Tipping Integration",
     subtitle: "RFP design for integrating digital tipping into Spotify",

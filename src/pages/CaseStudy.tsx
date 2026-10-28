@@ -22,7 +22,7 @@ import {
   Prose,
   Reflection,
   StatGrid,
-  ToolsStrip,
+  ToolsList,
 } from "../components/case-study/CaseLayout";
 
 const videoMeta: Record<string, { poster: string; width: number; height: number }> = {
@@ -460,7 +460,7 @@ const CaseStudy = () => {
   const meta = [
     ...(project.whatIWorkedOn ? [{ label: "Role", value: project.whatIWorkedOn.join(" · ") }] : []),
     { label: "Timeline", value: project.timeline },
-    ...(project.toolsImage ? [{ label: "Tools", value: <ToolsStrip src={project.toolsImage} /> }] : []),
+    ...(project.tools ? [{ label: "Tools", value: <ToolsList tools={project.tools} />, wide: project.tools.length > 4 }] : []),
   ];
 
   return (
