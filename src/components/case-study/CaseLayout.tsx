@@ -6,6 +6,7 @@ import ScrollReveal from "../ScrollReveal";
 import SectionLabel from "../SectionLabel";
 import CaseImage, { imageShape } from "../CaseImage";
 import { imgDims } from "@/data/imageDimensions";
+import { resolveTool } from "@/data/tools";
 import { caseStudyPath, getNextProject } from "@/data/caseStudies";
 
 export type MediaItem = { src: string; alt: string; caption?: string; wide?: boolean };
