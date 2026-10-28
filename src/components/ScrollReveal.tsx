@@ -8,13 +8,13 @@ interface ScrollRevealProps {
   distance?: number;
 }
 
-const ScrollReveal = ({ children, delay = 0, className = "", distance = 16 }: ScrollRevealProps) => (
+const ScrollReveal = ({ children, delay = 0, className = "", distance = 40 }: ScrollRevealProps) => (
   <motion.div
     initial={{ opacity: 0, y: distance }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-40px" }}
+    viewport={{ once: true, margin: "-80px" }}
     transition={{
-      duration: 0.6,
+      duration: 0.8,
       delay,
       ease: [0.16, 1, 0.3, 1],
     }}

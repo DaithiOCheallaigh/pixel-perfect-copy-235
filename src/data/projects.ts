@@ -26,8 +26,6 @@ export interface Project {
   comingSoon?: boolean;
   /** Shown on /work and in next-project links; defaults to true. Unlisted case-study routes stay live. */
   listed?: boolean;
-  role?: string;
-  category?: string;
   client?: string;
   clientLogo?: string;
   researchFindings?: string[];
@@ -114,8 +112,6 @@ export interface CaseImageEntry {
 export const projects: Project[] = [
   {
     id: "spark",
-    role: "Product design · Leyden design system",
-    category: "Healthcare education",
     title: "MedEd Workspace",
     subtitle: "A self-guided study companion for nursing and health-sciences students, and an LMS-companion for faculty",
     workDescription: "Contract UI/UX design for a two-sided learning product — student self-study and faculty LMS companion — built on and extended into Elsevier's Leyden design system.",
@@ -130,8 +126,6 @@ export const projects: Project[] = [
   },
   {
     id: "marsh-internal-tooling",
-    role: "Product design · CORE design system",
-    category: "Enterprise tools",
     title: "Marsh Internal Tooling",
     subtitle: "Three enterprise internal tools designed and shipped simultaneously",
     workDescription: "Three enterprise tools designed and shipped in parallel — built on a shared component library and an AI-accelerated design process.",
@@ -145,8 +139,6 @@ export const projects: Project[] = [
   },
   {
     id: "marsh-design-system",
-    role: "Design system rebrand · Storybook",
-    category: "Enterprise",
     title: "Marsh Design System Rebrand",
     subtitle: "Rebranding an enterprise component library with an AI-first workflow",
     workDescription: "A full rebrand of the CORE design system — 60+ components updated, documented in Storybook, and shipped to GitHub before the official launch.",
@@ -160,8 +152,6 @@ export const projects: Project[] = [
   },
   {
     id: "ai-reviews",
-    role: "Feature design · Research · Analytics",
-    category: "Travel tech",
     title: "AI Assisted Reviews",
     subtitle: "AI-assisted review prompts: 26% of tipping guests left a review, 96% of them 5-star",
     heroSubtitle: "Leveraging the power of AI to generate personalised reviews for tour and activity providers",
@@ -233,8 +223,6 @@ export const projects: Project[] = [
   },
   {
     id: "digital-tipping",
-    role: "Product design · Brand",
-    category: "Fintech",
     title: "Digital Tipping",
     subtitle: "Enabling tour guides to receive an average tip of $25 through digital tipping",
     workDescription: "This digital tipping solution enables tour guides to take tips on the go, receiving immediate remittance via their selected payout method.",
@@ -302,8 +290,6 @@ export const projects: Project[] = [
   },
   {
     id: "admin-dashboard",
-    role: "Platform design · Design system",
-    category: "SaaS",
     title: "Admin Dashboard",
     subtitle: "A comprehensive admin platform processing €8,000,000+ in tips",
     heroSubtitle: "A case study on building the central management interface for TipDirect",
@@ -399,8 +385,6 @@ export const projects: Project[] = [
   },
   {
     id: "tipdirect-app",
-    role: "Native app design",
-    category: "iOS & Android",
     title: "TipDirect App",
     subtitle: "Native mobile app serving 10,000+ daily active users across 2 continents",
     heroSubtitle: "An app for managing and collecting tips",
@@ -490,8 +474,6 @@ export const projects: Project[] = [
   },
   {
     id: "whitelabel",
-    role: "Lead designer · White-label product",
-    category: "Airlines",
     title: "Airline Tour & Activity White-label",
     subtitle: "Lead designer on airline white-label product — 85 airlines approached, 17 launched",
     workDescription: "During my time at TripAdmit, I was the lead designer on the airline white label product.",
@@ -551,8 +533,6 @@ export const projects: Project[] = [
   },
   {
     id: "booking-app",
-    role: "App & eCommerce design",
-    category: "Beauty",
     listed: false,
     title: "Booking App & Site",
     subtitle: "Digital transformation of Therapie Clinic — £13m in online sales in first year",
@@ -591,8 +571,6 @@ export const projects: Project[] = [
   },
   {
     id: "website-tipdirect",
-    role: "Web design & build",
-    category: "Marketing site",
     listed: false,
     title: "TipDirect Marketing Website — Travel-Tech UI/UX Case Study",
     subtitle: "Designing and developing a conversion-focused marketing website for a digital tipping platform",
@@ -627,8 +605,6 @@ export const projects: Project[] = [
   },
   {
     id: "spotify",
-    role: "Concept · RFP",
-    category: "Concept",
     listed: false,
     title: "Spotify Tipping Integration",
     subtitle: "RFP design for integrating digital tipping into Spotify",
@@ -661,8 +637,6 @@ export const projects: Project[] = [
   },
   {
     id: "ticketing",
-    role: "Product research",
-    category: "Coming soon",
     listed: false,
     title: "Ticketing System",
     subtitle: "Ticketing System for the tours and activity sector",

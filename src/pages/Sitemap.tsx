@@ -10,7 +10,6 @@ const linkClass = "text-muted-foreground hover:text-primary transition-colors te
 const corePages = [
   { path: "/", label: "Home" },
   { path: "/work", label: "Work" },
-  { path: "/playground", label: "Playground" },
   { path: "/about", label: "About" },
   { path: "/skills", label: "Skills" },
   { path: "/blog", label: "Blog" },
