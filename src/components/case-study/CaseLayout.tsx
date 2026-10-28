@@ -197,7 +197,7 @@ export const StatGrid = ({ stats }: { stats: { value: string; label: string; eye
 
 /* ---------- Hero ---------- */
 
-export interface HeroMeta { label: string; value: ReactNode }
+export interface HeroMeta { label: string; value: ReactNode; wide?: boolean }
 
 export const CaseHero = ({
   client,
