@@ -13,6 +13,7 @@ import { routeTable, type RouteDef } from "./routing/routeTable";
 const Index = lazy(() => import("./pages/Index"));
 const Work = lazy(() => import("./pages/Work"));
 const About = lazy(() => import("./pages/About"));
+const Playground = lazy(() => import("./pages/Playground"));
 const Skills = lazy(() => import("./pages/Skills"));
 const Blog = lazy(() => import("./pages/Blog"));
 const CaseStudy = lazy(() => import("./pages/CaseStudy"));
@@ -158,6 +159,7 @@ const elements: Record<string, ReactNode> = {
   "case-study": <CaseStudy />,
   "marsh-internal-tooling": <MarshInternalTooling />,
   "marsh-design-system": <MarshDesignSystem />,
+  playground: <Playground />,
   about: <About />,
   skills: <Skills />,
   blog: <Blog />,

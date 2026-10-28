@@ -39,7 +39,7 @@ describe("public sitemap boundaries", () => {
   });
 
   it("omits uniform lastmod dates", () => {
-    expect(entries.length).toBe(63);
+    expect(entries.length).toBe(64);
     for (const entry of entries) {
       expect(entry.getElementsByTagName("lastmod")).toHaveLength(0);
     }
@@ -47,7 +47,7 @@ describe("public sitemap boundaries", () => {
 
   it("lists portfolio URLs before services URLs", () => {
     const firstService = paths.indexOf("/services");
-    expect(firstService).toBe(24);
+    expect(firstService).toBe(25);
     expect(paths.slice(firstService).every(path => path.startsWith("/services"))).toBe(true);
   });
 

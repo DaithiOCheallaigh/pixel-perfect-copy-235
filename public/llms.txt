@@ -6,6 +6,7 @@
 
 - [Home](https://www.lacunadigital.io/)
 - [Work](https://www.lacunadigital.io/work)
+- [Playground](https://www.lacunadigital.io/playground)
 - [About](https://www.lacunadigital.io/about)
 - [Skills](https://www.lacunadigital.io/skills)
 - [AI Design Process](https://www.lacunadigital.io/ai-design-process)
