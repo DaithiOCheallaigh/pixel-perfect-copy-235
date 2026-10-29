@@ -1,3 +1,4 @@
+/// <reference lib="es2022.intl" />
 import { lazy, Suspense, useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
