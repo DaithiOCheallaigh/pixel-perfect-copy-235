@@ -1,5 +1,8 @@
 // Explicit browser API declarations for compiler environments with incomplete Intl libraries.
-declare namespace Intl {
+export {};
+
+declare global {
+namespace Intl {
   interface SegmenterOptions {
     localeMatcher?: "best fit" | "lookup";
     granularity?: "grapheme" | "word" | "sentence";
@@ -24,4 +27,5 @@ declare namespace Intl {
     prototype: Segmenter;
     new (locales?: string | readonly string[], options?: SegmenterOptions): Segmenter;
   };
+}
 }
