@@ -34,8 +34,11 @@ export type VaporTypeProps = {
   recovery?: number;
 };
 
-const ALPHA_LEVELS = [0.3, 0.55, 0.8, 1];
-const CELL_CAP = 7000;
+const MAX_CELLS = 90000;
+const BASE_PARTICLES = 14000;
+const BURST_CAP = 16000;
+const LAND = 0.5;
+const SPRITES = 8;
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
@@ -43,6 +46,14 @@ const hash = (x: number, y: number) => {
   let h = Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263);
   h = Math.imul(h ^ (h >>> 13), 1274126177);
   return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
+};
+
+const smooth = (t: number) => t * t * (3 - 2 * t);
+const vnoise = (x: number, y: number) => {
+  const xi = Math.floor(x), yi = Math.floor(y);
+  const fx = smooth(x - xi), fy = smooth(y - yi);
+  const a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+  return a + (b - a) * fx + (c - a) * fy + (a - b - c + d) * fx * fy;
 };
 
 const VaporType = ({
@@ -103,9 +114,9 @@ const VaporType = ({
     probe.width = probe.height = 1;
     const pctx = probe.getContext("2d", { willReadFrequently: true })!;
 
-    const K = Math.min(4, Math.max(1, Math.round(2 * density)));
     const wind = sweep === "right" ? -1 : 1;
     const baseAng = wind === 1 ? -0.5 : Math.PI + 0.5;
+    const recoverMs = recovery * 1000;
 
     let raf = 0;
     let disposed = false;
@@ -117,21 +128,31 @@ const VaporType = ({
 
     let W = 0, H = 0, M = 0, dpr = 1, fs = 16, cw = 0, ch = 0, stepD = 2;
     let cells = 0;
+    let np = 0;
     let wordIndex = 0;
     let phase: Phase = "condense";
     let phaseStart = 0;
     let blownCount = 0;
+    let burstAlive = false;
+    let builtW = 0, builtH = 0;
+    let sprites: HTMLCanvasElement[] = [];
 
+    // per cell (the erasable grains of the lettering)
     let cellX = new Int32Array(0), cellY = new Int32Array(0);
     let cx = new Float32Array(0), cy = new Float32Array(0), off = new Float32Array(0);
     let inLayer = new Uint8Array(0);
-    let blownAt = new Float32Array(0), kickX = new Float32Array(0), kickY = new Float32Array(0);
-    let px = new Float32Array(0), py = new Float32Array(0), sp = new Float32Array(0);
-    let rn = new Float32Array(0), ph = new Float32Array(0), lf = new Float32Array(0);
-
-    let letterRGB: [number, number, number] = [0, 0, 0];
-    let bucketStyles: string[] = [];
-    let builtW = 0, builtH = 0;
+    let blownAt = new Float32Array(0), blownDur = new Float32Array(0);
+    // per base particle (a subset of cells emit vapour)
+    let pc = new Int32Array(0);
+    let ppx = new Float32Array(0), ppy = new Float32Array(0), psp = new Float32Array(0);
+    let prn = new Float32Array(0), pph = new Float32Array(0), plf = new Float32Array(0), psz = new Float32Array(0);
+    // pointer burst pool
+    const bx = new Float32Array(BURST_CAP), by = new Float32Array(BURST_CAP);
+    const bt0 = new Float32Array(BURST_CAP), blife = new Float32Array(BURST_CAP);
+    const bkx = new Float32Array(BURST_CAP), bky = new Float32Array(BURST_CAP);
+    const bsp = new Float32Array(BURST_CAP), bph = new Float32Array(BURST_CAP);
+    const brn = new Float32Array(BURST_CAP), bsz = new Float32Array(BURST_CAP);
+    let bHead = 0, bCount = 0;
 
     const toRgb = (css: string): [number, number, number] => {
       pctx.clearRect(0, 0, 1, 1);
@@ -173,7 +194,7 @@ const VaporType = ({
       const data = sctx.getImageData(0, 0, cw, ch).data;
       let cnt = 0;
       for (let p = 3; p < data.length; p += 4) if (data[p] > 40) cnt++;
-      stepD = Math.max(2, Math.ceil(Math.sqrt(cnt / CELL_CAP)));
+      stepD = Math.max(dpr >= 2 ? 2 : 1, Math.ceil(Math.sqrt(cnt / MAX_CELLS)));
       const list: number[] = [];
       for (let y = 0; y < ch; y += stepD) {
         const ye = Math.min(ch, y + stepD);
@@ -188,14 +209,12 @@ const VaporType = ({
         }
       }
       cells = list.length / 2;
-      const n = cells * K;
       cellX = new Int32Array(cells); cellY = new Int32Array(cells);
       cx = new Float32Array(cells); cy = new Float32Array(cells); off = new Float32Array(cells);
       inLayer = new Uint8Array(cells);
       blownAt = new Float32Array(cells).fill(-1);
-      kickX = new Float32Array(cells); kickY = new Float32Array(cells);
-      px = new Float32Array(n); py = new Float32Array(n); sp = new Float32Array(n);
-      rn = new Float32Array(n); ph = new Float32Array(n); lf = new Float32Array(n);
+      blownDur = new Float32Array(cells);
+      np = 0;
       if (!cells) return;
 
       let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
@@ -208,8 +227,10 @@ const VaporType = ({
       const rx = Math.max(1, maxX - minX), ry = Math.max(1, maxY - minY);
       const mx = (minX + maxX) / 2, my = (minY + maxY) / 2;
       const maxR = Math.max(1, Math.hypot(rx / 2, ry / 2));
-      const patch = Math.max(2, fs * 0.09 * Math.max(grain, 0.25));
+      const patch = Math.max(3, fs * 0.18 * Math.max(grain, 0.25));
 
+      const prob = Math.min(1, (BASE_PARTICLES * density) / cells);
+      const pcList: number[] = [];
       for (let c = 0; c < cells; c++) {
         const x = list[2 * c], y = list[2 * c + 1];
         cellX[c] = x; cellY[c] = y;
@@ -219,20 +240,34 @@ const VaporType = ({
         if (sweep === "right") base = 1 - (ccx - minX) / rx;
         else if (sweep === "top") base = (ccy - minY) / ry;
         else if (sweep === "center") base = Math.hypot(ccx - mx, ccy - my) / maxR;
-        else if (sweep === "scatter") base = hash(Math.floor(ccx / (patch * 3)), Math.floor(ccy / (patch * 3)) + 97);
+        else if (sweep === "scatter") base = vnoise(ccx / (patch * 2), ccy / (patch * 2) + 97);
         else base = (ccx - minX) / rx;
-        const noise = hash(Math.floor(ccx / patch), Math.floor(ccy / patch));
-        off[c] = clamp01(base + (noise - 0.5) * 0.35 * grain) * stagger * 0.55;
-        for (let k = 0; k < K; k++) {
-          const i = c * K + k;
-          px[i] = k === 0 ? ccx : (x + hash(i, 5) * stepD) / dpr;
-          py[i] = k === 0 ? ccy : (y + hash(i, 9) * stepD) / dpr;
-          rn[i] = hash(i, 13);
-          sp[i] = hash(i, 29);
-          ph[i] = hash(i, 47) * 6.2832;
-          lf[i] = 0.45 + 0.1 * hash(i, 71);
-        }
+        const noise = 0.65 * vnoise(ccx / patch, ccy / patch) + 0.35 * vnoise(ccx / (patch * 0.35) + 31, ccy / (patch * 0.35) + 17);
+        off[c] = clamp01(base + (noise - 0.5) * 0.5 * grain) * stagger * 0.5;
+        if (hash(c, 3) < prob) pcList.push(c);
       }
+
+      np = pcList.length;
+      pc = Int32Array.from(pcList);
+      ppx = new Float32Array(np); ppy = new Float32Array(np); psp = new Float32Array(np);
+      prn = new Float32Array(np); pph = new Float32Array(np); plf = new Float32Array(np); psz = new Float32Array(np);
+      const cellCss = stepD / dpr;
+      for (let i = 0; i < np; i++) {
+        const c = pc[i];
+        ppx[i] = cx[c] + (hash(i, 5) - 0.5) * cellCss * 1.5;
+        ppy[i] = cy[c] + (hash(i, 9) - 0.5) * cellCss * 1.5;
+        prn[i] = hash(i, 13);
+        psp[i] = hash(i, 29);
+        pph[i] = hash(i, 47) * 6.2832;
+        plf[i] = 0.4 + 0.2 * hash(i, 71);
+        const r = hash(i, 83);
+        psz[i] = 0.6 + 2.0 * r * r * r;
+      }
+    };
+
+    const paintCell = (c: number) => {
+      lctx.drawImage(src, cellX[c], cellY[c], stepD, stepD, cellX[c], cellY[c], stepD, stepD);
+      inLayer[c] = 1;
     };
 
     const paintAll = () => {
@@ -254,6 +289,8 @@ const VaporType = ({
         inLayer.fill(0);
         blownAt.fill(-1);
         blownCount = 0;
+        bCount = 0;
+        bHead = 0;
       } else {
         paintAll();
       }
@@ -280,86 +317,99 @@ const VaporType = ({
 
       const dark = document.documentElement.classList.contains("dark");
       const vc = typeof vaporColor === "string" ? vaporColor : dark ? vaporColor.dark : vaporColor.light;
-      letterRGB = toRgb(cs.color);
+      const letterRGB = toRgb(cs.color);
       const vaporRGB = toRgb(resolveVars(vc));
-      bucketStyles = [];
-      for (let c = 0; c < 4; c++) {
-        const m = c / 3;
+      sprites = [];
+      for (let s = 0; s < SPRITES; s++) {
+        const m = s / (SPRITES - 1);
         const r = Math.round(letterRGB[0] + (vaporRGB[0] - letterRGB[0]) * m);
         const g = Math.round(letterRGB[1] + (vaporRGB[1] - letterRGB[1]) * m);
         const b = Math.round(letterRGB[2] + (vaporRGB[2] - letterRGB[2]) * m);
-        for (let a = 0; a < 4; a++) bucketStyles.push(`rgba(${r},${g},${b},${ALPHA_LEVELS[a]})`);
+        const sc = document.createElement("canvas");
+        sc.width = sc.height = 32;
+        const sg = sc.getContext("2d")!;
+        const grad = sg.createRadialGradient(16, 16, 0, 16, 16, 16);
+        grad.addColorStop(0, `rgba(${r},${g},${b},1)`);
+        grad.addColorStop(0.4, `rgba(${r},${g},${b},0.7)`);
+        grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+        sg.fillStyle = grad;
+        sg.fillRect(0, 0, 32, 32);
+        sprites.push(sc);
       }
       loadPhrase();
       return true;
     };
 
-    const render = (now: number, t: number) => {
-      const paths = Array.from({ length: 16 }, () => new Path2D());
-      const used = new Uint8Array(16);
-      const ps = particleSize;
-      const blownDur = recovery * 1000;
+    // One soft vapour particle at flight progress f (0 = at home, 1 = fully drifted away and faded).
+    const drawParticle = (x0: number, y0: number, f: number, spv: number, phv: number, rnv: number, szv: number, kx: number, ky: number) => {
+      const al = Math.pow(1 - f, 1.15) * 0.92;
+      if (al < 0.04) return;
+      const e = 1 - (1 - f) * (1 - f) * (1 - f);
+      const d = spread * fs * e * (0.45 + 0.9 * spv);
+      const n = Math.sin(x0 * 0.013 + phv * 0.35) * Math.cos(y0 * 0.017 - f * 2.2);
+      const ang = baseAng + n * turbulence * 1.1 + (rnv - 0.5) * diffusion * 2.4;
+      const x = x0 + Math.cos(ang) * d + kx * e;
+      const y = y0 + Math.sin(ang) * d - rise * fs * 0.5 * e * (0.4 + spv) + ky * e;
+      const s = particleSize * 2.2 * szv * (0.55 + 0.45 * Math.min(1, f * 3));
+      const ci = Math.min(SPRITES - 1, (Math.min(1, f * 2.4) * SPRITES) | 0);
+      ctx.globalAlpha = al;
+      ctx.drawImage(sprites[ci], x - s / 2, y - s / 2, s, s);
+    };
 
-      for (let c = 0; c < cells; c++) {
-        let blown = false;
-        if (phase === "dissolve") {
-          if (t / dissolve - off[c] > 0 && inLayer[c]) {
+    const render = (now: number, t: number) => {
+      // Update the crisp-letter layer.
+      if (phase === "dissolve") {
+        const base = t / dissolve;
+        for (let c = 0; c < cells; c++) {
+          if (inLayer[c] && base - off[c] > 0) {
             lctx.clearRect(cellX[c], cellY[c], stepD, stepD);
             inLayer[c] = 0;
           }
-        } else if (phase === "condense") {
-          if (!inLayer[c] && (t / condense - off[c]) / lf[c * K] >= 1) {
-            lctx.drawImage(src, cellX[c], cellY[c], stepD, stepD, cellX[c], cellY[c], stepD, stepD);
-            inLayer[c] = 1;
-          }
-        } else if (blownAt[c] >= 0) {
-          if ((now - blownAt[c]) / blownDur >= 1) {
-            lctx.drawImage(src, cellX[c], cellY[c], stepD, stepD, cellX[c], cellY[c], stepD, stepD);
-            inLayer[c] = 1;
+        }
+      } else if (phase === "condense") {
+        const base = t / condense;
+        for (let c = 0; c < cells; c++) {
+          if (!inLayer[c] && base - off[c] >= LAND) paintCell(c);
+        }
+      } else if (blownCount > 0) {
+        for (let c = 0; c < cells; c++) {
+          if (blownAt[c] >= 0 && now - blownAt[c] >= blownDur[c]) {
+            paintCell(c);
             blownAt[c] = -1;
             blownCount--;
-          } else blown = true;
-        }
-
-        for (let k = 0; k < K; k++) {
-          const i = c * K + k;
-          let f = -1;
-          if (phase === "dissolve") {
-            const q = (t / dissolve - off[c]) / lf[i];
-            if (q > 0 && q < 1) f = q;
-          } else if (phase === "condense") {
-            const q = (t / condense - off[c]) / lf[i];
-            if (q > 0 && q < 1) f = 1 - q;
-          } else if (blown) {
-            f = 0.5 * Math.sin(Math.PI * ((now - blownAt[c]) / blownDur));
           }
-          if (f < 0) continue;
-          const al = Math.pow(1 - f, 1.15);
-          if (al < 0.06) continue;
-          const e = 1 - (1 - f) * (1 - f) * (1 - f);
-          const d = spread * fs * e * (0.45 + 0.9 * sp[i]);
-          const n = Math.sin(px[i] * 0.013 + ph[i] * 0.35) * Math.cos(py[i] * 0.017 - f * 2.2);
-          const ang = baseAng + n * turbulence * 1.1 + (rn[i] - 0.5) * diffusion * 2.4;
-          let x = px[i] + Math.cos(ang) * d;
-          let y = py[i] + Math.sin(ang) * d - rise * fs * 0.5 * e * (0.4 + sp[i]);
-          if (blown) { x += kickX[c] * e; y += kickY[c] * e; }
-          const ai = Math.min(3, (al * 4) | 0);
-          const ci = Math.min(3, (Math.min(1, f * 2.4) * 3.99) | 0);
-          const b = ci * 4 + ai;
-          paths[b].rect(x, y, ps, ps);
-          used[b] = 1;
         }
       }
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.globalAlpha = 1;
       ctx.clearRect(0, 0, cw, ch);
       ctx.drawImage(layer, 0, 0);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      for (let b = 0; b < 16; b++) {
-        if (!used[b]) continue;
-        ctx.fillStyle = bucketStyles[b];
-        ctx.fill(paths[b]);
+
+      if (phase === "dissolve") {
+        const base = t / dissolve;
+        for (let i = 0; i < np; i++) {
+          const q = (base - off[pc[i]]) / plf[i];
+          if (q > 0 && q < 1) drawParticle(ppx[i], ppy[i], q, psp[i], pph[i], prn[i], psz[i], 0, 0);
+        }
+      } else if (phase === "condense") {
+        const base = t / condense;
+        for (let i = 0; i < np; i++) {
+          const q = (base - off[pc[i]]) / plf[i];
+          if (q > 0 && q < 1) drawParticle(ppx[i], ppy[i], 1 - q, psp[i], pph[i], prn[i], psz[i], 0, 0);
+        }
       }
+
+      burstAlive = false;
+      const live = Math.min(bCount, BURST_CAP);
+      for (let j = 0; j < live; j++) {
+        const age = now - bt0[j];
+        if (age < 0 || age >= blife[j]) continue;
+        burstAlive = true;
+        drawParticle(bx[j], by[j], age / blife[j], bsp[j], bph[j], brn[j], bsz[j], bkx[j], bky[j]);
+      }
+      ctx.globalAlpha = 1;
     };
 
     // Pointer "breath": blows nearby letters into vapour, faster movement blows harder.
@@ -386,18 +436,38 @@ const VaporType = ({
       const R = breathRadius * fs * Math.min(1.5, Math.max(0.4, 0.4 + speed * 0.03 * breath));
       const R2 = R * R;
       const mag = Math.min(fs * 0.8, speed * 0.35 * breath);
+      const dirX = ptr.vx / speed, dirY = ptr.vy / speed;
+      const cellCss = stepD / dpr;
       let any = false;
       for (let c = 0; c < cells; c++) {
-        if (!inLayer[c] || blownAt[c] >= 0) continue;
+        if (!inLayer[c]) continue;
         const dx = cx[c] - ptr.x, dy = cy[c] - ptr.y;
-        if (dx * dx + dy * dy > R2) continue;
+        const d2 = dx * dx + dy * dy;
+        if (d2 > R2) continue;
         blownAt[c] = now;
-        kickX[c] = (ptr.vx / speed) * mag;
-        kickY[c] = (ptr.vy / speed) * mag;
+        blownDur[c] = recoverMs * (0.75 + 0.25 * Math.random());
         lctx.clearRect(cellX[c], cellY[c], stepD, stepD);
         inLayer[c] = 0;
         blownCount++;
         any = true;
+        if (Math.random() < 0.45) {
+          const j = bHead % BURST_CAP;
+          bHead++;
+          if (bCount < BURST_CAP) bCount++;
+          const dist = Math.sqrt(d2) || 1;
+          const out = fs * (0.15 + 0.35 * Math.random());
+          bx[j] = cx[c] + (Math.random() - 0.5) * cellCss;
+          by[j] = cy[c] + (Math.random() - 0.5) * cellCss;
+          bt0[j] = now;
+          blife[j] = recoverMs * (0.6 + 0.4 * Math.random());
+          bkx[j] = dirX * mag * (0.4 + 0.6 * Math.random()) + (dx / dist) * out;
+          bky[j] = dirY * mag * (0.4 + 0.6 * Math.random()) + (dy / dist) * out;
+          bsp[j] = Math.random();
+          bph[j] = Math.random() * 6.2832;
+          brn[j] = Math.random();
+          const r = Math.random();
+          bsz[j] = 0.6 + 2.0 * r * r * r;
+        }
       }
       return any;
     };
@@ -420,7 +490,7 @@ const VaporType = ({
         t = 0;
       }
       const released = breathe(now);
-      if (phase !== "hold" || blownCount > 0 || released || dirty) {
+      if (phase !== "hold" || blownCount > 0 || burstAlive || released || dirty) {
         render(now, t);
         dirty = false;
       }
@@ -472,7 +542,7 @@ const VaporType = ({
 
   const Component = Tag as ElementType;
   return (
-    <Component ref={rootRef} className={cn("relative", className)} style={style}>
+    <Component ref={rootRef} className={cn("relative", className)} style={{ cursor: "default", ...style }}>
       <span className="grid">
         {words.map((w, i) => (
           <span
