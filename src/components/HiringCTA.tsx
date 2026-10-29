@@ -2,8 +2,8 @@ import ScrollReveal from "./ScrollReveal";
 import { Button } from "@/components/ui/button";
 import { CHAT_URL, CV_URL, LINKEDIN_URL, LOCATION_LINE, PORTFOLIO_EMAIL } from "@/data/profile";
 
-const HiringCTA = () => (
-  <section id="contact" className="scroll-mt-16 border-t border-border px-6 py-24 md:px-12 lg:px-24">
+const HiringCTA = ({ borderless = false }: { borderless?: boolean }) => (
+  <section id="contact" className={`scroll-mt-16 ${borderless ? "" : "border-t border-border "}px-6 py-24 md:px-12 lg:px-24`}>
     <div className="mx-auto max-w-5xl text-center">
       <ScrollReveal>
         <div className="mb-6 inline-flex items-center gap-2">
