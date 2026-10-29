@@ -196,6 +196,22 @@ const Index = () => {
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
 
+      <section className="px-6 py-16 md:px-12 md:py-24 lg:px-24">
+        <div className="mx-auto w-full max-w-[640px]">
+          <iframe
+            src="/embeds/pencil-pad.html"
+            loading="lazy"
+            title="Mechanical pencil dropping dots onto a dotted notepad"
+            frameBorder={0}
+            scrolling="no"
+            tabIndex={-1}
+            aria-hidden="true"
+            className="block w-full border-0 bg-transparent pointer-events-none"
+            style={{ aspectRatio: "577.7 / 628", width: "100%", colorScheme: "normal" }}
+          />
+        </div>
+      </section>
+
       <HiringCTA />
     </main>
   );
