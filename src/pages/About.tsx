@@ -4,7 +4,72 @@ import SectionLabel from "../components/SectionLabel";
 import HiringCTA from "../components/HiringCTA";
 import { ShineBorder } from "../components/ui/shine-border";
 import { SearchNormal1, Calendar, Bezier, TaskSquare, Code1, Chart2 } from "iconsax-react";
-import { type ReactNode } from "react";
+import { type ReactNode, lazy, Suspense, useSyncExternalStore } from "react";
+
+const BlurHighlight = lazy(() => import("@/components/react-bits/blur-highlight"));
+
+const INTRO: { text: string; bits: string[] }[] = [
+  { text: "I'm a senior product designer based in Dublin with over 10 years of experience across SaaS platforms, native apps and design systems.", bits: ["over 10 years", "design systems"] },
+  { text: "Most recently I designed MedEd Workspace for Elsevier, a two-sided study and faculty product built on their Leyden design system, and three internal enterprise tools for Marsh on CORE, a component library I built and documented in Storybook. Before that I spent several years at TripAdmit taking TipDirect from a pivot idea to a tipping platform used by 10,000 guides a day.", bits: ["MedEd Workspace for Elsevier", "10,000 guides a day"] },
+  { text: "I work close to engineering: spec-driven design, Figma MCP and AI-assisted prototyping mean I hand over components rather than pictures of components.", bits: ["components rather than pictures of components"] },
+];
+const MARK_CLASS = "rounded-sm px-1 text-primary-foreground";
+
+const useReducedMotionPref = () =>
+  useSyncExternalStore(
+    (cb) => {
+      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      mq.addEventListener("change", cb);
+      return () => mq.removeEventListener("change", cb);
+    },
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    () => false,
+  );
+
+/** Paragraph text with its highlight phrases as static marks (reduced motion and loading fallback). */
+const StaticIntro = ({ text, bits }: { text: string; bits: string[] }) => {
+  const re = new RegExp(`(${bits.map((b) => b.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")).join("|")})`);
+  return (
+    <>
+      {text.split(re).map((part, i) =>
+        bits.includes(part) ? (
+          <mark key={i} className={`${MARK_CLASS} bg-primary`}>{part}</mark>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+};
+
+const AboutIntro = () => {
+  const reduced = useReducedMotionPref();
+  return (
+    <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
+      {INTRO.map((p, i) => (
+        <p key={i}>
+          {reduced ? (
+            <StaticIntro {...p} />
+          ) : (
+            <Suspense fallback={<StaticIntro {...p} />}>
+              <BlurHighlight
+                highlightedBits={p.bits}
+                highlightColor="hsl(var(--primary))"
+                highlightClassName={MARK_CLASS}
+                inactiveOpacity={0.5}
+                blurAmount={6}
+                blurDelay={i * 0.15}
+                viewportOptions={{ once: true, amount: 0.3 }}
+              >
+                {p.text}
+              </BlurHighlight>
+            </Suspense>
+          )}
+        </p>
+      ))}
+    </div>
+  );
+};
 import avatarImg from "@/assets/avatar.jpeg";
 import { SEO } from "../components/SEO";
 
@@ -108,19 +173,7 @@ const About = () => (
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.1}>
-            <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
-              <p>
-                I'm a senior product designer based in Dublin with over 10 years of experience across SaaS platforms, native apps and design systems.
-              </p>
-              <p>
-                Most recently I designed MedEd Workspace for Elsevier, a two-sided study and faculty product built on their Leyden design system, and three internal enterprise tools for Marsh on CORE, a component library I built and documented in Storybook. Before that I spent several years at TripAdmit taking TipDirect from a pivot idea to a tipping platform used by 10,000 guides a day.
-              </p>
-              <p>
-                I work close to engineering: spec-driven design, Figma MCP and AI-assisted prototyping mean I hand over components rather than pictures of components.
-              </p>
-            </div>
-          </ScrollReveal>
+          <AboutIntro />
         </div>
 
         {/* Interests / Facts / Hobbies */}
