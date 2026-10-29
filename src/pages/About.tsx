@@ -28,7 +28,7 @@ const useReducedMotionPref = () =>
 
 /** Paragraph text with its highlight phrases as static marks (reduced motion and loading fallback). */
 const StaticIntro = ({ text, bits }: { text: string; bits: string[] }) => {
-  const re = new RegExp(`(${bits.map((b) => b.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")).join("|")})`);
+  const re = new RegExp(`(${bits.join("|")})`);
   return (
     <>
       {text.split(re).map((part, i) =>
@@ -51,7 +51,7 @@ const AboutIntro = () => {
           {reduced ? (
             <StaticIntro {...p} />
           ) : (
-            <Suspense fallback={<StaticIntro {...p} />}>
+            <Suspense fallback={p.text}>
               <BlurHighlight
                 highlightedBits={p.bits}
                 highlightColor="hsl(var(--primary))"
