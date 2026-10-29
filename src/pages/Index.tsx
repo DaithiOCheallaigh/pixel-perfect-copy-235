@@ -1,4 +1,4 @@
-import type {} from "@/components/react-bits/intl-segmenter";
+import "@/components/react-bits/intl-segmenter";
 import { lazy, Suspense, useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
