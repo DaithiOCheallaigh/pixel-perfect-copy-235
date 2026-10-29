@@ -40,7 +40,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
           <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="text-muted-foreground font-normal">| Senior Product Designer</span></span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 lg:gap-8 md:flex">
           {links.map((link) => (
             <Link
               key={link.to}
