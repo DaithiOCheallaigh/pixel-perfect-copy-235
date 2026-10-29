@@ -12,6 +12,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
   const links = [
     { label: "My Work", to: "/work" },
     { label: "Skills", to: "/skills" },
+    { label: "AI Process", to: "/ai-design-process" },
     { label: "About", to: "/about" },
     { label: "Blog", to: "/blog" },
   ];
@@ -36,10 +37,10 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               className="rounded-full"
             />
           </div>
-          <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="text-muted-foreground font-normal">| Senior Product Designer</span></span>
+          <span className="ml-3 text-sm font-semibold text-foreground">Dave Kelly <span className="hidden text-muted-foreground font-normal lg:inline">| Senior Product Designer</span></span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 lg:gap-8 md:flex">
           {links.map((link) => (
             <Link
               key={link.to}
@@ -94,13 +95,6 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               {link.label}
             </Link>
           ))}
-          <Link
-            to="/ai-design-process"
-            onClick={() => setMobileOpen(false)}
-            className={`text-lg font-semibold transition-colors ${isActive("/ai-design-process") ? "text-primary" : "text-foreground"}`}
-          >
-            AI Process
-          </Link>
           <a
             href="/docs/DavidKelly_CV_2026.pdf"
             target="_blank"

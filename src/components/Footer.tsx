@@ -11,6 +11,7 @@ const Footer = () => (
         {[
           { label: "My Work", to: "/work" },
           { label: "Skill Set", to: "/skills" },
+          { label: "AI Process", to: "/ai-design-process" },
           { label: "About", to: "/about" },
         ]
           .filter(

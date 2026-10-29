@@ -1,6 +1,6 @@
 # Architecture rules
 
-- Portfolio hero uses the original React Bits Pro VaporType at src/components/react-bits/vapor-type.tsx, kept byte-identical and lazy-loaded with a static h1 fallback, its Intl.Segmenter types supplied by react-bits/intl-segmenter.d.ts referenced from Index.tsx; this keeps Three.js out of the home chunk and preserves reduced-motion static text.
+- Portfolio hero uses the original React Bits Pro VaporType at src/components/react-bits/vapor-type.tsx, kept byte-identical and lazy-loaded with a static h1 fallback; this keeps Three.js out of the home chunk and preserves reduced-motion static text.
 
 - MedEd Workspace's route gate validates the password and signed, expiring access tokens in an edge function; never embed the password or trust a client-only unlock flag; it is a display gate only, so truly sensitive content needs an authorized backend.
 - Keep the supplied MedEd Workspace student prototype unchanged as a public standalone HTML document; mount its iframe only after a desktop visitor clicks to load it, avoiding an automatic large download.

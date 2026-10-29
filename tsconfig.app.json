@@ -4,7 +4,8 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": [
-      "ES2022",
+      "ES2020",
+      "ES2022.Intl",
       "DOM",
       "DOM.Iterable"
     ],
@@ -23,7 +24,7 @@
     },
     "skipLibCheck": true,
     "strict": false,
-    "target": "ES2022",
+    "target": "ES2020",
     "types": [
       "vitest/globals"
     ],
