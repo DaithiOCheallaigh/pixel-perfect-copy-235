@@ -106,10 +106,10 @@ const VaporType = ({
     if (!ctx) return;
 
     const lite = window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches;
-    const MAX_CELLS = lite ? 16000 : 90000;
-    const BASE_PARTICLES = lite ? 3200 : 14000;
+    const MAX_CELLS = lite ? 8000 : 90000;
+    const BASE_PARTICLES = lite ? 1600 : 14000;
     const BURST_CAP = lite ? 3500 : 16000;
-    const DPR_CAP = lite ? 1.5 : 2;
+    const DPR_CAP = lite ? 1.25 : 2;
 
     const layer = document.createElement("canvas");
     const lctx = layer.getContext("2d");
