@@ -1,3 +1,5 @@
+/// <reference path="../components/react-bits/intl-segmenter.d.ts" />
+import { lazy, Suspense, useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
 import { motion } from "framer-motion";
@@ -6,8 +8,22 @@ import ScrollReveal from "../components/ScrollReveal";
 import HiringCTA from "../components/HiringCTA";
 import { caseStudyPath } from "../data/caseStudies";
 import { ShineBorder } from "../components/ui/shine-border";
-import VaporType from "@/components/ui/vapor-type";
 import { SEO } from "../components/SEO";
+
+const VaporType = lazy(() => import("@/components/react-bits/vapor-type"));
+const HERO_TITLE = "Senior product designer for complex products";
+const HERO_CLASS = "mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl";
+
+const useIsDark = () =>
+  useSyncExternalStore(
+    (cb) => {
+      const mo = new MutationObserver(cb);
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+      return () => mo.disconnect();
+    },
+    () => document.documentElement.classList.contains("dark"),
+    () => false,
+  );
 
 const SHINE = ["#A07CFE", "#FE8FB5", "#FFBE7B"];
 
@@ -57,6 +73,7 @@ const featured: FeaturedCard[] = [
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const Index = () => {
+  const isDark = useIsDark();
   return (
     <main>
       <SEO title="Home" description="Dave Kelly is a senior product designer in Dublin with over 10 years designing SaaS platforms, mobile apps and design systems for Marsh, Elsevier and TipDirect." />
@@ -65,13 +82,15 @@ const Index = () => {
         <div className="pointer-events-none absolute inset-0 grid-background opacity-50" />
 
         <div className="relative mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl flex-col items-center justify-center text-center">
-          <VaporType
-            words={["Senior product designer for complex products"]}
-            as="h1"
-            className="mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl"
-            vaporColor={{ light: "hsl(var(--primary))", dark: "#FE8FB5" }}
-            hold={6}
-          />
+          <Suspense fallback={<h1 className={HERO_CLASS}>{HERO_TITLE}</h1>}>
+            <VaporType
+              words={[HERO_TITLE]}
+              as="h1"
+              className={HERO_CLASS}
+              vaporColor={isDark ? "#FE8FB5" : "hsl(310 60% 50%)"}
+              hold={6}
+            />
+          </Suspense>
 
           <motion.p
             className="mx-auto mb-10 max-w-2xl text-lg leading-[1.75] tracking-[-0.01em] text-muted-foreground md:text-xl"
