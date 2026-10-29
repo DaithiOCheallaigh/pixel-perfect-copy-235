@@ -34,11 +34,10 @@ export type VaporTypeProps = {
   recovery?: number;
 };
 
-const MAX_CELLS = 90000;
-const BASE_PARTICLES = 14000;
-const BURST_CAP = 16000;
 const LAND = 0.5;
-const SPRITES = 8;
+const SPRITES = 8; // colour steps
+const ALPHAS = 8; // baked alpha levels
+const SP = 24; // sprite size in the atlas
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
@@ -106,13 +105,26 @@ const VaporType = ({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const lite = window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches;
+    const MAX_CELLS = lite ? 16000 : 90000;
+    const BASE_PARTICLES = lite ? 3200 : 14000;
+    const BURST_CAP = lite ? 3500 : 16000;
+    const DPR_CAP = lite ? 1.5 : 2;
+
     const layer = document.createElement("canvas");
-    const lctx = layer.getContext("2d")!;
+    const lctx = layer.getContext("2d");
+    if (!lctx) return;
     const src = document.createElement("canvas");
-    const sctx = src.getContext("2d", { willReadFrequently: true })!;
+    const sctx = src.getContext("2d", { willReadFrequently: true });
+    if (!sctx) return;
     const probe = document.createElement("canvas");
     probe.width = probe.height = 1;
-    const pctx = probe.getContext("2d", { willReadFrequently: true })!;
+    const pctx = probe.getContext("2d", { willReadFrequently: true });
+    if (!pctx) return;
+
+    const atlas = document.createElement("canvas");
+    atlas.width = SPRITES * SP;
+    atlas.height = ALPHAS * SP;
 
     const wind = sweep === "right" ? -1 : 1;
     const baseAng = wind === 1 ? -0.5 : Math.PI + 0.5;
@@ -126,6 +138,14 @@ const VaporType = ({
     let pausedAt = 0;
     let dirty = true;
 
+    // frame-time governor
+    let lastFrame = 0;
+    let dtEma = 0;
+    let govFrames = 0;
+    let stride = 1;
+    let sizeBoost = 1;
+    let fastSince = 0;
+
     let W = 0, H = 0, M = 0, dpr = 1, fs = 16, cw = 0, ch = 0, stepD = 2;
     let cells = 0;
     let np = 0;
@@ -135,7 +155,6 @@ const VaporType = ({
     let blownCount = 0;
     let burstAlive = false;
     let builtW = 0, builtH = 0;
-    let sprites: HTMLCanvasElement[] = [];
 
     // per cell (the erasable grains of the lettering)
     let cellX = new Int32Array(0), cellY = new Int32Array(0);
@@ -252,7 +271,7 @@ const VaporType = ({
       ppx = new Float32Array(np); ppy = new Float32Array(np); psp = new Float32Array(np);
       prn = new Float32Array(np); pph = new Float32Array(np); plf = new Float32Array(np); psz = new Float32Array(np);
       const cellCss = stepD / dpr;
-      for (let i = 0; i < np; i++) {
+      for (let i = 0; i < np; i += stride) {
         const c = pc[i];
         ppx[i] = cx[c] + (hash(i, 5) - 0.5) * cellCss * 1.5;
         ppy[i] = cy[c] + (hash(i, 9) - 0.5) * cellCss * 1.5;
@@ -309,7 +328,7 @@ const VaporType = ({
       const cs = getComputedStyle(root);
       fs = parseFloat(cs.fontSize) || 16;
       M = Math.ceil(fs * spread * 1.1);
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
       cw = Math.ceil((W + 2 * M) * dpr);
       ch = Math.ceil((H + 2 * M) * dpr);
       for (const c of [canvas, layer, src]) { c.width = cw; c.height = ch; }
@@ -319,22 +338,25 @@ const VaporType = ({
       const vc = typeof vaporColor === "string" ? vaporColor : dark ? vaporColor.dark : vaporColor.light;
       const letterRGB = toRgb(cs.color);
       const vaporRGB = toRgb(resolveVars(vc));
-      sprites = [];
+      // sprite atlas: column = colour step (letter -> vapour), row = baked alpha level
+      const ag = atlas.getContext("2d");
+      if (!ag) return false;
+      ag.clearRect(0, 0, atlas.width, atlas.height);
       for (let s = 0; s < SPRITES; s++) {
         const m = s / (SPRITES - 1);
         const r = Math.round(letterRGB[0] + (vaporRGB[0] - letterRGB[0]) * m);
         const g = Math.round(letterRGB[1] + (vaporRGB[1] - letterRGB[1]) * m);
         const b = Math.round(letterRGB[2] + (vaporRGB[2] - letterRGB[2]) * m);
-        const sc = document.createElement("canvas");
-        sc.width = sc.height = 32;
-        const sg = sc.getContext("2d")!;
-        const grad = sg.createRadialGradient(16, 16, 0, 16, 16, 16);
-        grad.addColorStop(0, `rgba(${r},${g},${b},1)`);
-        grad.addColorStop(0.4, `rgba(${r},${g},${b},0.7)`);
-        grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
-        sg.fillStyle = grad;
-        sg.fillRect(0, 0, 32, 32);
-        sprites.push(sc);
+        for (let a = 0; a < ALPHAS; a++) {
+          const am = (a + 0.5) / ALPHAS;
+          const ox = s * SP + SP / 2, oy = a * SP + SP / 2;
+          const grad = ag.createRadialGradient(ox, oy, 0, ox, oy, SP / 2);
+          grad.addColorStop(0, `rgba(${r},${g},${b},${am})`);
+          grad.addColorStop(0.4, `rgba(${r},${g},${b},${am * 0.7})`);
+          grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+          ag.fillStyle = grad;
+          ag.fillRect(s * SP, a * SP, SP, SP);
+        }
       }
       loadPhrase();
       return true;
@@ -342,7 +364,7 @@ const VaporType = ({
 
     // One soft vapour particle at flight progress f (0 = at home, 1 = fully drifted away and faded).
     const drawParticle = (x0: number, y0: number, f: number, spv: number, phv: number, rnv: number, szv: number, kx: number, ky: number) => {
-      const al = Math.pow(1 - f, 1.15) * 0.92;
+      const al = (1 - f) * (1 - 0.15 * f) * 0.92;
       if (al < 0.04) return;
       const e = 1 - (1 - f) * (1 - f) * (1 - f);
       const d = spread * fs * e * (0.45 + 0.9 * spv);
@@ -350,10 +372,10 @@ const VaporType = ({
       const ang = baseAng + n * turbulence * 1.1 + (rnv - 0.5) * diffusion * 2.4;
       const x = x0 + Math.cos(ang) * d + kx * e;
       const y = y0 + Math.sin(ang) * d - rise * fs * 0.5 * e * (0.4 + spv) + ky * e;
-      const s = particleSize * 2.2 * szv * (0.55 + 0.45 * Math.min(1, f * 3));
+      const s = particleSize * 2.2 * szv * sizeBoost * (0.55 + 0.45 * Math.min(1, f * 3));
       const ci = Math.min(SPRITES - 1, (Math.min(1, f * 2.4) * SPRITES) | 0);
-      ctx.globalAlpha = al;
-      ctx.drawImage(sprites[ci], x - s / 2, y - s / 2, s, s);
+      const ai = Math.min(ALPHAS - 1, (al * ALPHAS) | 0);
+      ctx.drawImage(atlas, ci * SP, ai * SP, SP, SP, x - s / 2, y - s / 2, s, s);
     };
 
     const render = (now: number, t: number) => {
@@ -382,20 +404,19 @@ const VaporType = ({
       }
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.globalAlpha = 1;
       ctx.clearRect(0, 0, cw, ch);
       ctx.drawImage(layer, 0, 0);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       if (phase === "dissolve") {
         const base = t / dissolve;
-        for (let i = 0; i < np; i++) {
+        for (let i = 0; i < np; i += stride) {
           const q = (base - off[pc[i]]) / plf[i];
           if (q > 0 && q < 1) drawParticle(ppx[i], ppy[i], q, psp[i], pph[i], prn[i], psz[i], 0, 0);
         }
       } else if (phase === "condense") {
         const base = t / condense;
-        for (let i = 0; i < np; i++) {
+        for (let i = 0; i < np; i += stride) {
           const q = (base - off[pc[i]]) / plf[i];
           if (q > 0 && q < 1) drawParticle(ppx[i], ppy[i], 1 - q, psp[i], pph[i], prn[i], psz[i], 0, 0);
         }
@@ -403,13 +424,12 @@ const VaporType = ({
 
       burstAlive = false;
       const live = Math.min(bCount, BURST_CAP);
-      for (let j = 0; j < live; j++) {
+      for (let j = 0; j < live; j += stride) {
         const age = now - bt0[j];
         if (age < 0 || age >= blife[j]) continue;
         burstAlive = true;
         drawParticle(bx[j], by[j], age / blife[j], bsp[j], bph[j], brn[j], bsz[j], bkx[j], bky[j]);
       }
-      ctx.globalAlpha = 1;
     };
 
     // Pointer "breath": blows nearby letters into vapour, faster movement blows harder.
@@ -472,11 +492,36 @@ const VaporType = ({
       return any;
     };
 
+    // Self-tuning: if frames run long, draw fewer (slightly larger) particles; step back up when fast again.
+    const govern = (now: number, animating: boolean) => {
+      const dt = now - lastFrame;
+      lastFrame = now;
+      if (!animating || dt > 250 || dt <= 0) { dtEma = 0; govFrames = 0; return; }
+      dtEma = dtEma ? dtEma * 0.88 + dt * 0.12 : dt;
+      if (++govFrames % 10 !== 0) return;
+      if (dtEma > 26 && stride < 4) {
+        stride++;
+        sizeBoost = 1 + (stride - 1) * 0.35;
+        dtEma = 17;
+        fastSince = 0;
+      } else if (dtEma < 18 && stride > 1) {
+        if (!fastSince) fastSince = now;
+        else if (now - fastSince > 1500) {
+          stride--;
+          sizeBoost = 1 + (stride - 1) * 0.35;
+          fastSince = 0;
+        }
+      } else {
+        fastSince = 0;
+      }
+    };
+
     const tick = (now: number) => {
       raf = requestAnimationFrame(tick);
       const active = visible && !document.hidden && ready;
       if (!active) {
         if (!pausedAt) pausedAt = now;
+        lastFrame = 0;
         return;
       }
       if (pausedAt) { phaseStart += now - pausedAt; pausedAt = 0; }
@@ -490,7 +535,9 @@ const VaporType = ({
         t = 0;
       }
       const released = breathe(now);
-      if (phase !== "hold" || blownCount > 0 || burstAlive || released || dirty) {
+      const animating = phase !== "hold" || blownCount > 0 || burstAlive;
+      govern(now, animating);
+      if (animating || released || dirty) {
         render(now, t);
         dirty = false;
       }
@@ -505,13 +552,20 @@ const VaporType = ({
     let resizeTimer = 0;
     const ro = new ResizeObserver(() => {
       const r = root.getBoundingClientRect();
-      if (Math.abs(r.width - builtW) < 1 && Math.abs(r.height - builtH) < 1) return;
+      if (Math.abs(r.width - builtW) < 2 && Math.abs(r.height - builtH) < 2) return;
       window.clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(rebuild, 150);
     });
     ro.observe(root);
 
-    const mo = new MutationObserver(rebuild);
+    // Only rebuild when the theme actually flips, not on every html class change.
+    let wasDark = document.documentElement.classList.contains("dark");
+    const mo = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      if (isDark === wasDark) return;
+      wasDark = isDark;
+      rebuild();
+    });
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
     const io = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
