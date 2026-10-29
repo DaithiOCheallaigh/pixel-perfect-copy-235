@@ -197,7 +197,7 @@ const Index = () => {
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
 
       <section className="px-6 pt-12 pb-0 md:px-12 md:pt-16 lg:px-24">
-        <div className="mx-auto w-full max-w-[220px]">
+        <div className="mx-auto w-full max-w-[275px]">
           <iframe
             src="/embeds/pencil-pad.html"
             loading="lazy"
