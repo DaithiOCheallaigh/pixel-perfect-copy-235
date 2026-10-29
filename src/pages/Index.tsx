@@ -1,5 +1,5 @@
-import { lazy, Suspense, useSyncExternalStore } from "react";
-import { Link } from "react-router-dom";
+import { lazy, Suspense, useEffect, useState, useSyncExternalStore } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
 import { motion } from "framer-motion";
 import { LockKeyhole } from "lucide-react";
@@ -10,6 +10,7 @@ import { ShineBorder } from "../components/ui/shine-border";
 import { SEO } from "../components/SEO";
 
 const VaporType = lazy(() => import("@/components/react-bits/vapor-type"));
+const HoverPreview = lazy(() => import("@/components/react-bits/hover-preview"));
 const HERO_TITLE = "Senior product designer for complex products";
 const HERO_CLASS = "mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl";
 
@@ -71,6 +72,62 @@ const featured: FeaturedCard[] = [
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+const TARGET_CLASS =
+  "font-semibold text-foreground underline decoration-primary/50 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary";
+const HERO_TARGETS = [
+  { text: "MedEd Workspace for Elsevier", ...featured[0] },
+  { text: "three internal tools and the CORE design system for Marsh", ...featured[1] },
+  { text: "TipDirect's tipping platform", ...featured[2] },
+];
+
+/** True once the browser is idle on a fine-pointer, hover-capable device without reduced motion. */
+const useHoverPreviewReady = () => {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const rm = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!mq.matches || rm.matches) return;
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void };
+    const go = () => setReady(true);
+    if (w.requestIdleCallback) {
+      const id = w.requestIdleCallback(go, { timeout: 1500 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const t = window.setTimeout(go, 1500);
+    return () => window.clearTimeout(t);
+  }, []);
+  return ready;
+};
+
+const PlainHeroIntro = () => (
+  <div>
+    Over 10 years designing SaaS platforms, mobile apps and design systems. Most recently{" "}
+    <Link to={HERO_TARGETS[0].to} className={TARGET_CLASS}>{HERO_TARGETS[0].text}</Link>,{" "}
+    <Link to={HERO_TARGETS[1].to} className={TARGET_CLASS}>{HERO_TARGETS[1].text}</Link>, and{" "}
+    <Link to={HERO_TARGETS[2].to} className={TARGET_CLASS}>{HERO_TARGETS[2].text}</Link>.
+  </div>
+);
+
+const HeroIntro = () => {
+  const ready = useHoverPreviewReady();
+  const navigate = useNavigate();
+  if (!ready) return <PlainHeroIntro />;
+  return (
+    <Suspense fallback={<PlainHeroIntro />}>
+      <HoverPreview
+        content="Over 10 years designing SaaS platforms, mobile apps and design systems. Most recently {0}, {1}, and {2}."
+        targets={HERO_TARGETS.map((t) => ({ text: t.text, imageUrl: t.image, linkUrl: t.to, altText: t.alt }))}
+        onTargetClick={(t) => t.linkUrl && navigate(t.linkUrl)}
+        imagePosition="above"
+        imageWidth={260}
+        imageHeight={170}
+        imageBorderRadius="0.5rem"
+        targetClassName={TARGET_CLASS}
+      />
+    </Suspense>
+  );
+};
+
 const Index = () => {
   const isDark = useIsDark();
   return (
@@ -91,14 +148,23 @@ const Index = () => {
             />
           </Suspense>
 
-          <motion.p
+          <motion.div
             className="mx-auto mb-10 max-w-2xl text-lg leading-[1.75] tracking-[-0.01em] text-muted-foreground md:text-xl"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.8, ease }}
           >
-            Over 10 years designing SaaS platforms, mobile apps and design systems. Most recently MedEd Workspace for Elsevier, three internal tools and the CORE design system for Marsh, and TipDirect's tipping platform.
-          </motion.p>
+            <HeroIntro />
+          </motion.div>
+          <nav aria-label="Featured projects" className="sr-only focus-within:not-sr-only focus-within:mb-6">
+            <ul className="flex flex-wrap justify-center gap-4 text-sm">
+              {HERO_TARGETS.map((t) => (
+                <li key={t.to}>
+                  <Link to={t.to} className={TARGET_CLASS}>{t.text}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <motion.div
             className="flex flex-wrap justify-center gap-4"
