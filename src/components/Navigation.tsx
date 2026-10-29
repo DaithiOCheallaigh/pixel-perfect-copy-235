@@ -12,6 +12,7 @@ const Navigation = ({ visible }: { visible: boolean }) => {
   const links = [
     { label: "My Work", to: "/work" },
     { label: "Skills", to: "/skills" },
+    { label: "AI Process", to: "/ai-design-process" },
     { label: "About", to: "/about" },
     { label: "Blog", to: "/blog" },
   ];
@@ -94,13 +95,6 @@ const Navigation = ({ visible }: { visible: boolean }) => {
               {link.label}
             </Link>
           ))}
-          <Link
-            to="/ai-design-process"
-            onClick={() => setMobileOpen(false)}
-            className={`text-lg font-semibold transition-colors ${isActive("/ai-design-process") ? "text-primary" : "text-foreground"}`}
-          >
-            AI Process
-          </Link>
           <a
             href="/docs/DavidKelly_CV_2026.pdf"
             target="_blank"
