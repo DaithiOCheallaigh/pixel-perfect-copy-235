@@ -1,3 +1,4 @@
+/// <reference path="../components/react-bits/intl-segmenter.d.ts" />
 import { lazy, Suspense, useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
