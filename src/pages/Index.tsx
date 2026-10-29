@@ -66,9 +66,11 @@ const Index = () => {
 
         <div className="relative mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl flex-col items-center justify-center text-center">
           <VaporType
-            text="Senior product designer for complex products"
+            words={["Senior product designer for complex products"]}
             as="h1"
             className="mb-8 text-5xl font-black tracking-[-0.04em] leading-[0.9] text-foreground md:text-7xl"
+            vaporColor={{ light: "hsl(var(--primary))", dark: "#FE8FB5" }}
+            hold={6}
           />
 
           <motion.p
