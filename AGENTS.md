@@ -1,5 +1,7 @@
 # Architecture rules
 
+- Portfolio hero word animation lives in VaporType with a reduced-motion static fallback; keep the home page responsible only for text and layout.
+
 - MedEd Workspace's route gate validates the password and signed, expiring access tokens in an edge function; never embed the password or trust a client-only unlock flag; it is a display gate only, so truly sensitive content needs an authorized backend.
 - Keep the supplied MedEd Workspace student prototype unchanged as a public standalone HTML document; mount its iframe only after a desktop visitor clicks to load it, avoiding an automatic large download.
 - User-supplied HTML animations stay byte-identical in public/embeds and mount as transparent iframes, preserving their theme handling.
