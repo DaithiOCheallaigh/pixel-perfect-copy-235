@@ -13,12 +13,13 @@ const tools: { icon: IconName; label: string }[] = [
   { icon: "stethoscope", label: "Work a case" },
 ];
 
-export default function ToolRail() {
+export default function ToolRail({ interactive = true, forceLabel }: { interactive?: boolean; forceLabel?: string } = {}) {
   const [active, setActive] = useState<string | null>(null);
   const timer = useRef<number>();
   const railRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!interactive) return;
     const onDown = (e: PointerEvent) => {
       if (railRef.current && !railRef.current.contains(e.target as Node)) setActive(null);
     };
@@ -27,7 +28,7 @@ export default function ToolRail() {
       document.removeEventListener("pointerdown", onDown);
       window.clearTimeout(timer.current);
     };
-  }, []);
+  }, [interactive]);
 
   const show = (label: string) => {
     setActive(label);
@@ -36,15 +37,15 @@ export default function ToolRail() {
   };
 
   return (
-    <div className="flex w-full justify-center px-16 py-4 md:px-[220px]">
+    <div className={interactive ? "flex w-full justify-center px-16 py-4 md:px-[220px]" : "flex justify-center"}>
       <div>
         <div ref={railRef} className="sc-rail" role="toolbar" aria-label="Study tools" aria-orientation="vertical">
           {tools.map((t) => (
             <div key={t.label} className="sc-rail-item">
-              <button type="button" className="sc-btn sc-rail-btn" aria-label={t.label} onClick={() => show(t.label)} onBlur={() => setActive((a) => (a === t.label ? null : a))}>
+              <button type="button" className="sc-btn sc-rail-btn" aria-label={t.label} {...(interactive ? { onClick: () => show(t.label), onBlur: () => setActive((a) => (a === t.label ? null : a)) } : { tabIndex: -1 })}>
                 <Icon name={t.icon} />
               </button>
-              <span className="sc-tip" data-show={active === t.label} aria-hidden="true">{t.label}</span>
+              <span className="sc-tip" data-show={(forceLabel ?? active) === t.label} aria-hidden="true">{t.label}</span>
             </div>
           ))}
         </div>
