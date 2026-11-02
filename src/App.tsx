@@ -18,6 +18,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const CaseStudy = lazy(() => import("./pages/CaseStudy"));
 const SparkCaseStudy = lazy(() => import("./pages/SparkCaseStudy"));
 const SparkPasswordGate = lazy(() => import("./components/SparkPasswordGate"));
+const SparkComponents = lazy(() => import("./pages/SparkComponents"));
 const ServicePage = lazy(() => import("./pages/ServicePage"));
 const WebDesignServices = lazy(() => import("./pages/WebDesignServices"));
 const AIDesignProcess = lazy(() => import("./pages/AIDesignProcess"));
@@ -155,6 +156,7 @@ const elements: Record<string, ReactNode> = {
   work: <Work />,
   "spark-work": sparkGate,
   "spark-case": sparkGate,
+  "spark-components": <SparkPasswordGate><SparkComponents /></SparkPasswordGate>,
   "case-study": <CaseStudy />,
   "marsh-internal-tooling": <MarshInternalTooling />,
   "marsh-design-system": <MarshDesignSystem />,

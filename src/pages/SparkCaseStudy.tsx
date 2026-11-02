@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
 import { CaseBlock, CaseHero, CaseSection, CardGrid, NextProject, Prose, Reflection, ToolsList } from "../components/case-study/CaseLayout";
@@ -211,6 +212,12 @@ const SparkCaseStudy = () => {
                 Open full screen ↗
               </a>
             </Button>
+          </div>
+        </CaseBlock>
+        <CaseBlock title="Components">
+          <Prose text="Pieces of the prototype pulled out on their own, with what each is for and why it works." />
+          <div className="mt-6">
+            <Button asChild variant="outline"><Link to="/work/spark/components">View components →</Link></Button>
           </div>
         </CaseBlock>
       </CaseSection>
