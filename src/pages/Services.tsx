@@ -1,5 +1,28 @@
 import { SEO } from "@/components/SEO";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, lazy, Suspense, useSyncExternalStore } from "react";
+
+const ElasticLettering = lazy(() => import("@/components/react-bits/elastic-lettering"));
+
+const HERO_H1_CLASS = "mt-6 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl";
+
+const STATIC_HERO_H1 = (
+  <h1 className={HERO_H1_CLASS}>
+    Get found, get booked,{" "}
+    <br />
+    <span className="text-primary">get paid.</span>
+  </h1>
+);
+
+const useIsDark = () =>
+  useSyncExternalStore(
+    (cb) => {
+      const mo = new MutationObserver(cb);
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+      return () => mo.disconnect();
+    },
+    () => document.documentElement.classList.contains("dark"),
+    () => false,
+  );
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
@@ -155,11 +178,22 @@ const Services = () => {
             <span className="font-mono-label text-muted-foreground">
               LACUNA DIGITAL — SERVICES
             </span>
-            <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl">
-              Get found, get booked,{" "}
-              <br />
-              <span className="text-primary">get paid.</span>
-            </h1>
+            <Suspense fallback={STATIC_HERO_H1}>
+              <h1 className={HERO_H1_CLASS}>
+                <ElasticLettering
+                  as="span"
+                  text="Get found, get booked,"
+                  className="block"
+                  {...elasticProps}
+                />{" "}
+                <ElasticLettering
+                  as="span"
+                  text="get paid."
+                  className="block text-primary"
+                  {...elasticProps}
+                />
+              </h1>
+            </Suspense>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
               Designed by a senior product designer, built in days with AI.
             </p>
