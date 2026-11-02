@@ -39,7 +39,7 @@ const RailThumb = () => (
 );
 
 const RecorderThumb = () => (
-  <Fit w={0.9} h={0.94} align="top">
+  <Fit w={0.9} h={0.86}>
     <div style={{ width: 720 }}>
       <Recorder tab="transcript" secs={7} paused={false} shown={3} notes="" />
     </div>
