@@ -4,6 +4,8 @@ export interface SparkComponentEntry {
   id: SparkComponentId;
   number: string;
   title: string;
+  /** One-line card description on the index. */
+  summary: string;
   purpose: string;
   benefits: { title: string; text: string }[];
   hint: string;
@@ -17,6 +19,7 @@ export const sparkComponents: SparkComponentEntry[] = [
     id: "tool-rail",
     number: "01",
     title: "Study tools rail",
+    summary: "A collapsed rail of study tools. Names appear on hover.",
     purpose:
       "A narrow rail of study tools that sits beside the topic the student is reading. Eight ways to work with the same material: test, review, brief, map, explore in 3D, explain back, compare, and work a case. One click each, without leaving the page.",
     benefits: [
@@ -32,6 +35,7 @@ export const sparkComponents: SparkComponentEntry[] = [
     id: "record-flow",
     number: "02",
     title: "Record a lecture",
+    summary: "One mic button, a live recorder and a streaming transcript.",
     purpose:
       "Students can capture a lecture without leaving their study space. One microphone button opens a recorder where they take their own notes while a live transcript builds alongside. Afterwards MEW AI summarises the notes and the transcript and checks the claims against Elsevier sources.",
     benefits: [
@@ -44,3 +48,11 @@ export const sparkComponents: SparkComponentEntry[] = [
     source,
   },
 ];
+
+/** `id` doubles as the URL slug. */
+export const getSparkComponent = (slug: string | undefined) => sparkComponents.find((c) => c.id === slug);
+
+export const nextSparkComponent = (id: SparkComponentId) => {
+  const i = sparkComponents.findIndex((c) => c.id === id);
+  return sparkComponents.length > 1 ? sparkComponents[(i + 1) % sparkComponents.length] : undefined;
+};
