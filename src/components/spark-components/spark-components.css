@@ -50,3 +50,4 @@
   .sc-btn:active { transform:none; }
   .sc-wave span, .sc-line { animation:none; }
 }
+.sc-static *, .sc-static *::before, .sc-static *::after { animation:none !important; transition:none !important; }

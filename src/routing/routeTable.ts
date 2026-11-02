@@ -60,6 +60,7 @@ export const routeTable: RouteDef[] = [
     { id: "work", path: "/work" },
     { id: "spark-work", path: "/work/spark" },
     { id: "spark-components", path: "/work/spark/components" },
+    { id: "spark-component", path: "/work/spark/components/:slug" },
     { id: "spark-case", path: "/case/spark" },
     { id: "case-study", path: "/case/:id" },
     { id: "marsh-internal-tooling", path: "/work/marsh-internal-tooling" },
