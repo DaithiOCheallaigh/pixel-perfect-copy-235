@@ -146,6 +146,16 @@ const StepHeading = ({ n, title, body }: { n: number; title: string; body: strin
 /* ------------------------------------------------------------------ */
 
 const Services = () => {
+  const isDark = useIsDark();
+  const elasticProps = {
+    align: "left" as const,
+    fontSize: "inherit",
+    fontWeight: 700,
+    letterSpacing: "-0.025em",
+    lineHeight: 1.1,
+    hint: true,
+    tensionColor: isDark ? "hsl(310 100% 92%)" : "hsl(310 60% 50%)",
+  };
   const [tierId, setTierId] = useState<string | null>(null);
   const [careId, setCareId] = useState<string | null>(null);
 
