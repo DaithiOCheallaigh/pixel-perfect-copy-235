@@ -36,8 +36,8 @@ export default function ToolRail() {
   };
 
   return (
-    <div className="flex w-full justify-center py-4 pl-[220px] pr-16 max-sm:pl-16" style={{ paddingLeft: undefined }}>
-      <div className="flex w-full justify-center" style={{ paddingLeft: "min(220px, 40vw)" }}>
+    <div className="flex w-full justify-center px-16 py-4 md:px-[220px]">
+      <div>
         <div ref={railRef} className="sc-rail" role="toolbar" aria-label="Study tools" aria-orientation="vertical">
           {tools.map((t) => (
             <div key={t.label} className="sc-rail-item">
