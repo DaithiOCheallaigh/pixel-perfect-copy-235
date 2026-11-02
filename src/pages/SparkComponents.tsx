@@ -12,7 +12,7 @@ export default function SparkComponents() {
         <div className="mx-auto max-w-6xl">
           <h1 className="text-4xl font-black tracking-tighter md:text-6xl">Components</h1>
           <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
-            Small, well-made pieces of the MedEd Workspace prototype, lifted out of the product so you can see how each one behaves and why it's there.
+            Small, well-made pieces of the MedEd Workspace, lifted out of the product so you can see how each one behaves and why it's there.
           </p>
           <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 md:mt-16 md:gap-6 lg:grid-cols-3">
             {sparkComponents.map((c) => (
