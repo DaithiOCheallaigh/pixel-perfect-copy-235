@@ -113,7 +113,9 @@ const stats = [
 
 const SparkCaseStudy = () => {
   const [prototypeReady, setPrototypeReady] = useState(false);
-  const isMobile = useIsMobile();
+  const isMobileHook = useIsMobile();
+  // Read the width synchronously so phones never mount (and download) the prototype on first render.
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768 ? true : isMobileHook;
   const project = projects.find((p) => p.id === "spark");
 
   return (
