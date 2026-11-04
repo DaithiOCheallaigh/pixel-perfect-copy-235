@@ -14,7 +14,7 @@ export const lines = [
 const summary = [
   "MEN1 (menin, chromosome 11) affects the parathyroid, pancreas and pituitary.",
   "MEN2A and MEN2B are RET syndromes with medullary thyroid carcinoma and pheochromocytoma; only MEN2A adds parathyroid disease.",
-  "Treat pheochromocytoma before thyroid surgery, and time prophylactic thyroidectomy by RET mutation after screening relatives.",
+  "Screen first-degree relatives with gene testing and time prophylactic thyroidectomy by RET mutation. One claim on treatment order was flagged below.",
 ];
 
 const claims = ["MEN1 = menin gene, chromosome 11", "MEN2 = RET proto-oncogene", "MEN2B has no hyperparathyroidism"];
@@ -134,7 +134,10 @@ function Result({ secs, notes, onClose, onAgain }: { secs: number; notes: string
           )}
         </div>
         <div style={{ padding: "12px 16px", borderTop: "1px solid var(--sc-border-soft)" }}>
-          <div className="font-mono-label text-xs" style={{ color: "var(--sc-text-2)" }}>Checked against Elsevier sources</div>
+          <div className="flex flex-wrap items-baseline justify-between gap-2 font-mono-label text-xs" style={{ color: "var(--sc-text-2)" }}>
+            <span>Checked against Elsevier sources</span>
+            <span>{claims.length} verified · 1 flagged</span>
+          </div>
           <ul className="sc-claims">
             {claims.map((c) => (
               <li key={c}>
@@ -143,6 +146,13 @@ function Result({ secs, notes, onClose, onAgain }: { secs: number; notes: string
                 <span className="sr-only">verified</span>
               </li>
             ))}
+            <li style={{ flexWrap: "wrap" }}>
+              <span className="sc-check" aria-hidden="true" style={{ background: "var(--sc-stop-bg)", color: "var(--sc-stop-text)", fontWeight: 700, fontSize: 12 }}>!</span>
+              <span style={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>Remove the thyroid first, then treat any pheochromocytoma</span>
+              <span aria-hidden="true" className="font-mono-label text-xs" style={{ padding: "2px 8px", borderRadius: 9999, background: "var(--sc-stop-bg)", color: "var(--sc-stop-text)" }}>Flagged</span>
+              <span className="sr-only">flagged, does not match Elsevier sources</span>
+              <span style={{ flexBasis: "100%", paddingLeft: 30, fontSize: 13, color: "var(--sc-text-2)" }}>Elsevier: treat the pheochromocytoma first, then the thyroid.</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -168,6 +178,9 @@ export default function RecordFlow() {
   const listRef = useRef<HTMLOListElement>(null);
   const micRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const keepRef = useRef<HTMLButtonElement>(null);
+  const [confirming, setConfirming] = useState(false);
 
   const recording = step === 2 || step === 3;
   const open = step !== 1;
@@ -201,6 +214,7 @@ export default function RecordFlow() {
     setPaused(false);
     setNotes("");
     setFollow(true);
+    setConfirming(false);
   };
 
   const goTo = (n: Step) => {
@@ -223,10 +237,34 @@ export default function RecordFlow() {
     if (el) setFollow(el.scrollHeight - el.scrollTop - el.clientHeight < 8);
   };
 
+  // Closing from Record/Transcript asks first when there is something to lose; Result is final.
+  const requestClose = (fromBackdrop = false) => {
+    if (step === 4) return fromBackdrop === true ? undefined : reset();
+    if (notes.trim() || secs > 0) return setConfirming(true);
+    reset();
+  };
+
+  useEffect(() => {
+    if (confirming) keepRef.current?.focus();
+  }, [confirming]);
+
+  // Pull focus back into the dialog if it escapes to the stage (e.g. backdrop click).
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!open || !stage) return;
+    const onIn = (e: FocusEvent) => {
+      const d = dialogRef.current;
+      if (d && !d.contains(e.target as Node)) d.querySelector<HTMLElement>(confirming ? "[role='alertdialog'] button" : "button, textarea")?.focus();
+    };
+    stage.addEventListener("focusin", onIn);
+    return () => stage.removeEventListener("focusin", onIn);
+  }, [open, confirming]);
+
   const trap = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       e.stopPropagation();
-      return reset();
+      if (confirming) return setConfirming(false);
+      return requestClose();
     }
     if (e.key !== "Tab" || !dialogRef.current) return;
     const f = [...dialogRef.current.querySelectorAll<HTMLElement>("button, textarea, [tabindex]:not([tabindex='-1'])")].filter((el) => !el.hasAttribute("disabled"));
@@ -257,7 +295,7 @@ export default function RecordFlow() {
         })}
       </div>
 
-      <div className="sc-space relative w-full md:min-h-[560px]" style={{ minHeight: 520 }}>
+      <div ref={stageRef} className="sc-space relative w-full md:min-h-[560px]" style={{ minHeight: 520 }}>
         <div className="sc-sources" {...(open ? { inert: "", "aria-hidden": true } : {})}>
           <h4 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 4px" }}>Add a source</h4>
           <p style={{ margin: "0 0 16px", fontSize: 14, color: "var(--sc-text-2)" }}>Bring material into this study space.</p>
@@ -277,8 +315,15 @@ export default function RecordFlow() {
         </div>
 
         {open && (
-          <div className="sc-backdrop" onMouseDown={(e) => e.target === e.currentTarget && reset()}>
+          <div className="sc-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) { e.preventDefault(); requestClose(true); } }}>
             <div ref={dialogRef} className="sc-dialog" role="dialog" aria-modal="true" aria-labelledby="sc-rec-title" onKeyDown={trap}>
+              {confirming && (
+                <div role="alertdialog" aria-labelledby="sc-discard-title" className="mb-4 flex flex-wrap items-center gap-3" style={{ padding: "12px 16px", borderRadius: 12, border: "1px solid var(--sc-border)", background: "var(--sc-surface)" }}>
+                  <span id="sc-discard-title" style={{ flex: "1 1 160px", fontWeight: 600 }}>Discard this recording?</span>
+                  <button ref={keepRef} type="button" className="sc-pill" style={{ padding: "6px 14px" }} onClick={() => setConfirming(false)}>Keep recording</button>
+                  <button type="button" className="sc-pill sc-stop" style={{ padding: "6px 14px" }} onClick={reset}>Discard</button>
+                </div>
+              )}
               {step === 4 ? (
                 <Result secs={secs} notes={notes} onClose={reset} onAgain={reset} />
               ) : (
@@ -295,7 +340,7 @@ export default function RecordFlow() {
                   }}
                   onPause={() => setPaused((p) => !p)}
                   onStop={() => goTo(4)}
-                  onClose={reset}
+                  onClose={requestClose}
                   onNotes={setNotes}
                   onListScroll={onListScroll}
                   showJump={!follow}
