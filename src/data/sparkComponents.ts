@@ -42,7 +42,7 @@ export const sparkComponents: SparkComponentEntry[] = [
       { title: "A low-commitment way in", text: "A single icon button that sits with the other source actions. Starting is one click, with no setup screen." },
       { title: "Notes and transcript, side by side", text: "Students keep typing their own notes while the transcript runs. A tab switch shows either one. Nothing is lost by choosing." },
       { title: "Never unsure it's recording", text: "A live waveform, a running timer and clear Pause and Stop controls keep the state visible at all times. If you scroll back in the transcript it stops jumping, and a pill takes you to the latest line." },
-      { title: "Ends with something useful", text: "Stop lands on the added lecture: its length, a three-point summary that keeps your notes, and the key claims checked against Elsevier sources." },
+      { title: "Ends with something useful", text: "Stop lands on the added lecture: its length, a three-point summary that keeps your notes, and the key claims checked against Elsevier sources, with a wrong claim flagged alongside the correction." },
       { title: "Consent in context", text: "The reminder that everyone being transcribed has agreed sits in the recorder itself, at the moment it matters." },
     ],
     hint: "Click the microphone, type a note, try the tabs and Pause, then Stop to see the result. Escape closes the recorder; the steps above jump to any stage.",
