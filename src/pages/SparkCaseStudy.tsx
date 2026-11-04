@@ -112,7 +112,7 @@ const stats = [
 ];
 
 const SparkCaseStudy = () => {
-  const [prototypeLoaded, setPrototypeLoaded] = useState(false);
+  const [prototypeReady, setPrototypeReady] = useState(false);
   const isMobile = useIsMobile();
   const project = projects.find((p) => p.id === "spark");
 
@@ -184,22 +184,22 @@ const SparkCaseStudy = () => {
           </div>
         </CaseBlock>
         <CaseBlock title="Try the prototype">
-          <Prose text="The working Alpha prototype, live in the page. Click through the student dashboard, open a topic in the Study Guide, start a quiz and ask the AI Coach. It runs in your browser with sample data, so nothing is saved." />
+          <Prose text="The working Alpha prototype, live in the page and ready to use: the student dashboard, a topic in the Study Guide, a quiz and the AI Coach. It runs in your browser with sample data, so nothing is saved." />
           {!isMobile && (
-            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-background">
-              {prototypeLoaded ? (
-                <iframe
-                  src="/embeds/spark-student.html#screen=home"
-                  title="MedEd Workspace student prototype (interactive)"
-                  loading="lazy"
-                  className="block aspect-[16/10] w-full border-0"
-                />
-              ) : (
-                <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-4">
-                  <Button onClick={() => setPrototypeLoaded(true)}>Load interactive prototype</Button>
-                  <span className="font-mono-label text-xs text-muted-foreground">~2 MB · opens the student dashboard</span>
-                </div>
-              )}
+            <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-card">
+              <div
+                aria-hidden="true"
+                className={`absolute inset-0 flex items-center justify-center bg-card motion-safe:transition-opacity motion-safe:duration-500 ${prototypeReady ? "pointer-events-none opacity-0" : "opacity-100"}`}
+              >
+                <span className="font-mono-label text-xs text-muted-foreground">Loading prototype…</span>
+              </div>
+              <iframe
+                src="/embeds/spark-student.html#screen=home"
+                title="MedEd Workspace student prototype (interactive)"
+                loading="eager"
+                onLoad={() => setPrototypeReady(true)}
+                className={`relative block h-full w-full border-0 ${prototypeReady ? "" : "opacity-0"}`}
+              />
             </div>
           )}
           <div className="mt-4 flex justify-end">
