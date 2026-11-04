@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent as RPointerEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import "./spark-components.css";
 
@@ -54,7 +54,7 @@ function Rail({ interactive, forceLabel, tip, selected, focusIdx, onSelect, onFo
                     onClick: () => onSelect?.(t.label),
                     onFocus: () => onFocusIdx?.(i),
                     onKeyDown: (e: KeyboardEvent) => onKey(e, i),
-                    onPointerDown: (e: React.PointerEvent) => e.pointerType === "touch" && onTouchTip?.(t.label),
+                    onPointerDown: (e: RPointerEvent) => e.pointerType === "touch" && onTouchTip?.(t.label),
                   }
                 : { tabIndex: -1 })}
             >

@@ -205,13 +205,16 @@ export default function RecordFlow() {
 
   const goTo = (n: Step) => {
     if (n === 1) return reset();
-    if (n === 2 && (step === 1 || step === 4)) {
+    const fresh = step === 1 || step === 4;
+    if (n === 2 && fresh) {
       setSecs(0);
       setPaused(false);
     }
-    if (n === 3 || n === 4) setSecs((s) => (step === 1 || step === 4 || s < 15 ? (n === 4 && step === 4 ? s : 15) : s));
-    if (n === 3) setFollow(true);
-    if (n === 4) setPaused(false);
+    if (n === 3) {
+      setSecs((s) => (fresh || s < 15 ? 15 : s));
+      setFollow(true);
+    }
+    if (n === 4 && step === 1) setSecs(15);
     setStep(n);
   };
 
@@ -255,7 +258,7 @@ export default function RecordFlow() {
       </div>
 
       <div className="sc-space relative w-full md:min-h-[560px]" style={{ minHeight: 520 }}>
-        <div className="sc-sources" inert={open ? true : undefined} aria-hidden={open || undefined}>
+        <div className="sc-sources" {...(open ? { inert: "", "aria-hidden": true } : {})}>
           <h4 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 4px" }}>Add a source</h4>
           <p style={{ margin: "0 0 16px", fontSize: 14, color: "var(--sc-text-2)" }}>Bring material into this study space.</p>
           <div className="flex flex-wrap gap-2">
