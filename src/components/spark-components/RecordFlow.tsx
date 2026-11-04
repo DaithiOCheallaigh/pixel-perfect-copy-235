@@ -223,10 +223,34 @@ export default function RecordFlow() {
     if (el) setFollow(el.scrollHeight - el.scrollTop - el.clientHeight < 8);
   };
 
+  // Closing from Record/Transcript asks first when there is something to lose; Result is final.
+  const requestClose = (fromBackdrop = false) => {
+    if (step === 4) return fromBackdrop === true ? undefined : reset();
+    if (notes.trim() || secs > 0) return setConfirming(true);
+    reset();
+  };
+
+  useEffect(() => {
+    if (confirming) keepRef.current?.focus();
+  }, [confirming]);
+
+  // Pull focus back into the dialog if it escapes to the stage (e.g. backdrop click).
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!open || !stage) return;
+    const onIn = (e: FocusEvent) => {
+      const d = dialogRef.current;
+      if (d && !d.contains(e.target as Node)) d.querySelector<HTMLElement>(confirming ? "[role='alertdialog'] button" : "button, textarea")?.focus();
+    };
+    stage.addEventListener("focusin", onIn);
+    return () => stage.removeEventListener("focusin", onIn);
+  }, [open, confirming]);
+
   const trap = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       e.stopPropagation();
-      return reset();
+      if (confirming) return setConfirming(false);
+      return requestClose();
     }
     if (e.key !== "Tab" || !dialogRef.current) return;
     const f = [...dialogRef.current.querySelectorAll<HTMLElement>("button, textarea, [tabindex]:not([tabindex='-1'])")].filter((el) => !el.hasAttribute("disabled"));
@@ -277,8 +301,15 @@ export default function RecordFlow() {
         </div>
 
         {open && (
-          <div className="sc-backdrop" onMouseDown={(e) => e.target === e.currentTarget && reset()}>
+          <div className="sc-backdrop" onMouseDown={(e) => e.target === e.currentTarget && requestClose()}>
             <div ref={dialogRef} className="sc-dialog" role="dialog" aria-modal="true" aria-labelledby="sc-rec-title" onKeyDown={trap}>
+              {confirming && (
+                <div role="alertdialog" aria-labelledby="sc-discard-title" className="mb-4 flex flex-wrap items-center gap-3" style={{ padding: "12px 16px", borderRadius: 12, border: "1px solid var(--sc-border)", background: "var(--sc-surface)" }}>
+                  <span id="sc-discard-title" style={{ flex: "1 1 160px", fontWeight: 600 }}>Discard this recording?</span>
+                  <button ref={keepRef} type="button" className="sc-pill" style={{ padding: "6px 14px" }} onClick={() => setConfirming(false)}>Keep recording</button>
+                  <button type="button" className="sc-pill sc-stop" style={{ padding: "6px 14px" }} onClick={reset}>Discard</button>
+                </div>
+              )}
               {step === 4 ? (
                 <Result secs={secs} notes={notes} onClose={reset} onAgain={reset} />
               ) : (
@@ -295,7 +326,7 @@ export default function RecordFlow() {
                   }}
                   onPause={() => setPaused((p) => !p)}
                   onStop={() => goTo(4)}
-                  onClose={reset}
+                  onClose={requestClose}
                   onNotes={setNotes}
                   onListScroll={onListScroll}
                   showJump={!follow}
