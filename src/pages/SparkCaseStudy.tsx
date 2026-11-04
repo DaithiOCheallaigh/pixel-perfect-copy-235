@@ -198,7 +198,7 @@ const SparkCaseStudy = () => {
                 title="MedEd Workspace student prototype (interactive)"
                 loading="eager"
                 onLoad={() => setPrototypeReady(true)}
-                className={`relative block h-full w-full border-0 ${prototypeReady ? "" : "opacity-0"}`}
+                className={`relative block h-full w-full border-0 motion-safe:transition-opacity motion-safe:duration-500 ${prototypeReady ? "opacity-100" : "opacity-0"}`}
               />
             </div>
           )}
