@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
 import { useReducedMotion } from "framer-motion";
 import ToolRail, { tools } from "./ToolRail";
-import { Recorder, lines } from "./RecordFlow";
+import { Recorder, AUTO_TITLE, type Note } from "./RecordFlow";
 import type { SparkComponentId } from "../../data/sparkComponents";
 import "./spark-components.css";
 
@@ -52,13 +52,20 @@ const RailThumb = ({ live }: { live: boolean }) => {
   );
 };
 
+const thumbNotes: Note[] = [
+  { t: 4, text: "MEN1 = 3 Ps" },
+  { t: 9, text: "RET → MTC + pheo" },
+];
+
 const RecorderThumb = ({ live }: { live: boolean }) => {
   const n = useTick(live, 600);
   const t = live ? n % 16 : 0;
+  const secs = live ? 2 + t : 12;
+  const notes = live ? thumbNotes.filter((x) => secs >= x.t) : thumbNotes;
   return (
     <Fit w={0.9} h={0.86}>
       <div className="sc-dialog" style={{ width: 720 }}>
-        <Recorder tab="transcript" secs={live ? 7 + t : 7} paused={!live} shown={live ? Math.min(lines.length, 1 + Math.floor(t / 2)) : 3} notes="" />
+        <Recorder title={AUTO_TITLE} secs={secs} paused={!live} notes={notes} draft="" />
       </div>
     </Fit>
   );
