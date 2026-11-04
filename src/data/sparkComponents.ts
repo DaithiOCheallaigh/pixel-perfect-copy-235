@@ -26,9 +26,9 @@ export const sparkComponents: SparkComponentEntry[] = [
       { title: "Out of the way", text: "At 56px wide it leaves the reading column its full space. The content stays the focus; the tools wait at the edge." },
       { title: "Names on demand", text: "Icons stay compact. The name appears on hover or keyboard focus as a dark pill, so students learn the vocabulary without a permanent column of labels." },
       { title: "Ordered like a study loop", text: "Check what you know, understand it, then apply it. The order of the icons follows that sequence." },
-      { title: "Accessible by default", text: "Every icon is a real button with an accessible name, the label shows on focus as well as hover, and motion is removed for people who prefer reduced motion." },
+      { title: "Accessible by default", text: "A proper toolbar: one tab stop, arrow keys between tools, a pressed state on the open tool, labels on focus as well as hover, and no motion for people who prefer reduced motion." },
     ],
-    hint: "Hover, tap or tab through the icons.",
+    hint: "Hover or arrow through the icons, press one to open it.",
     source,
   },
   {
@@ -41,10 +41,11 @@ export const sparkComponents: SparkComponentEntry[] = [
     benefits: [
       { title: "A low-commitment way in", text: "A single icon button that sits with the other source actions. Starting is one click, with no setup screen." },
       { title: "Notes and transcript, side by side", text: "Students keep typing their own notes while the transcript runs. A tab switch shows either one. Nothing is lost by choosing." },
-      { title: "Never unsure it's recording", text: "A live waveform, a running timer and clear Pause and Stop controls keep the state visible at all times." },
+      { title: "Never unsure it's recording", text: "A live waveform, a running timer and clear Pause and Stop controls keep the state visible at all times. If you scroll back in the transcript it stops jumping, and a pill takes you to the latest line." },
+      { title: "Ends with something useful", text: "Stop lands on the added lecture: its length, a three-point summary that keeps your notes, and the key claims checked against Elsevier sources." },
       { title: "Consent in context", text: "The reminder that everyone being transcribed has agreed sits in the recorder itself, at the moment it matters." },
     ],
-    hint: "Click the microphone, then try the tabs, Pause and Stop. Use the steps above to jump to any stage.",
+    hint: "Click the microphone, type a note, try the tabs and Pause, then Stop to see the result. Escape closes the recorder; the steps above jump to any stage.",
     source,
   },
 ];

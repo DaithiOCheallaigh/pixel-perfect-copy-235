@@ -3,7 +3,7 @@
 - Portfolio hero uses the original React Bits Pro VaporType at src/components/react-bits/vapor-type.tsx, kept byte-identical and lazy-loaded with a static h1 fallback; this keeps Three.js out of the home chunk and preserves reduced-motion static text.
 
 - MedEd Workspace's route gate validates the password and signed, expiring access tokens in an edge function; never embed the password or trust a client-only unlock flag; it is a display gate only, so truly sensitive content needs an authorized backend.
-- Keep the supplied MedEd Workspace student prototype unchanged as a public standalone HTML document; mount its iframe only after a desktop visitor clicks to load it, avoiding an automatic large download.
+- Keep the supplied MedEd Workspace student prototype unchanged as a public standalone HTML document; mount its iframe eagerly on desktop only (width read synchronously), so it is ready on arrival while phones never download it.
 - User-supplied HTML animations stay byte-identical in public/embeds and mount as transparent iframes, preserving their theme handling.
 - Lead-form edge functions validate, HTML-escape and send through supabase/functions/_shared/email-utils.ts, and send-service-selection prices services from its own server-side map; client-sent titles and prices are never trusted.
 - New/migrated frontend pricing uses src/data/pricing.ts and its formatters to avoid duplicated prices and inconsistent VAT.

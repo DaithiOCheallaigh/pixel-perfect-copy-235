@@ -57,14 +57,21 @@ const icons = {
   },
 } satisfies Record<string, IconDef>;
 
-export type IconName = keyof typeof icons | "close";
+const strokeIcons = {
+  close: ["M6 6l12 12", "M18 6L6 18"],
+  upload: ["M12 16V4", "M7 9l5-5 5 5", "M4 16v4h16v-4"],
+  link: ["M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1", "M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"],
+  paste: ["M9 4h6v3H9z", "M9 5H6v15h12V5h-3", "M9 11h6", "M9 15h4"],
+  check: ["M5 12l5 5L19 7"],
+};
+
+export type IconName = keyof typeof icons | keyof typeof strokeIcons;
 
 export function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
-  if (name === "close") {
+  if (name in strokeIcons) {
     return (
-      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" focusable="false" stroke="currentColor" strokeWidth={2} strokeLinecap="round" fill="none">
-        <line x1="6" y1="6" x2="18" y2="18" />
-        <line x1="18" y1="6" x2="6" y2="18" />
+      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" focusable="false" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" fill="none">
+        {strokeIcons[name as keyof typeof strokeIcons].map((d) => <path key={d} d={d} />)}
       </svg>
     );
   }
