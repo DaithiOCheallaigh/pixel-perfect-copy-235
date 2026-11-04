@@ -63,6 +63,8 @@ const strokeIcons = {
   link: ["M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1", "M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"],
   paste: ["M9 4h6v3H9z", "M9 5H6v15h12V5h-3", "M9 11h6", "M9 15h4"],
   check: ["M5 12l5 5L19 7"],
+  chevronLeft: ["M15 5l-7 7 7 7"],
+  chevronRight: ["M9 5l7 7-7 7"],
 };
 
 export type IconName = keyof typeof icons | keyof typeof strokeIcons;
