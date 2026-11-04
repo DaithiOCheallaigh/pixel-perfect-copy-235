@@ -1,6 +1,7 @@
-import { useLayoutEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
-import ToolRail from "./ToolRail";
-import { Recorder } from "./RecordFlow";
+import { useEffect, useLayoutEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
+import { useReducedMotion } from "framer-motion";
+import ToolRail, { tools } from "./ToolRail";
+import { Recorder, lines } from "./RecordFlow";
 import type { SparkComponentId } from "../../data/sparkComponents";
 import "./spark-components.css";
 
@@ -30,33 +31,52 @@ function Fit({ children, w = 0.9, h = 0.9, align = "center" }: { children: React
   );
 }
 
-const RailThumb = () => (
-  <Fit w={0.9} h={0.7}>
-    <div style={{ paddingLeft: 90 }}>
-      <ToolRail interactive={false} forceLabel="See it" />
-    </div>
-  </Fit>
-);
+function useTick(live: boolean, ms: number) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!live) return setN(0);
+    const id = window.setInterval(() => setN((v) => v + 1), ms);
+    return () => window.clearInterval(id);
+  }, [live, ms]);
+  return n;
+}
 
-const RecorderThumb = () => (
-  <Fit w={0.9} h={0.86}>
-    <div style={{ width: 720 }}>
-      <Recorder tab="transcript" secs={7} paused={false} shown={3} notes="" />
-    </div>
-  </Fit>
-);
+const RailThumb = ({ live }: { live: boolean }) => {
+  const n = useTick(live, 700);
+  return (
+    <Fit w={0.9} h={0.7}>
+      <div style={{ paddingLeft: 120 }}>
+        <ToolRail interactive={false} forceLabel={live ? tools[n % tools.length].label : "See it"} />
+      </div>
+    </Fit>
+  );
+};
 
-export const thumbs: Record<SparkComponentId, ComponentType> = {
+const RecorderThumb = ({ live }: { live: boolean }) => {
+  const n = useTick(live, 600);
+  const t = live ? n % 16 : 0;
+  return (
+    <Fit w={0.9} h={0.86}>
+      <div className="sc-dialog" style={{ width: 720 }}>
+        <Recorder tab="transcript" secs={live ? 7 + t : 7} paused={!live} shown={live ? Math.min(lines.length, 1 + Math.floor(t / 2)) : 3} notes="" />
+      </div>
+    </Fit>
+  );
+};
+
+export const thumbs: Record<SparkComponentId, ComponentType<{ live: boolean }>> = {
   "tool-rail": RailThumb,
   "record-flow": RecorderThumb,
 };
 
-/** Static, non-interactive light-theme preview area for a card. */
-export function Thumb({ id }: { id: SparkComponentId }) {
+/** Light-theme preview for a card; static unless `live` (hover/focus, never under reduced motion). */
+export function Thumb({ id, live = false }: { id: SparkComponentId; live?: boolean }) {
+  const reduce = useReducedMotion();
+  const on = live && !reduce;
   const T = thumbs[id];
   return (
-    <div data-stage-theme="light" className="sc-static pointer-events-none absolute inset-0" style={{ background: "var(--sc-stage)", color: "var(--sc-text)", fontSize: 15 }} aria-hidden="true" {...{ inert: "" }}>
-      <T />
+    <div data-stage-theme="light" className={`${on ? "" : "sc-static "}pointer-events-none absolute inset-0`} style={{ background: "var(--sc-stage)", color: "var(--sc-text)", fontSize: 15 }} aria-hidden="true" {...{ inert: "" }}>
+      <T live={on} />
     </div>
   );
 }
