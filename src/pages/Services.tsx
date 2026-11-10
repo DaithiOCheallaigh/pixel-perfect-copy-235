@@ -90,7 +90,7 @@ const howItWorks = [
 /* ------------------------------------------------------------------ */
 
 const cardClass = (selected: boolean, featured?: boolean) =>
-  `group relative flex h-full w-full items-start whitespace-normal flex-col rounded-xl border p-6 text-left transition-all ${
+  `group relative flex h-full w-full items-start whitespace-normal flex-col rounded-xl border p-6 text-left transition-all text-foreground hover:text-foreground dark:hover:text-foreground ${
     selected
       ? "border-primary bg-primary/10 shadow-lg shadow-primary/20 hover:bg-primary/10 dark:hover:bg-primary/10"
       : featured
@@ -138,7 +138,7 @@ const SelectableCard = ({
     >
       {footer ? (
         <div className={`${cardClass(selected, featured)} !p-0`}>
-          <Button variant="ghost" type="button" onClick={onToggle} aria-pressed={selected} data-label={label} className="relative flex h-auto w-full flex-1 flex-col items-start whitespace-normal rounded-none rounded-t-xl border-0 p-6 text-left hover:bg-transparent dark:hover:bg-transparent">
+          <Button variant="ghost" type="button" onClick={onToggle} aria-pressed={selected} data-label={label} className="relative flex h-auto w-full flex-1 flex-col items-start whitespace-normal rounded-none rounded-t-xl border-0 p-6 text-left text-foreground hover:bg-transparent hover:text-foreground dark:hover:bg-transparent dark:hover:text-foreground">
             <SelectIndicator selected={selected} />
             {children}
           </Button>
