@@ -338,7 +338,6 @@ const Services = () => {
           </ScrollReveal>
 
           <div className="mt-12">
-            <StepHeading title="Pick your website" body="Building new? Pick a tier. Already have a site? Choose Refresh. Every option has a fixed scope, a launch date in writing and your year-1 domain included." />
             <div className="grid gap-4 md:grid-cols-3">
               {tiers.map((baseTier, i) => {
                 const isBusiness = baseTier.id === "business";
