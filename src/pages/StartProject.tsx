@@ -303,7 +303,6 @@ const StartProject = () => {
     );
   }
 
-  const isLastStep = step === TOTAL_STEPS - 1;
   const canSubmit = step >= 1;
 
   return (

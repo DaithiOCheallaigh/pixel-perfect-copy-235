@@ -29,20 +29,29 @@ describe("pricing catalogue", () => {
     expect(entry.aiAudit.price * entry.aiAudit.creditShare).toBe(625);
     expect(entry.aiAudit.maxStaff).toBe(15);
   });
-  it.each([["launch", 750, 70], ["business", 2500, undefined], ["business-plus", 5000, undefined]])("keeps tier %s at the specified setup and monthly amounts", (id, price, monthly) => {
+  it.each([["launch", 750, 70], ["business", 2500, undefined]])("keeps tier %s at the specified setup and monthly amounts", (id, price, monthly) => {
     const tier = tiers.find((t) => t.id === id);
     expect(tier?.price).toBe(price);
     expect(tier?.monthly).toBe(monthly);
   });
   it("has exactly three tiers, with webLadder as an alias", () => {
-    expect(tiers.map((t) => t.id)).toEqual(["launch", "business", "business-plus"]);
+    expect(tiers.map((t) => t.id)).toEqual(["launch", "refresh", "business"]);
     expect(webLadder).toBe(tiers);
+  });
+  it("prices the refresh tier from 1500 with a 140 monthly instalment", () => {
+    const r = tiers.find((t) => t.id === "refresh");
+    expect(r?.priceFrom).toBe(1500);
+    expect(r?.monthly).toBe(140);
+  });
+  it("offers the 5000 full build as the Business Site upgrade", () => {
+    expect(businessFull.price).toBe(5000);
+    expect(tiers[2].upgrade).toBe(businessFull);
   });
   it("quotes bespoke builds from 7500", () => expect(bespokeFrom).toBe(7500));
   it("has no per-segment package ladders", () => {
     for (const segment of Object.values(segments)) expect("packages" in segment).toBe(false);
   });
-  it.each([["kitchens", "business"], ["clinics", "business"], ["salons", "launch"], ["tours", "business-plus"]] as const)("recommends the specified tier for %s", (key, tier) => {
+  it.each([["kitchens", "business"], ["clinics", "business"], ["salons", "launch"], ["tours", "business"]] as const)("recommends the specified tier for %s", (key, tier) => {
     expect(segments[key].recommendedTier).toBe(tier);
     expect(segments[key].recommendedAddOns).toHaveLength(3);
     for (const id of segments[key].recommendedAddOns) expect(addOnCatalogue.some((a) => a.id === id)).toBe(true);
