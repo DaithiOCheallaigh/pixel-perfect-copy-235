@@ -17,7 +17,7 @@ export type AddOnId = "extra-page" | "gbp" | "booking" | "stripe" | "email" | "b
 export const refresh: Pkg = { id: "refresh", name: "Website Refresh", priceFrom: 1500, monthly: 140, live: "2–3 weeks from access to your current site", scope: ["Your existing content and photos, redesigned page by page (up to 5 pages)", "Mobile and speed fixes", "Every old address redirected so you keep your Google rankings", "Forms, analytics and Google profile checked and reconnected", "Moved to new hosting if you want (see step 2)", "1 revision round"] };
 /** The only website pricing: one three-tier ladder shared by every services page. */
 export const tiers: Pkg[] = [
-  { id: "launch", name: "Launch", price: 750, monthly: 70, selfServe: true, live: "7 working days", scope: ["1-page site", "Year-1 domain and 12 months' hosting included", "Contact or booking button", "Google profile claim", "1 revision round"] },
+  { id: "launch", name: "Launch", price: 750, monthly: 70, selfServe: true, live: "7 working days", scope: ["1-page site", "Contact or booking button", "Google profile claim", "1 revision round"] },
   refresh,
   { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"] },
 ];
@@ -55,7 +55,7 @@ export const segments = {
     recommendedTier: "business" as TierId, tierNote: "Most tour operators choose a Business Site of 8 pages or more: a blog for itineraries and your own booking engine embedded.", recommendedAddOns: ["gbp", "stripe", "ai-assistant"] as AddOnId[] },
 };
 export const carePlans = [
-  { id: "care", name: "Care", monthly: 65, includes: ["Hosting, SSL, backups, uptime monitoring", "Security updates and .ie renewal", "30 minutes of edits a month", "Reply within 1 business day"] },
+  { id: "care", name: "Care", monthly: 65, includes: ["Hosting, SSL, backups, uptime monitoring", "Security updates and .ie renewal", "Email on your domain set up and managed (2 inboxes; licences billed to you)", "30 minutes of edits a month", "Reply within 1 business day"] },
   { id: "growth", name: "Growth", monthly: 200, popular: true, includes: ["Everything in Care", "60 minutes of edits a month", "Review-request flow (asks every customer)", "Monthly report", "One module for your industry"] },
   { id: "growth-ai", name: "Growth + AI", monthly: 350, includes: ["Everything in Growth", "AI website assistant (up to 200 conversations, says it is an AI)", "Missed-call text-back", "Quarterly 30-minute call"] },
 ];
@@ -117,21 +117,9 @@ export const aftercare = {
     includes: [
       "Hosting, SSL, backups and uptime monitoring",
       "Security updates and domain renewal",
-      "Email accounts managed within your monthly edit time",
+      "Email on your domain set up and managed (licences billed to you)",
       "A set amount of edit time every month",
     ],
   },
-};
-/** Services picker step 3: optional email on the client's domain. */
-export const emailSetup = {
-  id: "email-setup",
-  name: "Email setup",
-  setup: addOns.email.setup,
-  includes: [
-    `${addOns.email.inboxesIncluded} inboxes set up on your domain`,
-    "Tested on your phone and laptop",
-    "Licences billed to you by the provider",
-    `Extra inboxes ${eur(addOns.email.extraInbox)} each; moving an existing mailbox ${eur(addOns.email.migrationPerMailbox)} each`,
-  ],
 };
 export const refreshNotes = () => `${eur(addOns.extraPage)} per page beyond 5; new copy ${eur(addOns.copyPerPage)} a page. Sites over 10 pages or on an unsupported platform are quoted individually.`;

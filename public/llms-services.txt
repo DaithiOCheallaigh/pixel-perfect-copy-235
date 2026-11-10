@@ -51,15 +51,11 @@ Industry pages (Kitchens & Joinery, Clinics & Practices, Salons & Barbers, Tours
 ### After launch
 
 - I'll look after it myself: Free handover. At launch the site, hosting and domain go into accounts in your name; You pay the hosting and domain providers directly; 30-minute handover call and a short written guide; Edits when you need them, quoted per job based on the work.
-- Lacuna looks after it: Care plans from €65/mo. Hosting, SSL, backups and uptime monitoring; Security updates and domain renewal; Email accounts managed within your monthly edit time; A set amount of edit time every month.
-
-### Email setup
-
-- Email setup: €150 + VAT one-off. 2 inboxes set up on your domain; Tested on your phone and laptop; Licences billed to you by the provider; Extra inboxes €40 each; moving an existing mailbox €75 each.
+- Lacuna looks after it: Care plans from €65/mo. Hosting, SSL, backups and uptime monitoring; Security updates and domain renewal; Email on your domain set up and managed (licences billed to you); A set amount of edit time every month.
 
 ### Care plans
 
-- Care: €65/month. Hosting, SSL, backups, uptime monitoring; Security updates and .ie renewal; 30 minutes of edits a month; Reply within 1 business day.
+- Care: €65/month. Hosting, SSL, backups, uptime monitoring; Security updates and .ie renewal; Email on your domain set up and managed (2 inboxes; licences billed to you); 30 minutes of edits a month; Reply within 1 business day.
 - Growth: €200/month. Everything in Care; 60 minutes of edits a month; Review-request flow (asks every customer); Monthly report; One module for your industry.
 - Growth + AI: €350/month. Everything in Growth; AI website assistant (up to 200 conversations, says it is an AI); Missed-call text-back; Quarterly 30-minute call.
 3-month minimum for salons and restaurants, 6 months for others. Pay a year upfront, get 1 month free. Your domain, your content, your code. Export any time; no exit fee after the minimum term.

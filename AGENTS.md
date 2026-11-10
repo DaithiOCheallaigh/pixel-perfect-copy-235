@@ -8,7 +8,7 @@
 - Lead-form edge functions validate, HTML-escape and send through supabase/functions/_shared/email-utils.ts, and send-service-selection prices services from its own server-side map; client-sent titles and prices are never trusted.
 - New/migrated frontend pricing uses src/data/pricing.ts and its formatters to avoid duplicated prices and inconsistent VAT.
 - `tiers` in src/data/pricing.ts (Launch, Website Refresh from-price, Business Site) plus `businessOption` page options (5–10 pages, ids `business`/`business-N`, shown via a Pages dropdown in a SelectableCard footer), `addOnCatalogue` and care plans are the only website pricing; industry pages reuse them (proof/FAQs in src/data/segmentPages.ts, retired URLs redirected), keeping scopes, VAT and care terms consistent.
-- The services picker reveals Steps 2–3 only after a website is chosen and scrolls to Step 2 once.
+- The services picker reveals the aftercare step only after a website is chosen and scrolls to it once, only from a tier card click.
 - send-consultation requires only the About You fields; description and budget are optional.
 - Pricing, segment copy and FAQs never name third-party platform brands; they say "your own booking system" or "your ordering provider", so the offer stays vendor-neutral.
 - Free tools are unlisted and noindex (absent from navigation, sitemap and llms files) but their routes and BioPage stay live, so existing client links keep working.
@@ -17,7 +17,7 @@
 - Service catalogue price lines use shared pricing exports and render through ServicePage, avoiding duplicated amounts on detail pages.
 - Pages using usePageDescription synchronise the static description fallback with their managed SEO description and restore it on unmount; this avoids conflicting descriptions without changing the site's static head globally.
 - Intake options and plain-English working terms are shared data modules using the pricing catalogue; this makes numeric rules testable without duplicating page values.
-- The services picker has three steps (tier; aftercare: self-managed handover or a care plan; optional email setup). Selection estimates accept only tier and care IDs plus the follow-on IDs `self-managed` and `email-setup` from src/data/pricing.ts, never stored totals or retired add-on IDs.
+- The services picker has two steps (website with Business page options; aftercare: self-managed handover or a care plan). Selection estimates accept only tier/business-N/care IDs plus `self-managed`. Email setup is part of every care plan, not a picker step. No build includes a domain or hosting; hosting comes with care plans.
 - Generate portfolio public/llms.txt from projects/profile and public/llms-services.txt pricing from the shared catalogue using scripts/generate-llms.ts; this separates recruiter discovery from commercial pricing without creating a services directory.
 - Keep personal identity and hiring-contact constants in the profile module, re-exporting shared experience from pricing; this prevents portfolio code depending on the commercial catalogue.
 - SEO derives section branding, default sharing image and fallback service schema from the current pathname; PortfolioSEO is a compatibility re-export and layouts do not set page metadata, avoiding competing head tags.

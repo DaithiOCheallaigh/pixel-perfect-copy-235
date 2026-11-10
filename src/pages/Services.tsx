@@ -46,7 +46,7 @@ import {
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { Button } from "@/components/ui/button";
-import { addOns, aftercare, businessOption, emailSetup, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, refreshNotes, segments, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
+import { aftercare, businessOption, bespokeLine, monthlyLabel, carePlans, careTerms, eur, priceLabel, refreshNotes, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";

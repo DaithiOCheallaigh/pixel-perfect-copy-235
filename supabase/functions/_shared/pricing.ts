@@ -36,13 +36,13 @@ export const segments = {
     { id: "listing-tuneup", name: "Delivery listing tune-up (per platform)", price: 250, addOn: true, live: "5 working days after the platform approves you", scope: ["Menu copy, categories and photo selection on Uber Eats, Deliveroo or Just Eat"] } ] as Pkg[] },
 };
 export const webLadder: Pkg[] = [
-  { id: "launch", name: "Launch", price: 750, monthly: 70, selfServe: true, live: "7 working days", scope: ["1-page site", "Year-1 domain and 12 months' hosting included", "Contact or booking button", "Google profile claim", "1 revision round"] },
+  { id: "launch", name: "Launch", price: 750, monthly: 70, selfServe: true, live: "7 working days", scope: ["1-page site", "Contact or booking button", "Google profile claim", "1 revision round"] },
   { id: "refresh", name: "Website Refresh", priceFrom: 1500, monthly: 140, live: "2–3 weeks from access to your current site", scope: ["Your existing content and photos, redesigned page by page (up to 5 pages)", "Mobile and speed fixes", "Every old address redirected so you keep your Google rankings", "Forms, analytics and Google profile checked and reconnected", "Moved to new hosting if you want (see step 2)", "1 revision round"] },
   { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"] },
   { id: "bespoke", name: "Bespoke", priceFrom: 7500, live: "8–12 weeks", scope: ["Custom functionality or e-commerce", "Single point of contact: me"] },
 ];
 export const carePlans = [
-  { id: "care", name: "Care", monthly: 65, includes: ["Hosting, SSL, backups, uptime monitoring", "Security updates and .ie renewal", "30 minutes of edits a month", "Reply within 1 business day"] },
+  { id: "care", name: "Care", monthly: 65, includes: ["Hosting, SSL, backups, uptime monitoring", "Security updates and .ie renewal", "Email on your domain set up and managed (2 inboxes; licences billed to you)", "30 minutes of edits a month", "Reply within 1 business day"] },
   { id: "growth", name: "Growth", monthly: 200, popular: true, includes: ["Everything in Care", "60 minutes of edits a month", "Review-request flow (asks every customer)", "Monthly report", "One module for your industry"] },
   { id: "growth-ai", name: "Growth + AI", monthly: 350, includes: ["Everything in Growth", "AI website assistant (up to 200 conversations, says it is an AI)", "Missed-call text-back", "Quarterly 30-minute call"] },
 ];
