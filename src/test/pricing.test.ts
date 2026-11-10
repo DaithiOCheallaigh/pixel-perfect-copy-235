@@ -101,3 +101,9 @@ describe("pricing catalogue", () => {
     expect(availability.productStudioFrom).toBe("November 2026");
   });
 });
+import { priceLabel as refreshPriceLabel, refresh } from "@/data/pricing";
+describe("website refresh package", () => {
+  it("is from €1,500 with €140/mo instalments", () => { expect(refresh.id).toBe("refresh"); expect(refresh.priceFrom).toBe(1500); expect(refresh.monthly).toBe(140); });
+  it("keeps the ladder at three tiers", () => { expect(tiers).toHaveLength(3); });
+  it("labels the from-price", () => { expect(refreshPriceLabel(refresh)).toBe("from €1,500 + VAT"); });
+});
