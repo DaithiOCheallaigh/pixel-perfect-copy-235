@@ -260,7 +260,7 @@ const Services = () => {
               </a>
               <Link
                 to="/services/web-design"
-                className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
+                className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/60 hover:text-foreground hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.25)]"
               >
                 Live examples
               </Link>
