@@ -381,7 +381,7 @@ export const services: Service[] = [
   // ── Marketing ──
   {
     id: "digital-marketing-strategy",
-    priceLine: `Extra work ${eur(addOns.hourly)}/hour`,
+    priceLine: "Extra work quoted per job",
     title: "Digital Marketing Strategy",
     category: "Marketing",
     intro: "A strong digital marketing strategy is the foundation of online success. I develop comprehensive, data-driven marketing plans that align your digital presence with your business objectives, ensuring every campaign, channel, and touchpoint works together to drive measurable results.\n\nMy approach combines market research, competitive analysis, and audience insights to create strategies that not only attract attention but convert visitors into loyal customers.",
@@ -487,7 +487,7 @@ export const services: Service[] = [
   // ── SEO ──
   {
     id: "keyword-research",
-    priceLine: `Extra work ${eur(addOns.hourly)}/hour`,
+    priceLine: "Extra work quoted per job",
     title: "Keyword Research & SEO Analysis in Dublin",
     category: "SEO",
     intro: "Keyword research is the process of identifying the exact words and phrases your potential customers type into Google when searching for what you offer. It's the foundation of every successful SEO and content strategy — without it, you're creating content in the dark.\n\nEffective keyword research goes beyond search volume. It analyses user intent, competition difficulty, and commercial value to identify the opportunities where your investment will deliver the greatest return.\n\nAt Lacuna Digital, I deliver keyword research that goes beyond spreadsheets of search volumes. My analysis maps keywords to user intent — informational, commercial, transactional — so your content strategy targets users at every stage of the buying journey.\n\nEach research engagement includes competitor keyword analysis, content gap identification, keyword clustering by topic, and a prioritised action plan. You receive a clear roadmap showing which keywords to target first, what content to create, and what realistic ranking timelines to expect.\n\nWith deep experience in SEO for Irish SMEs, I understand the nuances of targeting both local and national search terms in the Irish market. My recommendations are practical, prioritised, and tied directly to your business objectives.",
@@ -563,7 +563,7 @@ export const services: Service[] = [
   },
   {
     id: "link-building",
-    priceLine: `Extra work ${eur(addOns.hourly)}/hour`,
+    priceLine: "Extra work quoted per job",
     title: "Link Building & Authority Services in Dublin",
     category: "SEO",
     intro: "Backlinks remain one of Google's strongest ranking signals. Every quality link pointing to your website is a vote of confidence from another site, telling search engines that your content is valuable, trustworthy, and worth ranking. Without a healthy backlink profile, competing for valuable keywords becomes exponentially harder.\n\nStrategic link building isn't about quantity — it's about earning links from relevant, authoritative sources in your industry. A single link from a respected Irish publication or industry blog is worth more than dozens of low-quality directory listings.\n\nAt Lacuna Digital, I take a strategic, ethical approach to link building that focuses on earning links through genuine value. My process includes backlink profile auditing, competitor link analysis, content-driven outreach, and digital PR strategies that build relationships with relevant publications and industry voices.\n\nEvery link building campaign is tailored to your industry and objectives. I identify realistic link opportunities, create content that naturally attracts backlinks, and conduct targeted outreach that prioritises relevance and authority over volume.\n\nWorking with Irish SMEs, I understand the local link landscape — the Irish publications, directories, and industry associations that carry real authority. My white-hat approach builds sustainable authority that compounds over time.",
