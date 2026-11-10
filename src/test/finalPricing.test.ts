@@ -41,7 +41,11 @@ describe("Final pricing rules", () => {
   it("reschedules after 15 working days waiting for content", () => expect(CONTENT_PAUSE_WORKING_DAYS).toBe(15));
   it("sets a five-working-day consolidated revision window", () => expect(REVISION_WINDOW_WORKING_DAYS).toBe(5));
 });
+describe("business full build selection", () => {
+  it("totals the full build with Growth", () => { expect(selectionTotals([{ id: "business-full" }, { id: "growth" }])).toEqual({ oneOff: 5000, monthly: 200 }); });
+});
 describe("website refresh selection", () => {
+  it("titles the refresh without a website suffix", () => { expect(selectionItems([{ id: "refresh" }])[0].title).toBe("Website Refresh"); });
   it("totals refresh + growth + email", () => { expect(selectionTotals([{ id: "refresh" }, { id: "growth" }, { id: "email-setup" }])).toEqual({ oneOff: 1650, monthly: 200 }); });
   it("summarises as a from-price", () => {
     const s = selectionSummary([{ id: "refresh" }, { id: "care" }]);

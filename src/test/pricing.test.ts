@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addOnCatalogue, addOnPriceLabel, addOns, availability, bespokeFrom, carePlans, entry, incVat, segments, studio, terms, tiers, VAT_RATE, VAT_REGISTERED, webLadder } from "@/data/pricing";
+import { addOnCatalogue, addOnPriceLabel, addOns, availability, bespokeFrom, carePlans, entry, incVat, businessFull, segments, studio, terms, tiers, VAT_RATE, VAT_REGISTERED, webLadder } from "@/data/pricing";
 
 describe("pricing catalogue", () => {
   it("requires upfront payment below 1000 and split payment through 3000", () => {
@@ -113,6 +113,6 @@ describe("pricing catalogue", () => {
 import { priceLabel as refreshPriceLabel, refresh } from "@/data/pricing";
 describe("website refresh package", () => {
   it("is from €1,500 with €140/mo instalments", () => { expect(refresh.id).toBe("refresh"); expect(refresh.priceFrom).toBe(1500); expect(refresh.monthly).toBe(140); });
-  it("keeps the ladder at three tiers", () => { expect(tiers).toHaveLength(3); });
+  it("is the second tier in the ladder", () => { expect(tiers[1]).toBe(refresh); });
   it("labels the from-price", () => { expect(refreshPriceLabel(refresh)).toBe("from €1,500 + VAT"); });
 });
