@@ -36,6 +36,7 @@ const extras = [
   ["Extra work", "Quoted per job, based on the work"],
 ];
 const WebDesignServices = () => {
+  const [pages, setPages] = useState(5);
   const description = `Professional business websites from ${eur(webLadder[0]?.price ?? 0)} and website refreshes from ${eur(refresh.priceFrom ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery from Dublin, for clinics, trades, salons and more.`;
   usePageDescription(description);
   return (

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link, Navigate, useLocation } from "react-router-dom";
 import { resolveLegacyTarget } from "@/routing/resolveLegacyTarget";
 import { motion } from "framer-motion";
@@ -14,6 +15,7 @@ import { clinicCompliance, getSegmentKey, grantNote, legacySegmentRedirects, seg
 
 const IndustryLanding = () => {
   const { slug } = useParams<{ slug: string }>();
+  const [businessPages, setBusinessPages] = useState(5);
   const { search, hash } = useLocation();
   const redirect = slug ? legacySegmentRedirects[slug] : undefined;
   if (redirect) return <Navigate to={resolveLegacyTarget(redirect, {}, search, hash)} replace />;
