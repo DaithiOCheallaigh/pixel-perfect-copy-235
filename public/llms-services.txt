@@ -27,7 +27,7 @@ Free intro call and fixed written quote within 48 hours. Digital Health Check �
 - Launch: €750 + VAT; or €70/mo + VAT × 12. Live in 7 working days.
 - Website Refresh: from €1,500 + VAT; or €140/mo + VAT × 12. Live in 2–3 weeks from access to your current site.
 - Business Site: €2,500 + VAT. Live in 3–4 weeks.
-- Business Site, full build: €5,000 + VAT. Live in 5–6 weeks. Up to 10 pages, blog, booking or CRM integration, local SEO setup, 3 revision rounds.
+- Business Site pages: 5 pages €2,500, then €500 per extra page up to 10 (€5,000); blog from 6 pages, booking or CRM integration from 8, local SEO setup and 3 revision rounds at 10.
 €150 per page beyond 5; new copy €100 a page. Sites over 10 pages or on an unsupported platform are quoted individually.
 Need more? Bespoke builds from €7,500 + VAT, quoted in writing.
 Industry pages (Kitchens & Joinery, Clinics & Practices, Salons & Barbers, Tours & Experiences) reuse these tiers.
@@ -46,11 +46,11 @@ Industry pages (Kitchens & Joinery, Clinics & Practices, Salons & Barbers, Tours
 - AI receptionist: €950 setup + €250/mo + VAT.
 - CRM starter: €1,200 setup + VAT.
 - Social media: €350 setup + €200/mo + VAT.
-- Extra email inbox €40; migration €75 per mailbox; licences billed directly. Extra work €100/hour in 30-minute blocks.
+- Extra email inbox €40; migration €75 per mailbox; licences billed directly. Extra work quoted per job.
 
 ### After launch
 
-- I'll look after it myself: Free handover. At launch the site, hosting and domain go into accounts in your name; You pay the hosting and domain providers directly; 30-minute handover call and a short written guide; Edits when you need them at €100/hour.
+- I'll look after it myself: Free handover. At launch the site, hosting and domain go into accounts in your name; You pay the hosting and domain providers directly; 30-minute handover call and a short written guide; Edits when you need them, quoted per job based on the work.
 - Lacuna looks after it: Care plans from €65/mo. Hosting, SSL, backups and uptime monitoring; Security updates and domain renewal; Email accounts managed within your monthly edit time; A set amount of edit time every month.
 
 ### Email setup
