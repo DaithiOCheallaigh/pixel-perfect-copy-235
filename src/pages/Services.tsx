@@ -7,9 +7,9 @@ const HERO_H1_CLASS = "mt-6 max-w-4xl text-4xl font-bold leading-[1.1] tracking-
 
 const STATIC_HERO_H1 = (
   <h1 className={HERO_H1_CLASS}>
-    Get found, get booked,{" "}
+    A proper website,{" "}
     <br />
-    <span className="text-primary">get paid.</span>
+    <span className="text-primary">built to win you work.</span>
   </h1>
 );
 
@@ -41,10 +41,12 @@ import {
   Clock,
   Receipt1,
   TickCircle,
+  Brush2,
+  ShieldTick,
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { Button } from "@/components/ui/button";
-import { bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, segments, terms, tiers, vatFootnote } from "@/data/pricing";
+import { addOns, aftercare, emailSetup, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, segments, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
@@ -56,13 +58,13 @@ import SocialProof from "@/components/SocialProof";
 const differentiators = [
   {
     icon: Setting2,
-    title: "Practical AI experience",
-    body: "Not theory — I've built and deployed AI tools in real businesses, from automated review systems to internal knowledge bases.",
+    title: "Senior design, not a template",
+    body: "Over 10 years designing products for Elsevier, Marsh and TipDirect. Your site gets the same care.",
   },
   {
     icon: Star1,
     title: "Design-led thinking",
-    body: "Every solution is built around how your team actually works. No bloated platforms or tools that gather dust.",
+    body: "Every page is built around what your customers actually do: call, book or ask for a quote. Nothing you don't need.",
   },
   {
     icon: Clock,
@@ -74,6 +76,12 @@ const differentiators = [
     title: "Transparent pricing",
     body: "One price per item, published. Software licences (email, booking or ordering systems) are billed to you directly.",
   },
+];
+
+const howItWorks = [
+  { icon: Brush2, title: "Designed", body: "A senior product designer, not a template. Every page is built around what your customers actually do: call, book or ask for a quote." },
+  { icon: Global, title: "Built and launched", body: "Fixed scope, fixed price and a launch date in writing. Your year-1 domain is included and you own the content and the code." },
+  { icon: ShieldTick, title: "Looked after", body: "Hosting, domain, email and updates handled for you on a care plan, or handed over to you at launch. Your choice, in step 2 below." },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -157,13 +165,27 @@ const Services = () => {
     tensionColor: isDark ? "hsl(310 100% 92%)" : "hsl(310 60% 50%)",
   };
   const [tierId, setTierId] = useState<string | null>(null);
+  const [aftercareChoice, setAftercareChoice] = useState<"self-managed" | "managed" | null>(null);
   const [careId, setCareId] = useState<string | null>(null);
+  const [emailSelected, setEmailSelected] = useState(false);
 
-  // Broadcast IDs only; the selection bar prices them from the catalogue.
+  const chooseAftercare = (choice: "self-managed" | "managed") => {
+    setAftercareChoice((cur) => (cur === choice ? null : choice));
+    // Switching to (or toggling off) aftercare choices other than "managed" clears any plan.
+    if (choice === "self-managed" || aftercareChoice === "managed") setCareId(null);
+  };
+
+  // Broadcast IDs only; the selection bar prices them from the catalogue. "managed" alone is UI state.
   useEffect(() => {
-    const ids = tierId ? [tierId, ...(careId ? [careId] : [])] : [];
+    const ids = tierId
+      ? [
+          tierId,
+          ...(aftercareChoice === "self-managed" ? [aftercare.selfManaged.id] : aftercareChoice === "managed" && careId ? [careId] : []),
+          ...(emailSelected ? [emailSetup.id] : []),
+        ]
+      : [];
     window.dispatchEvent(new CustomEvent("service-selection-change", { detail: ids.length ? ids.map((id) => ({ id })) : null }));
-  }, [tierId, careId]);
+  }, [tierId, aftercareChoice, careId, emailSelected]);
 
   // Clear the floating selection bar when leaving the page
   useEffect(() => {
@@ -174,7 +196,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Websites, AI & Automation for Irish SMEs" description="Lacuna Digital builds fixed-quote websites, booking systems, AI tools and automations for Irish small businesses, designed and built by Dave Kelly in Dublin." />
+      <SEO title="Web Design for Irish Businesses" description="Lacuna Digital designs and builds fixed-quote websites for Irish small businesses, with hosting, domain and email looked after for you if you want. Designed and built by Dave Kelly in Dublin." />
 
       {/* ── Hero ── */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-16 md:px-12 lg:px-24">
@@ -186,26 +208,26 @@ const Services = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="font-mono-label text-muted-foreground">
-              LACUNA DIGITAL — SERVICES
+              LACUNA DIGITAL — WEB DESIGN
             </span>
             <Suspense fallback={STATIC_HERO_H1}>
               <h1 className={HERO_H1_CLASS}>
                 <ElasticLettering
                   as="span"
-                  text="Get found, get booked,"
+                  text="A proper website,"
                   className="block"
                   {...elasticProps}
                 />{" "}
                 <ElasticLettering
                   as="span"
-                  text="get paid."
+                  text="built to win you work."
                   className="block text-primary"
                   {...elasticProps}
                 />
               </h1>
             </Suspense>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Designed by a senior product designer, built in days with AI.
+              Designed and built by a senior product designer in Dublin. Fixed price, launch date in writing, and looked after once it's live if you want it to be.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <a
@@ -247,66 +269,27 @@ const Services = () => {
             <Button asChild className="mt-4 rounded-sm">
               <Link to="/services/start-project">Get a fixed quote <ArrowRight /></Link>
             </Button>
-            <p className="mt-4 text-xs text-muted-foreground">
-              Custom AI or multi-site project? {entry.healthCheck.name} {eur(entry.healthCheck.price)}, half credited against your project.
-            </p>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* ── Two Pillars ── */}
+      {/* ── How it works ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
-        <div className="mx-auto grid max-w-7xl gap-0 md:grid-cols-2">
-          <ScrollReveal>
-            <div className="flex flex-col border-b border-border pb-12 md:border-b-0 md:border-r md:pb-0 md:pr-12">
-              <Global variant="TwoTone" className="h-10 w-10 text-primary" />
-              <h2 className="mt-6 text-2xl font-bold md:text-3xl">Online Visibility</h2>
-              <p className="mt-4 max-w-sm text-muted-foreground leading-relaxed">
-                Getting your business in front of the right people, on the right platforms.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.15}>
-            <div className="flex flex-col pt-12 md:pl-12 md:pt-0">
-              <Setting2 variant="TwoTone" className="h-10 w-10 text-primary" />
-              <h2 className="mt-6 text-2xl font-bold md:text-3xl">Business Efficiency</h2>
-              <p className="mt-4 max-w-sm text-muted-foreground leading-relaxed">
-                Automating the workflows that drain your time and cost you money.
-              </p>
-            </div>
-          </ScrollReveal>
+        <div className="mx-auto grid max-w-7xl gap-0 md:grid-cols-3">
+          {howItWorks.map((item, i) => (
+            <ScrollReveal key={item.title} delay={i * 0.15}>
+              <div className={`flex flex-col ${i < howItWorks.length - 1 ? "border-b border-border pb-12 md:border-b-0 md:border-r md:pb-0 md:pr-12" : ""} ${i > 0 ? "pt-12 md:pl-12 md:pt-0" : ""}`}>
+                <item.icon variant="TwoTone" className="h-10 w-10 text-primary" />
+                <h2 className="mt-6 text-2xl font-bold md:text-3xl">{item.title}</h2>
+                <p className="mt-4 max-w-sm text-muted-foreground leading-relaxed">{item.body}</p>
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </section>
 
       {/* ── Social Proof ── */}
       <SocialProof />
-
-      {/* ── Connected Services ── */}
-      <section className="relative px-6 pt-16 pb-0 md:px-12 lg:px-24 overflow-hidden">
-        <div className="mx-auto max-w-7xl">
-          <ScrollReveal>
-            <div className="text-center mb-8">
-              <SectionLabel>How It Works</SectionLabel>
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-                Every service connects
-              </h2>
-              <p className="mt-4 mx-auto max-w-2xl text-muted-foreground">
-                Most businesses patch tools together and hope for the best. I use AI to build you a system where everything works together — from your first online presence to a fully automated operation.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <iframe
-            src="/embeds/hairline-services.html"
-            title="Connected services: Local SEO, AI Assistant, CRM & Leads, Website and Reservations"
-            loading="lazy"
-            scrolling="no"
-            className="mx-auto block aspect-[40/23] w-full max-w-[800px] border-0 bg-transparent"
-          />
-
-        </div>
-      </section>
 
       {/* ── Choose your package ── */}
       <section id="packages" className="px-6 pt-4 pb-24 md:px-12 lg:px-24">
@@ -316,12 +299,12 @@ const Services = () => {
             <SectionLabel>Build Your Package</SectionLabel>
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Choose your package</h2>
             <p className="mt-4 max-w-2xl text-muted-foreground">
-              Pick a website tier, then choose how it's looked after. Every price is fixed and published.
+              Pick a website, decide who looks after it once it's live, add email if you need it. Every price is fixed and published.
             </p>
           </ScrollReveal>
 
           <div className="mt-12">
-            <StepHeading n={1} title="Pick a tier" body="One website ladder for every business. Each tier has a fixed scope and a launch date in writing." />
+            <StepHeading n={1} title="Pick your website" body="One ladder for every business. Each tier has a fixed scope, a launch date in writing and your year-1 domain included." />
             <div className="grid gap-4 md:grid-cols-3">
               {tiers.map((tier, i) => (
                 <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => setTierId((cur) => (cur === tier.id ? null : tier.id))}>
@@ -345,32 +328,82 @@ const Services = () => {
               <Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link>
             </p>
 
-            <StepHeading n={2} title="Keep it running" body="Optional care after launch. Choose one plan, or none." />
-            <div className="grid gap-6 md:grid-cols-3">
-              {carePlans.map((plan, i) => {
-                const selected = careId === plan.id;
+            <StepHeading n={2} title="Once it's live, who looks after it?" body="Hosting, domain renewal, security updates and small edits all need an owner. Pick one of the two; you can change later." />
+            <div className="grid gap-6 md:grid-cols-2">
+              {([
+                { key: "self-managed" as const, option: aftercare.selfManaged, featured: false },
+                { key: "managed" as const, option: aftercare.managed, featured: true },
+              ]).map(({ key, option, featured }, i) => {
+                const selected = aftercareChoice === key;
                 return (
-                  <SelectableCard key={plan.id} index={i} featured={plan.popular} selected={selected} label={`${plan.name} care plan, ${eur(plan.monthly)} a month`} onToggle={() => setCareId((cur) => (cur === plan.id ? null : plan.id))}>
-                    {plan.popular && <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">Most Popular</span>}
-                    <h4 className={`text-lg font-bold ${plan.popular ? "mt-6" : ""} ${HOVER_TEXT}`}>{plan.name}</h4>
-                    <p className={`mt-4 text-3xl font-bold ${HOVER_TEXT}`}>{eur(plan.monthly)}<span className={`text-sm font-normal text-muted-foreground ${HOVER_TEXT}`}>/mo</span></p>
+                  <SelectableCard key={key} index={i} featured={featured} selected={selected} label={`${option.name}, ${option.priceLine}`} onToggle={() => chooseAftercare(key)}>
+                    {featured && <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">Recommended</span>}
+                    <h4 className={`text-xl font-bold ${featured ? "mt-6" : ""} ${HOVER_TEXT}`}>{option.name}</h4>
+                    <p className={`mt-3 text-2xl font-bold ${HOVER_TEXT}`}>{option.priceLine}</p>
                     <ul className="mt-6 flex-1 space-y-3">
-                      {plan.includes.map((feature) => (
-                        <li key={feature} className={`flex items-start gap-2 text-sm text-muted-foreground ${HOVER_TEXT}`}>
+                      {option.includes.map((item) => (
+                        <li key={item} className={`flex items-start gap-2 text-sm text-muted-foreground ${HOVER_TEXT}`}>
                           <Check className={`mt-0.5 h-4 w-4 shrink-0 ${accentText(selected)}`} />
-                          <span>{feature}</span>
+                          <span>{item}</span>
                         </li>
                       ))}
                     </ul>
+                    <span className={`mt-5 text-sm font-semibold ${accentText(selected)}`}>{selected ? "Selected" : "Select"}</span>
                   </SelectableCard>
                 );
               })}
             </div>
+            {aftercareChoice === "managed" && (
+              <div className="mt-10">
+                <p className="mb-4 font-mono-label text-muted-foreground">Choose a plan</p>
+                <div className="grid gap-6 md:grid-cols-3">
+                  {carePlans.map((plan, i) => {
+                    const selected = careId === plan.id;
+                    return (
+                      <SelectableCard key={plan.id} index={i} featured={plan.popular} selected={selected} label={`${plan.name} care plan, ${eur(plan.monthly)} a month`} onToggle={() => setCareId((cur) => (cur === plan.id ? null : plan.id))}>
+                        {plan.popular && <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">Most Popular</span>}
+                        <h4 className={`text-lg font-bold ${plan.popular ? "mt-6" : ""} ${HOVER_TEXT}`}>{plan.name}</h4>
+                        <p className={`mt-4 text-3xl font-bold ${HOVER_TEXT}`}>{eur(plan.monthly)}<span className={`text-sm font-normal text-muted-foreground ${HOVER_TEXT}`}>/mo</span></p>
+                        <ul className="mt-6 flex-1 space-y-3">
+                          {plan.includes.map((feature) => (
+                            <li key={feature} className={`flex items-start gap-2 text-sm text-muted-foreground ${HOVER_TEXT}`}>
+                              <Check className={`mt-0.5 h-4 w-4 shrink-0 ${accentText(selected)}`} />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </SelectableCard>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
             <div className="mt-6 space-y-3 text-xs leading-relaxed text-muted-foreground">
               <p>{careTerms.minimums}. {careTerms.annualPrepay}.</p>
               <p>{careTerms.exit}</p>
-              <p>{vatFootnote()} {terms.payMonthlyNote}.</p>
+              <p>Launch includes 12 months' hosting; Business Site and Business Plus are hosted on a care plan or on your own account from launch.</p>
             </div>
+
+            <StepHeading n={3} title="Email on your domain" body="Optional. Professional email at you@yourbusiness.ie, set up and tested on your devices." />
+            <div className="max-w-md">
+              <SelectableCard index={0} selected={emailSelected} label={`${emailSetup.name}, ${eur(emailSetup.setup)} one-off`} onToggle={() => setEmailSelected((v) => !v)}>
+                <h4 className={`text-xl font-bold ${HOVER_TEXT}`}>{emailSetup.name}</h4>
+                <p className={`mt-3 text-2xl font-bold ${HOVER_TEXT}`}>{eur(emailSetup.setup)}{VAT_REGISTERED ? " + VAT" : ""} one-off</p>
+                <ul className="mt-6 flex-1 space-y-3">
+                  {emailSetup.includes.map((item) => (
+                    <li key={item} className={`flex items-start gap-2 text-sm text-muted-foreground ${HOVER_TEXT}`}>
+                      <Check className={`mt-0.5 h-4 w-4 shrink-0 ${accentText(emailSelected)}`} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <span className={`mt-5 text-sm font-semibold ${accentText(emailSelected)}`}>{emailSelected ? "Selected" : "Select"}</span>
+              </SelectableCard>
+            </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              Also available: extra pages {eur(addOns.extraPage)} each, copywriting {eur(addOns.copyPerPage)} a page, Google Business Profile setup {eur(addOns.gbp)}. Ask in the quote form.
+            </p>
+            <p className="mt-6 text-xs leading-relaxed text-muted-foreground">{vatFootnote()} {terms.payMonthlyNote}.</p>
           </div>
 
           <p className="mt-12 text-sm text-muted-foreground">
