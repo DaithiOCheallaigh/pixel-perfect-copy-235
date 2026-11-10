@@ -320,7 +320,7 @@ const Services = () => {
             <SectionLabel>Build Your Package</SectionLabel>
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Choose your package</h2>
             <p className="mt-4 max-w-2xl text-muted-foreground">
-              Pick a website, decide who looks after it once it's live, add email if you need it. Every price is fixed and published.
+              Pick a website, then decide who looks after it once it's live. Every price is fixed and published.
             </p>
           </ScrollReveal>
 
