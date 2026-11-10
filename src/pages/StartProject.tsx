@@ -9,6 +9,7 @@ import { CONTACT_EMAIL, entry } from "@/data/pricing";
 import { BUDGET_OPTIONS, BUDGET_LABEL, INDUSTRIES } from "@/data/projectIntake";
 import { SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotals } from "@/data/serviceEstimates";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://lgdjivhyveowybzhbqum.supabase.co";
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZGppdmh5dmVvd3liemhicXVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMjMyNDMsImV4cCI6MjA4Nzg5OTI0M30.ThNz5RF9Pco9Up0nIn_gaMIUSV_yc2WINGBXpuvF-A0";
@@ -147,7 +148,10 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const inputClass =
   "w-full rounded-md border border-[#2a2a2a] bg-[#1e1e1e] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors";
 
-const selectClass = inputClass + " appearance-none";
+const selectTriggerClass =
+  "h-auto w-full justify-between gap-3 rounded-md border border-[#2a2a2a] bg-[#1e1e1e] py-3 pl-4 pr-4 text-left text-sm text-foreground ring-offset-0 focus:border-primary focus:ring-1 focus:ring-primary focus:ring-offset-0 data-[placeholder]:text-muted-foreground [&>svg]:mr-0";
+const selectContentClass = "rounded-md border border-[#2a2a2a] bg-[#1e1e1e] shadow-xl";
+const selectItemClass = "px-3 py-2.5 text-sm focus:bg-primary/10 focus:text-primary data-[highlighted]:bg-primary/10 data-[highlighted]:text-primary";
 
 // ─── Main Page ─────────────────────────────────────────────────
 const StartProject = () => {
@@ -205,15 +209,7 @@ const StartProject = () => {
       if (!form.industry) errs.industry = "Required";
       if (!form.source) errs.source = "Required";
     }
-    if (step === 1) {
-      if (form.projectTypes.length === 0) errs.projectTypes = "Select at least one";
-      if (!form.projectDescription.trim()) errs.projectDescription = "Required";
-      if (!form.existingBrand) errs.existingBrand = "Required";
-      if (!form.urgency) errs.urgency = "Required";
-    }
-    if (step === 2) {
-      if (!form.budgetRange) errs.budgetRange = "Please select a budget range";
-    }
+    // Steps 2 and 3 are optional.
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -308,10 +304,11 @@ const StartProject = () => {
   }
 
   const isLastStep = step === TOTAL_STEPS - 1;
+  const canSubmit = step >= 1;
 
   return (
     <div className="min-h-screen">
-      <SEO title="Start a Project" description="Tell Lacuna Digital about your project in three short steps and get a fixed quote for your website, booking system, AI tool or automation in two working days." />
+      <SEO title="Start a Project" description="Tell Lacuna Digital about your project. Only your contact details are required; the rest is optional. Fixed quote within two working days." />
       {/* Top accent border */}
       <div className="h-[2px] w-full bg-gradient-to-r from-[#8b4513] via-[#a0522d] to-[#8b4513]" />
 
@@ -378,16 +375,20 @@ const StartProject = () => {
                   <input id="sp-websiteUrl" type="url" className={inputClass} autoComplete="url" maxLength={300} placeholder="https://example.com" value={form.websiteUrl} onChange={(e) => set("websiteUrl", e.target.value)} />
                 </Field>
                 <Field id="sp-industry" label="Industry / Sector" required error={errors.industry}>
-                  <select {...errProps("sp-industry", errors.industry)} className={selectClass} value={form.industry} onChange={(e) => set("industry", e.target.value)}>
-                    <option value="">Select…</option>
-                    {INDUSTRIES.map((i) => <option key={i} value={i}>{i}</option>)}
-                  </select>
+                  <Select value={form.industry || undefined} onValueChange={(v) => set("industry", v)}>
+                    <SelectTrigger {...errProps("sp-industry", errors.industry)} className={selectTriggerClass}><SelectValue placeholder="Select…" /></SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {INDUSTRIES.map((i) => <SelectItem key={i} value={i} className={selectItemClass}>{i}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
                 </Field>
                 <Field id="sp-source" label="How did you find us?" required error={errors.source}>
-                  <select {...errProps("sp-source", errors.source)} className={selectClass} value={form.source} onChange={(e) => set("source", e.target.value)}>
-                    <option value="">Select…</option>
-                    {SOURCES.map((s) => <option key={s} value={s}>{s}</option>)}
-                  </select>
+                  <Select value={form.source || undefined} onValueChange={(v) => set("source", v)}>
+                    <SelectTrigger {...errProps("sp-source", errors.source)} className={selectTriggerClass}><SelectValue placeholder="Select…" /></SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {SOURCES.map((src) => <SelectItem key={src} value={src} className={selectItemClass}>{src}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
                 </Field>
               </div>
             )}
@@ -396,14 +397,14 @@ const StartProject = () => {
             {step === 1 && (
               <div className="space-y-8">
                 <h1 ref={headingRef} tabIndex={-1} className="text-3xl font-extrabold tracking-tight outline-none md:text-4xl">Your Project</h1>
-                <Group id="sp-projectTypes" label="What type of project is this?" required error={errors.projectTypes}>
+                <Group id="sp-projectTypes" label="What type of project is this?" error={errors.projectTypes}>
                   <div className="flex flex-wrap gap-2">
                     {PROJECT_TYPES.map((t) => (
                       <Pill key={t} label={t} selected={form.projectTypes.includes(t)} onClick={() => toggleArray("projectTypes", t)} />
                     ))}
                   </div>
                 </Group>
-                <Field id="sp-projectDescription" label="Briefly describe what you need" required error={errors.projectDescription}>
+                <Field id="sp-projectDescription" label="Briefly describe what you need" error={errors.projectDescription}>
                   <div className="relative">
                     <textarea
                       {...errProps("sp-projectDescription", errors.projectDescription)}
@@ -427,14 +428,14 @@ const StartProject = () => {
                     </button>
                   </div>
                 </Field>
-                <Group id="sp-existingBrand" label="Do you have an existing brand?" required error={errors.existingBrand}>
+                <Group id="sp-existingBrand" label="Do you have an existing brand?" error={errors.existingBrand}>
                   <div className="flex gap-2">
                     {BRAND_OPTIONS.map((o) => (
                       <Pill key={o} label={o} selected={form.existingBrand === o} onClick={() => set("existingBrand", o)} />
                     ))}
                   </div>
                 </Group>
-                <Group id="sp-urgency" label="Project Urgency" required error={errors.urgency}>
+                <Group id="sp-urgency" label="Project Urgency" error={errors.urgency}>
                   <div className="flex flex-wrap gap-2">
                     {URGENCY_OPTIONS.map((o) => (
                       <Pill key={o} label={o} selected={form.urgency === o} onClick={() => set("urgency", o)} />
@@ -489,7 +490,7 @@ const StartProject = () => {
             {step === 2 && (
               <div className="space-y-8">
                 <h1 ref={headingRef} tabIndex={-1} className="text-3xl font-extrabold tracking-tight outline-none md:text-4xl">Budget & Timeline</h1>
-                <Group id="sp-budgetRange" label={BUDGET_LABEL} required error={errors.budgetRange}>
+                <Group id="sp-budgetRange" label={BUDGET_LABEL} error={errors.budgetRange}>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {BUDGET_OPTIONS.map((b) => (
                       <BudgetCard key={b.value} label={b.label} desc={b.desc} selected={form.budgetRange === b.value} onClick={() => set("budgetRange", b.value)} />
@@ -536,26 +537,37 @@ const StartProject = () => {
           ) : (
             <div />
           )}
-          {isLastStep ? (
-            <button
-              type="button"
-              onClick={submitEnquiry}
-              disabled={submitting}
-              className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 disabled:opacity-50"
-            >
-              {submitting ? "Sending…" : "Submit Enquiry →"}
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={next}
-              className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-            >
-              Next →
-            </button>
-          )}
+          <div className="flex flex-wrap items-center justify-end gap-3">
+            {step === 1 && (
+              <button
+                type="button"
+                onClick={next}
+                className="rounded-md border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
+              >
+                Next: Budget &amp; Timeline →
+              </button>
+            )}
+            {canSubmit ? (
+              <button
+                type="button"
+                onClick={submitEnquiry}
+                disabled={submitting}
+                className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 disabled:opacity-50"
+              >
+                {submitting ? "Sending…" : "Submit Enquiry →"}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={next}
+                className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+              >
+                Next →
+              </button>
+            )}
+          </div>
         </div>
-        {isLastStep && (
+        {canSubmit && (
           <p className="mt-4 text-right text-xs text-muted-foreground">
             I'll only use your details to respond to your enquiry. 'Enhance with AI' sends your description to an AI service to draft a brief.
           </p>

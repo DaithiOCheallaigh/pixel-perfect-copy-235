@@ -33,10 +33,10 @@ Deno.serve(async (req) => {
     const websiteUrl = req_("websiteUrl", TEXT);
     const industry = req_("industry", TEXT, true);
     const source = req_("source", TEXT, true);
-    const projectDescription = req_("projectDescription", 5000, true);
+    const projectDescription = req_("projectDescription", 5000);
     const existingBrand = req_("existingBrand", TEXT);
     const urgency = req_("urgency", TEXT);
-    const budgetRange = req_("budgetRange", TEXT, true);
+    const budgetRange = req_("budgetRange", TEXT);
     const launchDate = req_("launchDate", 20);
     const deadlineDetails = req_("deadlineDetails", TEXT);
     const hasDeadline = f.hasDeadline === true;
@@ -74,10 +74,10 @@ Deno.serve(async (req) => {
       <p><strong>Urgency:</strong> ${e(urgency || "N/A")}</p>
       <p><strong>Competitor / inspiration URLs:</strong> ${e(competitorUrls.join(", ") || "None")}</p>
       <p><strong>Description:</strong></p>
-      <pre style="white-space: pre-wrap; font-family: sans-serif;">${e(projectDescription)}</pre>
+      <pre style="white-space: pre-wrap; font-family: sans-serif;">${e(projectDescription || "Not provided")}</pre>
 
       <h2>Budget & Timeline</h2>
-      <p><strong>Budget:</strong> ${e(budgetRange)}</p>
+      <p><strong>Budget:</strong> ${e(budgetRange || "Not provided")}</p>
       <p><strong>Launch Date:</strong> ${e(launchDate || "Flexible")}</p>
       <p><strong>Hard Deadline:</strong> ${hasDeadline ? e(deadlineDetails || "Yes") : "No"}</p>
     `;
