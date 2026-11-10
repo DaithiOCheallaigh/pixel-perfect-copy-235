@@ -1,4 +1,4 @@
-import { monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, studio, entry, terms, eur, priceLabel, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
+import { aftercare, emailSetup, monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, entry, terms, eur, priceLabel, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
 import { writeFileSync } from "node:fs";
 import { projects } from "../src/data/projects";
 import { YEARS_EXPERIENCE, CV_URL, PORTFOLIO_EMAIL, LINKEDIN_URL } from "../src/data/profile";
@@ -39,28 +39,17 @@ ${caseStudies.join("\n")}
 
 export function buildServicesLlms() {
   const packageLine = (p: (typeof tiers)[number]) => `- ${p.name}: ${priceLabel(p)}${p.monthly ? `; ${monthlyLabel(p)}` : ""}. Live in ${p.live}.`;
-  const studioRows = [
-    `Day rate ${eur(studio.dayRate)}; agency white-label ${eur(studio.agencyDayRate)}/day (${studio.agencyMinDays}-day minimum).`,
-    `Fractional Product Designer ${eur(studio.fractional.monthly)}/month for ${studio.fractional.days} days (${studio.fractional.minMonths}-month minimum).`,
-    `Investor Prototype ${eur(studio.investorPrototype)} (5 working days); Prototype Sprint ${eur(studio.prototypeSprint)} (3 weeks); 5 moderated tests +${eur(studio.userTestingAddOn)}.`,
-    `AI-built MVP from ${eur(studio.mvpFrom)} (6–10 weeks, only after a Prototype Sprint).`,
-    `UX & Accessibility Audit: Focused ${eur(studio.uxAuditFocused)} (5 days, WCAG 2.2 AA spot check); Comprehensive ${eur(studio.uxAuditComprehensive)}.`,
-    `Design System Foundation from ${eur(studio.designSystemFrom)} (8 weeks); Digital / AI Discovery Roadmap ${eur(studio.discoveryRoadmap)} (5 days).`,
-    `AI Opportunity Audit ${eur(entry.aiAudit.price)} (about 2 days, half credited against Automation Sprint, up to ${entry.aiAudit.maxStaff} staff). Automation Sprint typically ${eur(studio.automationSprintRange[0])}–${eur(studio.automationSprintRange[1])}, fixed price agreed in writing.`,
-    `AI Ops ${eur(studio.aiOps.monthly)}/month for ${studio.aiOps.hours} hours including meetings; ${studio.aiOps.minMonths}-month minimum then ${studio.aiOps.noticeDays} days' notice; overage ${eur(studio.aiOps.overageHourly)}/hour.`,
-  ];
   return `# Lacuna Digital
 
-> Lacuna Digital is Dave Kelly's independent product design and digital consulting practice in North County Dublin.
+> Lacuna Digital is Dave Kelly's independent web design practice in North County Dublin.
 
-Senior product design and AI-assisted build: fixed-price launches from 5 working days; prototypes in 5 days.
+Websites for Irish small businesses, designed and built by a senior product designer: fixed price, launch date in writing, and optional care plans after launch.
 
 ## Pages
 
 - [Services](${BASE_URL}/services)
 ${Object.values(segments).map(s => `- [${s.title}](${BASE_URL}/services/${s.slug})`).join("\n")}
 - [Web Design](${BASE_URL}/services/web-design)
-- [Product Studio](${BASE_URL}/services/product-studio)
 - [Refer](${BASE_URL}/services/refer)
 - [Terms](${BASE_URL}/services/terms)
 - [Get Started](${BASE_URL}/services/get-started)
@@ -82,14 +71,19 @@ Industry pages (${Object.values(segments).map(s => s.title).join(", ")}) reuse t
 ${addOnCatalogue.map(a => `- ${a.name}: ${addOnPriceLabel(a)}.`).join("\n")}
 - Extra email inbox ${eur(addOns.email.extraInbox)}; migration ${eur(addOns.email.migrationPerMailbox)} per mailbox; licences billed directly. Extra work ${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks.
 
+### After launch
+
+- ${aftercare.selfManaged.name}: ${aftercare.selfManaged.priceLine}. ${aftercare.selfManaged.includes.join("; ")}.
+- ${aftercare.managed.name}: ${aftercare.managed.priceLine}. ${aftercare.managed.includes.join("; ")}.
+
+### Email setup
+
+- ${emailSetup.name}: ${eur(emailSetup.setup)} + VAT one-off. ${emailSetup.includes.join("; ")}.
+
 ### Care plans
 
 ${carePlans.map(p => `- ${p.name}: ${eur(p.monthly)}/month. ${p.includes.join("; ")}.`).join("\n")}
 ${careTerms.minimums}. ${careTerms.annualPrepay}. ${careTerms.exit}
-
-### Product Studio
-
-${studioRows.map(row => `- ${row}`).join("\n")}
 
 ## Proof (portfolio case studies)
 

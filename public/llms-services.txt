@@ -1,8 +1,8 @@
 # Lacuna Digital
 
-> Lacuna Digital is Dave Kelly's independent product design and digital consulting practice in North County Dublin.
+> Lacuna Digital is Dave Kelly's independent web design practice in North County Dublin.
 
-Senior product design and AI-assisted build: fixed-price launches from 5 working days; prototypes in 5 days.
+Websites for Irish small businesses, designed and built by a senior product designer: fixed price, launch date in writing, and optional care plans after launch.
 
 ## Pages
 
@@ -12,7 +12,6 @@ Senior product design and AI-assisted build: fixed-price launches from 5 working
 - [Salons & Barbers](https://www.lacunadigital.io/services/salons-barbers)
 - [Tours & Experiences](https://www.lacunadigital.io/services/tours-experiences)
 - [Web Design](https://www.lacunadigital.io/services/web-design)
-- [Product Studio](https://www.lacunadigital.io/services/product-studio)
 - [Refer](https://www.lacunadigital.io/services/refer)
 - [Terms](https://www.lacunadigital.io/services/terms)
 - [Get Started](https://www.lacunadigital.io/services/get-started)
@@ -47,23 +46,21 @@ Industry pages (Kitchens & Joinery, Clinics & Practices, Salons & Barbers, Tours
 - Social media: €350 setup + €200/mo + VAT.
 - Extra email inbox €40; migration €75 per mailbox; licences billed directly. Extra work €100/hour in 30-minute blocks.
 
+### After launch
+
+- I'll look after it myself: Free handover. At launch the site, hosting and domain go into accounts in your name; You pay the hosting and domain providers directly; 30-minute handover call and a short written guide; Edits when you need them at €100/hour.
+- Lacuna looks after it: Care plans from €65/mo. Hosting, SSL, backups and uptime monitoring; Security updates and domain renewal; Email accounts managed within your monthly edit time; A set amount of edit time every month.
+
+### Email setup
+
+- Email setup: €150 + VAT one-off. 2 inboxes set up on your domain; Tested on your phone and laptop; Licences billed to you by the provider; Extra inboxes €40 each; moving an existing mailbox €75 each.
+
 ### Care plans
 
 - Care: €65/month. Hosting, SSL, backups, uptime monitoring; Security updates and .ie renewal; 30 minutes of edits a month; Reply within 1 business day.
 - Growth: €200/month. Everything in Care; 60 minutes of edits a month; Review-request flow (asks every customer); Monthly report; One module for your industry.
 - Growth + AI: €350/month. Everything in Growth; AI website assistant (up to 200 conversations, says it is an AI); Missed-call text-back; Quarterly 30-minute call.
 3-month minimum for salons and restaurants, 6 months for others. Pay a year upfront, get 1 month free. Your domain, your content, your code. Export any time; no exit fee after the minimum term.
-
-### Product Studio
-
-- Day rate €650; agency white-label €600/day (5-day minimum).
-- Fractional Product Designer €2,600/month for 4 days (3-month minimum).
-- Investor Prototype €3,000 (5 working days); Prototype Sprint €6,000 (3 weeks); 5 moderated tests +€2,500.
-- AI-built MVP from €20,000 (6–10 weeks, only after a Prototype Sprint).
-- UX & Accessibility Audit: Focused €4,500 (5 days, WCAG 2.2 AA spot check); Comprehensive €9,000.
-- Design System Foundation from €18,000 (8 weeks); Digital / AI Discovery Roadmap €4,500 (5 days).
-- AI Opportunity Audit €1,250 (about 2 days, half credited against Automation Sprint, up to 15 staff). Automation Sprint typically €3,000–€6,500, fixed price agreed in writing.
-- AI Ops €750/month for 8 hours including meetings; 3-month minimum then 30 days' notice; overage €100/hour.
 
 ## Proof (portfolio case studies)
 
