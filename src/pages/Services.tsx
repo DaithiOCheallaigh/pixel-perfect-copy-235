@@ -180,12 +180,7 @@ const Services = () => {
   const [aftercareChoice, setAftercareChoice] = useState<"self-managed" | "managed" | null>(null);
   const [careId, setCareId] = useState<string | null>(null);
   const [businessPages, setBusinessPages] = useState(5);
-  const step2Ref = useRef<HTMLDivElement>(null);
-  const scrolledToStep2 = useRef(false);
-  /** Set only by a tier card click, so the Pages dropdown never scrolls the page. */
-  const scrollRequested = useRef(false);
   const reduceMotion = useReducedMotion();
-  const selectedTier = tiers.find((t) => t.id === tierId);
 
   const chooseTier = (id: string) => {
     const next = tierId === id ? null : id;
@@ -196,16 +191,6 @@ const Services = () => {
       setCareId(null);
     }
   };
-
-  // Scroll to Step 2 the first time a website is chosen, never again on switching.
-  useEffect(() => {
-    if (!scrollRequested.current) return;
-    scrollRequested.current = false;
-    if (!tierId || scrolledToStep2.current) return;
-    scrolledToStep2.current = true;
-    const t = window.setTimeout(() => step2Ref.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }), 120);
-    return () => window.clearTimeout(t);
-  }, [tierId, reduceMotion]);
 
   const chooseAftercare = (choice: "self-managed" | "managed") => {
     setAftercareChoice((cur) => (cur === choice ? null : choice));
@@ -330,7 +315,7 @@ const Services = () => {
                 const isBusiness = baseTier.id === "business";
                 const tier = isBusiness ? { ...baseTier, ...businessOption(businessPages), id: baseTier.id } : baseTier;
                 return (
-                <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => { scrollRequested.current = true; chooseTier(tier.id); }}
+                <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => chooseTier(tier.id)}
                   footer={isBusiness ? <BusinessPagesSelect pages={businessPages} onChange={(n) => { setBusinessPages(n); if (tierId !== "business") chooseTier("business"); }} /> : undefined}>
                   <h4 className="text-xl font-bold text-foreground">{tier.name}</h4>
                   <p className="mt-3 text-2xl font-bold text-foreground">{priceLabel(tier)}</p>
@@ -349,11 +334,6 @@ const Services = () => {
                 );
               })}
             </div>
-            {selectedTier && !aftercareChoice && (
-              <p className="mt-6 text-sm font-semibold text-primary" role="status">
-                {selectedTier.name} selected. Next: choose who looks after it once it's live ↓
-              </p>
-            )}
             <div className="mt-6 space-y-2 text-sm text-muted-foreground">
               <p><Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link></p>
               <p className="text-xs">Website Refresh: {refreshNotes()}</p>
@@ -368,7 +348,7 @@ const Services = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-            <div ref={step2Ref} className="scroll-mt-24 pt-16">
+            <div className="pt-16">
             <StepHeading title="Once it's live, who looks after it?" body="Hosting, domain renewal, security updates and small edits all need an owner. Pick one of the two; you can change later." />
             </div>
             <div className="grid gap-6 md:grid-cols-2">

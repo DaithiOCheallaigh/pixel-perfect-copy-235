@@ -8,7 +8,9 @@
 - Lead-form edge functions validate, HTML-escape and send through supabase/functions/_shared/email-utils.ts, and send-service-selection prices services from its own server-side map; client-sent titles and prices are never trusted.
 - New/migrated frontend pricing uses src/data/pricing.ts and its formatters to avoid duplicated prices and inconsistent VAT.
 - `tiers` in src/data/pricing.ts (Launch, Website Refresh from-price, Business Site) plus `businessOption` page options (5–10 pages, ids `business`/`business-N`, shown via a Pages dropdown in a SelectableCard footer), `addOnCatalogue` and care plans are the only website pricing; industry pages reuse them (proof/FAQs in src/data/segmentPages.ts, retired URLs redirected), keeping scopes, VAT and care terms consistent.
-- Aftercare shows once a website is chosen; only a tier card click scrolls to it, once.
+<!-- LOVABLE:BEGIN -->
+- Aftercare shows once a website is chosen; nothing scrolls or points to it. The enquiry page's Your package panel is always shown and lets visitors pick or change aftercare (self-managed or a care plan); IDs persist in sessionStorage until the brief is sent.
+<!-- LOVABLE:END -->
 - send-consultation requires only the About You fields; description and budget are optional.
 - Pricing, segment copy and FAQs never name third-party platform brands; they say "your own booking system" or "your ordering provider", so the offer stays vendor-neutral.
 - Free tools are unlisted and noindex (absent from navigation, sitemap and llms files) but their routes and BioPage stay live, so existing client links keep working.

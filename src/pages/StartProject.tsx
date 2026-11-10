@@ -5,7 +5,7 @@ import { Check, Plus, X, Sparkles, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
-import { CONTACT_EMAIL, entry } from "@/data/pricing";
+import { aftercare, carePlans, CONTACT_EMAIL, entry } from "@/data/pricing";
 import { BUDGET_OPTIONS, BUDGET_LABEL, INDUSTRIES } from "@/data/projectIntake";
 import { SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotals } from "@/data/serviceEstimates";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
@@ -173,12 +173,27 @@ const StartProject = () => {
   }, [step]);
   const { toast } = useToast();
   // Package chosen on /services: IDs only, re-priced from the catalogue here.
-  const [selection] = useState(() => {
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
     try {
       const raw = JSON.parse(sessionStorage.getItem(SELECTION_STORAGE_KEY) ?? "[]");
-      return Array.isArray(raw) ? selectionItems(raw.filter((id): id is string => typeof id === "string").map((id) => ({ id }))) : [];
+      return Array.isArray(raw) ? raw.filter((id): id is string => typeof id === "string") : [];
     } catch { return []; }
   });
+  useEffect(() => {
+    sessionStorage.setItem(SELECTION_STORAGE_KEY, JSON.stringify(selectedIds));
+  }, [selectedIds]);
+  const selection = selectionItems(selectedIds.map((id) => ({ id })));
+  const totals = selectionTotals(selection);
+  const aftercareOptions = [
+    { id: aftercare.selfManaged.id, label: `${aftercare.selfManaged.name} · ${aftercare.selfManaged.priceLine}` },
+    ...carePlans.map((plan) => ({ id: plan.id, label: `${plan.name} · ${eur(plan.monthly)}/mo` })),
+  ];
+  const chooseAftercare = (id: string) => {
+    setSelectedIds((current) => {
+      const kept = current.filter((selectedId) => !aftercareOptions.some((option) => option.id === selectedId));
+      return current.includes(id) ? kept : [...kept, id];
+    });
+  };
   const selectionText = selectionSummary(selection);
   const withSelection = (text: string) => (selectionText ? `${selectionText}\n\n${text}` : text).slice(0, 5000);
 
@@ -324,16 +339,34 @@ const StartProject = () => {
       </div>
 
       <div className="mx-auto max-w-2xl px-6 pb-32 pt-32">
-        {selection.length > 0 && (
           <section aria-label="Your selected package" className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5">
             <p className="font-mono-label text-muted-foreground">Your package</p>
             <ul className="mt-3 space-y-1.5">
               {selection.map((s) => <li key={s.id} className="flex justify-between gap-4 text-sm"><span className="text-foreground">{s.title}</span><span className="text-muted-foreground">{s.price}</span></li>)}
             </ul>
-            <p className="mt-3 text-sm font-semibold text-foreground">Setup {selectionIsFrom(selection) ? "from " : ""}{eur(selectionTotals(selection).oneOff)}{VAT_REGISTERED ? " + VAT" : ""}{selectionTotals(selection).monthly ? ` · Monthly ${eur(selectionTotals(selection).monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}` : ""}</p>
+            {!selection.some((item) => item.kind === "tier") && (
+              <div className="mt-3 text-sm">
+                <p className="text-muted-foreground">No website chosen yet.</p>
+                <Link to="/services#services" className="text-primary hover:underline">Choose a package on the services page →</Link>
+              </div>
+            )}
+            <div className="mt-5">
+              <Group id="sp-aftercare" label="Once it's live, who looks after it?">
+                <div className="flex flex-wrap gap-2">
+                  {aftercareOptions.map((option) => (
+                    <Pill key={option.id} label={option.label} selected={selectedIds.includes(option.id)} onClick={() => chooseAftercare(option.id)} />
+                  ))}
+                </div>
+              </Group>
+            </div>
+            {(totals.oneOff > 0 || totals.monthly > 0) && (
+              <p className="mt-3 text-sm font-semibold text-foreground">{[
+                ...(totals.oneOff ? [`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`] : []),
+                ...(totals.monthly ? [`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`] : []),
+              ].join(" · ")}</p>
+            )}
             <p className="mt-1 text-xs text-muted-foreground">This selection is sent with your brief.</p>
           </section>
-        )}
         {/* Step label */}
         <div className="mb-12">
           <p className="font-mono-label text-muted-foreground">
