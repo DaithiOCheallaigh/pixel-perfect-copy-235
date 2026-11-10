@@ -392,7 +392,7 @@ const Services = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-            <div ref={step2Ref} className="scroll-mt-24">
+            <div ref={step2Ref} className="scroll-mt-24 pt-16">
             <StepHeading n={2} title="Once it's live, who looks after it?" body="Hosting, domain renewal, security updates and small edits all need an owner. Pick one of the two; you can change later." />
             </div>
             <div className="grid gap-6 md:grid-cols-2">
