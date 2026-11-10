@@ -332,8 +332,8 @@ const Services = () => {
                 return (
                 <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => { scrollRequested.current = true; chooseTier(tier.id); }}
                   footer={isBusiness ? <BusinessPagesSelect pages={businessPages} onChange={(n) => { setBusinessPages(n); if (tierId !== "business") chooseTier("business"); }} /> : undefined}>
-                  <h4 className="text-xl font-bold">{tier.name}</h4>
-                  <p className="mt-3 text-2xl font-bold">{priceLabel(tier)}</p>
+                  <h4 className="text-xl font-bold text-foreground">{tier.name}</h4>
+                  <p className="mt-3 text-2xl font-bold text-foreground">{priceLabel(tier)}</p>
                   <p className={`mt-2 min-h-5 text-sm ${accentText(tierId === tier.id)}`}>{tier.monthly ? monthlyLabel(tier) : ""}</p>
                   <ul className="mt-6 flex-1 space-y-3">
                     {tier.scope?.map((item) => (
@@ -380,8 +380,8 @@ const Services = () => {
                 return (
                   <SelectableCard key={key} index={i} featured={featured} selected={selected} label={`${option.name}, ${option.priceLine}`} onToggle={() => chooseAftercare(key)}>
                     {featured && <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">Recommended</span>}
-                    <h4 className={`text-xl font-bold ${featured ? "mt-6" : ""}`}>{option.name}</h4>
-                    <p className="mt-3 text-2xl font-bold">{option.priceLine}</p>
+                    <h4 className={`text-xl font-bold text-foreground ${featured ? "mt-6" : ""}`}>{option.name}</h4>
+                    <p className="mt-3 text-2xl font-bold text-foreground">{option.priceLine}</p>
                     <ul className="mt-6 flex-1 space-y-3">
                       {option.includes.map((item) => (
                         <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -404,8 +404,8 @@ const Services = () => {
                     return (
                       <SelectableCard key={plan.id} index={i} featured={plan.popular} selected={selected} label={`${plan.name} care plan, ${eur(plan.monthly)} a month`} onToggle={() => setCareId((cur) => (cur === plan.id ? null : plan.id))}>
                         {plan.popular && <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">Most Popular</span>}
-                        <h4 className={`text-lg font-bold ${plan.popular ? "mt-6" : ""}`}>{plan.name}</h4>
-                        <p className="mt-4 text-3xl font-bold">{eur(plan.monthly)}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                        <h4 className={`text-lg font-bold text-foreground ${plan.popular ? "mt-6" : ""}`}>{plan.name}</h4>
+                        <p className="mt-4 text-3xl font-bold text-foreground">{eur(plan.monthly)}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
                         <ul className="mt-6 flex-1 space-y-3">
                           {plan.includes.map((feature) => (
                             <li key={feature} className="flex items-start gap-2 text-sm text-muted-foreground">
