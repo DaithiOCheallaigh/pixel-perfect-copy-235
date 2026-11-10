@@ -5,7 +5,7 @@ export { YEARS_EXPERIENCE } from "./profile";
 export const CALENDLY_URL = "https://calendly.com/lacunaconsulting-info/30min";
 export const CONTACT_EMAIL = "info@lacunaconsulting.com";
 export const availability = { headline: "Now booking new projects", nextStart: "November 2026", productStudioFrom: "November 2026" };
-export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[]; upgrade?: Pkg };
+export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[] };
 export const entry = {
   introCall: { name: "Free intro call + fixed written quote", price: 0, quoteWithin: "48 hours" },
   healthCheck: { name: "Digital Health Check", price: 250, onSiteExtra: 100, creditShare: 0.5, scope: "custom work only (AI, automation, multi-site)" },
@@ -15,16 +15,34 @@ export type TierId = "launch" | "refresh" | "business";
 export type AddOnId = "extra-page" | "gbp" | "booking" | "stripe" | "email" | "brand-starter" | "copywriting" | "ai-assistant" | "missed-call" | "ai-receptionist" | "crm-starter" | "social";
 /** Existing-site redesign (from-price). */
 export const refresh: Pkg = { id: "refresh", name: "Website Refresh", priceFrom: 1500, monthly: 140, live: "2–3 weeks from access to your current site", scope: ["Your existing content and photos, redesigned page by page (up to 5 pages)", "Mobile and speed fixes", "Every old address redirected so you keep your Google rankings", "Forms, analytics and Google profile checked and reconnected", "Moved to new hosting if you want (see step 2)", "1 revision round"] };
-/** The Business Site full build, offered as an upgrade inside the Business card (selection id business-full). */
-export const businessFull: Pkg = { id: "business-full", name: "Business Site, full build", price: 5000, live: "5–6 weeks", scope: ["Up to 10 pages", "Blog", "Booking or CRM integration", "Local SEO setup (Google profile + 2 location pages)", "3 revision rounds"] };
 /** The only website pricing: one three-tier ladder shared by every services page. */
 export const tiers: Pkg[] = [
   { id: "launch", name: "Launch", price: 750, monthly: 70, selfServe: true, live: "7 working days", scope: ["1-page site", "Year-1 domain and 12 months' hosting included", "Contact or booking button", "Google profile claim", "1 revision round"] },
   refresh,
-  { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"], upgrade: businessFull },
+  { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"] },
 ];
 /** Kept as an alias for existing imports. */
 export const webLadder = tiers;
+
+export const BUSINESS_BASE_PAGES = 5;
+export const BUSINESS_MAX_PAGES = 10;
+export const BUSINESS_PER_PAGE = 500;
+export type BusinessOption = { pages: number; id: string; price: number; live: string; scope: string[] };
+/** Business Site priced and scoped by page count (5–10); id "business" at 5 pages, otherwise business-N. */
+export const businessOption = (pages: number): BusinessOption => ({
+  pages,
+  id: pages === BUSINESS_BASE_PAGES ? "business" : `business-${pages}`,
+  price: 2500 + (pages - BUSINESS_BASE_PAGES) * BUSINESS_PER_PAGE,
+  live: pages <= 6 ? "3–4 weeks" : pages <= 8 ? "4–5 weeks" : "5–6 weeks",
+  scope: [
+    `Up to ${pages} pages`, "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim",
+    ...(pages >= 6 ? ["Blog"] : []),
+    ...(pages >= 8 ? ["Booking or CRM integration"] : []),
+    ...(pages >= 10 ? ["Local SEO setup (Google profile + 2 location pages)"] : []),
+    `${pages >= 10 ? 3 : 2} revision rounds`,
+  ],
+});
+export const businessOptions = [5, 6, 7, 8, 9, 10].map(businessOption);
 export const bespokeFrom = 7500;
 export const segments = {
   kitchens: { title: "Kitchens & Joinery", slug: "kitchens-joinery", tagline: "Leads you own, not leads you rent.", growthModule: "1 project post + quarterly review drive", careMinMonths: 6, growDigital: true,
@@ -90,7 +108,7 @@ export const aftercare = {
       "At launch the site, hosting and domain go into accounts in your name",
       "You pay the hosting and domain providers directly",
       "30-minute handover call and a short written guide",
-      `Edits when you need them at ${eur(addOns.hourly)}/hour`,
+      "Edits when you need them, quoted per job based on the work",
     ],
   },
   managed: {

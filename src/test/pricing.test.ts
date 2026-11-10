@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addOnCatalogue, addOnPriceLabel, addOns, availability, bespokeFrom, carePlans, entry, incVat, businessFull, segments, studio, terms, tiers, VAT_RATE, VAT_REGISTERED, webLadder } from "@/data/pricing";
+import { addOnCatalogue, addOnPriceLabel, addOns, availability, bespokeFrom, carePlans, entry, incVat, businessOption, businessOptions, segments, studio, terms, tiers, VAT_RATE, VAT_REGISTERED, webLadder } from "@/data/pricing";
 
 describe("pricing catalogue", () => {
   it("requires upfront payment below 1000 and split payment through 3000", () => {
@@ -43,9 +43,22 @@ describe("pricing catalogue", () => {
     expect(r?.priceFrom).toBe(1500);
     expect(r?.monthly).toBe(140);
   });
-  it("offers the 5000 full build as the Business Site upgrade", () => {
-    expect(businessFull.price).toBe(5000);
-    expect(tiers[2].upgrade).toBe(businessFull);
+  it("prices 5 Business pages at 2500 with the base scope", () => {
+    expect(businessOption(5).scope).toEqual(tiers[2].scope);
+    expect(businessOption(5).price).toBe(2500);
+  });
+  it("adds booking or CRM at 8 pages without local SEO", () => {
+    expect(businessOption(8).price).toBe(4000);
+    expect(businessOption(8).scope).toContain("Booking or CRM integration");
+    expect(businessOption(8).scope).not.toContain("Local SEO setup (Google profile + 2 location pages)");
+  });
+  it("prices 10 pages at 5000 with local SEO and 3 revisions", () => {
+    expect(businessOption(10).price).toBe(5000);
+    expect(businessOption(10).scope).toContain("Local SEO setup (Google profile + 2 location pages)");
+    expect(businessOption(10).scope).toContain("3 revision rounds");
+  });
+  it("offers six page options with business ids", () => {
+    expect(businessOptions.map((o) => o.id)).toEqual(["business", "business-6", "business-7", "business-8", "business-9", "business-10"]);
   });
   it("quotes bespoke builds from 7500", () => expect(bespokeFrom).toBe(7500));
   it("has no per-segment package ladders", () => {
