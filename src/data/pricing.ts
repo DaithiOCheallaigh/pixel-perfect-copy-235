@@ -19,6 +19,8 @@ export const tiers: Pkg[] = [
   { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"] },
   { id: "business-plus", name: "Business Plus", price: 5000, live: "5–6 weeks", scope: ["Up to 10 pages", "Blog", "Booking or CRM integration", "Local SEO setup (Google profile + 2 location pages)", "3 revision rounds"] },
 ];
+/** Existing-site redesign; sits beside the tier ladder, not inside it. */
+export const refresh: Pkg = { id: "refresh", name: "Website Refresh", priceFrom: 1500, monthly: 140, live: "2–3 weeks from access to your current site", scope: ["Your existing content and photos, redesigned page by page (up to 5 pages)", "Mobile and speed fixes", "Every old address redirected so you keep your Google rankings", "Forms, analytics and Google profile checked and reconnected", "Moved to new hosting if you want (see step 2)", "1 revision round"] };
 /** Kept as an alias for existing imports. */
 export const webLadder = tiers;
 export const bespokeFrom = 7500;
@@ -112,3 +114,4 @@ export const emailSetup = {
     `Extra inboxes ${eur(addOns.email.extraInbox)} each; moving an existing mailbox ${eur(addOns.email.migrationPerMailbox)} each`,
   ],
 };
+export const refreshNotes = () => `${eur(addOns.extraPage)} per page beyond 5; new copy ${eur(addOns.copyPerPage)} a page. Sites over 10 pages or on an unsupported platform are quoted individually.`;

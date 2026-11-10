@@ -1,4 +1,4 @@
-import { addOns, aftercare, carePlans, emailSetup, eur, priceLabel, tiers, VAT_REGISTERED } from "./pricing";
+import { addOns, aftercare, carePlans, emailSetup, eur, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
 
 /** Setup and recurring fees are separate; optional website instalments are not added to setup. */
 export type Fee = { oneOff: number; monthly: number };
@@ -11,6 +11,7 @@ export const SELECTION_STORAGE_KEY = "lacuna-services-selection";
 export function selectionItem(id: string): SelectionItem | undefined {
   const tier = tiers.find((t) => t.id === id);
   if (tier) return { id, kind: "tier", title: `${tier.name} website`, price: priceLabel(tier), oneOff: tier.price ?? 0, monthly: 0 };
+  if (id === refresh.id) return { id, kind: "tier", title: refresh.name, price: priceLabel(refresh), oneOff: refresh.priceFrom ?? 0, monthly: 0 };
   const care = carePlans.find((c) => c.id === id);
   if (care) return { id, kind: "care", title: `${care.name} care plan`, price: `${eur(care.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`, oneOff: 0, monthly: care.monthly };
   if (id === aftercare.selfManaged.id) return { id, kind: "aftercare", title: "Self-managed after launch", price: aftercare.selfManaged.priceLine, oneOff: 0, monthly: 0 };
@@ -24,6 +25,9 @@ export const selectionItems = (selections: readonly { id: string }[]) =>
 export function selectionTotals(selections: readonly { id: string }[]): Fee {
   return selectionItems(selections).reduce((t, s) => ({ oneOff: t.oneOff + s.oneOff, monthly: t.monthly + s.monthly }), { oneOff: 0, monthly: 0 });
 }
+
+/** True when the selection includes a from-priced package (the refresh). */
+export const selectionIsFrom = (selections: readonly { id: string }[]) => selections.some((s) => s.id === refresh.id);
 
 export function selectionPrice(selections: readonly { id: string }[]) {
   const totals = selectionTotals(selections);
@@ -39,7 +43,7 @@ export function selectionSummary(selections: readonly { id: string }[]) {
   return [
     "Selected package:",
     ...items.map((s) => `- ${s.title}: ${s.price}`),
-    `One-off setup: ${eur(totals.oneOff)}${v}`,
+    `One-off setup: ${selectionIsFrom(items) ? "from " : ""}${eur(totals.oneOff)}${v}`,
     ...(totals.monthly ? [`Monthly: ${eur(totals.monthly)}/mo${v}`] : []),
   ].join("\n");
 }

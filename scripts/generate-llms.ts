@@ -1,4 +1,4 @@
-import { aftercare, emailSetup, monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, entry, terms, eur, priceLabel, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
+import { aftercare, emailSetup, monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, entry, terms, eur, priceLabel, refresh, refreshNotes, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
 import { writeFileSync } from "node:fs";
 import { projects } from "../src/data/projects";
 import { YEARS_EXPERIENCE, CV_URL, PORTFOLIO_EMAIL, LINKEDIN_URL } from "../src/data/profile";
@@ -63,6 +63,8 @@ Free intro call and fixed written quote within ${entry.introCall.quoteWithin}. D
 ### Website tiers (one ladder for every business)
 
 ${tiers.map(packageLine).join("\n")}
+- ${refresh.name} (existing site, up to 5 pages): ${priceLabel(refresh)}; ${monthlyLabel(refresh)}. Live in ${refresh.live}.
+${refreshNotes()}
 Need more? Bespoke builds from ${eur(bespokeFrom)} + VAT, quoted in writing.
 Industry pages (${Object.values(segments).map(s => s.title).join(", ")}) reuse these tiers.
 

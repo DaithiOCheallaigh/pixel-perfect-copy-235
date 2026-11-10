@@ -4,7 +4,7 @@ import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { bespokeLine, monthlyLabel, addOns, availability, carePlans, careTerms, eur, priceLabel, terms, vatFootnote, webLadder } from "@/data/pricing";
+import { bespokeLine, monthlyLabel, addOns, availability, carePlans, careTerms, eur, priceLabel, refresh, refreshNotes, terms, vatFootnote, webLadder } from "@/data/pricing";
 import { usePageDescription } from "@/hooks/usePageDescription";
 
 interface RecentProject {
@@ -34,7 +34,7 @@ const extras = [
   ["Extra work", `${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks`],
 ];
 const WebDesignServices = () => {
-  const description = `Professional business websites from ${eur(webLadder[0]?.price ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery from Dublin, for clinics, trades, salons and more.`;
+  const description = `Professional business websites from ${eur(webLadder[0]?.price ?? 0)} and website refreshes from ${eur(refresh.priceFrom ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery from Dublin, for clinics, trades, salons and more.`;
   usePageDescription(description);
   return (
   <main className="bg-background pt-24 text-foreground">
@@ -72,6 +72,18 @@ const WebDesignServices = () => {
           </article>)}
         </div>
         <p className="mt-6 text-sm"><Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link></p>
+        <div className="mt-12"><SectionLabel>Already have a website?</SectionLabel>
+          <div className="grid gap-4 md:grid-cols-3">
+            <article className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
+              <h2 className="text-xl font-bold">{refresh.name}</h2><p className="mt-3 text-2xl font-bold">{priceLabel(refresh)}</p>
+              <p className="mt-2 text-sm text-primary">{monthlyLabel(refresh)}</p>
+              <ul className="mt-6 flex-1 space-y-3">{refresh.scope?.map(item => <li key={item} className="flex gap-2 text-sm text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" />{item}</li>)}</ul>
+              <p className="mt-5 text-xs text-muted-foreground">Live in {refresh.live}</p>
+              <Button asChild variant="outline" className="mt-6"><Link to="/services/start-project">Get a fixed quote <ArrowRight /></Link></Button>
+            </article>
+          </div>
+          <p className="mt-4 text-xs text-muted-foreground">{refreshNotes()}</p>
+        </div>
         <p className="mt-6 text-sm text-muted-foreground">A revision round is one consolidated written list within 5 working days; new work after design sign-off is {eur(addOns.hourly)}/hour.</p>
         <div className="mt-12">
           <SectionLabel>Add-ons</SectionLabel>

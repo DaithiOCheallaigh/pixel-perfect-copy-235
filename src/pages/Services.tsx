@@ -46,7 +46,7 @@ import {
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { Button } from "@/components/ui/button";
-import { addOns, aftercare, emailSetup, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, segments, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
+import { addOns, aftercare, emailSetup, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, refresh, refreshNotes, segments, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
@@ -304,7 +304,7 @@ const Services = () => {
           </ScrollReveal>
 
           <div className="mt-12">
-            <StepHeading n={1} title="Pick your website" body="One ladder for every business. Each tier has a fixed scope, a launch date in writing and your year-1 domain included." />
+            <StepHeading n={1} title="Pick your website" body="Building new? Pick a tier. Already have a site? Choose Refresh. Every option has a fixed scope, a launch date in writing and your year-1 domain included." />
             <div className="grid gap-4 md:grid-cols-3">
               {tiers.map((tier, i) => (
                 <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => setTierId((cur) => (cur === tier.id ? null : tier.id))}>
@@ -327,6 +327,30 @@ const Services = () => {
             <p className="mt-6 text-sm text-muted-foreground">
               <Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link>
             </p>
+            <div className="mt-10">
+              <p className="font-mono-label mb-4 text-muted-foreground">Already have a website?</p>
+              <div className="grid gap-4 md:grid-cols-3">
+                <SelectableCard index={0} selected={tierId === refresh.id} label={`${refresh.name}, ${priceLabel(refresh)}`} onToggle={() => setTierId((cur) => (cur === refresh.id ? null : refresh.id))}>
+                  <h4 className={`text-xl font-bold ${HOVER_TEXT}`}>{refresh.name}</h4>
+                  <p className={`mt-3 text-2xl font-bold ${HOVER_TEXT}`}>{priceLabel(refresh)}</p>
+                  <p className={`mt-2 text-sm ${accentText(tierId === refresh.id)}`}>{monthlyLabel(refresh)}</p>
+                  <ul className="mt-6 flex-1 space-y-3">
+                    {refresh.scope?.map((item) => (
+                      <li key={item} className={`flex gap-2 text-sm text-muted-foreground ${HOVER_TEXT}`}>
+                        <Check className={`mt-1 h-4 w-4 shrink-0 ${accentText(tierId === refresh.id)}`} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className={`mt-5 text-xs text-muted-foreground ${HOVER_TEXT}`}>Live in {refresh.live}</p>
+                  <span className={`mt-5 text-sm font-semibold ${accentText(tierId === refresh.id)}`}>{tierId === refresh.id ? "Selected" : "Select"}</span>
+                </SelectableCard>
+                <div className="md:col-span-2">
+                  <p className="max-w-md text-muted-foreground">Keep your domain and your content. I redesign and rebuild what you already have, fix speed and mobile, and redirect every old address so Google keeps sending people to you. For a one-page site, Launch is usually better value.</p>
+                  <p className="mt-4 max-w-md text-xs text-muted-foreground">{refreshNotes()}</p>
+                </div>
+              </div>
+            </div>
 
             <StepHeading n={2} title="Once it's live, who looks after it?" body="Hosting, domain renewal, security updates and small edits all need an owner. Pick one of the two; you can change later." />
             <div className="grid gap-6 md:grid-cols-2">
