@@ -1,13 +1,13 @@
 # Architecture rules
 
-- Portfolio hero uses the original React Bits Pro VaporType at src/components/react-bits/vapor-type.tsx, kept byte-identical and lazy-loaded with a static h1 fallback; this keeps Three.js out of the home chunk and preserves reduced-motion static text.
+- Portfolio hero uses the original React Bits Pro VaporType at src/components/react-bits/vapor-type.tsx, kept byte-identical and lazy-loaded with a static h1 fallback; keeps Three.js out of the home chunk.
 
 - MedEd Workspace's route gate validates the password and signed, expiring access tokens in an edge function; never embed the password or trust a client-only unlock flag; it is a display gate only, so truly sensitive content needs an authorized backend.
 - Keep the supplied MedEd Workspace student prototype unchanged as a public standalone HTML document; mount its iframe eagerly on desktop only (width read synchronously), so it is ready on arrival while phones never download it.
 - User-supplied HTML animations stay byte-identical in public/embeds and mount as transparent iframes, preserving their theme handling.
 - Lead-form edge functions validate, HTML-escape and send through supabase/functions/_shared/email-utils.ts, and send-service-selection prices services from its own server-side map; client-sent titles and prices are never trusted.
 - New/migrated frontend pricing uses src/data/pricing.ts and its formatters to avoid duplicated prices and inconsistent VAT.
-- `tiers` in src/data/pricing.ts is Launch, Website Refresh (from-price, existing sites) and Business Site (with a €5,000 `upgrade` full build, selection id `business-full`); Business Plus was merged into Business Site on 2026-11-10. With `addOnCatalogue` and care plans it is the only website pricing; industry pages are landing pages that reuse it, with editorial proof and FAQs in src/data/segmentPages.ts and retired industry URLs redirected by React Router. This keeps scopes, VAT and care terms consistent without per-segment ladders.
+- `tiers` in src/data/pricing.ts (Launch, Website Refresh from-price, Business Site) plus `businessOption` page options (5–10 pages, ids `business`/`business-N`, shown via a Pages dropdown in a SelectableCard footer), `addOnCatalogue` and care plans are the only website pricing; industry pages reuse them (proof/FAQs in src/data/segmentPages.ts, retired URLs redirected), keeping scopes, VAT and care terms consistent.
 - The services picker reveals Steps 2–3 only after a website is chosen and scrolls to Step 2 once.
 - send-consultation requires only the About You fields; description and budget are optional.
 - Pricing, segment copy and FAQs never name third-party platform brands; they say "your own booking system" or "your ordering provider", so the offer stays vendor-neutral.
@@ -30,3 +30,4 @@
 - The services Hub is a cropped, aspect-reserved lazy Hairline iframe; keep kernel/bench blocks, token pink, themes, controls, reduced motion; no npm.
 - React Bits Pro components in src/components/react-bits stay byte-identical and are lazy-loaded; HoverPreview mounts only on idle fine-pointer devices (plain Links otherwise) and BlurHighlight falls back to static marks under reduced motion, keeping the motion package out of first-load chunks.
 - MedEd components pages derive from src/data/sparkComponents.ts, sit behind the Spark gate and use only scoped --sc-* tokens.
+- The package builder has no step labels, sits above SocialProof, and shows no care terms; edits are quoted per job in services copy.

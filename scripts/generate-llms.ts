@@ -1,4 +1,4 @@
-import { aftercare, emailSetup, monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, entry, terms, eur, priceLabel, businessFull, refreshNotes, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
+import { aftercare, emailSetup, monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, entry, terms, eur, priceLabel, BUSINESS_BASE_PAGES, BUSINESS_MAX_PAGES, BUSINESS_PER_PAGE, businessOption, refreshNotes, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
 import { writeFileSync } from "node:fs";
 import { projects } from "../src/data/projects";
 import { YEARS_EXPERIENCE, CV_URL, PORTFOLIO_EMAIL, LINKEDIN_URL } from "../src/data/profile";
@@ -63,7 +63,7 @@ Free intro call and fixed written quote within ${entry.introCall.quoteWithin}. D
 ### Website tiers (one ladder for every business)
 
 ${tiers.map(packageLine).join("\n")}
-- ${businessFull.name}: ${priceLabel(businessFull)}. Live in ${businessFull.live}. Up to 10 pages, blog, booking or CRM integration, local SEO setup, 3 revision rounds.
+- Business Site pages: ${BUSINESS_BASE_PAGES} pages ${eur(businessOption(BUSINESS_BASE_PAGES).price)}, then ${eur(BUSINESS_PER_PAGE)} per extra page up to ${BUSINESS_MAX_PAGES} (${eur(businessOption(BUSINESS_MAX_PAGES).price)}); blog from 6 pages, booking or CRM integration from 8, local SEO setup and 3 revision rounds at 10.
 ${refreshNotes()}
 Need more? Bespoke builds from ${eur(bespokeFrom)} + VAT, quoted in writing.
 Industry pages (${Object.values(segments).map(s => s.title).join(", ")}) reuse these tiers.
@@ -71,7 +71,7 @@ Industry pages (${Object.values(segments).map(s => s.title).join(", ")}) reuse t
 ### Add-ons
 
 ${addOnCatalogue.map(a => `- ${a.name}: ${addOnPriceLabel(a)}.`).join("\n")}
-- Extra email inbox ${eur(addOns.email.extraInbox)}; migration ${eur(addOns.email.migrationPerMailbox)} per mailbox; licences billed directly. Extra work ${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks.
+- Extra email inbox ${eur(addOns.email.extraInbox)}; migration ${eur(addOns.email.migrationPerMailbox)} per mailbox; licences billed directly. Extra work quoted per job.
 
 ### After launch
 

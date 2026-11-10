@@ -6,7 +6,7 @@ export const YEARS_EXPERIENCE = "over 10";
 export const CALENDLY_URL = "https://calendly.com/lacunaconsulting-info/30min";
 export const CONTACT_EMAIL = "info@lacunaconsulting.com";
 export const availability = { headline: "Now booking new projects", nextStart: "November 2026", productStudioFrom: "November 2026" };
-export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[]; upgrade?: Pkg };
+export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[] };
 export const entry = {
   introCall: { name: "Free intro call + fixed written quote", price: 0, quoteWithin: "48 hours" },
   healthCheck: { name: "Digital Health Check", price: 250, onSiteExtra: 100, creditShare: 0.5, scope: "custom work only (AI, automation, multi-site)" },
@@ -38,7 +38,7 @@ export const segments = {
 export const webLadder: Pkg[] = [
   { id: "launch", name: "Launch", price: 750, monthly: 70, selfServe: true, live: "7 working days", scope: ["1-page site", "Year-1 domain and 12 months' hosting included", "Contact or booking button", "Google profile claim", "1 revision round"] },
   { id: "refresh", name: "Website Refresh", priceFrom: 1500, monthly: 140, live: "2–3 weeks from access to your current site", scope: ["Your existing content and photos, redesigned page by page (up to 5 pages)", "Mobile and speed fixes", "Every old address redirected so you keep your Google rankings", "Forms, analytics and Google profile checked and reconnected", "Moved to new hosting if you want (see step 2)", "1 revision round"] },
-  { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"], upgrade: { id: "business-full", name: "Business Site, full build", price: 5000, live: "5–6 weeks", scope: ["Up to 10 pages", "Blog", "Booking or CRM integration", "Local SEO setup (Google profile + 2 location pages)", "3 revision rounds"] } },
+  { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"] },
   { id: "bespoke", name: "Bespoke", priceFrom: 7500, live: "8–12 weeks", scope: ["Custom functionality or e-commerce", "Single point of contact: me"] },
 ];
 export const carePlans = [
@@ -85,7 +85,7 @@ export function renderPricingPrompt(): string {
   lines.push("\nOther businesses (websites):");
   for (const p of webLadder) {
     lines.push(`- ${p.name}: ${withMonthly(p)}. Live in ${p.live}.`);
-    if (p.upgrade) lines.push(`- ${p.upgrade.name}: ${withMonthly(p.upgrade)}. Live in ${p.upgrade.live}.`);
+    if (p.id === "business") lines.push("- Business Site pages: 5 pages €2,500, then €500 per extra page up to 10 (€5,000); blog from 6 pages, booking or CRM integration from 8, local SEO setup and 3 revision rounds at 10.");
   }
   lines.push("\nCare plans (monthly):");
   for (const c of carePlans) lines.push(`- ${c.name}: ${eur(c.monthly)}/mo${vatSuffix()}.`);
@@ -96,7 +96,7 @@ export function renderPricingPrompt(): string {
   lines.push(`- Email setup ${eur(addOns.email.setup)}${v} (${addOns.email.inboxesIncluded} inboxes, licences billed directly).`);
   lines.push(`- AI website assistant ${eur(addOns.aiAssistant.setup)} + ${eur(addOns.aiAssistant.monthly)}/mo${v}; missed-call text-back ${eur(addOns.missedCall.monthly)}/mo${v}; AI receptionist ${eur(addOns.aiReceptionist.setup)} + ${eur(addOns.aiReceptionist.monthly)}/mo${v}.`);
   lines.push(`- Social setup ${eur(addOns.socialSetup)}${v}; posting ${eur(addOns.socialPosting.monthly)}/mo${v} (${addOns.socialPosting.posts} posts).`);
-  lines.push(`- CRM starter ${eur(addOns.crmStarter)}${v}; brand starter ${eur(addOns.brandStarter)}${v}; copywriting ${eur(addOns.copyPerPage)}/page${v}; extra work ${eur(addOns.hourly)}/hour${v}.`);
+  lines.push(`- CRM starter ${eur(addOns.crmStarter)}${v}; brand starter ${eur(addOns.brandStarter)}${v}; copywriting ${eur(addOns.copyPerPage)}/page${v}; extra work quoted per job.`);
   lines.push("\nProduct Studio:");
   lines.push(`- ${entry.aiAudit.name} ${eur(entry.aiAudit.price)}${v} (half credited, up to ${entry.aiAudit.maxStaff} staff).`);
   lines.push(`- Automation Sprint typically ${eur(studio.automationSprintRange[0])}–${eur(studio.automationSprintRange[1])}${v}, fixed price agreed in writing.`);

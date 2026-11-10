@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link, Navigate, useLocation } from "react-router-dom";
 import { resolveLegacyTarget } from "@/routing/resolveLegacyTarget";
 import { motion } from "framer-motion";
@@ -8,11 +9,13 @@ import { SEO } from "@/components/SEO";
 import { fitDescription } from "@/lib/seoDescription";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CALENDLY_URL, addOnCatalogue, addOnPriceLabel, bespokeLine, carePlans, refreshNotes, careTerms, eur, priceLabel, monthlyLabel, segments, tiers, vatFootnote } from "@/data/pricing";
+import { CALENDLY_URL, addOnCatalogue, addOnPriceLabel, bespokeLine, businessOption, carePlans, refreshNotes, careTerms, eur, priceLabel, monthlyLabel, segments, tiers, vatFootnote } from "@/data/pricing";
+import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
 import { clinicCompliance, getSegmentKey, grantNote, legacySegmentRedirects, segmentPages } from "@/data/segmentPages";
 
 const IndustryLanding = () => {
   const { slug } = useParams<{ slug: string }>();
+  const [businessPages, setBusinessPages] = useState(5);
   const { search, hash } = useLocation();
   const redirect = slug ? legacySegmentRedirects[slug] : undefined;
   if (redirect) return <Navigate to={resolveLegacyTarget(redirect, {}, search, hash)} replace />;
@@ -81,21 +84,17 @@ const IndustryLanding = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal><SectionLabel>Fixed scope</SectionLabel><h2 className="text-2xl font-bold md:text-3xl">Packages</h2><p className="mt-4 max-w-3xl text-muted-foreground">{segment.tierNote}</p></ScrollReveal>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {tiers.map((tier, i) => {
+              {tiers.map((baseTier, i) => {
+                const tier = baseTier.id === "business" ? { ...baseTier, ...businessOption(businessPages), id: baseTier.id } : baseTier;
                 const recommended = tier.id === segment.recommendedTier;
                 return <ScrollReveal key={tier.id} delay={i * 0.08}>
                 <article className={`relative flex h-full flex-col rounded-xl border bg-card p-6 ${recommended ? "border-primary" : "border-border"}`}>
                   {recommended && <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Recommended for most {audience}</span>}
-                  {tier.id === "refresh" && <p className="font-mono-label text-muted-foreground">Already have a website?</p>}
-                  <h3 className={`text-lg font-bold ${tier.id === "refresh" ? "mt-1" : ""}`}>{tier.name}</h3>
+                  <h3 className="text-lg font-bold">{tier.name}</h3>
                   <p className="mt-4 text-2xl font-bold text-primary">{priceLabel(tier)}</p>
                   <p className="mt-2 min-h-5 text-sm text-muted-foreground">{tier.monthly ? monthlyLabel(tier) : ""}</p>
                   <ul className="mt-6 flex-1 space-y-3">{tier.scope?.map((item) => <li key={item} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" /><span>{item}</span></li>)}</ul>
-                  {tier.upgrade && <div className="mt-6 border-t border-border pt-4">
-                    <p className="text-sm font-semibold">Full build {priceLabel(tier.upgrade)}</p>
-                    <ul className="mt-2 space-y-1.5">{tier.upgrade.scope?.map((item) => <li key={item} className="flex gap-2 text-xs text-muted-foreground"><Check className="mt-0.5 h-3 w-3 shrink-0 text-primary" /><span>{item}</span></li>)}</ul>
-                    <p className="mt-2 text-xs text-muted-foreground">Live in {tier.upgrade.live}</p>
-                  </div>}
+                  {baseTier.id === "business" && <div className="mt-6 border-t border-border pt-4"><BusinessPagesSelect pages={businessPages} onChange={setBusinessPages} /></div>}
                   <p className="mt-6 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">Live in {tier.live} from a complete intake</p>
                 </article>
               </ScrollReveal>;
