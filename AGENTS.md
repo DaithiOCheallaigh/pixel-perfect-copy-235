@@ -27,6 +27,6 @@
 - Pages are lazy-loaded route chunks in App.tsx while layouts, LegacyRedirect and NotFound stay eager; this keeps the first download small.
 - Portfolio pages do not link to /services (the Skills expertise list is intentionally plain text, not links); the only cross-link is from the services footer back to the portfolio, so recruiters are not sent into the Lacuna Digital services site.
 - Case studies share src/components/case-study/CaseLayout.tsx and CaseImage and follow one seven-stage story order; data-driven pages place images by `stage`/`with` in projects.ts and the next project follows /work order via src/data/caseStudies.ts to avoid per-project layout hacks.
-- The services Hub uses a cropped, aspect-reserved lazy Hairline iframe with flat projected inlays; preserve kernel/bench blocks, parent-token pink, themes, tile controls and reduced motion; no npm.
+- The services Hub is a cropped, aspect-reserved lazy Hairline iframe; keep kernel/bench blocks, token pink, themes, controls, reduced motion; no npm.
 - React Bits Pro components in src/components/react-bits stay byte-identical and are lazy-loaded; HoverPreview mounts only on idle fine-pointer devices (plain Links otherwise) and BlurHighlight falls back to static marks under reduced motion, keeping the motion package out of first-load chunks.
-- MedEd Workspace components (index of static thumbnails plus /:slug detail pages with live stages) derive from src/data/sparkComponents.ts, sit behind the Spark gate and theme only via scoped --sc-* variables; entries stay easy to add.
+- MedEd components pages derive from src/data/sparkComponents.ts, sit behind the Spark gate and use only scoped --sc-* tokens.
