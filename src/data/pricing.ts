@@ -52,7 +52,7 @@ export const segments = {
   salons: { title: "Salons & Barbers", slug: "salons-barbers", tagline: "Book direct.", growthModule: "4 Instagram posts a month from your photos", careMinMonths: 3, growDigital: true,
     recommendedTier: "launch" as TierId, tierNote: "Most salons and barbers start with Launch: one page with your service menu and a Book button into your own booking system.", recommendedAddOns: ["booking", "gbp", "social"] as AddOnId[] },
   tours: { title: "Tours & Experiences", slug: "tours-experiences", tagline: "More direct bookings, less commission.", growthModule: "listing checks + seasonal pricing update", careMinMonths: 6, growDigital: false,
-    recommendedTier: "business" as TierId, tierNote: "Most tour operators choose the Business Site full build: up to ten pages, a blog for itineraries and your own booking engine embedded.", recommendedAddOns: ["gbp", "stripe", "ai-assistant"] as AddOnId[] },
+    recommendedTier: "business" as TierId, tierNote: "Most tour operators choose a Business Site of 8 pages or more: a blog for itineraries and your own booking engine embedded.", recommendedAddOns: ["gbp", "stripe", "ai-assistant"] as AddOnId[] },
 };
 export const carePlans = [
   { id: "care", name: "Care", monthly: 65, includes: ["Hosting, SSL, backups, uptime monitoring", "Security updates and .ie renewal", "30 minutes of edits a month", "Reply within 1 business day"] },
