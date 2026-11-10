@@ -75,3 +75,40 @@ export const addOnSetupLabel = (a: AddOn) => a.setup === undefined ? undefined :
 export const addOnMonthlyLabel = (a: AddOn) => a.monthly === undefined ? undefined : `${eur(a.monthly)}/mo${vatSuffix()}`;
 export const addOnPriceLabel = (a: AddOn) => [addOnSetupLabel(a), addOnMonthlyLabel(a)].filter(Boolean).join(" + ").replace(/ \+ VAT \+ /, " + ");
 export const bespokeLine = () => `Need more? Bespoke builds from ${eur(bespokeFrom)}${vatSuffix()} — get a quote`;
+
+/** Services picker step 2: who looks after the site after launch. */
+export const aftercare = {
+  selfManaged: {
+    id: "self-managed",
+    name: "I'll look after it myself",
+    priceLine: "Free handover",
+    includes: [
+      "At launch the site, hosting and domain go into accounts in your name",
+      "You pay the hosting and domain providers directly",
+      "30-minute handover call and a short written guide",
+      `Edits when you need them at ${eur(addOns.hourly)}/hour`,
+    ],
+  },
+  managed: {
+    name: "Lacuna looks after it",
+    priceLine: `Care plans from ${eur(carePlans[0].monthly)}/mo`,
+    includes: [
+      "Hosting, SSL, backups and uptime monitoring",
+      "Security updates and domain renewal",
+      "Email accounts managed within your monthly edit time",
+      "A set amount of edit time every month",
+    ],
+  },
+};
+/** Services picker step 3: optional email on the client's domain. */
+export const emailSetup = {
+  id: "email-setup",
+  name: "Email setup",
+  setup: addOns.email.setup,
+  includes: [
+    `${addOns.email.inboxesIncluded} inboxes set up on your domain`,
+    "Tested on your phone and laptop",
+    "Licences billed to you by the provider",
+    `Extra inboxes ${eur(addOns.email.extraInbox)} each; moving an existing mailbox ${eur(addOns.email.migrationPerMailbox)} each`,
+  ],
+};
