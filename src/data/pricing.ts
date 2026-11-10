@@ -5,22 +5,24 @@ export { YEARS_EXPERIENCE } from "./profile";
 export const CALENDLY_URL = "https://calendly.com/lacunaconsulting-info/30min";
 export const CONTACT_EMAIL = "info@lacunaconsulting.com";
 export const availability = { headline: "Now booking new projects", nextStart: "November 2026", productStudioFrom: "November 2026" };
-export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[] };
+export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[]; upgrade?: Pkg };
 export const entry = {
   introCall: { name: "Free intro call + fixed written quote", price: 0, quoteWithin: "48 hours" },
   healthCheck: { name: "Digital Health Check", price: 250, onSiteExtra: 100, creditShare: 0.5, scope: "custom work only (AI, automation, multi-site)" },
   aiAudit: { name: "AI Opportunity Audit", price: 1250, creditShare: 0.5, maxStaff: 15 },
 };
-export type TierId = "launch" | "business" | "business-plus";
+export type TierId = "launch" | "refresh" | "business";
 export type AddOnId = "extra-page" | "gbp" | "booking" | "stripe" | "email" | "brand-starter" | "copywriting" | "ai-assistant" | "missed-call" | "ai-receptionist" | "crm-starter" | "social";
+/** Existing-site redesign (from-price). */
+export const refresh: Pkg = { id: "refresh", name: "Website Refresh", priceFrom: 1500, monthly: 140, live: "2–3 weeks from access to your current site", scope: ["Your existing content and photos, redesigned page by page (up to 5 pages)", "Mobile and speed fixes", "Every old address redirected so you keep your Google rankings", "Forms, analytics and Google profile checked and reconnected", "Moved to new hosting if you want (see step 2)", "1 revision round"] };
+/** The Business Site full build, offered as an upgrade inside the Business card (selection id business-full). */
+export const businessFull: Pkg = { id: "business-full", name: "Business Site, full build", price: 5000, live: "5–6 weeks", scope: ["Up to 10 pages", "Blog", "Booking or CRM integration", "Local SEO setup (Google profile + 2 location pages)", "3 revision rounds"] };
 /** The only website pricing: one three-tier ladder shared by every services page. */
 export const tiers: Pkg[] = [
   { id: "launch", name: "Launch", price: 750, monthly: 70, selfServe: true, live: "7 working days", scope: ["1-page site", "Year-1 domain and 12 months' hosting included", "Contact or booking button", "Google profile claim", "1 revision round"] },
-  { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"] },
-  { id: "business-plus", name: "Business Plus", price: 5000, live: "5–6 weeks", scope: ["Up to 10 pages", "Blog", "Booking or CRM integration", "Local SEO setup (Google profile + 2 location pages)", "3 revision rounds"] },
+  refresh,
+  { id: "business", name: "Business Site", price: 2500, live: "3–4 weeks", scope: ["Up to 5 pages", "Contact or quote forms", "Basic on-page SEO", "Analytics with consent banner", "Google profile claim", "2 revision rounds"], upgrade: businessFull },
 ];
-/** Existing-site redesign; sits beside the tier ladder, not inside it. */
-export const refresh: Pkg = { id: "refresh", name: "Website Refresh", priceFrom: 1500, monthly: 140, live: "2–3 weeks from access to your current site", scope: ["Your existing content and photos, redesigned page by page (up to 5 pages)", "Mobile and speed fixes", "Every old address redirected so you keep your Google rankings", "Forms, analytics and Google profile checked and reconnected", "Moved to new hosting if you want (see step 2)", "1 revision round"] };
 /** Kept as an alias for existing imports. */
 export const webLadder = tiers;
 export const bespokeFrom = 7500;
@@ -32,7 +34,7 @@ export const segments = {
   salons: { title: "Salons & Barbers", slug: "salons-barbers", tagline: "Book direct.", growthModule: "4 Instagram posts a month from your photos", careMinMonths: 3, growDigital: true,
     recommendedTier: "launch" as TierId, tierNote: "Most salons and barbers start with Launch: one page with your service menu and a Book button into your own booking system.", recommendedAddOns: ["booking", "gbp", "social"] as AddOnId[] },
   tours: { title: "Tours & Experiences", slug: "tours-experiences", tagline: "More direct bookings, less commission.", growthModule: "listing checks + seasonal pricing update", careMinMonths: 6, growDigital: false,
-    recommendedTier: "business-plus" as TierId, tierNote: "Most tour operators choose Business Plus: up to ten pages, a blog for itineraries and your own booking engine embedded.", recommendedAddOns: ["gbp", "stripe", "ai-assistant"] as AddOnId[] },
+    recommendedTier: "business" as TierId, tierNote: "Most tour operators choose the Business Site full build: up to ten pages, a blog for itineraries and your own booking engine embedded.", recommendedAddOns: ["gbp", "stripe", "ai-assistant"] as AddOnId[] },
 };
 export const carePlans = [
   { id: "care", name: "Care", monthly: 65, includes: ["Hosting, SSL, backups, uptime monitoring", "Security updates and .ie renewal", "30 minutes of edits a month", "Reply within 1 business day"] },

@@ -62,7 +62,7 @@ export const segmentPages: Record<SegmentKey, SegmentPage> = {
     ],
     faqs: [
       tierFaq,
-      { question: "Do I need a new booking engine?", answer: "Not necessarily. I check your current setup first. Business Plus includes embedding your own booking engine in your site." },
+      { question: "Do I need a new booking engine?", answer: "Not necessarily. I check your current setup first. The Business Site full build includes embedding your own booking engine in your site." },
       { question: "Who pays the booking-engine fees?", answer: "The provider bills you directly. My price is for the setup and integration scope, not a resale of its licences." },
       { question: "Can you guarantee more bookings?", answer: "No. I can improve the journey and measure how it performs, but demand, traffic, availability and pricing also affect bookings." },
       startFaq,
