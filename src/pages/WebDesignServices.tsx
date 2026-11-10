@@ -91,7 +91,7 @@ const WebDesignServices = () => {
     </section>
     <section className="px-6 py-12 md:px-12 lg:px-24"><div className="mx-auto max-w-6xl space-y-4 text-sm text-muted-foreground">
       <SectionLabel>Good to Know</SectionLabel>
-      <p>Year-1 domain included. Launch includes 12 months' hosting; after that, hosting is in every care plan, or move it to your own account free.</p>
+      <p>Domain registration is billed to you by the registrar. Hosting is included in every care plan, or runs in your own account if you look after the site yourself.</p>
       <p>Professional email licences are billed to you directly.</p>
       <p>Under {eur(terms.upfrontBelow)}: {terms.upTo1000}. Up to {eur(terms.splitThrough)}: {terms.to3000}. Above: {terms.over3000}.</p>
       <p>{terms.payMonthlyNote}.</p><p>{vatFootnote()}</p>

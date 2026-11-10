@@ -1,4 +1,4 @@
-import { aftercare, emailSetup, monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, entry, terms, eur, priceLabel, BUSINESS_BASE_PAGES, BUSINESS_MAX_PAGES, BUSINESS_PER_PAGE, businessOption, refreshNotes, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
+import { aftercare, monthlyLabel, segments, tiers, bespokeFrom, addOnCatalogue, addOnPriceLabel, carePlans, careTerms, addOns, entry, terms, eur, priceLabel, BUSINESS_BASE_PAGES, BUSINESS_MAX_PAGES, BUSINESS_PER_PAGE, businessOption, refreshNotes, vatFootnote, CONTACT_EMAIL, CALENDLY_URL } from "../src/data/pricing";
 import { writeFileSync } from "node:fs";
 import { projects } from "../src/data/projects";
 import { YEARS_EXPERIENCE, CV_URL, PORTFOLIO_EMAIL, LINKEDIN_URL } from "../src/data/profile";
@@ -77,10 +77,6 @@ ${addOnCatalogue.map(a => `- ${a.name}: ${addOnPriceLabel(a)}.`).join("\n")}
 
 - ${aftercare.selfManaged.name}: ${aftercare.selfManaged.priceLine}. ${aftercare.selfManaged.includes.join("; ")}.
 - ${aftercare.managed.name}: ${aftercare.managed.priceLine}. ${aftercare.managed.includes.join("; ")}.
-
-### Email setup
-
-- ${emailSetup.name}: ${eur(emailSetup.setup)} + VAT one-off. ${emailSetup.includes.join("; ")}.
 
 ### Care plans
 

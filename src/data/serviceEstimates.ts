@@ -1,13 +1,13 @@
-import { addOns, aftercare, businessOptions, carePlans, emailSetup, eur, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
+import { aftercare, businessOptions, carePlans, eur, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
 
 /** Setup and recurring fees are separate; optional website instalments are not added to setup. */
 export type Fee = { oneOff: number; monthly: number };
-export type SelectionKind = "tier" | "aftercare" | "care" | "extra";
+export type SelectionKind = "tier" | "aftercare" | "care";
 export type SelectionItem = { id: string; kind: SelectionKind; title: string; price: string } & Fee;
 
 export const SELECTION_STORAGE_KEY = "lacuna-services-selection";
 
-/** Price a tier, aftercare choice, care plan or email setup by its catalogue ID; unknown IDs return undefined. */
+/** Price a tier, aftercare choice, or care plan by its catalogue ID; unknown IDs return undefined. */
 export function selectionItem(id: string): SelectionItem | undefined {
   const tier = tiers.find((t) => t.id === id);
   if (tier) return { id, kind: "tier", title: tier.id === "refresh" ? tier.name : `${tier.name} website`, price: priceLabel(tier), oneOff: tier.price ?? tier.priceFrom ?? 0, monthly: 0 };
@@ -16,7 +16,6 @@ export function selectionItem(id: string): SelectionItem | undefined {
   const care = carePlans.find((c) => c.id === id);
   if (care) return { id, kind: "care", title: `${care.name} care plan`, price: `${eur(care.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`, oneOff: 0, monthly: care.monthly };
   if (id === aftercare.selfManaged.id) return { id, kind: "aftercare", title: "Self-managed after launch", price: aftercare.selfManaged.priceLine, oneOff: 0, monthly: 0 };
-  if (id === emailSetup.id) return { id, kind: "extra", title: `Email setup (${addOns.email.inboxesIncluded} inboxes)`, price: `${eur(emailSetup.setup)}${VAT_REGISTERED ? " + VAT" : ""}`, oneOff: emailSetup.setup, monthly: 0 };
   return undefined;
 }
 
