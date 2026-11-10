@@ -12,7 +12,6 @@ const ServicesNavigation = ({ visible }: { visible: boolean }) => {
   const links = [
     { label: "Services", to: "/services" },
     { label: "Web Design", to: "/services/web-design" },
-    { label: "Product Studio", to: "/services/product-studio" },
   ];
 
   const isActive = (path: string) => path === "/services" ? location.pathname === path : location.pathname.startsWith(path);

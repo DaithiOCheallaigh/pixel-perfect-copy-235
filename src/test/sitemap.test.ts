@@ -22,14 +22,14 @@ describe("public sitemap boundaries", () => {
 
   it("caps all services priorities at 0.6", () => {
     const services = entries.filter(entry => entry.getElementsByTagName("loc")[0].textContent?.includes("/services"));
-    expect(services.length).toBe(39);
+    expect(services.length).toBe(38);
     for (const entry of services) {
       expect(Number(entry.getElementsByTagName("priority")[0].textContent)).toBeLessThanOrEqual(0.6);
     }
   });
 
   it("excludes archived free tools and retired industry pages", () => {
-    for (const path of paths) expect(path).not.toMatch(/^\/services\/(tools|trades-home|restaurants-cafes)(\/|$)/);
+    for (const path of paths) expect(path).not.toMatch(/^\/services\/(tools|trades-home|restaurants-cafes|product-studio)(\/|$)/);
   });
 
   it("excludes private, gated, coming-soon and legacy URLs", () => {
@@ -39,7 +39,7 @@ describe("public sitemap boundaries", () => {
   });
 
   it("omits uniform lastmod dates", () => {
-    expect(entries.length).toBe(63);
+    expect(entries.length).toBe(62);
     for (const entry of entries) {
       expect(entry.getElementsByTagName("lastmod")).toHaveLength(0);
     }

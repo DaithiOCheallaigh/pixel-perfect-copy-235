@@ -15,9 +15,6 @@ const ServicesFooter = () => (
         <Link to="/services/web-design" className="text-sm text-muted-foreground transition-colors hover:text-primary">
           Web Design
         </Link>
-        <Link to="/services/product-studio" className="text-sm text-muted-foreground transition-colors hover:text-primary">
-          Product Studio
-        </Link>
         <Link to="/services/terms" className="text-sm text-muted-foreground md:hover:text-primary">Terms</Link>
         <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-muted-foreground md:hover:text-primary">{CONTACT_EMAIL}</a>
         <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground md:hover:text-primary">Book a free call ↗</a>
