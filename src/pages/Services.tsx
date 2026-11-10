@@ -82,7 +82,7 @@ const differentiators = [
 const howItWorks = [
   { icon: Brush2, title: "Designed", body: "A senior product designer, not a template. Every page is built around what your customers actually do: call, book or ask for a quote." },
   { icon: Global, title: "Built and launched", body: "Fixed scope, fixed price and a launch date in writing. Your year-1 domain is included and you own the content and the code." },
-  { icon: ShieldTick, title: "Looked after", body: "Hosting, domain, email and updates handled for you on a care plan, or handed over to you at launch. Your choice, in step 2 below." },
+  { icon: ShieldTick, title: "Looked after", body: "Hosting, domain, email and updates handled for you on a care plan, or handed over to you at launch. Your choice, below." },
 ];
 
 /* ------------------------------------------------------------------ */
