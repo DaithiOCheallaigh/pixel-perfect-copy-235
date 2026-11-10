@@ -41,3 +41,11 @@ describe("Final pricing rules", () => {
   it("reschedules after 15 working days waiting for content", () => expect(CONTENT_PAUSE_WORKING_DAYS).toBe(15));
   it("sets a five-working-day consolidated revision window", () => expect(REVISION_WINDOW_WORKING_DAYS).toBe(5));
 });
+describe("website refresh selection", () => {
+  it("totals refresh + growth + email", () => { expect(selectionTotals([{ id: "refresh" }, { id: "growth" }, { id: "email-setup" }])).toEqual({ oneOff: 1650, monthly: 200 }); });
+  it("summarises as a from-price", () => {
+    const s = selectionSummary([{ id: "refresh" }, { id: "care" }]);
+    expect(s).toContain("- Website Refresh: from €1,500 + VAT");
+    expect(s).toContain("One-off setup: from €1,500 + VAT");
+  });
+});

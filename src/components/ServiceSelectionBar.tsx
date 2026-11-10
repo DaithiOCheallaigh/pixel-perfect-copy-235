@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
-import { SELECTION_STORAGE_KEY, selectionItems, selectionTotals } from "@/data/serviceEstimates";
+import { SELECTION_STORAGE_KEY, selectionItems, selectionIsFrom, selectionTotals } from "@/data/serviceEstimates";
 
 /** Floating running total. Prices come from the catalogue by ID, never from the event payload. */
 const ServiceSelectionBar = () => {
@@ -43,7 +43,7 @@ const ServiceSelectionBar = () => {
           >
             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{items.length}</div>
             <span className="text-left text-sm font-semibold text-foreground">
-              <span className="block" data-testid="selection-oneoff">Setup {eur(totals.oneOff)}{v}</span>
+              <span className="block" data-testid="selection-oneoff">Setup {selectionIsFrom(items) ? "from " : ""}{eur(totals.oneOff)}{v}</span>
               {totals.monthly > 0 && <span className="block text-xs text-muted-foreground" data-testid="selection-monthly">Monthly {eur(totals.monthly)}/mo{v}</span>}
             </span>
             <span className="hidden text-sm font-semibold text-primary sm:inline">Get a fixed quote</span>

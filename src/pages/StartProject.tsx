@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
 import { CONTACT_EMAIL, entry } from "@/data/pricing";
 import { BUDGET_OPTIONS, BUDGET_LABEL, INDUSTRIES } from "@/data/projectIntake";
-import { SELECTION_STORAGE_KEY, selectionItems, selectionSummary, selectionTotals } from "@/data/serviceEstimates";
+import { SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotals } from "@/data/serviceEstimates";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://lgdjivhyveowybzhbqum.supabase.co";
@@ -334,7 +334,7 @@ const StartProject = () => {
             <ul className="mt-3 space-y-1.5">
               {selection.map((s) => <li key={s.id} className="flex justify-between gap-4 text-sm"><span className="text-foreground">{s.title}</span><span className="text-muted-foreground">{s.price}</span></li>)}
             </ul>
-            <p className="mt-3 text-sm font-semibold text-foreground">Setup {eur(selectionTotals(selection).oneOff)}{VAT_REGISTERED ? " + VAT" : ""}{selectionTotals(selection).monthly ? ` · Monthly ${eur(selectionTotals(selection).monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}` : ""}</p>
+            <p className="mt-3 text-sm font-semibold text-foreground">Setup {selectionIsFrom(selection) ? "from " : ""}{eur(selectionTotals(selection).oneOff)}{VAT_REGISTERED ? " + VAT" : ""}{selectionTotals(selection).monthly ? ` · Monthly ${eur(selectionTotals(selection).monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}` : ""}</p>
             <p className="mt-1 text-xs text-muted-foreground">This selection is sent with your brief.</p>
           </section>
         )}
