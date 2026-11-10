@@ -4,6 +4,11 @@
 - [x] Add pricing rule tests and verify selection and desktop/mobile layout.
 - [x] Confirm frontend-only scope and passing preview build.
 
+# Aftercare enquiry choices
+- [ ] Remove website-selection scrolling and the next-step prompt.
+- [ ] Make the enquiry package panel always visible with persisted optional aftercare.
+- [ ] Update architecture rule and verify tests, types and headless flow without sending an enquiry.
+
 # Pricing overhaul — step 2
 - [x] Build six segment pages with existing work proof, packages, care plans and FAQs.
 - [x] Add clinic compliance, restaurant payback and eligible-segment grant notes.
