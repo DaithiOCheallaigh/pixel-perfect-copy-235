@@ -4,7 +4,9 @@ import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { bespokeLine, monthlyLabel, addOns, availability, carePlans, careTerms, eur, priceLabel, refresh, refreshNotes, terms, vatFootnote, webLadder } from "@/data/pricing";
+import { bespokeLine, monthlyLabel, addOns, availability, businessOption, carePlans, careTerms, eur, priceLabel, refresh, refreshNotes, terms, vatFootnote, webLadder } from "@/data/pricing";
+import { useState } from "react";
+import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
 import { usePageDescription } from "@/hooks/usePageDescription";
 
 interface RecentProject {
@@ -31,7 +33,7 @@ const extras = [
   ["Email setup", `${eur(addOns.email.setup)} (${addOns.email.inboxesIncluded} inboxes); +${eur(addOns.email.extraInbox)} per extra inbox. Licences billed to you.`],
   ["Brand starter", eur(addOns.brandStarter)],
   ["Copywriting", `${eur(addOns.copyPerPage)} per page`],
-  ["Extra work", `${eur(addOns.hourly)}/hour in ${terms.extraWorkBlockMinutes}-minute blocks`],
+  ["Extra work", "Quoted per job, based on the work"],
 ];
 const WebDesignServices = () => {
   const description = `Professional business websites from ${eur(webLadder[0]?.price ?? 0)} and website refreshes from ${eur(refresh.priceFrom ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery from Dublin, for clinics, trades, salons and more.`;
@@ -63,22 +65,17 @@ const WebDesignServices = () => {
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Website Packages</SectionLabel>
         <div className="grid gap-4 md:grid-cols-3">
-          {webLadder.map(tier => <article key={tier.id} className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
-            {tier.id === "refresh" && <p className="font-mono-label text-muted-foreground">Already have a website?</p>}
-            <h2 className={`text-xl font-bold ${tier.id === "refresh" ? "mt-1" : ""}`}>{tier.name}</h2><p className="mt-3 text-2xl font-bold">{priceLabel(tier)}</p>
+          {webLadder.map(baseTier => { const tier = baseTier.id === "business" ? { ...baseTier, ...businessOption(pages), id: baseTier.id } : baseTier; return <article key={tier.id} className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
+            <h2 className="text-xl font-bold">{tier.name}</h2><p className="mt-3 text-2xl font-bold">{priceLabel(tier)}</p>
             <p className="mt-2 min-h-5 text-sm text-primary">{tier.monthly ? monthlyLabel(tier) : ""}</p>
             <ul className="mt-6 flex-1 space-y-3">{tier.scope?.map(item => <li key={item} className="flex gap-2 text-sm text-muted-foreground"><Check className="mt-1 h-4 w-4 shrink-0 text-primary" />{item}</li>)}</ul>
-            {tier.upgrade && <div className="mt-6 border-t border-border pt-4">
-              <p className="text-sm font-semibold">Full build {priceLabel(tier.upgrade)}</p>
-              <ul className="mt-2 space-y-1.5">{tier.upgrade.scope?.map(item => <li key={item} className="flex gap-2 text-xs text-muted-foreground"><Check className="mt-0.5 h-3 w-3 shrink-0 text-primary" />{item}</li>)}</ul>
-              <p className="mt-2 text-xs text-muted-foreground">Live in {tier.upgrade.live}</p>
-            </div>}
+            {baseTier.id === "business" && <div className="mt-6 border-t border-border pt-4"><BusinessPagesSelect pages={pages} onChange={setPages} /></div>}
             <p className="mt-5 text-xs text-muted-foreground">Live in {tier.live} from a complete intake</p>
             <Button asChild variant="outline" className="mt-6"><Link to="/services/start-project">Get a fixed quote <ArrowRight /></Link></Button>
-          </article>)}
+          </article>; })}
         </div>
         <div className="mt-6 space-y-2"><p className="text-sm"><Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link></p><p className="text-xs text-muted-foreground">Website Refresh: {refreshNotes()}</p></div>
-        <p className="mt-6 text-sm text-muted-foreground">A revision round is one consolidated written list within 5 working days; new work after design sign-off is {eur(addOns.hourly)}/hour.</p>
+        <p className="mt-6 text-sm text-muted-foreground">A revision round is one consolidated written list within 5 working days; new work after design sign-off is quoted per job.</p>
         <div className="mt-12">
           <SectionLabel>Add-ons</SectionLabel>
           <dl>{extras.map(([name, price]) => <div key={name} className="grid gap-2 border-b border-border py-4 sm:grid-cols-2"><dt className="font-medium">{name}</dt><dd className="text-sm text-muted-foreground sm:text-right">{price}</dd></div>)}</dl>

@@ -46,10 +46,11 @@ import {
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { Button } from "@/components/ui/button";
-import { addOns, aftercare, businessFull, emailSetup, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, refreshNotes, segments, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
+import { addOns, aftercare, businessOption, emailSetup, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, refreshNotes, segments, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
+import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
 
 /* ------------------------------------------------------------------ */
 /*  Differentiators                                                    */
@@ -114,6 +115,7 @@ const SelectableCard = ({
   label,
   index,
   featured,
+  footer,
   children,
 }: {
   selected: boolean;
@@ -121,6 +123,8 @@ const SelectableCard = ({
   label: string;
   index: number;
   featured?: boolean;
+  /** Controls rendered under the card's button (never inside it: nested interactive elements are invalid). */
+  footer?: React.ReactNode;
   children: React.ReactNode;
 }) => {
   const ref = useRef(null);
@@ -133,18 +137,27 @@ const SelectableCard = ({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
     >
-      <Button variant="ghost" type="button" onClick={onToggle} aria-pressed={selected} data-label={label} className={cardClass(selected, featured)}>
-        <SelectIndicator selected={selected} />
-        {children}
-      </Button>
+      {footer ? (
+        <div className={`${cardClass(selected, featured)} !p-0`}>
+          <Button variant="ghost" type="button" onClick={onToggle} aria-pressed={selected} data-label={label} className="relative flex h-auto w-full flex-1 flex-col items-start whitespace-normal rounded-none rounded-t-xl border-0 p-6 text-left hover:bg-transparent dark:hover:bg-transparent">
+            <SelectIndicator selected={selected} />
+            {children}
+          </Button>
+          <div className="w-full border-t border-border p-4" onClick={(e) => e.stopPropagation()}>{footer}</div>
+        </div>
+      ) : (
+        <Button variant="ghost" type="button" onClick={onToggle} aria-pressed={selected} data-label={label} className={cardClass(selected, featured)}>
+          <SelectIndicator selected={selected} />
+          {children}
+        </Button>
+      )}
     </motion.div>
   );
 };
 
-const StepHeading = ({ n, title, body }: { n: number; title: string; body: string }) => (
+const StepHeading = ({ title, body }: { title: string; body: string }) => (
   <div className="mb-6 mt-16 first:mt-0">
-    <p className="font-mono-label text-muted-foreground">Step {n}</p>
-    <h3 className="mt-2 text-2xl font-bold">{title}</h3>
+    <h3 className="text-2xl font-bold">{title}</h3>
     <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{body}</p>
   </div>
 );
@@ -168,7 +181,7 @@ const Services = () => {
   const [aftercareChoice, setAftercareChoice] = useState<"self-managed" | "managed" | null>(null);
   const [careId, setCareId] = useState<string | null>(null);
   const [emailSelected, setEmailSelected] = useState(false);
-  const [fullBuild, setFullBuild] = useState(false);
+  const [businessPages, setBusinessPages] = useState(5);
   const step2Ref = useRef<HTMLDivElement>(null);
   const scrolledToStep2 = useRef(false);
   const reduceMotion = useReducedMotion();
@@ -177,7 +190,6 @@ const Services = () => {
   const chooseTier = (id: string) => {
     const next = tierId === id ? null : id;
     setTierId(next);
-    setFullBuild(false);
     if (!next) {
       // Deselecting the website resets everything that depends on it.
       setAftercareChoice(null);
@@ -204,13 +216,13 @@ const Services = () => {
   useEffect(() => {
     const ids = tierId
       ? [
-          tierId === "business" && fullBuild ? businessFull.id : tierId,
+          tierId === "business" ? businessOption(businessPages).id : tierId,
           ...(aftercareChoice === "self-managed" ? [aftercare.selfManaged.id] : aftercareChoice === "managed" && careId ? [careId] : []),
           ...(emailSelected ? [emailSetup.id] : []),
         ]
       : [];
     window.dispatchEvent(new CustomEvent("service-selection-change", { detail: ids.length ? ids.map((id) => ({ id })) : null }));
-  }, [tierId, fullBuild, aftercareChoice, careId, emailSelected]);
+  }, [tierId, businessPages, aftercareChoice, careId, emailSelected]);
 
   // Clear the floating selection bar when leaving the page
   useEffect(() => {
@@ -262,10 +274,10 @@ const Services = () => {
                 Build your package <ArrowRight className="h-4 w-4" />
               </a>
               <Link
-                to="/services/start-project"
+                to="/services/web-design"
                 className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
               >
-                Get a fixed quote
+                Live examples
               </Link>
             </div>
 
@@ -313,9 +325,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* ── Social Proof ── */}
-      <SocialProof />
-
       {/* ── Choose your package ── */}
       <section id="packages" className="px-6 pt-4 pb-24 md:px-12 lg:px-24">
         <span id="services" className="block scroll-mt-24" aria-hidden="true" />
@@ -331,10 +340,13 @@ const Services = () => {
           <div className="mt-12">
             <StepHeading n={1} title="Pick your website" body="Building new? Pick a tier. Already have a site? Choose Refresh. Every option has a fixed scope, a launch date in writing and your year-1 domain included." />
             <div className="grid gap-4 md:grid-cols-3">
-              {tiers.map((tier, i) => (
-                <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => chooseTier(tier.id)}>
-                  {tier.id === "refresh" && <p className={`font-mono-label text-muted-foreground ${HOVER_TEXT}`}>Already have a website?</p>}
-                  <h4 className={`text-xl font-bold ${tier.id === "refresh" ? "mt-1" : ""} ${HOVER_TEXT}`}>{tier.name}</h4>
+              {tiers.map((baseTier, i) => {
+                const isBusiness = baseTier.id === "business";
+                const tier = isBusiness ? { ...baseTier, ...businessOption(businessPages), id: baseTier.id } : baseTier;
+                return (
+                <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => chooseTier(tier.id)}
+                  footer={isBusiness ? <BusinessPagesSelect pages={businessPages} onChange={(n) => { setBusinessPages(n); if (tierId !== "business") chooseTier("business"); }} /> : undefined}>
+                  <h4 className={`text-xl font-bold ${HOVER_TEXT}`}>{tier.name}</h4>
                   <p className={`mt-3 text-2xl font-bold ${HOVER_TEXT}`}>{priceLabel(tier)}</p>
                   <p className={`mt-2 min-h-5 text-sm ${accentText(tierId === tier.id)}`}>{tier.monthly ? monthlyLabel(tier) : ""}</p>
                   <ul className="mt-6 flex-1 space-y-3">
@@ -345,34 +357,12 @@ const Services = () => {
                       </li>
                     ))}
                   </ul>
-                  {tier.upgrade && (
-                    <div className="mt-6 w-full border-t border-border pt-4">
-                      <p className={`text-sm font-semibold ${HOVER_TEXT}`}>Full build {priceLabel(tier.upgrade)}</p>
-                      <ul className="mt-2 space-y-1.5">
-                        {tier.upgrade.scope?.map((item) => (
-                          <li key={item} className={`flex gap-2 text-xs text-muted-foreground ${HOVER_TEXT}`}>
-                            <Check className={`mt-0.5 h-3 w-3 shrink-0 ${accentText(tierId === tier.id)}`} />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <p className={`mt-2 text-xs text-muted-foreground ${HOVER_TEXT}`}>Live in {tier.upgrade.live}</p>
-                    </div>
-                  )}
                   <p className={`mt-5 text-xs text-muted-foreground ${HOVER_TEXT}`}>Live in {tier.live}{tier.id === "refresh" ? "" : " from a complete intake"}</p>
                   <span className={`mt-5 text-sm font-semibold ${accentText(tierId === tier.id)}`}>{tierId === tier.id ? "Selected" : "Select"}</span>
                 </SelectableCard>
-              ))}
+                );
+              })}
             </div>
-            {tierId === "business" && (
-              <div className="mt-6 max-w-xl">
-                <SelectableCard index={0} selected={fullBuild} label={`Make it the full build, ${eur(businessFull.price ?? 0)} total`} onToggle={() => setFullBuild((v) => !v)}>
-                  <h4 className={`text-xl font-bold ${HOVER_TEXT}`}>Make it the full build</h4>
-                  <p className={`mt-3 text-2xl font-bold ${HOVER_TEXT}`}>{priceLabel(businessFull)} total</p>
-                  <p className={`mt-3 text-sm text-muted-foreground ${HOVER_TEXT}`}>Up to 10 pages, blog, booking or CRM integration, local SEO setup, 3 revision rounds. Live in {businessFull.live}.</p>
-                </SelectableCard>
-              </div>
-            )}
             {selectedTier && !aftercareChoice && (
               <p className="mt-6 text-sm font-semibold text-primary" role="status">
                 {selectedTier.name} selected. Next: choose who looks after it once it's live ↓
@@ -393,7 +383,7 @@ const Services = () => {
               transition={{ duration: reduceMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
             <div ref={step2Ref} className="scroll-mt-24 pt-16">
-            <StepHeading n={2} title="Once it's live, who looks after it?" body="Hosting, domain renewal, security updates and small edits all need an owner. Pick one of the two; you can change later." />
+            <StepHeading title="Once it's live, who looks after it?" body="Hosting, domain renewal, security updates and small edits all need an owner. Pick one of the two; you can change later." />
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               {([
@@ -444,13 +434,8 @@ const Services = () => {
                 </div>
               </div>
             )}
-            <div className="mt-6 space-y-3 text-xs leading-relaxed text-muted-foreground">
-              <p>{careTerms.minimums}. {careTerms.annualPrepay}.</p>
-              <p>{careTerms.exit}</p>
-              <p>Launch includes 12 months' hosting; Refresh and Business Site are hosted on a care plan or on your own account from launch.</p>
-            </div>
 
-            <StepHeading n={3} title="Email on your domain" body="Optional. Professional email at you@yourbusiness.ie, set up and tested on your devices." />
+            <StepHeading title="Email on your domain" body="Optional. Professional email at you@yourbusiness.ie, set up and tested on your devices." />
             <div className="max-w-md">
               <SelectableCard index={0} selected={emailSelected} label={`${emailSetup.name}, ${eur(emailSetup.setup)} one-off`} onToggle={() => setEmailSelected((v) => !v)}>
                 <h4 className={`text-xl font-bold ${HOVER_TEXT}`}>{emailSetup.name}</h4>
@@ -472,7 +457,6 @@ const Services = () => {
             </motion.div>
             )}
             </AnimatePresence>
-            <p className="mt-6 text-xs leading-relaxed text-muted-foreground">{vatFootnote()} {terms.payMonthlyNote}.</p>
           </div>
 
           <p className="mt-12 text-sm text-muted-foreground">
@@ -486,6 +470,9 @@ const Services = () => {
           </p>
         </div>
       </section>
+
+      {/* ── Social Proof ── */}
+      <SocialProof />
 
       {/* ── Why Work With Me ── */}
       <section className="px-6 py-24 md:px-12 lg:px-24">
