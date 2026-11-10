@@ -24,7 +24,7 @@ const useIsDark = () =>
     () => false,
   );
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import {
   Carousel,
@@ -46,7 +46,7 @@ import {
 } from "iconsax-react";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { Button } from "@/components/ui/button";
-import { addOns, aftercare, emailSetup, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, refresh, refreshNotes, segments, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
+import { addOns, aftercare, businessFull, emailSetup, bespokeLine, monthlyLabel, carePlans, careTerms, entry, eur, priceLabel, refreshNotes, segments, terms, tiers, vatFootnote, VAT_REGISTERED } from "@/data/pricing";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
@@ -168,6 +168,31 @@ const Services = () => {
   const [aftercareChoice, setAftercareChoice] = useState<"self-managed" | "managed" | null>(null);
   const [careId, setCareId] = useState<string | null>(null);
   const [emailSelected, setEmailSelected] = useState(false);
+  const [fullBuild, setFullBuild] = useState(false);
+  const step2Ref = useRef<HTMLDivElement>(null);
+  const scrolledToStep2 = useRef(false);
+  const reduceMotion = useReducedMotion();
+  const selectedTier = tiers.find((t) => t.id === tierId);
+
+  const chooseTier = (id: string) => {
+    const next = tierId === id ? null : id;
+    setTierId(next);
+    setFullBuild(false);
+    if (!next) {
+      // Deselecting the website resets everything that depends on it.
+      setAftercareChoice(null);
+      setCareId(null);
+      setEmailSelected(false);
+    }
+  };
+
+  // Scroll to Step 2 the first time a website is chosen, never again on switching.
+  useEffect(() => {
+    if (!tierId || scrolledToStep2.current) return;
+    scrolledToStep2.current = true;
+    const t = window.setTimeout(() => step2Ref.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }), 120);
+    return () => window.clearTimeout(t);
+  }, [tierId, reduceMotion]);
 
   const chooseAftercare = (choice: "self-managed" | "managed") => {
     setAftercareChoice((cur) => (cur === choice ? null : choice));
@@ -179,13 +204,13 @@ const Services = () => {
   useEffect(() => {
     const ids = tierId
       ? [
-          tierId,
+          tierId === "business" && fullBuild ? businessFull.id : tierId,
           ...(aftercareChoice === "self-managed" ? [aftercare.selfManaged.id] : aftercareChoice === "managed" && careId ? [careId] : []),
           ...(emailSelected ? [emailSetup.id] : []),
         ]
       : [];
     window.dispatchEvent(new CustomEvent("service-selection-change", { detail: ids.length ? ids.map((id) => ({ id })) : null }));
-  }, [tierId, aftercareChoice, careId, emailSelected]);
+  }, [tierId, fullBuild, aftercareChoice, careId, emailSelected]);
 
   // Clear the floating selection bar when leaving the page
   useEffect(() => {
@@ -307,10 +332,11 @@ const Services = () => {
             <StepHeading n={1} title="Pick your website" body="Building new? Pick a tier. Already have a site? Choose Refresh. Every option has a fixed scope, a launch date in writing and your year-1 domain included." />
             <div className="grid gap-4 md:grid-cols-3">
               {tiers.map((tier, i) => (
-                <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => setTierId((cur) => (cur === tier.id ? null : tier.id))}>
-                  <h4 className={`text-xl font-bold ${HOVER_TEXT}`}>{tier.name}</h4>
+                <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => chooseTier(tier.id)}>
+                  {tier.id === "refresh" && <p className={`font-mono-label text-muted-foreground ${HOVER_TEXT}`}>Already have a website?</p>}
+                  <h4 className={`text-xl font-bold ${tier.id === "refresh" ? "mt-1" : ""} ${HOVER_TEXT}`}>{tier.name}</h4>
                   <p className={`mt-3 text-2xl font-bold ${HOVER_TEXT}`}>{priceLabel(tier)}</p>
-                  {tier.monthly && <p className={`mt-2 text-sm ${accentText(tierId === tier.id)}`}>{monthlyLabel(tier)}</p>}
+                  <p className={`mt-2 min-h-5 text-sm ${accentText(tierId === tier.id)}`}>{tier.monthly ? monthlyLabel(tier) : ""}</p>
                   <ul className="mt-6 flex-1 space-y-3">
                     {tier.scope?.map((item) => (
                       <li key={item} className={`flex gap-2 text-sm text-muted-foreground ${HOVER_TEXT}`}>
@@ -319,40 +345,56 @@ const Services = () => {
                       </li>
                     ))}
                   </ul>
-                  <p className={`mt-5 text-xs text-muted-foreground ${HOVER_TEXT}`}>Live in {tier.live} from a complete intake</p>
+                  {tier.upgrade && (
+                    <div className="mt-6 w-full border-t border-border pt-4">
+                      <p className={`text-sm font-semibold ${HOVER_TEXT}`}>Full build {priceLabel(tier.upgrade)}</p>
+                      <ul className="mt-2 space-y-1.5">
+                        {tier.upgrade.scope?.map((item) => (
+                          <li key={item} className={`flex gap-2 text-xs text-muted-foreground ${HOVER_TEXT}`}>
+                            <Check className={`mt-0.5 h-3 w-3 shrink-0 ${accentText(tierId === tier.id)}`} />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className={`mt-2 text-xs text-muted-foreground ${HOVER_TEXT}`}>Live in {tier.upgrade.live}</p>
+                    </div>
+                  )}
+                  <p className={`mt-5 text-xs text-muted-foreground ${HOVER_TEXT}`}>Live in {tier.live}{tier.id === "refresh" ? "" : " from a complete intake"}</p>
                   <span className={`mt-5 text-sm font-semibold ${accentText(tierId === tier.id)}`}>{tierId === tier.id ? "Selected" : "Select"}</span>
                 </SelectableCard>
               ))}
             </div>
-            <p className="mt-6 text-sm text-muted-foreground">
-              <Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link>
-            </p>
-            <div className="mt-10">
-              <p className="font-mono-label mb-4 text-muted-foreground">Already have a website?</p>
-              <div className="grid gap-4 md:grid-cols-3">
-                <SelectableCard index={0} selected={tierId === refresh.id} label={`${refresh.name}, ${priceLabel(refresh)}`} onToggle={() => setTierId((cur) => (cur === refresh.id ? null : refresh.id))}>
-                  <h4 className={`text-xl font-bold ${HOVER_TEXT}`}>{refresh.name}</h4>
-                  <p className={`mt-3 text-2xl font-bold ${HOVER_TEXT}`}>{priceLabel(refresh)}</p>
-                  <p className={`mt-2 text-sm ${accentText(tierId === refresh.id)}`}>{monthlyLabel(refresh)}</p>
-                  <ul className="mt-6 flex-1 space-y-3">
-                    {refresh.scope?.map((item) => (
-                      <li key={item} className={`flex gap-2 text-sm text-muted-foreground ${HOVER_TEXT}`}>
-                        <Check className={`mt-1 h-4 w-4 shrink-0 ${accentText(tierId === refresh.id)}`} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className={`mt-5 text-xs text-muted-foreground ${HOVER_TEXT}`}>Live in {refresh.live}</p>
-                  <span className={`mt-5 text-sm font-semibold ${accentText(tierId === refresh.id)}`}>{tierId === refresh.id ? "Selected" : "Select"}</span>
+            {tierId === "business" && (
+              <div className="mt-6 max-w-xl">
+                <SelectableCard index={0} selected={fullBuild} label={`Make it the full build, ${eur(businessFull.price ?? 0)} total`} onToggle={() => setFullBuild((v) => !v)}>
+                  <h4 className={`text-xl font-bold ${HOVER_TEXT}`}>Make it the full build</h4>
+                  <p className={`mt-3 text-2xl font-bold ${HOVER_TEXT}`}>{priceLabel(businessFull)} total</p>
+                  <p className={`mt-3 text-sm text-muted-foreground ${HOVER_TEXT}`}>Up to 10 pages, blog, booking or CRM integration, local SEO setup, 3 revision rounds. Live in {businessFull.live}.</p>
                 </SelectableCard>
-                <div className="md:col-span-2">
-                  <p className="max-w-md text-muted-foreground">Keep your domain and your content. I redesign and rebuild what you already have, fix speed and mobile, and redirect every old address so Google keeps sending people to you. For a one-page site, Launch is usually better value.</p>
-                  <p className="mt-4 max-w-md text-xs text-muted-foreground">{refreshNotes()}</p>
-                </div>
               </div>
+            )}
+            {selectedTier && !aftercareChoice && (
+              <p className="mt-6 text-sm font-semibold text-primary" role="status">
+                {selectedTier.name} selected. Next: choose who looks after it once it's live ↓
+              </p>
+            )}
+            <div className="mt-6 space-y-2 text-sm text-muted-foreground">
+              <p><Link to="/services/start-project" className="text-primary hover:underline">{bespokeLine()} →</Link></p>
+              <p className="text-xs">Website Refresh: {refreshNotes()}</p>
             </div>
 
+            <AnimatePresence initial={false}>
+            {tierId && (
+            <motion.div
+              key="steps-2-3"
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+            <div ref={step2Ref} className="scroll-mt-24 pt-16">
             <StepHeading n={2} title="Once it's live, who looks after it?" body="Hosting, domain renewal, security updates and small edits all need an owner. Pick one of the two; you can change later." />
+            </div>
             <div className="grid gap-6 md:grid-cols-2">
               {([
                 { key: "self-managed" as const, option: aftercare.selfManaged, featured: false },
@@ -405,7 +447,7 @@ const Services = () => {
             <div className="mt-6 space-y-3 text-xs leading-relaxed text-muted-foreground">
               <p>{careTerms.minimums}. {careTerms.annualPrepay}.</p>
               <p>{careTerms.exit}</p>
-              <p>Launch includes 12 months' hosting; Business Site and Business Plus are hosted on a care plan or on your own account from launch.</p>
+              <p>Launch includes 12 months' hosting; Refresh and Business Site are hosted on a care plan or on your own account from launch.</p>
             </div>
 
             <StepHeading n={3} title="Email on your domain" body="Optional. Professional email at you@yourbusiness.ie, set up and tested on your devices." />
@@ -427,6 +469,9 @@ const Services = () => {
             <p className="mt-6 text-sm text-muted-foreground">
               Also available: extra pages {eur(addOns.extraPage)} each, copywriting {eur(addOns.copyPerPage)} a page, Google Business Profile setup {eur(addOns.gbp)}. Ask in the quote form.
             </p>
+            </motion.div>
+            )}
+            </AnimatePresence>
             <p className="mt-6 text-xs leading-relaxed text-muted-foreground">{vatFootnote()} {terms.payMonthlyNote}.</p>
           </div>
 
