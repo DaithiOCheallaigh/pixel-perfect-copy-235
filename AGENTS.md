@@ -33,3 +33,4 @@
 - React Bits Pro components in src/components/react-bits stay byte-identical and are lazy-loaded; HoverPreview mounts only on idle fine-pointer devices (plain Links otherwise) and BlurHighlight falls back to static marks under reduced motion, keeping the motion package out of first-load chunks.
 - MedEd components pages derive from src/data/sparkComponents.ts, sit behind the Spark gate and use only scoped --sc-* tokens.
 - The package builder has no step labels, sits above SocialProof, and shows no care terms; edits are quoted per job in services copy.
+- Discount codes live in `discountCodes` in src/data/pricing.ts and are applied client-side only on the enquiry page (website one-off prices, never care plans); the discount line goes into the brief summary; codes are never shown in site copy, llms files or the services page bar.
