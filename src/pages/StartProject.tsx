@@ -5,9 +5,10 @@ import { Check, Plus, X, Sparkles, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
-import { aftercare, carePlans, CONTACT_EMAIL, entry } from "@/data/pricing";
+import { aftercare, businessOption, BUSINESS_BASE_PAGES, carePlans, CONTACT_EMAIL, entry, tiers } from "@/data/pricing";
+import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
 import { BUDGET_OPTIONS, BUDGET_LABEL, INDUSTRIES } from "@/data/projectIntake";
-import { DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotalsWithDiscount } from "@/data/serviceEstimates";
+import { discountBreakdown, DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 import { findDiscountCode } from "@/data/pricing";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -203,6 +204,34 @@ const StartProject = () => {
       return current.includes(id) ? kept : [...kept, id];
     });
   };
+  const isWebsiteId = (id: string) => tiers.some((t) => t.id === id) || /^business-\d+$/.test(id);
+  const [businessPages, setBusinessPages] = useState<number>(() => {
+    const m = selectedIds.map((id) => /^business-(\d+)$/.exec(id)).find(Boolean);
+    return m ? Number(m[1]) : BUSINESS_BASE_PAGES;
+  });
+  const websiteId = selectedIds.find(isWebsiteId);
+  const websiteOptions = tiers.map((t) => {
+    if (t.id === "business") {
+      const o = businessOption(businessPages);
+      return { id: "business", match: (id: string) => id === "business" || /^business-\d+$/.test(id), label: `${t.name} · ${eur(o.price)}${o.pages !== BUSINESS_BASE_PAGES ? ` (${o.pages} pages)` : ""}` };
+    }
+    return { id: t.id, match: (id: string) => id === t.id, label: `${t.name} · ${t.price ? eur(t.price) : `from ${eur(t.priceFrom ?? 0)}`}` };
+  });
+  const chooseWebsite = (id: string) => {
+    setSelectedIds((current) => {
+      const kept = current.filter((x) => !isWebsiteId(x));
+      const active = current.find(isWebsiteId);
+      const option = websiteOptions.find((o) => o.id === id)!;
+      if (active && option.match(active)) return kept;
+      return [...kept, id === "business" ? businessOption(businessPages).id : id];
+    });
+  };
+  const changeBusinessPages = (pages: number) => {
+    setBusinessPages(pages);
+    setSelectedIds((current) => [...current.filter((x) => !isWebsiteId(x)), businessOption(pages).id]);
+  };
+  const breakdown = discountBreakdown(selection, discountInput);
+  const hasWebsite = selection.some((item) => item.kind === "tier");
   const selectionText = selectionSummary(selection, discountInput);
   const withSelection = (text: string) => (selectionText ? `${selectionText}\n\n${text}` : text).slice(0, 5000);
 
@@ -351,15 +380,18 @@ const StartProject = () => {
       <div className="mx-auto max-w-2xl px-6 pb-32 pt-32">
           <section aria-label="Your selected package" className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5">
             <p className="font-mono-label text-muted-foreground">Your package</p>
-            <ul className="mt-3 space-y-1.5">
-              {selection.map((s) => <li key={s.id} className="flex justify-between gap-4 text-sm"><span className="text-foreground">{s.title}</span><span className="text-muted-foreground">{s.price}</span></li>)}
-            </ul>
-            {!selection.some((item) => item.kind === "tier") && (
-              <div className="mt-3 text-sm">
-                <p className="text-muted-foreground">No website chosen yet.</p>
-                <Link to="/services#services" className="text-primary hover:underline">Choose a package on the services page →</Link>
-              </div>
-            )}
+            <div className="mt-4">
+              <Group id="sp-website" label="Website">
+                <div className="flex flex-wrap gap-2">
+                  {websiteOptions.map((option) => (
+                    <Pill key={option.id} label={option.label} selected={Boolean(websiteId && option.match(websiteId))} onClick={() => chooseWebsite(option.id)} />
+                  ))}
+                </div>
+                {websiteId && websiteOptions[2].match(websiteId) && (
+                  <div className="mt-3 max-w-xs"><BusinessPagesSelect pages={businessPages} onChange={changeBusinessPages} /></div>
+                )}
+              </Group>
+            </div>
             <div className="mt-5">
               <Group id="sp-aftercare" label="Once it's live, who looks after it?">
                 <div className="flex flex-wrap gap-2">
@@ -375,23 +407,33 @@ const StartProject = () => {
               </Field>
               {discountInput.trim() && (
                 <p id="sp-discount-status" aria-live="polite" className={`mt-2 text-xs ${discount ? "text-primary" : "text-muted-foreground"}`}>
-                  {discount ? `${discount.label} applied: ${discount.percent}% off website packages. Care plans are not discounted.` : "Code not recognised."}
+                  {discount
+                    ? `${discount.label} applied: ${discount.percent}% off website packages.${breakdown.bonusPlan ? ` Your ${breakdown.bonusPlan} plan adds a further ${breakdown.bonusPercent}%: ${breakdown.percent}% off in total.` : ""} Care plans are not discounted.`
+                    : "Code not recognised."}
                 </p>
               )}
             </div>
-            {(totals.oneOff + totals.discount > 0 || totals.monthly > 0) && (
-              <p className="mt-3 text-sm font-semibold text-foreground">
-                {totals.oneOff + totals.discount > 0 && (
+            <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t border-border/60 pt-4">
+              <p className="text-xs text-muted-foreground">
+                All enquiries are reviewed personally by Dave Kelly · <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-foreground hover:underline">{CONTACT_EMAIL}</a>
+              </p>
+              <div className="ml-auto text-right">
+                {selection.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">Nothing selected yet</p>
+                ) : (
                   <>
-                    {`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`}
-                    {totals.discount > 0 && <> <s className="font-normal text-muted-foreground">{eur(totals.oneOff + totals.discount)}</s></>}
+                    {hasWebsite && (
+                      <p className="text-sm font-semibold text-foreground">
+                        {`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`}
+                        {totals.discount > 0 && <> <s className="font-normal text-muted-foreground">{eur(totals.oneOff + totals.discount)}</s></>}
+                      </p>
+                    )}
+                    {totals.monthly > 0 && <p className="text-xs text-muted-foreground">{`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}</p>}
+                    {totals.discount > 0 && <p className="text-xs text-primary">{`You save ${eur(totals.discount)} (${totals.discountPercent}% off the website)`}</p>}
                   </>
                 )}
-                {totals.oneOff + totals.discount > 0 && totals.monthly > 0 && " · "}
-                {totals.monthly > 0 && `Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}
-              </p>
-            )}
-            <p className="mt-1 text-xs text-muted-foreground">This selection is sent with your brief.</p>
+              </div>
+            </div>
           </section>
         {/* Step label */}
         <div className="mb-12">
@@ -632,12 +674,6 @@ const StartProject = () => {
         )}
       </div>
 
-      {/* Footer */}
-      <div className="border-t border-[#2a2a2a] bg-[#0d0d0d]/80 px-6 py-4 text-center">
-        <p className="text-xs text-muted-foreground">
-          All enquiries are reviewed personally by Dave Kelly · {CONTACT_EMAIL}
-        </p>
-      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { aftercare, businessOptions, carePlans, eur, findDiscountCode, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
+import { aftercare, aftercareBonusPercent, businessOptions, carePlans, eur, findDiscountCode, type DiscountCode, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
 
 /** Setup and recurring fees are separate; optional website instalments are not added to setup. */
 export type Fee = { oneOff: number; monthly: number };
@@ -35,19 +35,29 @@ export function selectionPrice(selections: readonly { id: string }[]) {
   return `from ${eur(totals.oneOff)}${totals.monthly ? ` + ${eur(totals.monthly)}/mo` : ""}${VAT_REGISTERED ? " + VAT" : ""}`;
 }
 
-/** Enquiry-page discount: percent off website (tier) one-off prices only, rounded to the euro. */
-export function discountAmount(selections: readonly { id: string }[], code?: string | null): number {
+/** Enquiry-page discount: code % plus care-plan bonus % (additive), off website (tier) one-off prices only, rounded to the euro. */
+export function discountBreakdown(selections: readonly { id: string }[], code?: string | null): { code?: DiscountCode; basePercent: number; bonusPercent: number; bonusPlan?: string; percent: number; websiteOneOff: number; amount: number } {
   const d = findDiscountCode(code);
-  if (!d) return 0;
-  const website = selectionItems(selections).filter((s) => s.kind === "tier").reduce((t, s) => t + s.oneOff, 0);
-  return website ? Math.round((website * d.percent) / 100) : 0;
+  const items = selectionItems(selections);
+  const websiteOneOff = items.filter((s) => s.kind === "tier").reduce((t, s) => t + s.oneOff, 0);
+  const plan = d ? carePlans.find((c) => items.some((s) => s.id === c.id) && aftercareBonusPercent[c.id]) : undefined;
+  const basePercent = d?.percent ?? 0;
+  const bonusPercent = plan ? aftercareBonusPercent[plan.id] : 0;
+  const percent = basePercent + bonusPercent;
+  const amount = d && websiteOneOff ? Math.round((websiteOneOff * percent) / 100) : 0;
+  return { ...(d ? { code: d } : {}), basePercent, bonusPercent, ...(plan ? { bonusPlan: plan.name } : {}), percent, websiteOneOff, amount };
 }
+
+export const discountAmount = (selections: readonly { id: string }[], code?: string | null): number => discountBreakdown(selections, code).amount;
 
 export function selectionTotalsWithDiscount(selections: readonly { id: string }[], code?: string | null) {
   const totals = selectionTotals(selections);
-  const discount = discountAmount(selections, code);
-  const d = discount > 0 ? findDiscountCode(code) : undefined;
-  return { oneOff: totals.oneOff - discount, monthly: totals.monthly, discount, ...(d ? { discountLabel: d.label, discountPercent: d.percent } : {}) };
+  const b = discountBreakdown(selections, code);
+  const amount = b.amount;
+  return {
+    oneOff: totals.oneOff - amount, monthly: totals.monthly, discount: amount,
+    ...(amount > 0 && b.code ? { discountPercent: b.percent, discountLabel: b.code.label, bonusPercent: b.bonusPercent, ...(b.bonusPlan ? { bonusPlan: b.bonusPlan } : {}) } : {}),
+  };
 }
 
 /** Human-readable selection for enquiry emails: names, prices and separate totals. */
@@ -57,12 +67,13 @@ export function selectionSummary(selections: readonly { id: string }[], code?: s
   const totals = selectionTotals(items);
   const v = VAT_REGISTERED ? " + VAT" : "";
   const from = selectionIsFrom(items) ? "from " : "";
-  const discount = discountAmount(items, code);
-  const d = discount > 0 ? findDiscountCode(code) : undefined;
+  const b = discountBreakdown(items, code);
+  const discount = b.amount;
+  const d = discount > 0 ? b.code : undefined;
   return [
     "Selected package:",
     ...items.map((s) => `- ${s.title}: ${s.price}`),
-    ...(d ? [`- Discount code ${d.code} (${d.label}, ${d.percent}% off website packages): −${eur(discount)}`] : []),
+    ...(d ? [`- Discount code ${d.code} (${b.bonusPlan ? `${d.label} ${b.basePercent}% + ${b.bonusPlan} bonus ${b.bonusPercent}% = ${b.percent}%` : `${d.label}, ${b.percent}%`} off website packages): −${eur(discount)}`] : []),
     d ? `One-off setup: ${from}${eur(totals.oneOff - discount)}${v} (was ${eur(totals.oneOff)}${v})` : `One-off setup: ${from}${eur(totals.oneOff)}${v}`,
     ...(totals.monthly ? [`Monthly: ${eur(totals.monthly)}/mo${v}`] : []),
   ].join("\n");

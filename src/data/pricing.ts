@@ -3,7 +3,7 @@ export const VAT_RATE = 0.23;
 export const VAT_REGISTERED = true; // flip to false if not VAT-registered
 export { YEARS_EXPERIENCE } from "./profile";
 export const CALENDLY_URL = "https://calendly.com/lacunaconsulting-info/30min";
-export const CONTACT_EMAIL = "info@lacunaconsulting.com";
+export const CONTACT_EMAIL = "info@lacunadigital.io";
 export const availability = { headline: "Now booking new projects", nextStart: "November 2026", productStudioFrom: "November 2026" };
 export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[] };
 export const entry = {
@@ -126,5 +126,7 @@ export const refreshNotes = () => `${eur(addOns.extraPage)} per page beyond 5; n
 
 export type DiscountCode = { id: string; code: string; label: string; percent: number; appliesTo: "website" };
 export const discountCodes: DiscountCode[] = [{ id: "matesrates", code: "MATESRATES", label: "Mates rates", percent: 15, appliesTo: "website" }];
+/** Further % off the website package when a valid code is applied and this care plan is chosen (self-managed: none). */
+export const aftercareBonusPercent: Record<string, number> = { care: 5, growth: 10, "growth-ai": 10 };
 export const normaliseDiscountCode = (input: string) => input.trim().toUpperCase();
 export const findDiscountCode = (input: string | null | undefined) => { const key = normaliseDiscountCode(input ?? ""); return key ? discountCodes.find((d) => d.code === key) : undefined; };
