@@ -192,6 +192,22 @@ describe("enquiry step 2", () => {
     expect(pressed("Landing Page")).toBe("true");
     expect(pressed("Redesign")).toBe("false");
   });
+  it("keeps Continue aria-disabled until step 1 is filled and shows errors when tapped early", async () => {
+    open(["launch"]);
+    const cta = button("Continue →");
+    expect(cta.getAttribute("aria-disabled")).toBe("true");
+    expect(cta.disabled).toBe(false);
+    click(cta);
+    expect(container.querySelector("#sp-fullName-error")?.textContent).toBe("Required");
+    expect(container.textContent).toContain("Step 1 of 2");
+    fill("#sp-fullName", "Test Person");
+    fill("#sp-email", "test@example.com");
+    fill("#sp-companyName", "Test Co");
+    container.querySelectorAll<HTMLSelectElement>("select[data-native-select]").forEach((sel) => {
+      act(() => { sel.value = sel.options[1].value; sel.dispatchEvent(new Event("change", { bubbles: true })); });
+    });
+    expect(button("Continue →").getAttribute("aria-disabled")).toBeNull();
+  });
   it("has no budget step and is two steps long", async () => {
     open(["launch"]);
     await toStep2();
