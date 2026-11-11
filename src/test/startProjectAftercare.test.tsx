@@ -96,6 +96,35 @@ describe("enquiry discount code", () => {
     type("xyz");
     expect(container.textContent).toContain("Code not recognised.");
   });
+  it("invites a care plan when no bonus plan is chosen", () => {
+    open(["business", "self-managed"]);
+    type("matesrates");
+    expect(container.textContent).toContain("Mates rates applied: 15% off website packages. Select a care plan for a further discount.");
+    expect(container.textContent).not.toContain("Care plans are not discounted.");
+  });
+  it("names the bonus plan and the combined discount", () => {
+    open(["business", "growth"]);
+    type("matesrates");
+    expect(container.textContent).toContain("Mates rates applied: 15% off website packages. Your Growth plan adds a further 10%: 25% off in total.");
+  });
+  it("ticks the input only for an accepted code", () => {
+    open(["business"]);
+    expect(container.querySelector("#sp-discount + svg")).toBeNull();
+    type("matesrates");
+    expect(container.querySelector("#sp-discount + svg")).not.toBeNull();
+    type("xyz");
+    expect(container.querySelector("#sp-discount + svg")).toBeNull();
+  });
+});
+describe("enquiry package panel", () => {
+  it("heads the panel with an h2 and numbers its groups", () => {
+    open();
+    expect(Array.from(container.querySelectorAll("h2")).some((h) => h.textContent === "Your package")).toBe(true);
+    const legends = Array.from(container.querySelectorAll("legend")).map((l) => l.textContent?.trim());
+    expect(legends).toContain("1. Website");
+    expect(legends).toContain("2. Care plans");
+    expect(legends).not.toContain("Once it's live, who looks after it?");
+  });
 });
 describe("enquiry website choices", () => {
   it("swaps a stored Business option for Launch, keeping aftercare", () => {
