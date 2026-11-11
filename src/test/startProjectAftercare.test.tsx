@@ -161,7 +161,8 @@ describe("enquiry step 2", () => {
     const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!;
     act(() => { setter.call(el, value); el.dispatchEvent(new Event("input", { bubbles: true })); });
   };
-  const toStep2 = () => {
+  const settle = () => act(() => new Promise((r) => setTimeout(r, 700)));
+  const toStep2 = async () => {
     fill("#sp-fullName", "Test Person");
     fill("#sp-email", "test@example.com");
     fill("#sp-companyName", "Test Co");
@@ -169,28 +170,31 @@ describe("enquiry step 2", () => {
       act(() => { sel.value = sel.options[1].value; sel.dispatchEvent(new Event("change", { bubbles: true })); });
     });
     click(button("Next →"));
+    await settle();
   };
   const pressed = (label: string) => button(label).getAttribute("aria-pressed");
 
-  it.each([["launch", "Landing Page"], ["refresh", "Redesign"], ["business-8", "New Website"]])("pre-fills the project type for %s", (id, type) => {
+  it.each([["launch", "Landing Page"], ["refresh", "Redesign"], ["business-8", "New Website"]])("pre-fills the project type for %s", async (id, type) => {
     open([id]);
-    toStep2();
+    await toStep2();
     expect(pressed(type)).toBe("true");
   });
-  it("keeps a manual project type when the website changes", () => {
+  it("keeps a manual project type when the website changes", async () => {
     open(["launch"]);
-    toStep2();
+    await toStep2();
     click(button("Web App"));
     click(button("← Back"));
+    await settle();
     click(Array.from(container.querySelectorAll("button")).find((b) => b.textContent?.startsWith("Website Refresh"))!);
     click(button("Next →"));
+    await settle();
     expect(pressed("Web App")).toBe("true");
     expect(pressed("Landing Page")).toBe("true");
     expect(pressed("Redesign")).toBe("false");
   });
-  it("has no budget step and is two steps long", () => {
+  it("has no budget step and is two steps long", async () => {
     open(["launch"]);
-    toStep2();
+    await toStep2();
     expect(container.textContent).toContain("Step 2 of 2 — Your Project");
     expect(Array.from(container.querySelectorAll("legend")).some((l) => /budget/i.test(l.textContent ?? ""))).toBe(false);
     expect(container.textContent).not.toContain("Budget");
