@@ -110,10 +110,15 @@ const StartProject = () => {
 
   const reducedMotion = useReducedMotion();
   // Runs after the old step has left (AnimatePresence onExitComplete): land the new heading below the fixed nav + progress bar.
+  const [exitTick, setExitTick] = useState(0);
   const resetScrollToHeading = () => {
-    if (!stepChanged.current) return;
+    if (stepChanged.current) setExitTick((t) => t + 1);
+  };
+  // Effect runs after the commit that mounts the entering step, so headingRef is the new heading.
+  useEffect(() => {
+    if (!exitTick || !stepChanged.current) return;
     stepChanged.current = false;
-    requestAnimationFrame(() => {
+    const raf = requestAnimationFrame(() => {
       const heading = headingRef.current;
       if (!heading) return;
       // Layout position (offsetTop chain) ignores the entering step's y-transform.
@@ -123,7 +128,8 @@ const StartProject = () => {
       try { window.scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" }); } catch { /* jsdom */ }
       heading.focus({ preventScroll: true });
     });
-  };
+    return () => cancelAnimationFrame(raf);
+  }, [exitTick, reducedMotion]);
   const { toast } = useToast();
   // Package chosen on /services: IDs only, re-priced from the catalogue here.
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
