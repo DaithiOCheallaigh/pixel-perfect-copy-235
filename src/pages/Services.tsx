@@ -228,6 +228,7 @@ const Services = () => {
             <VoxelArc className="absolute inset-0 h-full min-h-0" color="#CE3BB6" accentColor="#FFD6F8" horizon={0.5} curvature={0.8} haze={0.25} brightness={0.9} glow={1} bloom={0.4} grain={0.15} speed={0.3} interactive={false} dpr={isMobile ? 1 : 1.5} />
           </Suspense>
           <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/45 to-transparent md:from-background/80 md:via-background/35 md:to-transparent md:via-55%" />
         </div>
         <div className="relative z-10 mx-auto max-w-7xl">
           <motion.div
@@ -254,7 +255,7 @@ const Services = () => {
                 />
               </h1>
             </Suspense>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/90">
               Designed and built by a senior product designer in Dublin. Fixed price, launch date in writing, and looked after once it's live if you want it to be.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
@@ -266,14 +267,14 @@ const Services = () => {
               </a>
               <Link
                 to="/services/web-design"
-                className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/60 hover:text-foreground hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.25)]"
+                className="inline-flex items-center gap-2 rounded-sm border border-foreground/40 bg-background/40 backdrop-blur-sm px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/60 hover:text-foreground hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.25)]"
               >
                 Live examples
               </Link>
             </div>
 
             {/* Trust strip */}
-            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-foreground/80">
               <span className="inline-flex items-center gap-2">
                 <span className="text-primary">★★★★★</span>
                 5.0 on Google Reviews
