@@ -1,13 +1,15 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { submitLead } from "@/lib/submitLead";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Plus, X, Sparkles, ArrowLeft, Loader2 } from "lucide-react";
+import { Check, Plus, X, Sparkles, ArrowLeft, Loader2, ChevronUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
-import { aftercare, businessOption, BUSINESS_BASE_PAGES, carePlans, CONTACT_EMAIL, entry, tiers } from "@/data/pricing";
-import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
-import { BUDGET_OPTIONS, BUDGET_LABEL, INDUSTRIES } from "@/data/projectIntake";
+import { aftercare, businessOption, BUSINESS_BASE_PAGES, carePlans, entry, tiers } from "@/data/pricing";
+import { Field, Group, inputClass, PackagePanel, Pill, type PackagePanelProps } from "@/components/services/PackagePanel";
+import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { INDUSTRIES } from "@/data/projectIntake";
 import { discountBreakdown, DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 import { findDiscountCode } from "@/data/pricing";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
@@ -47,10 +49,6 @@ interface FormData {
   existingBrand: string;
   urgency: string;
   competitorUrls: string[];
-  budgetRange: string;
-  launchDate: string;
-  hasDeadline: boolean;
-  deadlineDetails: string;
 }
 
 const initialFormData: FormData = {
@@ -66,77 +64,19 @@ const initialFormData: FormData = {
   existingBrand: "",
   urgency: "",
   competitorUrls: [""],
-  budgetRange: "",
-  launchDate: "",
-  hasDeadline: false,
-  deadlineDetails: "",
 };
 
-const TOTAL_STEPS = 3;
+const TOTAL_STEPS = 2;
 
 const STEP_LABELS = [
   "About You",
   "Your Project",
-  "Budget & Timeline",
 ];
 
 const SOURCES = ["Google", "Referral", "Social Media", "Portfolio", "Other"];
 const PROJECT_TYPES = ["New Website", "Redesign", "Landing Page", "E-commerce", "Web App", "Brand + Website"];
 const BRAND_OPTIONS = ["Yes", "No", "In progress"];
 const URGENCY_OPTIONS = ["Exploring options", "Ready to start within a month", "ASAP"];
-
-// ─── Pill / Toggle Components ──────────────────────────────────
-const Pill = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    aria-pressed={selected}
-    className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${
-      selected
-        ? "border-primary bg-primary/10 text-primary"
-        : "border-[#2a2a2a] bg-[#1e1e1e] text-muted-foreground hover:border-primary/40"
-    }`}
-  >
-    {label}
-  </button>
-);
-
-const BudgetCard = ({ label, desc, selected, onClick }: { label: string; desc: string; selected: boolean; onClick: () => void }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    aria-pressed={selected}
-    className={`w-full rounded-lg border p-4 text-left transition-all ${
-      selected
-        ? "border-primary bg-primary/5"
-        : "border-[#2a2a2a] bg-[#1e1e1e] hover:border-primary/40"
-    }`}
-  >
-    <div className="text-sm font-semibold text-foreground">{label}</div>
-    <div className="mt-1 text-xs text-muted-foreground">{desc}</div>
-  </button>
-);
-
-// ─── Input Wrapper ─────────────────────────────────────────────
-const Field = ({ id, label, required, children, error }: { id: string; label: string; required?: boolean; children: React.ReactNode; error?: string }) => (
-  <div className="space-y-2">
-    <label htmlFor={id} className="font-mono-label text-muted-foreground">
-      {label} {required && <span className="text-primary" aria-hidden="true">*</span>}
-    </label>
-    {children}
-    {error && <p id={`${id}-error`} className="text-xs text-destructive">{error}</p>}
-  </div>
-);
-
-const Group = ({ id, label, required, children, error }: { id: string; label: string; required?: boolean; children: React.ReactNode; error?: string }) => (
-  <fieldset className="space-y-2" aria-describedby={error ? `${id}-error` : undefined} aria-invalid={error ? true : undefined}>
-    <legend className="mb-2 font-mono-label text-muted-foreground">
-      {label} {required && <span className="text-primary" aria-hidden="true">*</span>}
-    </legend>
-    {children}
-    {error && <p id={`${id}-error`} className="text-xs text-destructive">{error}</p>}
-  </fieldset>
-);
 
 /** aria props linking a control to its Field error */
 const errProps = (id: string, error?: string) => ({
@@ -147,8 +87,6 @@ const errProps = (id: string, error?: string) => ({
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-const inputClass =
-  "w-full rounded-md border border-[#2a2a2a] bg-[#1e1e1e] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors";
 
 const selectTriggerClass =
   "h-auto w-full justify-between gap-3 rounded-md border border-[#2a2a2a] bg-[#1e1e1e] py-3 pl-4 pr-4 text-left text-sm text-foreground ring-offset-0 focus:border-primary focus:ring-1 focus:ring-primary focus:ring-offset-0 data-[placeholder]:text-muted-foreground [&>svg]:mr-0";
@@ -231,6 +169,8 @@ const StartProject = () => {
     setSelectedIds((current) => [...current.filter((x) => !isWebsiteId(x)), businessOption(pages).id]);
   };
   const breakdown = discountBreakdown(selection, discountInput);
+  const isMobile = useIsMobile();
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const hasWebsite = selection.some((item) => item.kind === "tier");
   const selectionText = selectionSummary(selection, discountInput);
   const withSelection = (text: string) => (selectionText ? `${selectionText}\n\n${text}` : text).slice(0, 5000);
@@ -248,8 +188,17 @@ const StartProject = () => {
   );
 
   const toggleArray = (key: "projectTypes", value: string) => {
+    projectTypesTouched.current = true;
     set(key, form[key].includes(value) ? form[key].filter((v) => v !== value) : [...form[key], value]);
   };
+
+  // Pre-fill the project type from the chosen website until the visitor picks one themselves.
+  const projectTypesTouched = useRef(false);
+  useEffect(() => {
+    if (step !== 1 || projectTypesTouched.current) return;
+    const mapped = !websiteId ? [] : websiteId === "launch" ? ["Landing Page"] : websiteId === "refresh" ? ["Redesign"] : /^business(-\d+)?$/.test(websiteId) ? ["New Website"] : [];
+    setForm((prev) => ({ ...prev, projectTypes: mapped }));
+  }, [step, websiteId]);
 
   // Validation
   const validate = (): boolean => {
@@ -262,7 +211,7 @@ const StartProject = () => {
       if (!form.industry) errs.industry = "Required";
       if (!form.source) errs.source = "Required";
     }
-    // Steps 2 and 3 are optional.
+    // Step 2 is optional.
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -309,7 +258,6 @@ const StartProject = () => {
           company: form.companyName.trim(),
           website: form.websiteUrl.trim() || undefined,
           service: form.projectTypes.join(", "),
-          budget: form.budgetRange,
           message: withSelection(form.projectDescription.trim()),
         }).catch(() => {});
       }
@@ -358,6 +306,16 @@ const StartProject = () => {
   }
 
   const canSubmit = step >= 1;
+  const panelProps: PackagePanelProps = {
+    selectedIds, selection, websiteId, websiteOptions, chooseWebsite, businessPages, changeBusinessPages,
+    aftercareOptions, chooseAftercare, discountInput, setDiscountInput, discount, breakdown, totals, hasWebsite,
+  };
+  const showInlinePanel = step === 0 && !isMobile;
+  const websiteTier = tiers.find((t) => websiteId && (t.id === websiteId || (t.id === "business" && /^business(-\d+)?$/.test(websiteId))));
+  const websiteName = websiteTier ? (websiteTier.id === "business" ? `${websiteTier.name} · ${businessOption(businessPages).pages} pages` : websiteTier.name) : "";
+  const aftercareId = selectedIds.find((id) => aftercareOptions.some((o) => o.id === id));
+  const aftercareName = aftercareId === aftercare.selfManaged.id ? "Self-managed" : carePlans.find((p) => p.id === aftercareId)?.name ?? "";
+  const barLabel = [websiteName, aftercareName].filter(Boolean).join(" · ") || "No package chosen";
 
   return (
     <div className="min-h-screen">
@@ -378,67 +336,7 @@ const StartProject = () => {
       </div>
 
       <div className="mx-auto max-w-2xl px-6 pb-32 pt-32">
-          <section aria-label="Your selected package" className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5">
-            <h2 className="text-xl font-bold tracking-tight text-foreground">Your package</h2>
-            <div className="mt-4">
-              <Group id="sp-website" label="1. Website">
-                <div className="flex flex-wrap gap-2">
-                  {websiteOptions.map((option) => (
-                    <Pill key={option.id} label={option.label} selected={Boolean(websiteId && option.match(websiteId))} onClick={() => chooseWebsite(option.id)} />
-                  ))}
-                </div>
-                {websiteId && websiteOptions[2].match(websiteId) && (
-                  <div className="mt-3 max-w-xs"><BusinessPagesSelect pages={businessPages} onChange={changeBusinessPages} /></div>
-                )}
-              </Group>
-            </div>
-            <div className="mt-5">
-              <Group id="sp-aftercare" label="2. Care plans">
-                <div className="flex flex-wrap gap-2">
-                  {aftercareOptions.map((option) => (
-                    <Pill key={option.id} label={option.label} selected={selectedIds.includes(option.id)} onClick={() => chooseAftercare(option.id)} />
-                  ))}
-                </div>
-              </Group>
-            </div>
-            <div className="mt-5">
-              <Field id="sp-discount" label="Discount code (optional)">
-                <div className="relative">
-                  <input id="sp-discount" className={inputClass + " uppercase" + (discount ? " pr-10 border-primary/60" : "")} maxLength={32} autoComplete="off" spellCheck={false} value={discountInput} onChange={(e) => setDiscountInput(e.target.value)} aria-describedby={discountInput.trim() ? "sp-discount-status" : undefined} />
-                  {discount && <Check className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" aria-hidden="true" />}
-                </div>
-              </Field>
-              {discountInput.trim() && (
-                <p id="sp-discount-status" aria-live="polite" className={`mt-2 text-xs ${discount ? "text-primary" : "text-muted-foreground"}`}>
-                  {discount
-                    ? `${discount.label} applied: ${discount.percent}% off website packages.${breakdown.bonusPlan ? ` Your ${breakdown.bonusPlan} plan adds a further ${breakdown.bonusPercent}%: ${breakdown.percent}% off in total.` : " Select a care plan for a further discount."}`
-                    : "Code not recognised."}
-                  {discount && <span className="sr-only"> Code accepted.</span>}
-                </p>
-              )}
-            </div>
-            <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t border-border/60 pt-4">
-              <p className="text-xs text-muted-foreground">
-                All enquiries are reviewed personally by Dave Kelly · <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-foreground hover:underline">{CONTACT_EMAIL}</a>
-              </p>
-              <div className="ml-auto text-right">
-                {selection.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">Nothing selected yet</p>
-                ) : (
-                  <>
-                    {hasWebsite && (
-                      <p className="text-sm font-semibold text-foreground">
-                        {`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`}
-                        {totals.discount > 0 && <> <s className="font-normal text-muted-foreground">{eur(totals.oneOff + totals.discount)}</s></>}
-                      </p>
-                    )}
-                    {totals.monthly > 0 && <p className="text-xs text-muted-foreground">{`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}</p>}
-                    {totals.discount > 0 && <p className="text-xs text-primary">{`You save ${eur(totals.discount)} (${totals.discountPercent}% off the website)`}</p>}
-                  </>
-                )}
-              </div>
-            </div>
-          </section>
+        {showInlinePanel && <PackagePanel {...panelProps} className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5" />}
         {/* Step label */}
         <div className="mb-12">
           <p className="font-mono-label text-muted-foreground">
@@ -514,7 +412,7 @@ const StartProject = () => {
                       {...errProps("sp-projectDescription", errors.projectDescription)}
                       maxLength={5000}
                       className={inputClass + " min-h-[120px] resize-y pr-4"}
-                      placeholder="Tell us about your project…"
+                      placeholder="A line or two is plenty: what you do, and what the site needs to bring in."
                       value={form.projectDescription}
                       onChange={(e) => set("projectDescription", e.target.value)}
                     />
@@ -590,42 +488,6 @@ const StartProject = () => {
               </div>
             )}
 
-            {/* ── Step 2: Budget & Timeline ────────────── */}
-            {step === 2 && (
-              <div className="space-y-8">
-                <h1 ref={headingRef} tabIndex={-1} className="text-3xl font-extrabold tracking-tight outline-none md:text-4xl">Budget & Timeline</h1>
-                <Group id="sp-budgetRange" label={BUDGET_LABEL} error={errors.budgetRange}>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {BUDGET_OPTIONS.map((b) => (
-                      <BudgetCard key={b.value} label={b.label} desc={b.desc} selected={form.budgetRange === b.value} onClick={() => set("budgetRange", b.value)} />
-                    ))}
-                  </div>
-                </Group>
-                <Field id="sp-launchDate" label="Preferred launch date (optional)">
-                  <input id="sp-launchDate" type="month" className={inputClass} value={form.launchDate} onChange={(e) => set("launchDate", e.target.value)} />
-                </Field>
-                <div className="space-y-3">
-                  <label className="flex items-center gap-3 text-sm text-foreground">
-                    <input
-                      type="checkbox"
-                      checked={form.hasDeadline}
-                      onChange={(e) => set("hasDeadline", e.target.checked as any)}
-                      className="h-4 w-4 rounded border-[#2a2a2a] bg-[#1e1e1e] text-primary focus:ring-primary"
-                    />
-                    I have a hard deadline
-                  </label>
-                  {form.hasDeadline && (
-                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                      <input
-                        className={inputClass}
-                        aria-label="Deadline details"
-                        maxLength={300}
-                        placeholder="e.g. Event on March 15th"
-                        value={form.deadlineDetails}
-                        onChange={(e) => set("deadlineDetails", e.target.value)}
-                      />
-                    </motion.div>
-                  )}
                 </div>
               </div>
             )}
@@ -642,15 +504,6 @@ const StartProject = () => {
             <div />
           )}
           <div className="flex flex-wrap items-center justify-end gap-3">
-            {step === 1 && (
-              <button
-                type="button"
-                onClick={next}
-                className="rounded-md border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/60 hover:text-foreground hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.25)]"
-              >
-                Next: Budget &amp; Timeline →
-              </button>
-            )}
             {canSubmit ? (
               <button
                 type="button"
@@ -678,6 +531,34 @@ const StartProject = () => {
         )}
       </div>
 
+      {!showInlinePanel && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/95 px-4 py-3 backdrop-blur">
+          <div className="mx-auto flex max-w-2xl items-center gap-3">
+            <p className="min-w-0 flex-1 truncate text-sm text-foreground">{barLabel}</p>
+            <div className="text-right">
+              {hasWebsite && (
+                <p className="text-sm font-semibold text-foreground">
+                  {`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`}
+                  {totals.discount > 0 && <span className="ml-1 text-xs font-normal text-primary">{`−${eur(totals.discount)}`}</span>}
+                </p>
+              )}
+              {totals.monthly > 0 && <p className="text-xs text-muted-foreground">{`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}</p>}
+            </div>
+            <button type="button" onClick={() => setDrawerOpen(true)} aria-expanded={drawerOpen} className="inline-flex shrink-0 items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary">
+              Adjust <ChevronUp className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      )}
+      <Drawer open={drawerOpen && !showInlinePanel} onOpenChange={setDrawerOpen} shouldScaleBackground={false}>
+        <DrawerContent className="max-h-[85vh]">
+          <DrawerTitle className="sr-only">Adjust your package</DrawerTitle>
+          <DrawerDescription className="sr-only">Change your website, care plan or discount code.</DrawerDescription>
+          <div className="mx-auto w-full max-w-2xl overflow-y-auto px-4 pb-6 pt-2">
+            <PackagePanel {...panelProps} className="p-1" />
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };
