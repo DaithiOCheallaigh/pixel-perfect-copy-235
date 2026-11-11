@@ -54,17 +54,24 @@ describe("website refresh selection", () => {
   });
 
   it("MATESRATES takes 15% off website one-off prices only", () => {
-    expect(discountAmount([{ id: "business" }, { id: "growth" }], "matesrates")).toBe(375);
-    expect(discountAmount([{ id: "business" }, { id: "growth" }], " MatesRates ")).toBe(375);
+    expect(discountAmount([{ id: "business" }, { id: "growth" }], "matesrates")).toBe(625);
+    expect(discountAmount([{ id: "business" }, { id: "growth" }], " MatesRates ")).toBe(625);
+    expect(discountAmount([{ id: "business" }, { id: "care" }], "matesrates")).toBe(500);
+    expect(discountAmount([{ id: "business" }, { id: "self-managed" }], "matesrates")).toBe(375);
+    expect(discountAmount([{ id: "business" }, { id: "growth" }], "")).toBe(0);
     expect(discountAmount([{ id: "growth" }], "MATESRATES")).toBe(0);
     expect(discountAmount([{ id: "business" }], "nope")).toBe(0);
-    expect(selectionTotalsWithDiscount([{ id: "business-8" }, { id: "care" }], "MATESRATES")).toEqual({ oneOff: 3400, monthly: 65, discount: 600, discountLabel: "Mates rates", discountPercent: 15 });
+    expect(selectionTotalsWithDiscount([{ id: "business-8" }, { id: "care" }], "MATESRATES")).toEqual({ oneOff: 3200, monthly: 65, discount: 800, discountPercent: 20, discountLabel: "Mates rates", bonusPercent: 5, bonusPlan: "Care" });
+  });
+
+  it("keeps the plain code line without a bonus plan", () => {
+    expect(selectionSummary([{ id: "business" }, { id: "self-managed" }], "MATESRATES")).toContain("- Discount code MATESRATES (Mates rates, 15% off website packages): −€375");
   });
 
   it("adds the discount line and was-price to the brief summary", () => {
     const s = selectionSummary([{ id: "business" }, { id: "growth" }], "MATESRATES");
-    expect(s).toContain("- Discount code MATESRATES (Mates rates, 15% off website packages): −€375");
-    expect(s).toContain("One-off setup: €2,125 + VAT (was €2,500 + VAT)");
+    expect(s).toContain("- Discount code MATESRATES (Mates rates 15% + Growth bonus 10% = 25% off website packages): −€625");
+    expect(s).toContain("One-off setup: €1,875 + VAT (was €2,500 + VAT)");
     expect(s).toContain("Monthly: €200/mo + VAT");
   });
 });

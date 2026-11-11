@@ -6,6 +6,11 @@ import StartProject from "@/pages/StartProject";
 import { DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionItems, selectionTotals } from "@/data/serviceEstimates";
 
 vi.mock("@/components/SEO", () => ({ SEO: () => null }));
+vi.mock("@/components/services/BusinessPagesSelect", () => ({
+  BusinessPagesSelect: ({ pages, onChange }: { pages: number; onChange: (p: number) => void }) => (
+    <select aria-label="Pages" value={pages} onChange={(e) => onChange(Number(e.target.value))}>{[5, 6, 7, 8, 9, 10].map((n) => <option key={n} value={n}>{n}</option>)}</select>
+  ),
+}));
 vi.mock("@/lib/submitLead", () => ({ submitLead: vi.fn() }));
 
 let root: Root | undefined;
@@ -90,5 +95,24 @@ describe("enquiry discount code", () => {
     open(["business"]);
     type("xyz");
     expect(container.textContent).toContain("Code not recognised.");
+  });
+});
+describe("enquiry website choices", () => {
+  it("swaps a stored Business option for Launch, keeping aftercare", () => {
+    open(["business-8", "growth"]);
+    click(button("Launch · €750"));
+    expect(new Set(saved())).toEqual(new Set(["launch", "growth"]));
+  });
+  it("selects Business Site then 8 pages", () => {
+    open();
+    click(button("Business Site · €2,500"));
+    expect(saved()).toEqual(["business"]);
+    const select = container.querySelector<HTMLSelectElement>('select[aria-label="Pages"]')!;
+    act(() => { select.value = "8"; select.dispatchEvent(new Event("change", { bubbles: true })); });
+    expect(saved()).toEqual(["business-8"]);
+  });
+  it("shows the contact email in the panel footer", () => {
+    open();
+    expect(container.querySelector('section[aria-label="Your selected package"]')!.textContent).toContain("info@lacunadigital.io");
   });
 });
