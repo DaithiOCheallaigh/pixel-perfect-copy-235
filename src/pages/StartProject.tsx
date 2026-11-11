@@ -116,7 +116,10 @@ const StartProject = () => {
     requestAnimationFrame(() => {
       const heading = headingRef.current;
       if (!heading) return;
-      const top = Math.max(0, heading.getBoundingClientRect().top + window.scrollY - 96);
+      // Layout position (offsetTop chain) ignores the entering step's y-transform.
+      let y = 0;
+      for (let el: HTMLElement | null = heading; el; el = el.offsetParent as HTMLElement | null) y += el.offsetTop;
+      const top = Math.max(0, y - 96);
       try { window.scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" }); } catch { /* jsdom */ }
       heading.focus({ preventScroll: true });
     });
