@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { submitLead } from "@/lib/submitLead";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Check, Plus, X, Sparkles, ArrowLeft, Loader2, ChevronUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -9,6 +9,7 @@ import { aftercare, businessOption, BUSINESS_BASE_PAGES, carePlans, entry, tiers
 import { Field, Group, inputClass, PackagePanel, Pill, type PackagePanelProps } from "@/components/services/PackagePanel";
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useVisualViewport } from "@/hooks/use-visual-viewport";
 import { INDUSTRIES } from "@/data/projectIntake";
 import { discountBreakdown, DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 import { findDiscountCode } from "@/data/pricing";
@@ -86,11 +87,12 @@ const errProps = (id: string, error?: string) => ({
 });
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const FIELD_ORDER = ["fullName", "email", "companyName", "industry", "source"] as const;
 
 
 const selectTriggerClass =
-  "h-auto w-full justify-between gap-3 rounded-md border border-[#2a2a2a] bg-[#1e1e1e] py-3 pl-4 pr-4 text-left text-sm text-foreground ring-offset-0 focus:border-primary focus:ring-1 focus:ring-primary focus:ring-offset-0 data-[placeholder]:text-muted-foreground [&>svg]:mr-0";
-const selectContentClass = "rounded-md border border-[#2a2a2a] bg-[#1e1e1e] shadow-xl";
+  "h-auto w-full justify-between gap-3 rounded-md border border-input bg-card py-3 pl-4 pr-4 min-h-12 text-left text-base text-foreground md:min-h-0 md:text-sm ring-offset-0 focus:border-primary focus:ring-1 focus:ring-primary focus:ring-offset-0 data-[placeholder]:text-muted-foreground [&>svg]:mr-0";
+const selectContentClass = "rounded-md border border-input bg-card shadow-xl";
 const selectItemClass = "px-3 py-2.5 text-sm focus:bg-primary/10 focus:text-primary data-[highlighted]:bg-primary/10 data-[highlighted]:text-primary";
 
 // ─── Main Page ─────────────────────────────────────────────────
@@ -106,11 +108,19 @@ const StartProject = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const stepChanged = useRef(false);
 
-  useEffect(() => {
+  const reducedMotion = useReducedMotion();
+  // Runs after the old step has left (AnimatePresence onExitComplete): land the new heading below the fixed nav + progress bar.
+  const resetScrollToHeading = () => {
     if (!stepChanged.current) return;
-    const t = window.setTimeout(() => headingRef.current?.focus(), 400);
-    return () => window.clearTimeout(t);
-  }, [step]);
+    stepChanged.current = false;
+    requestAnimationFrame(() => {
+      const heading = headingRef.current;
+      if (!heading) return;
+      const top = Math.max(0, heading.getBoundingClientRect().top + window.scrollY - 96);
+      try { window.scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" }); } catch { /* jsdom */ }
+      heading.focus({ preventScroll: true });
+    });
+  };
   const { toast } = useToast();
   // Package chosen on /services: IDs only, re-priced from the catalogue here.
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
@@ -161,6 +171,7 @@ const StartProject = () => {
       const active = current.find(isWebsiteId);
       const option = websiteOptions.find((o) => o.id === id)!;
       if (active && option.match(active)) return kept;
+      if (id !== "business") setBusinessPages(BUSINESS_BASE_PAGES);
       return [...kept, id === "business" ? businessOption(businessPages).id : id];
     });
   };
@@ -171,6 +182,31 @@ const StartProject = () => {
   const breakdown = discountBreakdown(selection, discountInput);
   const isMobile = useIsMobile();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { bottomOffset, keyboardOpen: viewportKeyboardOpen } = useVisualViewport();
+  const keyboardOpen = isMobile && viewportKeyboardOpen;
+  const pageRef = useRef<HTMLDivElement>(null);
+  const dockRef = useRef<HTMLDivElement>(null);
+  const [dockHeight, setDockHeight] = useState(0);
+  useEffect(() => {
+    const dock = dockRef.current;
+    if (!dock) { setDockHeight(0); return; }
+    const measure = () => setDockHeight(Math.round(dock.getBoundingClientRect().height));
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(dock);
+    return () => ro.disconnect();
+  }, [isMobile]);
+  // Phones: keep a focused field clear of the dock / keyboard.
+  const onFieldFocus = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!isMobile) return;
+    const el = e.target as HTMLElement;
+    if (!el.matches("input:not([type=hidden]), textarea")) return;
+    window.setTimeout(() => {
+      if (document.activeElement !== el) return;
+      try { el.scrollIntoView({ block: "center", behavior: "auto" }); } catch { /* jsdom */ }
+    }, 150);
+  };
   const hasWebsite = selection.some((item) => item.kind === "tier");
   const selectionText = selectionSummary(selection, discountInput);
   const withSelection = (text: string) => (selectionText ? `${selectionText}\n\n${text}` : text).slice(0, 5000);
@@ -196,7 +232,7 @@ const StartProject = () => {
   const projectTypesTouched = useRef(false);
   useEffect(() => {
     if (step !== 1 || projectTypesTouched.current) return;
-    const mapped = !websiteId ? [] : websiteId === "launch" ? ["Landing Page"] : websiteId === "refresh" ? ["Redesign"] : /^business(-\d+)?$/.test(websiteId) ? ["New Website"] : [];
+    const mapped: string[] = !websiteId ? [] : websiteId === "launch" ? ["Landing Page"] : websiteId === "refresh" ? ["Redesign"] : /^business(-\d+)?$/.test(websiteId) ? ["New Website"] : [];
     setForm((prev) => ({ ...prev, projectTypes: mapped }));
   }, [step, websiteId]);
 
@@ -213,8 +249,19 @@ const StartProject = () => {
     }
     // Step 2 is optional.
     setErrors(errs);
+    const first = FIELD_ORDER.find((key) => errs[key]);
+    if (first) {
+      window.setTimeout(() => {
+        const el = document.getElementById(`sp-${first}`);
+        if (!el) return;
+        try { el.scrollIntoView({ block: "center", behavior: reducedMotion ? "auto" : "smooth" }); } catch { /* jsdom */ }
+        el.focus({ preventScroll: true });
+      }, 0);
+    }
     return Object.keys(errs).length === 0;
   };
+  const step1Ready = Boolean(form.fullName.trim() && EMAIL_RE.test(form.email.trim()) && form.companyName.trim() && form.industry && form.source);
+  const ctaReady = step >= 1 || step1Ready;
 
   const next = () => {
     if (validate()) {
@@ -249,7 +296,8 @@ const StartProject = () => {
     if (!validate()) return;
     setSubmitting(true);
     try {
-      await invokeFunction("send-consultation", { formData: { ...form, projectDescription: withSelection(form.projectDescription.trim()), company_website: honeypot } });
+      const competitorUrls = form.competitorUrls.map((u) => u.trim()).filter(Boolean);
+      await invokeFunction("send-consultation", { formData: { ...form, competitorUrls, projectDescription: withSelection(form.projectDescription.trim()), company_website: honeypot } });
       if (!honeypot) {
         void submitLead({
           name: form.fullName.trim(),
@@ -274,11 +322,9 @@ const StartProject = () => {
 
   const progress = ((step + 1) / TOTAL_STEPS) * 100;
 
-  const stepVariants = {
-    initial: { opacity: 0, y: 16 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -16 },
-  };
+  const stepVariants = reducedMotion
+    ? { initial: { opacity: 1 }, animate: { opacity: 1 }, exit: { opacity: 1 } }
+    : { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -16 } };
 
   // ─── Submitted State ──────────────────────────────────────
   if (submitted) {
@@ -287,7 +333,7 @@ const StartProject = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="mx-auto max-w-md rounded-xl border border-[#2a2a2a] bg-[#161616] p-12 text-center"
+          className="mx-auto max-w-md rounded-xl border border-border bg-card p-12 text-center"
         >
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
             <Check className="h-8 w-8 text-primary" />
@@ -316,6 +362,39 @@ const StartProject = () => {
   const aftercareId = selectedIds.find((id) => aftercareOptions.some((o) => o.id === id));
   const aftercareName = aftercareId === aftercare.selfManaged.id ? "Self-managed" : carePlans.find((p) => p.id === aftercareId)?.name ?? "";
   const barLabel = [websiteName, aftercareName].filter(Boolean).join(" · ") || "No package chosen";
+  const barSummary = (
+    <>
+      <p className="min-w-0 flex-1 truncate text-sm text-foreground">{barLabel}</p>
+      <div className="shrink-0 text-right">
+        {hasWebsite && (
+          <p className="text-sm font-semibold text-foreground">
+            {`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`}
+            {totals.discount > 0 && <span className="ml-1 text-xs font-normal text-primary">{`−${eur(totals.discount)}`}</span>}
+          </p>
+        )}
+        {totals.monthly > 0 && <p className="text-xs text-muted-foreground">{`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}</p>}
+      </div>
+    </>
+  );
+  const renderCta = (size: string) => canSubmit ? (
+    <button
+      type="button"
+      onClick={submitEnquiry}
+      disabled={submitting}
+      className={`inline-flex items-center justify-center gap-2 bg-primary font-semibold text-primary-foreground transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99] disabled:opacity-60 ${size}`}
+    >
+      {submitting ? <><Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> Sending…</> : "Submit Enquiry →"}
+    </button>
+  ) : (
+    <button
+      type="button"
+      onClick={next}
+      aria-disabled={ctaReady ? undefined : "true"}
+      className={`inline-flex items-center justify-center font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99] ${ctaReady ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border border-border bg-muted text-muted-foreground"} ${size}`}
+    >
+      Continue →
+    </button>
+  );
 
   return (
     <div className="min-h-screen">
@@ -325,38 +404,48 @@ const StartProject = () => {
 
       {/* Progress bar */}
       <div className="fixed left-0 right-0 top-16 z-50">
-        <div className="h-[3px] w-full bg-[#1e1e1e]">
+        <div className="h-[3px] w-full bg-border">
           <motion.div
             className="h-full bg-primary"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: reducedMotion ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
           />
         </div>
       </div>
 
-      <div className="mx-auto max-w-2xl px-6 pb-32 pt-32">
+      <div ref={pageRef} onFocus={onFieldFocus} className="mx-auto max-w-2xl px-6 pb-[calc(var(--dock-h,0px)+16px)] pt-32 md:pb-32" style={{ ["--dock-h" as string]: `${dockHeight}px` }}>
         {showInlinePanel && <PackagePanel {...panelProps} className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5" />}
         {/* Step label */}
         <div className="mb-12">
           <p className="font-mono-label text-muted-foreground">
             Step {step + 1} of {TOTAL_STEPS} — {STEP_LABELS[step]}
           </p>
+          <div className="mt-3 flex gap-1.5" aria-hidden="true">
+            {STEP_LABELS.map((label, i) => (
+              <span key={label} data-step-segment={i < step ? "done" : i === step ? "current" : "upcoming"} className={`h-1 flex-1 rounded-full transition-colors ${i < step ? "bg-primary/60" : i === step ? "bg-primary" : "bg-border"}`} />
+            ))}
+          </div>
+          {isMobile && step > 0 && (
+            <button type="button" onClick={back} className="mt-4 inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground">
+              ← Back
+            </button>
+          )}
         </div>
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" onExitComplete={resetScrollToHeading}>
           <motion.div
             key={step}
             variants={stepVariants}
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: reducedMotion ? 0 : 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
             {/* ── Step 0: About You ─────────────────────── */}
             {step === 0 && (
-              <div className="space-y-8">
-                <h1 ref={headingRef} tabIndex={-1} className="text-3xl font-extrabold tracking-tight outline-none md:text-4xl">About You</h1>
+              <div className="space-y-7 md:space-y-8">
+                <h1 ref={headingRef} tabIndex={-1} className="scroll-mt-24 text-3xl font-extrabold tracking-tight outline-none md:text-4xl">About You</h1>
                 <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
                   <label htmlFor="sp-company-website">Company website</label>
                   <input id="sp-company-website" name="company_website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
@@ -397,8 +486,8 @@ const StartProject = () => {
 
             {/* ── Step 1: Your Project ─────────────────── */}
             {step === 1 && (
-              <div className="space-y-8">
-                <h1 ref={headingRef} tabIndex={-1} className="text-3xl font-extrabold tracking-tight outline-none md:text-4xl">Your Project</h1>
+              <div className="space-y-7 md:space-y-8">
+                <h1 ref={headingRef} tabIndex={-1} className="scroll-mt-24 text-3xl font-extrabold tracking-tight outline-none md:text-4xl">Your Project</h1>
                 <Group id="sp-projectTypes" label="What type of project is this?" error={errors.projectTypes}>
                   <div className="flex flex-wrap gap-2">
                     {PROJECT_TYPES.map((t) => (
@@ -467,7 +556,7 @@ const StartProject = () => {
                             type="button"
                             onClick={() => set("competitorUrls", form.competitorUrls.filter((_, j) => j !== i))}
                             aria-label={`Remove website ${i + 1}`}
-                            className="text-muted-foreground hover:text-foreground"
+                            className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center text-muted-foreground hover:text-foreground"
                           >
                             <X className="h-4 w-4" />
                           </button>
@@ -478,7 +567,7 @@ const StartProject = () => {
                       <button
                         type="button"
                         onClick={() => set("competitorUrls", [...form.competitorUrls, ""])}
-                        className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 transition-colors"
+                        className="inline-flex min-h-11 min-w-11 items-center gap-1 text-sm text-primary transition-colors hover:text-primary/80 md:text-xs"
                       >
                         <Plus className="h-3 w-3" /> Add another
                       </button>
@@ -490,36 +579,19 @@ const StartProject = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* ── Navigation ─────────────────────────────── */}
-        <div className="mt-16 flex items-center justify-between">
-          {step > 0 ? (
-            <button type="button" onClick={back} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-              ← Back
-            </button>
-          ) : (
-            <div />
-          )}
-          <div className="flex flex-wrap items-center justify-end gap-3">
-            {canSubmit ? (
-              <button
-                type="button"
-                onClick={submitEnquiry}
-                disabled={submitting}
-                className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 disabled:opacity-50"
-              >
-                {submitting ? "Sending…" : "Submit Enquiry →"}
+        {/* ── Navigation (desktop; phones use the dock) ── */}
+        {!isMobile && (
+          <div className="mt-16 flex items-center justify-between">
+            {step > 0 ? (
+              <button type="button" onClick={back} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                ← Back
               </button>
             ) : (
-              <button
-                type="button"
-                onClick={next}
-                className="rounded-md bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-              >
-                Next →
-              </button>
+              <div />
             )}
+            <div className="flex flex-wrap items-center justify-end gap-3">{renderCta("rounded-md px-8 py-3 text-sm")}</div>
           </div>
-        </div>
+        )}
         {canSubmit && (
           <p className="mt-4 text-right text-xs text-muted-foreground">
             I'll only use your details to respond to your enquiry. 'Enhance with AI' sends your description to an AI service to draft a brief.
@@ -527,19 +599,28 @@ const StartProject = () => {
         )}
       </div>
 
-      {!showInlinePanel && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/95 px-4 py-3 backdrop-blur">
+      {isMobile ? (
+        <div
+          ref={dockRef}
+          data-testid="mobile-dock"
+          className="fixed left-0 right-0 z-40 border-t border-border bg-background/95 backdrop-blur"
+          style={{ bottom: bottomOffset }}
+        >
+          <div className="mx-auto max-w-2xl px-4 pt-2" style={{ paddingBottom: keyboardOpen ? "0.75rem" : "calc(0.75rem + env(safe-area-inset-bottom))" }}>
+            {!keyboardOpen && (
+              <button type="button" onClick={() => setDrawerOpen(true)} aria-expanded={drawerOpen} aria-label={`Adjust package: ${barLabel}`} className="mb-2 flex min-h-11 w-full items-center gap-3 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                {barSummary}
+                <ChevronUp className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+              </button>
+            )}
+            {renderCta("h-12 w-full rounded-md text-base")}
+            {!ctaReady && <p className="mt-1.5 text-center text-xs text-muted-foreground">Fill in the required fields to continue</p>}
+          </div>
+        </div>
+      ) : !showInlinePanel && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/95 px-4 pt-3 backdrop-blur" style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}>
           <div className="mx-auto flex max-w-2xl items-center gap-3">
-            <p className="min-w-0 flex-1 truncate text-sm text-foreground">{barLabel}</p>
-            <div className="text-right">
-              {hasWebsite && (
-                <p className="text-sm font-semibold text-foreground">
-                  {`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`}
-                  {totals.discount > 0 && <span className="ml-1 text-xs font-normal text-primary">{`−${eur(totals.discount)}`}</span>}
-                </p>
-              )}
-              {totals.monthly > 0 && <p className="text-xs text-muted-foreground">{`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}</p>}
-            </div>
+            {barSummary}
             <button type="button" onClick={() => setDrawerOpen(true)} aria-expanded={drawerOpen} className="inline-flex shrink-0 items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary">
               Adjust <ChevronUp className="h-4 w-4" aria-hidden="true" />
             </button>
@@ -547,10 +628,10 @@ const StartProject = () => {
         </div>
       )}
       <Drawer open={drawerOpen && !showInlinePanel} onOpenChange={setDrawerOpen} shouldScaleBackground={false}>
-        <DrawerContent className="max-h-[85vh]">
+        <DrawerContent className="max-h-[85dvh]">
           <DrawerTitle className="sr-only">Adjust your package</DrawerTitle>
           <DrawerDescription className="sr-only">Change your website, care plan or discount code.</DrawerDescription>
-          <div className="mx-auto w-full max-w-2xl overflow-y-auto px-4 pb-6 pt-2">
+          <div className="mx-auto w-full max-w-2xl overflow-y-auto overscroll-contain px-4 pt-2" style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom))" }}>
             <PackagePanel {...panelProps} className="p-1" />
           </div>
         </DrawerContent>
