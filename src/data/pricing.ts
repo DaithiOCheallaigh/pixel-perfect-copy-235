@@ -123,3 +123,8 @@ export const aftercare = {
   },
 };
 export const refreshNotes = () => `${eur(addOns.extraPage)} per page beyond 5; new copy ${eur(addOns.copyPerPage)} a page. Sites over 10 pages or on an unsupported platform are quoted individually.`;
+
+export type DiscountCode = { id: string; code: string; label: string; percent: number; appliesTo: "website" };
+export const discountCodes: DiscountCode[] = [{ id: "matesrates", code: "MATESRATES", label: "Mates rates", percent: 15, appliesTo: "website" }];
+export const normaliseDiscountCode = (input: string) => input.trim().toUpperCase();
+export const findDiscountCode = (input: string | null | undefined) => { const key = normaliseDiscountCode(input ?? ""); return key ? discountCodes.find((d) => d.code === key) : undefined; };

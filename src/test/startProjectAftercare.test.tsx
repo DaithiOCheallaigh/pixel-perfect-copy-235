@@ -3,7 +3,7 @@ import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
 import StartProject from "@/pages/StartProject";
-import { SELECTION_STORAGE_KEY, selectionItems, selectionTotals } from "@/data/serviceEstimates";
+import { DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionItems, selectionTotals } from "@/data/serviceEstimates";
 
 vi.mock("@/components/SEO", () => ({ SEO: () => null }));
 vi.mock("@/lib/submitLead", () => ({ submitLead: vi.fn() }));
@@ -72,5 +72,23 @@ describe("enquiry aftercare choices", () => {
   it("reads only string IDs from storage", () => {
     open(["launch", 123, null, { id: "care" }]);
     expect(saved()).toEqual(["launch"]);
+  });
+});
+describe("enquiry discount code", () => {
+  const type = (value: string) => {
+    const input = container.querySelector<HTMLInputElement>("#sp-discount")!;
+    const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!;
+    act(() => { setter.call(input, value); input.dispatchEvent(new Event("input", { bubbles: true })); });
+  };
+  it("stores a valid code and confirms it", () => {
+    open(["business", "growth"]);
+    type("matesrates");
+    expect(sessionStorage.getItem(DISCOUNT_STORAGE_KEY)).toBe("matesrates");
+    expect(container.textContent).toContain("Mates rates applied");
+  });
+  it("flags an unknown code", () => {
+    open(["business"]);
+    type("xyz");
+    expect(container.textContent).toContain("Code not recognised.");
   });
 });
