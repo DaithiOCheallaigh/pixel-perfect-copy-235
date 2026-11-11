@@ -6,7 +6,7 @@ export const BusinessPagesSelect = ({ pages, onChange }: { pages: number; onChan
   <div className="w-full">
     <label className="mb-1.5 block text-xs font-medium text-muted-foreground" id="business-pages-label">Pages</label>
     <Select value={String(pages)} onValueChange={(v) => onChange(Number(v))}>
-      <SelectTrigger aria-label="Pages" aria-labelledby="business-pages-label" className="h-auto w-full justify-between gap-3 rounded-md border border-border bg-background px-3 py-2 text-sm [&>svg]:mr-0.5">
+      <SelectTrigger aria-label="Pages" aria-labelledby="business-pages-label" className="h-auto w-full justify-between gap-3 rounded-md border border-border bg-background px-3 py-2 min-h-12 text-base md:min-h-0 md:text-sm [&>svg]:mr-0.5">
         <SelectValue />
       </SelectTrigger>
       <SelectContent className="border-border bg-popover">
