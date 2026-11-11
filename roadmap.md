@@ -1,4 +1,9 @@
 # Pricing overhaul — step 1
+# Services Voxel Arc backdrop
+- [ ] Replace DottedSurface with the byte-identical lazy VoxelArc and update the architecture rule.
+- [ ] Verify the supplied hash, full tests, types and desktop/mobile hero without submitting or publishing.
+
+# Pricing overhaul — step 1
 - [x] Recover and create supplied pricing catalogue.
 - [x] Refactor Services hub and preserve specified sections.
 - [x] Add pricing rule tests and verify selection and desktop/mobile layout.
