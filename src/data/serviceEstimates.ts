@@ -1,4 +1,4 @@
-import { aftercare, businessOptions, carePlans, eur, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
+import { aftercare, businessOptions, carePlans, eur, findDiscountCode, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
 
 /** Setup and recurring fees are separate; optional website instalments are not added to setup. */
 export type Fee = { oneOff: number; monthly: number };
@@ -6,6 +6,7 @@ export type SelectionKind = "tier" | "aftercare" | "care";
 export type SelectionItem = { id: string; kind: SelectionKind; title: string; price: string } & Fee;
 
 export const SELECTION_STORAGE_KEY = "lacuna-services-selection";
+export const DISCOUNT_STORAGE_KEY = "lacuna-services-discount";
 
 /** Price a tier, aftercare choice, or care plan by its catalogue ID; unknown IDs return undefined. */
 export function selectionItem(id: string): SelectionItem | undefined {
@@ -34,16 +35,35 @@ export function selectionPrice(selections: readonly { id: string }[]) {
   return `from ${eur(totals.oneOff)}${totals.monthly ? ` + ${eur(totals.monthly)}/mo` : ""}${VAT_REGISTERED ? " + VAT" : ""}`;
 }
 
+/** Enquiry-page discount: percent off website (tier) one-off prices only, rounded to the euro. */
+export function discountAmount(selections: readonly { id: string }[], code?: string | null): number {
+  const d = findDiscountCode(code);
+  if (!d) return 0;
+  const website = selectionItems(selections).filter((s) => s.kind === "tier").reduce((t, s) => t + s.oneOff, 0);
+  return website ? Math.round((website * d.percent) / 100) : 0;
+}
+
+export function selectionTotalsWithDiscount(selections: readonly { id: string }[], code?: string | null) {
+  const totals = selectionTotals(selections);
+  const discount = discountAmount(selections, code);
+  const d = discount > 0 ? findDiscountCode(code) : undefined;
+  return { oneOff: totals.oneOff - discount, monthly: totals.monthly, discount, ...(d ? { discountLabel: d.label, discountPercent: d.percent } : {}) };
+}
+
 /** Human-readable selection for enquiry emails: names, prices and separate totals. */
-export function selectionSummary(selections: readonly { id: string }[]) {
+export function selectionSummary(selections: readonly { id: string }[], code?: string | null) {
   const items = selectionItems(selections);
   if (!items.length) return "";
   const totals = selectionTotals(items);
   const v = VAT_REGISTERED ? " + VAT" : "";
+  const from = selectionIsFrom(items) ? "from " : "";
+  const discount = discountAmount(items, code);
+  const d = discount > 0 ? findDiscountCode(code) : undefined;
   return [
     "Selected package:",
     ...items.map((s) => `- ${s.title}: ${s.price}`),
-    `One-off setup: ${selectionIsFrom(items) ? "from " : ""}${eur(totals.oneOff)}${v}`,
+    ...(d ? [`- Discount code ${d.code} (${d.label}, ${d.percent}% off website packages): −${eur(discount)}`] : []),
+    d ? `One-off setup: ${from}${eur(totals.oneOff - discount)}${v} (was ${eur(totals.oneOff)}${v})` : `One-off setup: ${from}${eur(totals.oneOff)}${v}`,
     ...(totals.monthly ? [`Monthly: ${eur(totals.monthly)}/mo${v}`] : []),
   ].join("\n");
 }

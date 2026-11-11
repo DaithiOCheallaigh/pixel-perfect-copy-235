@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { selectionSummary, selectionTotals, selectionPrice, selectionItems } from "@/data/serviceEstimates";
+import { discountAmount, selectionTotalsWithDiscount, selectionSummary, selectionTotals, selectionPrice, selectionItems } from "@/data/serviceEstimates";
 import { BUDGET_OPTIONS, INDUSTRIES } from "@/data/projectIntake";
 import { CONTENT_PAUSE_WORKING_DAYS, REVISION_WINDOW_WORKING_DAYS } from "@/data/workingTerms";
 import { addOns, aftercare, terms } from "@/data/pricing";
@@ -51,5 +51,20 @@ describe("website refresh selection", () => {
     const s = selectionSummary([{ id: "refresh" }, { id: "care" }]);
     expect(s).toContain("- Website Refresh: from €1,500 + VAT");
     expect(s).toContain("One-off setup: from €1,500 + VAT");
+  });
+
+  it("MATESRATES takes 15% off website one-off prices only", () => {
+    expect(discountAmount([{ id: "business" }, { id: "growth" }], "matesrates")).toBe(375);
+    expect(discountAmount([{ id: "business" }, { id: "growth" }], " MatesRates ")).toBe(375);
+    expect(discountAmount([{ id: "growth" }], "MATESRATES")).toBe(0);
+    expect(discountAmount([{ id: "business" }], "nope")).toBe(0);
+    expect(selectionTotalsWithDiscount([{ id: "business-8" }, { id: "care" }], "MATESRATES")).toEqual({ oneOff: 3400, monthly: 65, discount: 600, discountLabel: "Mates rates", discountPercent: 15 });
+  });
+
+  it("adds the discount line and was-price to the brief summary", () => {
+    const s = selectionSummary([{ id: "business" }, { id: "growth" }], "MATESRATES");
+    expect(s).toContain("- Discount code MATESRATES (Mates rates, 15% off website packages): −€375");
+    expect(s).toContain("One-off setup: €2,125 + VAT (was €2,500 + VAT)");
+    expect(s).toContain("Monthly: €200/mo + VAT");
   });
 });

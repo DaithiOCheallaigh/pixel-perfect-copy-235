@@ -26,4 +26,10 @@ describe("split AI discovery documents", () => {
   it("does not shadow the services route with a physical directory", () => {
     expect(existsSync("public/services")).toBe(false);
   });
+
+  it("never exposes discount codes in the services llms file", () => {
+    const out = buildServicesLlms();
+    expect(out).not.toContain("MATESRATES");
+    expect(out).not.toContain("Mates rates");
+  });
 });

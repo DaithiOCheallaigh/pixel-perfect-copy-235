@@ -7,7 +7,8 @@ import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
 import { aftercare, carePlans, CONTACT_EMAIL, entry } from "@/data/pricing";
 import { BUDGET_OPTIONS, BUDGET_LABEL, INDUSTRIES } from "@/data/projectIntake";
-import { SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotals } from "@/data/serviceEstimates";
+import { DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotalsWithDiscount } from "@/data/serviceEstimates";
+import { findDiscountCode } from "@/data/pricing";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -183,7 +184,15 @@ const StartProject = () => {
     sessionStorage.setItem(SELECTION_STORAGE_KEY, JSON.stringify(selectedIds));
   }, [selectedIds]);
   const selection = selectionItems(selectedIds.map((id) => ({ id })));
-  const totals = selectionTotals(selection);
+  const [discountInput, setDiscountInput] = useState<string>(() => {
+    try { return sessionStorage.getItem(DISCOUNT_STORAGE_KEY) ?? ""; } catch { return ""; }
+  });
+  useEffect(() => {
+    if (discountInput) sessionStorage.setItem(DISCOUNT_STORAGE_KEY, discountInput);
+    else sessionStorage.removeItem(DISCOUNT_STORAGE_KEY);
+  }, [discountInput]);
+  const discount = findDiscountCode(discountInput);
+  const totals = selectionTotalsWithDiscount(selection, discountInput);
   const aftercareOptions = [
     { id: aftercare.selfManaged.id, label: `${aftercare.selfManaged.name} · ${aftercare.selfManaged.priceLine}` },
     ...carePlans.map((plan) => ({ id: plan.id, label: `${plan.name} · ${eur(plan.monthly)}/mo` })),
@@ -194,7 +203,7 @@ const StartProject = () => {
       return current.includes(id) ? kept : [...kept, id];
     });
   };
-  const selectionText = selectionSummary(selection);
+  const selectionText = selectionSummary(selection, discountInput);
   const withSelection = (text: string) => (selectionText ? `${selectionText}\n\n${text}` : text).slice(0, 5000);
 
   const set = useCallback(
@@ -276,6 +285,7 @@ const StartProject = () => {
         }).catch(() => {});
       }
       sessionStorage.removeItem(SELECTION_STORAGE_KEY);
+      sessionStorage.removeItem(DISCOUNT_STORAGE_KEY);
       setSubmitted(true);
     } catch (e: any) {
       console.error(e);
@@ -359,11 +369,27 @@ const StartProject = () => {
                 </div>
               </Group>
             </div>
-            {(totals.oneOff > 0 || totals.monthly > 0) && (
-              <p className="mt-3 text-sm font-semibold text-foreground">{[
-                ...(totals.oneOff ? [`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`] : []),
-                ...(totals.monthly ? [`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`] : []),
-              ].join(" · ")}</p>
+            <div className="mt-5">
+              <Field id="sp-discount" label="Discount code (optional)">
+                <input id="sp-discount" className={inputClass + " uppercase"} maxLength={32} autoComplete="off" spellCheck={false} value={discountInput} onChange={(e) => setDiscountInput(e.target.value)} aria-describedby={discountInput.trim() ? "sp-discount-status" : undefined} />
+              </Field>
+              {discountInput.trim() && (
+                <p id="sp-discount-status" aria-live="polite" className={`mt-2 text-xs ${discount ? "text-primary" : "text-muted-foreground"}`}>
+                  {discount ? `${discount.label} applied: ${discount.percent}% off website packages. Care plans are not discounted.` : "Code not recognised."}
+                </p>
+              )}
+            </div>
+            {(totals.oneOff + totals.discount > 0 || totals.monthly > 0) && (
+              <p className="mt-3 text-sm font-semibold text-foreground">
+                {totals.oneOff + totals.discount > 0 && (
+                  <>
+                    {`Setup ${selectionIsFrom(selection) ? "from " : ""}${eur(totals.oneOff)}${VAT_REGISTERED ? " + VAT" : ""}`}
+                    {totals.discount > 0 && <> <s className="font-normal text-muted-foreground">{eur(totals.oneOff + totals.discount)}</s></>}
+                  </>
+                )}
+                {totals.oneOff + totals.discount > 0 && totals.monthly > 0 && " · "}
+                {totals.monthly > 0 && `Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}
+              </p>
             )}
             <p className="mt-1 text-xs text-muted-foreground">This selection is sent with your brief.</p>
           </section>
