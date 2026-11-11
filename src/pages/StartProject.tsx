@@ -166,12 +166,12 @@ const StartProject = () => {
     return { id: t.id, match: (id: string) => id === t.id, label: `${t.name} · ${t.price ? eur(t.price) : `from ${eur(t.priceFrom ?? 0)}`}` };
   });
   const chooseWebsite = (id: string) => {
+    if (id !== "business") setBusinessPages(BUSINESS_BASE_PAGES);
     setSelectedIds((current) => {
       const kept = current.filter((x) => !isWebsiteId(x));
       const active = current.find(isWebsiteId);
       const option = websiteOptions.find((o) => o.id === id)!;
       if (active && option.match(active)) return kept;
-      if (id !== "business") setBusinessPages(BUSINESS_BASE_PAGES);
       return [...kept, id === "business" ? businessOption(businessPages).id : id];
     });
   };

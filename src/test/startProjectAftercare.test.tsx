@@ -169,7 +169,7 @@ describe("enquiry step 2", () => {
     container.querySelectorAll<HTMLSelectElement>("select[data-native-select]").forEach((sel) => {
       act(() => { sel.value = sel.options[1].value; sel.dispatchEvent(new Event("change", { bubbles: true })); });
     });
-    click(button("Next →"));
+    click(button("Continue →"));
     await settle();
   };
   const pressed = (label: string) => button(label).getAttribute("aria-pressed");
@@ -186,7 +186,7 @@ describe("enquiry step 2", () => {
     click(button("← Back"));
     await settle();
     click(Array.from(container.querySelectorAll("button")).find((b) => b.textContent?.startsWith("Website Refresh"))!);
-    click(button("Next →"));
+    click(button("Continue →"));
     await settle();
     expect(pressed("Web App")).toBe("true");
     expect(pressed("Landing Page")).toBe("true");
