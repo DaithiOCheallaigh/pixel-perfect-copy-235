@@ -379,9 +379,9 @@ const StartProject = () => {
 
       <div className="mx-auto max-w-2xl px-6 pb-32 pt-32">
           <section aria-label="Your selected package" className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5">
-            <p className="font-mono-label text-muted-foreground">Your package</p>
+            <h2 className="text-xl font-bold tracking-tight text-foreground">Your package</h2>
             <div className="mt-4">
-              <Group id="sp-website" label="Website">
+              <Group id="sp-website" label="1. Website">
                 <div className="flex flex-wrap gap-2">
                   {websiteOptions.map((option) => (
                     <Pill key={option.id} label={option.label} selected={Boolean(websiteId && option.match(websiteId))} onClick={() => chooseWebsite(option.id)} />
@@ -393,7 +393,7 @@ const StartProject = () => {
               </Group>
             </div>
             <div className="mt-5">
-              <Group id="sp-aftercare" label="Once it's live, who looks after it?">
+              <Group id="sp-aftercare" label="2. Care plans">
                 <div className="flex flex-wrap gap-2">
                   {aftercareOptions.map((option) => (
                     <Pill key={option.id} label={option.label} selected={selectedIds.includes(option.id)} onClick={() => chooseAftercare(option.id)} />
@@ -403,13 +403,17 @@ const StartProject = () => {
             </div>
             <div className="mt-5">
               <Field id="sp-discount" label="Discount code (optional)">
-                <input id="sp-discount" className={inputClass + " uppercase"} maxLength={32} autoComplete="off" spellCheck={false} value={discountInput} onChange={(e) => setDiscountInput(e.target.value)} aria-describedby={discountInput.trim() ? "sp-discount-status" : undefined} />
+                <div className="relative">
+                  <input id="sp-discount" className={inputClass + " uppercase" + (discount ? " pr-10 border-primary/60" : "")} maxLength={32} autoComplete="off" spellCheck={false} value={discountInput} onChange={(e) => setDiscountInput(e.target.value)} aria-describedby={discountInput.trim() ? "sp-discount-status" : undefined} />
+                  {discount && <Check className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" aria-hidden="true" />}
+                </div>
               </Field>
               {discountInput.trim() && (
                 <p id="sp-discount-status" aria-live="polite" className={`mt-2 text-xs ${discount ? "text-primary" : "text-muted-foreground"}`}>
                   {discount
-                    ? `${discount.label} applied: ${discount.percent}% off website packages.${breakdown.bonusPlan ? ` Your ${breakdown.bonusPlan} plan adds a further ${breakdown.bonusPercent}%: ${breakdown.percent}% off in total.` : ""} Care plans are not discounted.`
+                    ? `${discount.label} applied: ${discount.percent}% off website packages.${breakdown.bonusPlan ? ` Your ${breakdown.bonusPlan} plan adds a further ${breakdown.bonusPercent}%: ${breakdown.percent}% off in total.` : " Select a care plan for a further discount."}`
                     : "Code not recognised."}
+                  {discount && <span className="sr-only"> Code accepted.</span>}
                 </p>
               )}
             </div>
