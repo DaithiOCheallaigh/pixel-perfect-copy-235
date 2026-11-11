@@ -5,17 +5,17 @@ import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
 import { selectionIsFrom, type discountBreakdown, type selectionItems, type selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 
 export const inputClass =
-  "w-full rounded-md border border-[#2a2a2a] bg-[#1e1e1e] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors";
+  "w-full min-h-12 rounded-md border border-input bg-card px-4 py-3 text-base text-foreground md:min-h-0 md:text-sm placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors";
 
 export const Pill = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
   <button
     type="button"
     onClick={onClick}
     aria-pressed={selected}
-    className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${
+    className={`inline-flex min-h-11 items-center rounded-full border px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] ${
       selected
         ? "border-primary bg-primary/10 text-primary"
-        : "border-[#2a2a2a] bg-[#1e1e1e] text-muted-foreground hover:border-primary/40"
+        : "border-input bg-card text-muted-foreground hover:border-primary/40"
     }`}
   >
     {label}
@@ -28,7 +28,7 @@ export const Field = ({ id, label, required, children, error }: { id: string; la
       {label} {required && <span className="text-primary" aria-hidden="true">*</span>}
     </label>
     {children}
-    {error && <p id={`${id}-error`} className="text-xs text-destructive">{error}</p>}
+    {error && <p id={`${id}-error`} role="alert" className="text-xs text-destructive">{error}</p>}
   </div>
 );
 
@@ -38,7 +38,7 @@ export const Group = ({ id, label, required, children, error }: { id: string; la
       {label} {required && <span className="text-primary" aria-hidden="true">*</span>}
     </legend>
     {children}
-    {error && <p id={`${id}-error`} className="text-xs text-destructive">{error}</p>}
+    {error && <p id={`${id}-error`} role="alert" className="text-xs text-destructive">{error}</p>}
   </fieldset>
 );
 
