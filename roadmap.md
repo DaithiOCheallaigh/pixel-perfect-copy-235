@@ -1,3 +1,7 @@
+# Services Voxel Arc backdrop
+- [x] Replace DottedSurface with the byte-identical lazy VoxelArc and update the architecture rule.
+- [x] Verify the supplied hash, full tests, types and desktop/mobile hero without submitting or publishing; React ref warnings remain outside the backdrop.
+
 # Pricing overhaul — step 1
 - [x] Recover and create supplied pricing catalogue.
 - [x] Refactor Services hub and preserve specified sections.
