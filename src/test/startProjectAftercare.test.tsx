@@ -182,7 +182,7 @@ describe("enquiry step 2", () => {
     toStep2();
     click(button("Web App"));
     click(button("← Back"));
-    click(button("Website Refresh · from €1,500".replace("€1,500", button("Launch · €750") && Array.from(container.querySelectorAll("button")).find((b) => b.textContent?.startsWith("Website Refresh"))!.textContent!.split("from ")[1])));
+    click(Array.from(container.querySelectorAll("button")).find((b) => b.textContent?.startsWith("Website Refresh"))!);
     click(button("Next →"));
     expect(pressed("Web App")).toBe("true");
     expect(pressed("Landing Page")).toBe("true");

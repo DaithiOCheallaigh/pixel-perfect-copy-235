@@ -487,10 +487,6 @@ const StartProject = () => {
                 </Field>
               </div>
             )}
-
-                </div>
-              </div>
-            )}
           </motion.div>
         </AnimatePresence>
 
