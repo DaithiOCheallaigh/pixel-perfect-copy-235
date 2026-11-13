@@ -328,6 +328,12 @@ const Services = () => {
                 const tier = isBusiness ? { ...baseTier, ...businessOption(businessPages), id: baseTier.id } : baseTier;
                 return (
                 <SelectableCard key={tier.id} index={i} selected={tierId === tier.id} label={`${tier.name}, ${priceLabel(tier)}`} onToggle={() => chooseTier(tier.id)}
+                  tail={
+                    <>
+                      <p className="mt-5 text-xs text-muted-foreground">Live in {tier.live}{tier.id === "refresh" ? "" : " from a complete intake"}</p>
+                      <span className={`mt-5 text-sm font-semibold ${accentText(tierId === tier.id)}`}>{tierId === tier.id ? "Selected" : "Select"}</span>
+                    </>
+                  }
                   footer={isBusiness ? <BusinessPagesSelect pages={businessPages} onChange={(n) => { setBusinessPages(n); if (tierId !== "business") chooseTier("business"); }} /> : undefined}>
                   <h4 className="text-xl font-bold text-foreground">{tier.name}</h4>
                   <p className="mt-3 text-2xl font-bold text-foreground">{priceLabel(tier)}</p>
@@ -340,8 +346,6 @@ const Services = () => {
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-5 text-xs text-muted-foreground">Live in {tier.live}{tier.id === "refresh" ? "" : " from a complete intake"}</p>
-                  <span className={`mt-5 text-sm font-semibold ${accentText(tierId === tier.id)}`}>{tierId === tier.id ? "Selected" : "Select"}</span>
                 </SelectableCard>
                 );
               })}
