@@ -115,6 +115,7 @@ const SelectableCard = ({
   index,
   featured,
   footer,
+  tail,
   children,
 }: {
   selected: boolean;
@@ -124,6 +125,8 @@ const SelectableCard = ({
   featured?: boolean;
   /** Controls rendered under the card's button (never inside it: nested interactive elements are invalid). */
   footer?: React.ReactNode;
+  /** Trailing content (lead-time line and the Select label) rendered after the footer slot. */
+  tail?: React.ReactNode;
   children: React.ReactNode;
 }) => {
   const ref = useRef(null);
@@ -138,16 +141,18 @@ const SelectableCard = ({
     >
       {footer ? (
         <div className={`${cardClass(selected, featured)} !p-0`}>
-          <Button variant="ghost" type="button" onClick={onToggle} aria-pressed={selected} data-label={label} className="relative flex h-auto w-full flex-1 flex-col items-start whitespace-normal rounded-none rounded-t-xl border-0 p-6 text-left text-foreground hover:bg-transparent hover:text-foreground dark:hover:bg-transparent dark:hover:text-foreground">
+          <Button variant="ghost" type="button" onClick={onToggle} aria-pressed={selected} data-label={label} className="relative flex h-auto w-full flex-1 flex-col items-start whitespace-normal rounded-none rounded-t-xl border-0 p-6 pb-0 text-left text-foreground hover:bg-transparent hover:text-foreground dark:hover:bg-transparent dark:hover:text-foreground">
             <SelectIndicator selected={selected} />
             {children}
           </Button>
-          <div className="w-full border-t border-border p-4" onClick={(e) => e.stopPropagation()}>{footer}</div>
+          <div className="w-full px-6 pt-5" onClick={(e) => e.stopPropagation()}>{footer}</div>
+          <div className="flex w-full cursor-pointer flex-col px-6 pb-6" aria-hidden="true" onClick={onToggle}>{tail}</div>
         </div>
       ) : (
         <Button variant="ghost" type="button" onClick={onToggle} aria-pressed={selected} data-label={label} className={cardClass(selected, featured)}>
           <SelectIndicator selected={selected} />
           {children}
+          {tail}
         </Button>
       )}
     </motion.div>
