@@ -31,8 +31,8 @@ Deno.serve(async (req) => {
     const phone = req_("phone", 40);
     const companyName = req_("companyName", TEXT, true);
     const websiteUrl = req_("websiteUrl", TEXT);
-    const industry = req_("industry", TEXT, true);
-    const source = req_("source", TEXT, true);
+    const industry = req_("industry", TEXT);
+    const source = req_("source", TEXT);
     const projectDescription = req_("projectDescription", 5000);
     const existingBrand = req_("existingBrand", TEXT);
     const urgency = req_("urgency", TEXT);
@@ -65,8 +65,8 @@ Deno.serve(async (req) => {
       <p><strong>Phone:</strong> ${e(phone || "N/A")}</p>
       <p><strong>Company:</strong> ${e(companyName)}</p>
       <p><strong>Website:</strong> ${e(websiteUrl || "N/A")}</p>
-      <p><strong>Industry:</strong> ${e(industry)}</p>
-      <p><strong>Source:</strong> ${e(source)}</p>
+      <p><strong>Industry:</strong> ${e(industry || "N/A")}</p>
+      <p><strong>Source:</strong> ${e(source || "N/A")}</p>
 
       <h2>Project Details</h2>
       <p><strong>Type:</strong> ${e(projectTypes.join(", ") || "N/A")}</p>

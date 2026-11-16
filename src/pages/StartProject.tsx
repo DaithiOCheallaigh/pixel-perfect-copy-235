@@ -1,20 +1,18 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { submitLead } from "@/lib/submitLead";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Check, Plus, X, Sparkles, ArrowLeft, Loader2, ChevronUp } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Check, ArrowLeft, Loader2, ChevronUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
 import { aftercare, businessOption, BUSINESS_BASE_PAGES, carePlans, entry, tiers } from "@/data/pricing";
-import { Field, Group, inputClass, PackagePanel, Pill, type PackagePanelProps } from "@/components/services/PackagePanel";
+import { Field, inputClass, PackagePanel, type PackagePanelProps } from "@/components/services/PackagePanel";
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useVisualViewport } from "@/hooks/use-visual-viewport";
-import { INDUSTRIES } from "@/data/projectIntake";
 import { discountBreakdown, DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 import { findDiscountCode } from "@/data/pricing";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://lgdjivhyveowybzhbqum.supabase.co";
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZGppdmh5dmVvd3liemhicXVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMjMyNDMsImV4cCI6MjA4Nzg5OTI0M30.ThNz5RF9Pco9Up0nIn_gaMIUSV_yc2WINGBXpuvF-A0";
@@ -43,13 +41,6 @@ interface FormData {
   phone: string;
   companyName: string;
   websiteUrl: string;
-  industry: string;
-  source: string;
-  projectTypes: string[];
-  projectDescription: string;
-  existingBrand: string;
-  urgency: string;
-  competitorUrls: string[];
 }
 
 const initialFormData: FormData = {
@@ -58,26 +49,7 @@ const initialFormData: FormData = {
   phone: "",
   companyName: "",
   websiteUrl: "",
-  industry: "",
-  source: "",
-  projectTypes: [],
-  projectDescription: "",
-  existingBrand: "",
-  urgency: "",
-  competitorUrls: [""],
 };
-
-const TOTAL_STEPS = 2;
-
-const STEP_LABELS = [
-  "About You",
-  "Your Project",
-];
-
-const SOURCES = ["Google", "Referral", "Social Media", "Portfolio", "Other"];
-const PROJECT_TYPES = ["New Website", "Redesign", "Landing Page", "E-commerce", "Web App", "Brand + Website"];
-const BRAND_OPTIONS = ["Yes", "No", "In progress"];
-const URGENCY_OPTIONS = ["Exploring options", "Ready to start within a month", "ASAP"];
 
 /** aria props linking a control to its Field error */
 const errProps = (id: string, error?: string) => ({
@@ -87,49 +59,17 @@ const errProps = (id: string, error?: string) => ({
 });
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const FIELD_ORDER = ["fullName", "email", "companyName", "industry", "source"] as const;
+const FIELD_ORDER = ["fullName", "email", "companyName"] as const;
 
-
-const selectTriggerClass =
-  "h-auto w-full justify-between gap-3 rounded-md border border-input bg-card py-3 pl-4 pr-4 min-h-12 text-left text-base text-foreground md:min-h-0 md:text-sm ring-offset-0 focus:border-primary focus:ring-1 focus:ring-primary focus:ring-offset-0 data-[placeholder]:text-muted-foreground [&>svg]:mr-0";
-const selectContentClass = "rounded-md border border-input bg-card shadow-xl";
-const selectItemClass = "px-3 py-2.5 text-sm focus:bg-primary/10 focus:text-primary data-[highlighted]:bg-primary/10 data-[highlighted]:text-primary";
 
 // ─── Main Page ─────────────────────────────────────────────────
 const StartProject = () => {
-  const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [brief, setBrief] = useState("");
-  const [briefLoading, setBriefLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState("");
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const stepChanged = useRef(false);
-
   const reducedMotion = useReducedMotion();
-  // Runs after the old step has left (AnimatePresence onExitComplete): land the new heading below the fixed nav + progress bar.
-  const [exitTick, setExitTick] = useState(0);
-  const resetScrollToHeading = () => {
-    if (stepChanged.current) setExitTick((t) => t + 1);
-  };
-  // Effect runs after the commit that mounts the entering step, so headingRef is the new heading.
-  useEffect(() => {
-    if (!exitTick || !stepChanged.current) return;
-    stepChanged.current = false;
-    const raf = requestAnimationFrame(() => {
-      const heading = headingRef.current;
-      if (!heading) return;
-      // Layout position (offsetTop chain) ignores the entering step's y-transform.
-      let y = 0;
-      for (let el: HTMLElement | null = heading; el; el = el.offsetParent as HTMLElement | null) y += el.offsetTop;
-      const top = Math.max(0, y - 96);
-      try { window.scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" }); } catch { /* jsdom */ }
-      heading.focus({ preventScroll: true });
-    });
-    return () => cancelAnimationFrame(raf);
-  }, [exitTick, reducedMotion]);
   const { toast } = useToast();
   // Package chosen on /services: IDs only, re-priced from the catalogue here.
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
@@ -232,31 +172,13 @@ const StartProject = () => {
     []
   );
 
-  const toggleArray = (key: "projectTypes", value: string) => {
-    projectTypesTouched.current = true;
-    set(key, form[key].includes(value) ? form[key].filter((v) => v !== value) : [...form[key], value]);
-  };
-
-  // Pre-fill the project type from the chosen website until the visitor picks one themselves.
-  const projectTypesTouched = useRef(false);
-  useEffect(() => {
-    if (step !== 1 || projectTypesTouched.current) return;
-    const mapped: string[] = !websiteId ? [] : websiteId === "launch" ? ["Landing Page"] : websiteId === "refresh" ? ["Redesign"] : /^business(-\d+)?$/.test(websiteId) ? ["New Website"] : [];
-    setForm((prev) => ({ ...prev, projectTypes: mapped }));
-  }, [step, websiteId]);
-
   // Validation
   const validate = (): boolean => {
     const errs: Record<string, string> = {};
-    if (step === 0) {
-      if (!form.fullName.trim()) errs.fullName = "Required";
-      if (!form.email.trim()) errs.email = "Required";
-      else if (!EMAIL_RE.test(form.email.trim())) errs.email = "Enter a valid email address";
-      if (!form.companyName.trim()) errs.companyName = "Required";
-      if (!form.industry) errs.industry = "Required";
-      if (!form.source) errs.source = "Required";
-    }
-    // Step 2 is optional.
+    if (!form.fullName.trim()) errs.fullName = "Required";
+    if (!form.email.trim()) errs.email = "Required";
+    else if (!EMAIL_RE.test(form.email.trim())) errs.email = "Enter a valid email address";
+    if (!form.companyName.trim()) errs.companyName = "Required";
     setErrors(errs);
     const first = FIELD_ORDER.find((key) => errs[key]);
     if (first) {
@@ -269,44 +191,21 @@ const StartProject = () => {
     }
     return Object.keys(errs).length === 0;
   };
-  const step1Ready = Boolean(form.fullName.trim() && EMAIL_RE.test(form.email.trim()) && form.companyName.trim() && form.industry && form.source);
-  const ctaReady = step >= 1 || step1Ready;
-
-  const next = () => {
-    if (validate()) {
-      stepChanged.current = true;
-      setStep((s) => Math.min(s + 1, TOTAL_STEPS - 1));
-    }
-  };
-  const back = () => {
-    stepChanged.current = true;
-    setStep((s) => Math.max(s - 1, 0));
-  };
-
-  const enhanceWithAI = async () => {
-    if (!form.projectDescription.trim()) {
-      setErrors((prev) => ({ ...prev, projectDescription: "Write a brief description first" }));
-      return;
-    }
-    setBriefLoading(true);
-    try {
-      const data = await invokeFunction("generate-brief", { formData: form });
-      setBrief(data.brief);
-      set("projectDescription", data.brief);
-    } catch (e: any) {
-      console.error(e);
-      toast({ variant: "destructive", title: "Error", description: "Failed to enhance description. Please try again." });
-    } finally {
-      setBriefLoading(false);
-    }
-  };
+  const step1Ready = Boolean(form.fullName.trim() && EMAIL_RE.test(form.email.trim()) && form.companyName.trim());
+  const ctaReady = step1Ready;
+  const projectTypes: string[] = !websiteId ? [] : websiteId === "launch" ? ["Landing Page"] : websiteId === "refresh" ? ["Redesign"] : /^business(-\d+)?$/.test(websiteId) ? ["New Website"] : [];
 
   const submitEnquiry = async () => {
     if (!validate()) return;
     setSubmitting(true);
     try {
-      const competitorUrls = form.competitorUrls.map((u) => u.trim()).filter(Boolean);
-      await invokeFunction("send-consultation", { formData: { ...form, competitorUrls, projectDescription: withSelection(form.projectDescription.trim()), company_website: honeypot } });
+      const summary = withSelection("");
+      await invokeFunction("send-consultation", {
+        formData: {
+          fullName: form.fullName, email: form.email, phone: form.phone, companyName: form.companyName, websiteUrl: form.websiteUrl,
+          company_website: honeypot, projectDescription: summary, projectTypes,
+        },
+      });
       if (!honeypot) {
         void submitLead({
           name: form.fullName.trim(),
@@ -314,8 +213,8 @@ const StartProject = () => {
           phone: form.phone.trim() || undefined,
           company: form.companyName.trim(),
           website: form.websiteUrl.trim() || undefined,
-          service: form.projectTypes.join(", "),
-          message: withSelection(form.projectDescription.trim()),
+          service: projectTypes.join(", "),
+          message: summary,
         }).catch(() => {});
       }
       sessionStorage.removeItem(SELECTION_STORAGE_KEY);
@@ -328,12 +227,6 @@ const StartProject = () => {
       setSubmitting(false);
     }
   };
-
-  const progress = ((step + 1) / TOTAL_STEPS) * 100;
-
-  const stepVariants = reducedMotion
-    ? { initial: { opacity: 1 }, animate: { opacity: 1 }, exit: { opacity: 1 } }
-    : { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -16 } };
 
   // ─── Submitted State ──────────────────────────────────────
   if (submitted) {
@@ -360,12 +253,11 @@ const StartProject = () => {
     );
   }
 
-  const canSubmit = step >= 1;
   const panelProps: PackagePanelProps = {
     selectedIds, selection, websiteId, websiteOptions, chooseWebsite, businessPages, changeBusinessPages,
     aftercareOptions, chooseAftercare, discountInput, setDiscountInput, discount, breakdown, totals, hasWebsite,
   };
-  const showInlinePanel = step === 0 && !isMobile;
+  const showInlinePanel = !isMobile;
   const websiteTier = tiers.find((t) => websiteId && (t.id === websiteId || (t.id === "business" && /^business(-\d+)?$/.test(websiteId))));
   const websiteName = websiteTier ? (websiteTier.id === "business" ? `${websiteTier.name} · ${businessOption(businessPages).pages} pages` : websiteTier.name) : "";
   const aftercareId = selectedIds.find((id) => aftercareOptions.some((o) => o.id === id));
@@ -385,76 +277,29 @@ const StartProject = () => {
       </div>
     </>
   );
-  const renderCta = (size: string) => canSubmit ? (
+  const onCta = () => { if (!ctaReady) { validate(); return; } void submitEnquiry(); };
+  const renderCta = (size: string) => (
     <button
       type="button"
-      onClick={submitEnquiry}
+      onClick={onCta}
       disabled={submitting}
-      className={`inline-flex items-center justify-center gap-2 bg-primary font-semibold text-primary-foreground transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99] disabled:opacity-60 ${size}`}
+      aria-disabled={ctaReady ? undefined : "true"}
+      className={`inline-flex items-center justify-center gap-2 font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99] disabled:opacity-60 ${ctaReady ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border border-border bg-muted text-muted-foreground"} ${size}`}
     >
       {submitting ? <><Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> Sending…</> : "Submit Enquiry →"}
-    </button>
-  ) : (
-    <button
-      type="button"
-      onClick={next}
-      aria-disabled={ctaReady ? undefined : "true"}
-      className={`inline-flex items-center justify-center font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99] ${ctaReady ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border border-border bg-muted text-muted-foreground"} ${size}`}
-    >
-      Continue →
     </button>
   );
 
   return (
     <div className="min-h-screen">
-      <SEO title="Start a Project" description="Tell Lacuna Digital about your project. Only your contact details are required; the rest is optional. Fixed quote within two working days." />
+      <SEO title="Start a Project" description="Send Lacuna Digital your details and your chosen package. Fixed quote within two working days." />
       {/* Top accent border */}
       <div className="h-[2px] w-full bg-gradient-to-r from-[#8b4513] via-[#a0522d] to-[#8b4513]" />
 
-      {/* Progress bar */}
-      <div className="fixed left-0 right-0 top-16 z-50">
-        <div className="h-[3px] w-full bg-border">
-          <motion.div
-            className="h-full bg-primary"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: reducedMotion ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
-          />
-        </div>
-      </div>
-
       <div ref={pageRef} onFocus={onFieldFocus} className="mx-auto max-w-2xl px-6 pb-[calc(var(--dock-h,0px)+16px)] pt-32 md:pb-32" style={{ ["--dock-h" as string]: `${dockHeight}px` }}>
         {showInlinePanel && <PackagePanel {...panelProps} className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5" />}
-        {/* Step label */}
-        <div className="mb-12">
-          <p className="font-mono-label text-muted-foreground">
-            Step {step + 1} of {TOTAL_STEPS} — {STEP_LABELS[step]}
-          </p>
-          <div className="mt-3 flex gap-1.5" aria-hidden="true">
-            {STEP_LABELS.map((label, i) => (
-              <span key={label} data-step-segment={i < step ? "done" : i === step ? "current" : "upcoming"} className={`h-1 flex-1 rounded-full transition-colors ${i < step ? "bg-primary/60" : i === step ? "bg-primary" : "bg-border"}`} />
-            ))}
-          </div>
-          {isMobile && step > 0 && (
-            <button type="button" onClick={back} className="mt-4 inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground">
-              ← Back
-            </button>
-          )}
-        </div>
-
-        <AnimatePresence mode="wait" onExitComplete={resetScrollToHeading}>
-          <motion.div
-            key={step}
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: reducedMotion ? 0 : 0.35, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {/* ── Step 0: About You ─────────────────────── */}
-            {step === 0 && (
               <div className="space-y-7 md:space-y-8">
-                <h1 ref={headingRef} tabIndex={-1} className="scroll-mt-24 text-3xl font-extrabold tracking-tight outline-none md:text-4xl">About You</h1>
+                <h1 className="scroll-mt-24 text-3xl font-extrabold tracking-tight outline-none md:text-4xl">About You</h1>
                 <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
                   <label htmlFor="sp-company-website">Company website</label>
                   <input id="sp-company-website" name="company_website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
@@ -474,138 +319,17 @@ const StartProject = () => {
                 <Field id="sp-websiteUrl" label="Website URL (if existing)">
                   <input id="sp-websiteUrl" type="url" className={inputClass} autoComplete="url" maxLength={300} placeholder="https://example.com" value={form.websiteUrl} onChange={(e) => set("websiteUrl", e.target.value)} />
                 </Field>
-                <Field id="sp-industry" label="Industry / Sector" required error={errors.industry}>
-                  <Select value={form.industry || undefined} onValueChange={(v) => set("industry", v)}>
-                    <SelectTrigger {...errProps("sp-industry", errors.industry)} className={selectTriggerClass}><SelectValue placeholder="Select…" /></SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {INDUSTRIES.map((i) => <SelectItem key={i} value={i} className={selectItemClass}>{i}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </Field>
-                <Field id="sp-source" label="How did you find us?" required error={errors.source}>
-                  <Select value={form.source || undefined} onValueChange={(v) => set("source", v)}>
-                    <SelectTrigger {...errProps("sp-source", errors.source)} className={selectTriggerClass}><SelectValue placeholder="Select…" /></SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {SOURCES.map((src) => <SelectItem key={src} value={src} className={selectItemClass}>{src}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </Field>
               </div>
-            )}
-
-            {/* ── Step 1: Your Project ─────────────────── */}
-            {step === 1 && (
-              <div className="space-y-7 md:space-y-8">
-                <h1 ref={headingRef} tabIndex={-1} className="scroll-mt-24 text-3xl font-extrabold tracking-tight outline-none md:text-4xl">Your Project</h1>
-                <Group id="sp-projectTypes" label="What type of project is this?" error={errors.projectTypes}>
-                  <div className="flex flex-wrap gap-2">
-                    {PROJECT_TYPES.map((t) => (
-                      <Pill key={t} label={t} selected={form.projectTypes.includes(t)} onClick={() => toggleArray("projectTypes", t)} />
-                    ))}
-                  </div>
-                </Group>
-                <Field id="sp-projectDescription" label="Briefly describe what you need" error={errors.projectDescription}>
-                  <div className="relative">
-                    <textarea
-                      {...errProps("sp-projectDescription", errors.projectDescription)}
-                      maxLength={5000}
-                      className={inputClass + " min-h-[120px] resize-y pr-4"}
-                      placeholder="A line or two is plenty: what you do, and what the site needs to bring in."
-                      value={form.projectDescription}
-                      onChange={(e) => set("projectDescription", e.target.value)}
-                    />
-                    <button
-                      type="button"
-                      onClick={enhanceWithAI}
-                      disabled={briefLoading}
-                      className="mt-2 inline-flex items-center gap-2 rounded-md border border-primary/30 bg-primary/5 px-4 py-2 text-xs font-medium text-primary transition-all hover:bg-primary/10 hover:border-primary/50 disabled:opacity-50"
-                    >
-                      {briefLoading ? (
-                        <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Enhancing…</>
-                      ) : (
-                        <><Sparkles className="h-3.5 w-3.5" /> Enhance with AI</>
-                      )}
-                    </button>
-                  </div>
-                </Field>
-                <Group id="sp-existingBrand" label="Do you have an existing brand?" error={errors.existingBrand}>
-                  <div className="flex gap-2">
-                    {BRAND_OPTIONS.map((o) => (
-                      <Pill key={o} label={o} selected={form.existingBrand === o} onClick={() => set("existingBrand", o)} />
-                    ))}
-                  </div>
-                </Group>
-                <Group id="sp-urgency" label="Project Urgency" error={errors.urgency}>
-                  <div className="flex flex-wrap gap-2">
-                    {URGENCY_OPTIONS.map((o) => (
-                      <Pill key={o} label={o} selected={form.urgency === o} onClick={() => set("urgency", o)} />
-                    ))}
-                  </div>
-                </Group>
-                <Field id="sp-competitor-0" label="Competitor or inspiration websites">
-                  <div className="space-y-2">
-                    {form.competitorUrls.map((url, i) => (
-                      <div key={i} className="flex gap-2">
-                        <input
-                          id={`sp-competitor-${i}`}
-                          type="url"
-                          aria-label={i === 0 ? undefined : `Competitor or inspiration website ${i + 1}`}
-                          maxLength={300}
-                          className={inputClass}
-                          placeholder="https://example.com"
-                          value={url}
-                          onChange={(e) => {
-                            const urls = [...form.competitorUrls];
-                            urls[i] = e.target.value;
-                            set("competitorUrls", urls);
-                          }}
-                        />
-                        {form.competitorUrls.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => set("competitorUrls", form.competitorUrls.filter((_, j) => j !== i))}
-                            aria-label={`Remove website ${i + 1}`}
-                            className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center text-muted-foreground hover:text-foreground"
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                    {form.competitorUrls.length < 3 && (
-                      <button
-                        type="button"
-                        onClick={() => set("competitorUrls", [...form.competitorUrls, ""])}
-                        className="inline-flex min-h-11 min-w-11 items-center gap-1 text-sm text-primary transition-colors hover:text-primary/80 md:text-xs"
-                      >
-                        <Plus className="h-3 w-3" /> Add another
-                      </button>
-                    )}
-                  </div>
-                </Field>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-
         {/* ── Navigation (desktop; phones use the dock) ── */}
         {!isMobile && (
           <div className="mt-16 flex items-center justify-between">
-            {step > 0 ? (
-              <button type="button" onClick={back} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                ← Back
-              </button>
-            ) : (
-              <div />
-            )}
+            <div />
             <div className="flex flex-wrap items-center justify-end gap-3">{renderCta("rounded-md px-8 py-3 text-sm")}</div>
           </div>
         )}
-        {canSubmit && (
-          <p className="mt-4 text-right text-xs text-muted-foreground">
-            I'll only use your details to respond to your enquiry. 'Enhance with AI' sends your description to an AI service to draft a brief.
-          </p>
-        )}
+        <p className="mt-4 text-right text-xs text-muted-foreground">
+          I'll only use your details to respond to your enquiry.
+        </p>
       </div>
 
       {isMobile ? (
@@ -623,19 +347,10 @@ const StartProject = () => {
               </button>
             )}
             {renderCta("h-12 w-full rounded-md text-base")}
-            {!ctaReady && <p className="mt-1.5 text-center text-xs text-muted-foreground">Fill in the required fields to continue</p>}
+            {!ctaReady && <p className="mt-1.5 text-center text-xs text-muted-foreground">Fill in the required fields to send</p>}
           </div>
         </div>
-      ) : !showInlinePanel && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/95 px-4 pt-3 backdrop-blur" style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}>
-          <div className="mx-auto flex max-w-2xl items-center gap-3">
-            {barSummary}
-            <button type="button" onClick={() => setDrawerOpen(true)} aria-expanded={drawerOpen} className="inline-flex shrink-0 items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary">
-              Adjust <ChevronUp className="h-4 w-4" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-      )}
+      ) : null}
       <Drawer open={drawerOpen && !showInlinePanel} onOpenChange={setDrawerOpen} shouldScaleBackground={false}>
         <DrawerContent className="max-h-[85dvh]">
           <DrawerTitle className="sr-only">Adjust your package</DrawerTitle>
