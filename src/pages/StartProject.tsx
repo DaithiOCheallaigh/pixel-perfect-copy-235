@@ -1,3 +1,4 @@
+import { hubMeta } from "@/data/routeMeta";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { submitLead } from "@/lib/submitLead";
 import { motion, useReducedMotion } from "framer-motion";
@@ -292,7 +293,7 @@ const StartProject = () => {
 
   return (
     <div className="min-h-screen">
-      <SEO title="Start a Project" description="Send Lacuna Digital your details and your chosen package. Fixed quote within two working days." />
+      <SEO {...hubMeta.startProject} />
       {/* Top accent border */}
       <div className="h-[2px] w-full bg-gradient-to-r from-[#8b4513] via-[#a0522d] to-[#8b4513]" />
 

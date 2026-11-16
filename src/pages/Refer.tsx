@@ -1,3 +1,4 @@
+import { hubMeta } from "@/data/routeMeta";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -61,7 +62,7 @@ const Refer = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Refer a Friend" description={`Refer a business to Lacuna Digital: you get ${eur(terms.referral)} off your next invoice and they get ${eur(terms.referral)} off their package once their deposit is paid. No limit on referrals.`} />
+      <SEO {...hubMeta.refer} />
 
       {/* Hero */}
       <section className="px-6 pb-12 pt-32 md:px-12 lg:px-24">

@@ -1,3 +1,4 @@
+import { hubMeta } from "@/data/routeMeta";
 import { SEO } from "@/components/SEO";
 import SectionLabel from "@/components/SectionLabel";
 import { vatFootnote } from "@/data/pricing";
@@ -5,11 +6,11 @@ import { workingTerms } from "@/data/workingTerms";
 import { usePageDescription } from "@/hooks/usePageDescription";
 
 const Terms = () => {
-  const description = "Lacuna Digital's plain-English project terms covering payment stages, care plans, revisions, content deadlines, AI disclosure and third-party services.";
+  const { description } = hubMeta.terms;
   usePageDescription(description);
   return (
     <main className="px-6 pb-24 pt-32 md:px-12">
-      <SEO title="Project Terms" description={description} />
+      <SEO {...hubMeta.terms} />
       <div className="mx-auto max-w-3xl">
         <SectionLabel>Working together</SectionLabel>
         <h1 className="mt-4 text-4xl font-extrabold md:text-6xl">Terms</h1>

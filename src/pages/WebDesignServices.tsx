@@ -1,3 +1,4 @@
+import { hubMeta } from "@/data/routeMeta";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import SectionLabel from "@/components/SectionLabel";
@@ -37,11 +38,11 @@ const extras = [
 ];
 const WebDesignServices = () => {
   const [pages, setPages] = useState(5);
-  const description = `Professional business websites from ${eur(webLadder[0]?.price ?? 0)} and website refreshes from ${eur(refresh.priceFrom ?? 0)}. Fixed scope, clear payment terms and senior designer-led delivery from Dublin, for clinics, trades, salons and more.`;
+  const { description } = hubMeta.webDesign;
   usePageDescription(description);
   return (
   <main className="bg-background pt-24 text-foreground">
-    <SEO title="Business Website Design in Dublin" description={description} />
+    <SEO {...hubMeta.webDesign} />
     <section className="px-6 pb-12 pt-8 md:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel>Web Design</SectionLabel>
