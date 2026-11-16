@@ -34,7 +34,6 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
-import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Global,
   Setting2,
@@ -172,7 +171,6 @@ const StepHeading = ({ title, body }: { title: string; body: string }) => (
 
 const Services = () => {
   const isDark = useIsDark();
-  const isMobile = useIsMobile();
   const elasticProps = {
     align: "left" as const,
     fontSize: "inherit",
