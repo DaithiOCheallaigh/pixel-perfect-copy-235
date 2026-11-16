@@ -46,9 +46,13 @@ html, body {
     --input: 40 8% 85%;
     --ring: 310 60% 50%;
 
-    --radius: 12px;
-    --radius-inner: 8px;
-    --radius-xs: 4px;
+    /* 1 = plain round corners. Raised to 1.6 below where corner-shape is supported,
+       because a squircle curve needs ~1.6x the radius to read the same size as a
+       round corner (Figma "60% corner smoothing" extends the curve 0.6r along each edge). */
+    --corner-scale: 1;
+    --radius: calc(12px * var(--corner-scale));
+    --radius-inner: calc(8px * var(--corner-scale));
+    --radius-xs: calc(4px * var(--corner-scale));
 
     /* Custom tokens */
     --grey-1: 40 12% 93%;
@@ -154,6 +158,29 @@ html, body {
 
   .dark ::selection {
     color: hsl(40 15.4% 94.1%);
+  }
+}
+
+/* Squircle corners (Figma-style 60% corner smoothing).
+   Progressive enhancement: Chromium 139+ renders squircles; browsers without
+   corner-shape ignore this block and keep plain round corners at the base radii.
+   Convention: use the rounded-* tokens; never hard-code border-radius in px. */
+@supports (corner-shape: squircle) {
+  :root {
+    --corner-scale: 1.6;
+  }
+
+  *,
+  ::before,
+  ::after {
+    corner-shape: squircle;
+  }
+
+  /* Pills, dots and avatars keep true circular ends: a full-radius shape has no
+     straight edge for the smoothing to blend into, so Figma leaves these round too. */
+  .rounded-full,
+  [style*="border-radius: 9999px"] {
+    corner-shape: round;
   }
 }
 
