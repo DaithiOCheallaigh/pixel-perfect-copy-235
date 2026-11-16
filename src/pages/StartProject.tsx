@@ -299,7 +299,7 @@ const StartProject = () => {
       <div ref={pageRef} onFocus={onFieldFocus} className="mx-auto max-w-2xl px-6 pb-[calc(var(--dock-h,0px)+16px)] pt-32 md:pb-32" style={{ ["--dock-h" as string]: `${dockHeight}px` }}>
         {showInlinePanel && <PackagePanel {...panelProps} className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5" />}
               <div className="space-y-7 md:space-y-8">
-                <h1 className="scroll-mt-24 text-3xl font-extrabold tracking-tight outline-none md:text-4xl">About You</h1>
+                <h1 className="scroll-mt-24 text-3xl font-extrabold tracking-tight outline-none md:text-4xl">Start your project</h1>
                 <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
                   <label htmlFor="sp-company-website">Company website</label>
                   <input id="sp-company-website" name="company_website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
