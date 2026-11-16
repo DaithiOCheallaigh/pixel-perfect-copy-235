@@ -2,7 +2,7 @@ import { SEO } from "@/components/SEO";
 import { useEffect, useState, useRef, lazy, Suspense, useSyncExternalStore } from "react";
 
 const ElasticLettering = lazy(() => import("@/components/react-bits/elastic-lettering"));
-const VoxelArc = lazy(() => import("@/components/react-bits/voxel-arc").then((m) => ({ default: m.VoxelArc })));
+import HeroBackdrop from "@/components/services/HeroBackdrop";
 
 const HERO_H1_CLASS = "mt-6 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl";
 
@@ -229,9 +229,7 @@ const Services = () => {
       {/* ── Hero ── */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-16 md:px-12 lg:px-24">
         <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-          <Suspense fallback={null}>
-            <VoxelArc className="absolute inset-0 h-full min-h-0" color="#CE3BB6" accentColor="#FFD6F8" horizon={0.5} curvature={0.8} haze={0.25} brightness={0.9} glow={1} bloom={0.4} grain={0.15} speed={0.3} interactive={false} dpr={isMobile ? 1 : 1.5} />
-          </Suspense>
+          <HeroBackdrop />
           <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/45 to-transparent md:from-background/80 md:via-background/35 md:to-transparent md:via-55%" />
         </div>

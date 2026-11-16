@@ -33,3 +33,4 @@
 - React Bits Pro components in src/components/react-bits stay byte-identical and are lazy-loaded; HoverPreview mounts only on idle fine-pointer devices (plain Links otherwise) and BlurHighlight falls back to static marks under reduced motion, keeping the motion package out of first-load chunks.
 - MedEd components pages derive from src/data/sparkComponents.ts, sit behind the Spark gate and use only scoped --sc-* tokens.
 - The package builder has no step labels, sits above SocialProof, and shows no care terms; edits are quoted per job in services copy.
+- Services hero VoxelArc mounts only via src/components/services/HeroBackdrop.tsx after load + idle, behind a WebGL gate (no context, software renderer, Save-Data) and a 3s frame-gap governor; a CSS arc-glow fallback sits beneath so bots get a static hero.
