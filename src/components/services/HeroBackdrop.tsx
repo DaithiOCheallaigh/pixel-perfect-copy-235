@@ -1,10 +1,8 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { canRunWebGLHero, shouldDegrade } from "@/lib/webgl-capability";
+import { canRunWebGLHero, governorResetLast, governorStep, initialGovernorState } from "@/lib/webgl-capability";
 
 const VoxelArc = lazy(() => import("@/components/react-bits/voxel-arc").then((m) => ({ default: m.VoxelArc })));
-
-const GOVERNOR_MS = 3000;
 
 /** CSS-only arc glow approximating the VoxelArc horizon. Always rendered beneath the canvas. */
 function ArcGlowFallback() {
@@ -14,13 +12,13 @@ function ArcGlowFallback() {
         className="absolute inset-0 opacity-60 dark:opacity-100"
         style={{
           background:
-            "radial-gradient(ellipse 45% 20% at 50% 50%, hsl(var(--primary) / 0.35), hsl(var(--primary) / 0.12) 40%, transparent 70%)",
+            "radial-gradient(ellipse 35% 16% at 50% 50%, hsl(var(--primary) / 0.55), hsl(var(--primary) / 0.18) 45%, transparent 75%), radial-gradient(ellipse 55% 27.5% at 50% 50%, hsl(var(--primary) / 0.14), transparent 70%)",
         }}
       />
       <div
         className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 opacity-60 dark:opacity-100"
         style={{
-          background: "hsl(var(--primary) / 0.4)",
+          background: "hsl(var(--primary) / 0.6)",
           maskImage: "linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent)",
           WebkitMaskImage: "linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent)",
         }}
@@ -33,6 +31,7 @@ export default function HeroBackdrop() {
   const isMobile = useIsMobile();
   const [mounted, setMounted] = useState(false);
   const [degraded, setDegraded] = useState(false);
+  const arcRef = useRef<HTMLDivElement>(null);
 
   // Deferred mount: window load → one idle callback → capability gate.
   useEffect(() => {
@@ -65,36 +64,37 @@ export default function HeroBackdrop() {
     };
   }, []);
 
-  // Runtime governor: watch frame gaps for 3 s after mount.
+  // Runtime governor: wait for the canvas, skip warm-up frames, then watch frame gaps for 3 s.
   useEffect(() => {
     if (!mounted || degraded || typeof requestAnimationFrame !== "function") return;
-    const gaps: number[] = [];
-    let count = 0;
-    let last = 0;
-    let start = 0;
+    let state = initialGovernorState();
     let raf = 0;
+    const onVisibility = () => { state = governorResetLast(state); };
+    document.addEventListener("visibilitychange", onVisibility);
     const tick = (t: number) => {
-      count += 1;
-      if (count === 1) start = t;
-      if (count > 2 && !document.hidden) gaps.push(t - last);
-      last = t;
-      if (shouldDegrade(gaps)) {
-        setDegraded(true);
+      state = governorStep(state, { t, hasCanvas: !!arcRef.current?.querySelector("canvas"), hidden: document.hidden });
+      if (state.phase === "done") {
+        if (state.degraded) setDegraded(true);
         return;
       }
-      if (t - start < GOVERNOR_MS) raf = requestAnimationFrame(tick);
+      raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, [mounted, degraded]);
 
   return (
     <>
       <ArcGlowFallback />
       {mounted && !degraded && (
-        <Suspense fallback={null}>
-          <VoxelArc className="absolute inset-0 h-full min-h-0" color="#CE3BB6" accentColor="#FFD6F8" horizon={0.5} curvature={0.8} haze={0.25} brightness={0.9} glow={1} bloom={0.4} grain={0.15} speed={0.3} interactive={false} dpr={isMobile ? 1 : 1.5} />
-        </Suspense>
+        <div ref={arcRef} className="absolute inset-0">
+          <Suspense fallback={null}>
+            <VoxelArc className="absolute inset-0 h-full min-h-0" color="#CE3BB6" accentColor="#FFD6F8" horizon={0.5} curvature={0.8} haze={0.25} brightness={0.9} glow={1} bloom={0.4} grain={0.15} speed={0.3} interactive={false} dpr={isMobile ? 1 : 1.5} />
+          </Suspense>
+        </div>
       )}
     </>
   );
