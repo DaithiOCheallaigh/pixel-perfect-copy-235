@@ -1,0 +1,1 @@
+- Services hero VoxelArc mounts only via src/components/services/HeroBackdrop.tsx after load + idle, behind a WebGL gate (no context, software renderer, Save-Data) and a 3s frame-gap governor; a CSS arc-glow fallback sits beneath so bots get a static hero.
