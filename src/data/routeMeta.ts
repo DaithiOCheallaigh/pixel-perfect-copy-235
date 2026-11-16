@@ -28,3 +28,17 @@ export function serviceMeta(service: (typeof services)[number]): RouteMeta {
     description: fitDescription(service.metaDescription, service.intro, "Delivered by Dave Kelly at Lacuna Digital, a senior designer-led studio in Dublin."),
   };
 }
+
+import { segmentPages, type SegmentKey } from "@/data/segmentPages";
+
+/** Every indexable /services URL (mirrors public/sitemap.xml), keyed by pathname without trailing slash. */
+export const servicesRouteMeta: Record<string, RouteMeta> = {
+  "/services": hubMeta.services,
+  ...Object.fromEntries((Object.keys(segments) as SegmentKey[]).map((k) => [`/services/${segments[k].slug}`, segmentMeta(k, segmentPages[k].metaCategory)])),
+  "/services/web-design": hubMeta.webDesign,
+  "/services/get-started": hubMeta.getStarted,
+  "/services/start-project": hubMeta.startProject,
+  "/services/refer": hubMeta.refer,
+  "/services/terms": hubMeta.terms,
+  ...Object.fromEntries(services.map((s) => [`/services/expertise/${s.id}`, serviceMeta(s)])),
+};

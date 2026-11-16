@@ -1,3 +1,4 @@
+import { segmentMeta } from "@/data/routeMeta";
 import { useState } from "react";
 import { useParams, Link, Navigate, useLocation } from "react-router-dom";
 import { resolveLegacyTarget } from "@/routing/resolveLegacyTarget";
@@ -34,7 +35,7 @@ const IndustryLanding = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title={`${segment.title} Websites in Dublin`} description={fitDescription(`${content.metaCategory} from ${priceLabel(launch)}.`, segment.tagline, "Fixed scope, clear payment terms and a free 20-minute call with Dave Kelly in Dublin.")} />
+      <SEO {...segmentMeta(key, content.metaCategory)} />
       <main>
         <section className="relative px-6 pb-16 pt-32 md:px-12 lg:px-24">
           <div className="mx-auto max-w-5xl">

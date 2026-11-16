@@ -1,3 +1,4 @@
+import { hubMeta } from "@/data/routeMeta";
 import { SEO } from "@/components/SEO";
 import { useEffect, useState, useRef, lazy, Suspense, useSyncExternalStore } from "react";
 
@@ -222,7 +223,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Web Design for Irish Businesses" description="Lacuna Digital designs and builds fixed-quote websites for Irish small businesses, with hosting, domain and email looked after for you if you want. Designed and built by Dave Kelly in Dublin." />
+      <SEO {...hubMeta.services} />
 
       {/* ── Hero ── */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-16 md:px-12 lg:px-24">

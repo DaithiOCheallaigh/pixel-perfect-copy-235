@@ -1,3 +1,4 @@
+import { serviceMeta } from "@/data/routeMeta";
 import { SEO } from "@/components/SEO";
 import { fitDescription } from "@/lib/seoDescription";
 import { useParams, Link } from "react-router-dom";
@@ -33,7 +34,7 @@ const ServicePage = () => {
 
   return (
     <main className="pt-24">
-      <SEO title={/dublin/i.test(service.title) ? service.title : `${service.title} Services in Dublin`} description={fitDescription(service.metaDescription, service.intro, "Delivered by Dave Kelly at Lacuna Digital, a senior designer-led studio in Dublin.")} />
+      <SEO {...serviceMeta(service)} />
       {/* Hero */}
       <section className="px-6 pt-12 pb-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-4xl">
