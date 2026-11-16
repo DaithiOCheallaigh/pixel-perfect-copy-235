@@ -3,7 +3,7 @@ import { eur, priceLabel, refresh, segments, terms, tiers, webLadder } from "@/d
 import { services } from "@/data/services";
 import { fitDescription } from "@/lib/seoDescription";
 
-export type RouteMeta = { title: string; description: string; image?: string; jsonLd?: object };
+export type RouteMeta = { title: string; description: string; image?: string; jsonLd?: Record<string, unknown> };
 
 export const hubMeta = {
   services: { title: "Web Design for Irish Businesses", description: "Lacuna Digital designs and builds fixed-quote websites for Irish small businesses, with hosting, domain and email looked after for you if you want. Designed and built by Dave Kelly in Dublin." },
