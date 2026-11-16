@@ -27,12 +27,15 @@ function routeShells(): Plugin {
         const indexHtml = fs.readFileSync(indexPath, "utf8");
         let count = 0;
         for (const [pathname, meta] of Object.entries(servicesRouteMeta)) {
-          const out = path.join(dist, `${pathname.replace(/^\/+/, "")}.html`);
-          fs.mkdirSync(path.dirname(out), { recursive: true });
-          fs.writeFileSync(out, renderShell(indexHtml, pathname, meta));
-          count++;
+          const rel = pathname.replace(/^\/+/, "");
+          const html = renderShell(indexHtml, pathname, meta);
+          for (const out of [path.join(dist, `${rel}.html`), path.join(dist, rel, "index.html")]) {
+            fs.mkdirSync(path.dirname(out), { recursive: true });
+            fs.writeFileSync(out, html);
+            count++;
+          }
         }
-        console.log(`[route-shells] wrote ${count} static route shells`);
+        console.log(`[route-shells] wrote ${count} route shell files (.html + /index.html)`);
       } finally {
         await server.close();
       }
