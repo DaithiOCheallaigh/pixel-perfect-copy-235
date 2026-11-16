@@ -1,1 +1,2 @@
 - Services hero VoxelArc mounts only via src/components/services/HeroBackdrop.tsx after load + idle, behind a WebGL gate (no context, software renderer, Save-Data) and a 3s frame-gap governor; a CSS arc-glow fallback sits beneath so bots get a static hero.
+- Indexable /services routes get static HTML shells (dist/<path>.html) written by the route-shells Vite plugin from src/data/routeMeta.ts after build; hub pages read their SEO title/description from routeMeta so Helmet and shells never drift; SEO.tsx strips data-shell tags on mount.

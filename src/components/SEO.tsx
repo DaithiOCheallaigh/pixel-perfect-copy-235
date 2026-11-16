@@ -29,7 +29,7 @@ export function SEO({
   // managed tags, drop the static copies so crawlers that run JS see exactly one of each.
   useEffect(() => {
     document.head
-      .querySelectorAll('meta[name="description"]:not([data-rh]), meta[name="robots"]:not([data-rh]), meta[property^="og:"]:not([data-rh]), meta[name^="twitter:"]:not([data-rh])')
+      .querySelectorAll('meta[name="description"]:not([data-rh]), meta[name="robots"]:not([data-rh]), meta[property^="og:"]:not([data-rh]), meta[name^="twitter:"]:not([data-rh]), link[rel="canonical"][data-shell], script[type="application/ld+json"][data-shell]')
       .forEach(tag => tag.remove());
   }, []);
   const isServices = pathname === '/services' || pathname.startsWith('/services/');
