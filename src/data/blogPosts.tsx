@@ -14,6 +14,8 @@ export interface BlogAudio {
   src: string;
   durationSeconds: number;
   mimeType?: string;
+  /** Site-relative read-along JSON, e.g. /audio/blog/<post id>.words.json (see ReadAlongContent.tsx). */
+  wordTimings?: string;
 }
 
 export interface BlogPost {
@@ -39,7 +41,7 @@ export const blogPosts: BlogPost[] = [
     image: "/images/blog/fluid-interfaces.jpg",
     excerpt:
       "There's a quality that separates the interfaces we tolerate from the ones we love. It's not colour palettes or type scales. The quality is fluidity — the feeling that an interface has physical weight.",
-    audio: { src: "/audio/blog/8-principles-fluid-interfaces.mp3", durationSeconds: 470 },
+    audio: { src: "/audio/blog/8-principles-fluid-interfaces.mp3", durationSeconds: 470, wordTimings: "/audio/blog/8-principles-fluid-interfaces.words.json" },
     content: (
       <>
         <p>
@@ -160,7 +162,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "12 min read",
     image: "/images/blog/2026-new-norm-designers.webp",
     excerpt: "The year the design process stopped being a process. Engineers spin up coding agents, prototype in hours, and ship before designers finish exploring. Here's what that means.",
-    audio: { src: "/audio/blog/2026-new-norm-designers.mp3", durationSeconds: 432 },
+    audio: { src: "/audio/blog/2026-new-norm-designers.mp3", durationSeconds: 432, wordTimings: "/audio/blog/2026-new-norm-designers.words.json" },
     content: (
       <>
         <p className="text-sm text-muted-foreground italic mb-6">Based on Lenny's Podcast interview with Jenny Wen (Head of Design for Claude at Anthropic). <a href="https://www.youtube.com/watch?v=eh8bcBIAAFo&t=1s" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Watch the episode →</a></p>
@@ -296,7 +298,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "5 min read",
     image: "/images/blog/navigating-design-2025.webp",
     excerpt: "The design industry stands at a fascinating crossroads in 2025. Exploring the perfect storm of 5 challenges and 8 strategies for designers to thrive.",
-    audio: { src: "/audio/blog/navigating-design-2025.mp3", durationSeconds: 546 },
+    audio: { src: "/audio/blog/navigating-design-2025.mp3", durationSeconds: 546, wordTimings: "/audio/blog/navigating-design-2025.words.json" },
     content: (
       <>
         <p>The design industry stands at a fascinating crossroads in 2025. After years of unprecedented growth, rapid technological advancement, and shifting cultural expectations, designers face a landscape that's simultaneously more challenging and more opportunity-rich than ever before. Let's explore the key challenges shaping our field and how designers can not just survive, but thrive in this evolving environment.</p>
@@ -369,7 +371,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "7 min read",
     image: "/images/blog/strategic-ux.webp",
     excerpt: "Most SMEs treat design as decoration. Here's why strategic UX design is the difference between a product people use and one they love — and how to tell if you need it.",
-    audio: { src: "/audio/blog/strategic-ux.mp3", durationSeconds: 252 },
+    audio: { src: "/audio/blog/strategic-ux.mp3", durationSeconds: 252, wordTimings: "/audio/blog/strategic-ux.words.json" },
     content: (
       <>
         <p>If you're running a small or medium-sized business and considering investing in a digital product — an app, a platform, a customer portal — you've probably had this thought: <em>"We just need it to look professional."</em></p>
@@ -414,7 +416,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "8 min read",
     image: "/images/blog/design-trends-2025.webp",
     excerpt: "As we approach 2025, design evolves at an unprecedented pace. Exploring 9 key trends from immersive 3D experiences to ethical and inclusive design.",
-    audio: { src: "/audio/blog/design-trends-2025.mp3", durationSeconds: 392 },
+    audio: { src: "/audio/blog/design-trends-2025.mp3", durationSeconds: 392, wordTimings: "/audio/blog/design-trends-2025.words.json" },
     content: (
       <>
         <h2>Overview</h2>
@@ -470,7 +472,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "6 min read",
     image: "/images/blog/partner-for-agencies.webp",
     excerpt: "8 reasons Lacuna Digital is ideal for agency partnerships — from comprehensive digital expertise to dedicated support and continuous innovation.",
-    audio: { src: "/audio/blog/partner-for-agencies.mp3", durationSeconds: 239 },
+    audio: { src: "/audio/blog/partner-for-agencies.mp3", durationSeconds: 239, wordTimings: "/audio/blog/partner-for-agencies.words.json" },
     content: (
       <>
         <h2>Overview</h2>
@@ -514,7 +516,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "6 min read",
     image: "/images/blog/benefits-digital-agency.webp",
     excerpt: "Lacuna Digital is an end-to-end digital agency offering comprehensive solutions, local expertise with a global perspective, and scalable solutions for growing businesses.",
-    audio: { src: "/audio/blog/benefits-digital-agency.mp3", durationSeconds: 177 },
+    audio: { src: "/audio/blog/benefits-digital-agency.mp3", durationSeconds: 177, wordTimings: "/audio/blog/benefits-digital-agency.words.json" },
     content: (
       <>
         <h2>Overview</h2>
