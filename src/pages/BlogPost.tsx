@@ -1,6 +1,9 @@
+import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Play, Pause } from "lucide-react";
+import StickyAudioBar from "@/components/blog/StickyAudioBar";
+import { useAudioPlayer } from "@/components/blog/useAudioPlayer";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
@@ -13,6 +16,30 @@ const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
   const postIndex = blogPosts.findIndex((p) => p.id === id);
   const post = blogPosts[postIndex];
+
+  const player = useAudioPlayer({ src: post?.audio?.src ?? "", durationSeconds: post?.audio?.durationSeconds ?? 0 });
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [pastHero, setPastHero] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => { setDismissed(false); }, [id]);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => setPastHero((sentinelRef.current?.getBoundingClientRect().bottom ?? 1) < 0);
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; update(); });
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [id]);
 
   if (!post) {
     return (
@@ -29,11 +56,15 @@ const BlogPost = () => {
     );
   }
 
+  const audioMinutes = post.audio ? Math.ceil(post.audio.durationSeconds / 60) : 0;
+  const barVisible = !!post.audio && !dismissed && (player.playing || player.current > 0 || pastHero);
+  const onListen = () => { setDismissed(false); player.toggle(); };
+
   const prevPost = postIndex > 0 ? blogPosts[postIndex - 1] : null;
   const nextPost = postIndex < blogPosts.length - 1 ? blogPosts[postIndex + 1] : null;
 
   return (
-    <main className="pt-24">
+    <main className={`pt-24${barVisible ? " pb-24 sm:pb-20" : ""}`}>
       <SEO
         title={post.title}
         description={fitDescription(post.excerpt, "Written by Dave Kelly, senior product designer in Dublin.")}
@@ -54,6 +85,17 @@ const BlogPost = () => {
             logo: { "@type": "ImageObject", url: "https://www.lacunadigital.io/favicon.png" },
           },
           mainEntityOfPage: `https://www.lacunadigital.io/blog/${post.id}`,
+          ...(post.audio
+            ? {
+                audio: {
+                  "@type": "AudioObject",
+                  name: `${post.title} (audio version)`,
+                  contentUrl: `https://www.lacunadigital.io${post.audio.src}`,
+                  encodingFormat: post.audio.mimeType ?? "audio/mpeg",
+                  duration: `PT${Math.floor(post.audio.durationSeconds / 60)}M${post.audio.durationSeconds % 60}S`,
+                },
+              }
+            : {}),
         }}
       />
       <article className="px-6 md:px-12 lg:px-24">
@@ -94,6 +136,21 @@ const BlogPost = () => {
             <p className="font-mono text-sm text-muted-foreground">
               First published: <time dateTime={post.dateISO}>{post.date}</time> · {post.readTime}
             </p>
+            {post.audio && (
+              <>
+                <button
+                  type="button"
+                  onClick={onListen}
+                  aria-label={player.playing ? "Pause audio version" : "Play audio version"}
+                  aria-pressed={player.playing}
+                  className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-mono text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {player.playing ? <Pause size={14} aria-hidden="true" /> : <Play size={14} aria-hidden="true" />}
+                  {player.playing ? "Pause" : `Listen · ${audioMinutes} min`}
+                </button>
+                <p className="mt-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Audio version · AI narration</p>
+              </>
+            )}
           </motion.div>
         </div>
 
@@ -111,6 +168,7 @@ const BlogPost = () => {
               className="w-full object-cover" {...imgDims(post.image)} loading="eager" fetchPriority="high" decoding="async" />
           </div>
         </motion.div>
+        <div ref={sentinelRef} aria-hidden="true" className="h-px" />
 
         {/* ─── Intro lede (wider) ─── */}
         <div className="mx-auto max-w-3xl">
@@ -172,6 +230,12 @@ const BlogPost = () => {
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
       <HiringCTA />
+      {post.audio && (
+        <>
+          {player.audioElement}
+          <StickyAudioBar player={player} title={post.title} minutes={audioMinutes} visible={barVisible} onClose={() => { player.pause(); setDismissed(true); }} />
+        </>
+      )}
     </main>
   );
 };
