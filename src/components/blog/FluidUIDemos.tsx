@@ -29,11 +29,12 @@ const DemoContainer = ({
   <div className="my-12 overflow-hidden rounded-2xl border border-border bg-card/60 backdrop-blur-sm">
     <div className="flex min-h-[260px] items-center justify-center p-5 sm:p-8">{children}</div>
     <div className="border-t border-border bg-muted/30 px-6 py-3">
-      <p className="text-center font-mono text-xs text-muted-foreground">{caption}</p>
+      {/* divs rather than paragraphs: the post's .blog-content paragraph rule would restyle these */}
+      <div className="text-center font-mono text-xs text-muted-foreground">{caption}</div>
       {readout ? (
-        <p className="mt-1 text-center font-mono text-[11px] text-primary">
+        <div className="mt-1 text-center font-mono text-[11px] text-primary">
           {readout}
-        </p>
+        </div>
       ) : null}
     </div>
   </div>
@@ -660,10 +661,10 @@ export const ReducedMotionDemo = () => {
           >
             <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden />
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-foreground">Changes saved</p>
-              <p className="truncate font-mono text-[11px] text-muted-foreground">
+              <div className="text-sm font-semibold text-foreground">Changes saved</div>
+              <div className="truncate font-mono text-[11px] text-muted-foreground">
                 {reduced ? "Fades in place — same meaning, no travel" : "Slides in from the right with a spring"}
-              </p>
+              </div>
             </div>
           </motion.div>
         </div>
