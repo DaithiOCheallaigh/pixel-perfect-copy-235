@@ -4,6 +4,7 @@ import { imgDims } from "@/data/imageDimensions";
 import { ArrowLeft, ArrowRight, Play, Pause } from "lucide-react";
 import StickyAudioBar from "@/components/blog/StickyAudioBar";
 import { useAudioPlayer } from "@/components/blog/useAudioPlayer";
+import { ReadAlongContent, ReadAlongText, parseActiveWord } from "@/components/blog/ReadAlongContent";
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
@@ -17,7 +18,7 @@ const BlogPost = () => {
   const postIndex = blogPosts.findIndex((p) => p.id === id);
   const post = blogPosts[postIndex];
 
-  const player = useAudioPlayer({ src: post?.audio?.src ?? "", durationSeconds: post?.audio?.durationSeconds ?? 0 });
+  const player = useAudioPlayer({ src: post?.audio?.src ?? "", durationSeconds: post?.audio?.durationSeconds ?? 0, wordTimings: post?.audio?.wordTimings });
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [pastHero, setPastHero] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -59,6 +60,8 @@ const BlogPost = () => {
   const audioMinutes = post.audio ? Math.ceil(post.audio.durationSeconds / 60) : 0;
   const barVisible = !!post.audio && !dismissed && (player.playing || player.current > 0 || pastHero);
   const onListen = () => { setDismissed(false); player.toggle(); };
+  const activeWordKey = parseActiveWord(player.activeWord);
+  const titleActiveIndex = activeWordKey?.blockKey === "t" ? activeWordKey.index : null;
 
   const prevPost = postIndex > 0 ? blogPosts[postIndex - 1] : null;
   const nextPost = postIndex < blogPosts.length - 1 ? blogPosts[postIndex + 1] : null;
@@ -130,7 +133,7 @@ const BlogPost = () => {
             </div>
 
             <h1 className="mb-6 text-3xl font-black tracking-tighter text-foreground md:text-5xl lg:text-[3.5rem] lg:leading-[1.08]">
-              {post.title}
+              <ReadAlongText text={post.title} blockKey="t" activeIndex={titleActiveIndex} />
             </h1>
 
             <p className="font-mono text-sm text-muted-foreground">
@@ -178,7 +181,7 @@ const BlogPost = () => {
             transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="blog-content space-y-6">
-              {post.content}
+              <ReadAlongContent content={post.content} activeWord={player.activeWord} />
             </div>
           </motion.div>
         </div>
