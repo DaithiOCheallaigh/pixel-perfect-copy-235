@@ -33,6 +33,19 @@ const redirects: [string, string][] = [
   ["/service", "/services"],
   ["/contact", "/about#contact"],
   ["/services/tools/nope", "/services/tools"],
+  ["/2025-10-22/strategic-ux-design-business-growth/", "/blog/strategic-ux"],
+  ["/2025-10-22/why-your-digital-product-needs-more-than-just-good-design/", "/blog/strategic-ux"],
+  ["/service-component-library/", "/services/expertise/component-libraries"],
+  ["/service-local-seo/", "/services/expertise/local-seo"],
+  ["/service-webflow-shopify", "/services/expertise/shopify"],
+  ["/social-media-management-dublin/", "/services/expertise/social-media-management"],
+  ["/ui-prototypes-dublin", "/services/expertise/prototypes"],
+  ["/content-management-system-management/", "/services/expertise/cms-content-platforms"],
+  ["/digital-tipping/", "/case/digital-tipping"],
+  ["/website-tipdirect/?utm_source=google", "/case/website-tipdirect?utm_source=google"],
+  ["/about-2/", "/about"],
+  ["/process/", "/services"],
+  ["/privacy/", "/services/terms"],
 ];
 
 describe("route table", () => {
