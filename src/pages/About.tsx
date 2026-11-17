@@ -79,10 +79,10 @@ const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: stri
     title: "Discovery & Research",
     icon: <SearchNormal1 size={32} variant="Bulk" className="text-primary" />,
     items: [
-      "Market analysis and competitor research",
-      "User interviews and surveys",
-      "Stakeholder interviews",
-      "Problem definition and opportunity identification",
+      "Market and competitor analysis with AI research agents",
+      "Interview and survey synthesis using AI thematic coding",
+      "Stakeholder interviews and alignment sessions",
+      "Problem framing and opportunity sizing",
     ],
   },
   {
@@ -90,10 +90,10 @@ const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: stri
     title: "Strategy & Planning",
     icon: <Calendar size={32} variant="Bulk" className="text-primary" />,
     items: [
-      "Define project goals and success metrics",
-      "Create user personas and journey maps",
-      "Establish technical requirements",
-      "Set project timeline and milestones",
+      "Goals and success metrics agreed up front",
+      "AI-drafted personas and journey maps, checked against real research",
+      "Spec-driven briefs that humans and AI agents can both execute",
+      "Technical requirements, timeline and milestones",
     ],
   },
   {
@@ -101,10 +101,10 @@ const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: stri
     title: "Design & Ideation",
     icon: <Bezier size={32} variant="Bulk" className="text-primary" />,
     items: [
-      "Sketching and wireframing",
-      "Information architecture development",
-      "Interactive prototyping",
-      "Visual design and branding integration",
+      "Information architecture and wireframes",
+      "AI-assisted concept exploration before committing to a direction",
+      "Working prototypes in hours with Claude, Lovable and Figma MCP",
+      "Visual design on a token-based design system",
     ],
   },
   {
@@ -112,10 +112,10 @@ const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: stri
     title: "Testing & Validation",
     icon: <TaskSquare size={32} variant="Bulk" className="text-primary" />,
     items: [
-      "Usability testing",
-      "A/B testing",
-      "Stakeholder feedback collection",
-      "Design iteration based on feedback",
+      "Usability testing with AI-summarised session findings",
+      "Synthetic-user walkthroughs to catch issues before live tests",
+      "A/B testing and stakeholder feedback",
+      "Iteration driven by evidence, not opinion",
     ],
   },
   {
@@ -123,10 +123,10 @@ const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: stri
     title: "Implementation",
     icon: <Code1 size={32} variant="Bulk" className="text-primary" />,
     items: [
-      "Developer handoff",
-      "Design specifications documentation",
-      "Quality assurance",
-      "Launch preparation",
+      "Handoff through Figma MCP and code-connected components",
+      "AI-generated specs and acceptance criteria from the designs",
+      "Design QA with automated visual checks",
+      "Launch preparation alongside engineering",
     ],
   },
   {
@@ -134,10 +134,10 @@ const lifecycleSteps: { num: string; title: string; icon: ReactNode; items: stri
     title: "Post-Launch Analysis",
     icon: <Chart2 size={32} variant="Bulk" className="text-primary" />,
     items: [
-      "User behaviour monitoring",
-      "Performance metrics tracking",
-      "Feedback collection and analysis",
-      "Continuous improvement planning",
+      "User behaviour and performance monitoring",
+      "AI-summarised feedback and analytics reports",
+      "Continuous improvement backlog, prioritised by impact",
+      "Learnings fed back into the design system and prompts",
     ],
   },
 ];
@@ -230,7 +230,7 @@ const About = () => (
             My Product Design<br />Lifecycle Philosophy
           </h2>
           <p className="mx-auto mb-16 max-w-3xl text-center text-base leading-relaxed text-muted-foreground">
-            As a seasoned product designer, I've developed a comprehensive approach to creating meaningful, user-centered solutions. My design philosophy seamlessly integrates research, iteration, and validation to craft products that not only meet business objectives but genuinely enhance user experiences.
+            I've built a comprehensive, user-centred approach that integrates research, iteration and validation, and I run AI-enabled workflows at every stage of it. Research agents, AI-assisted prototyping, spec-driven handoff and automated QA compress the cycle, while the judgement calls on what to build and why stay human.
           </p>
         </ScrollReveal>
 
