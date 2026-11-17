@@ -54,8 +54,8 @@ export const routeTable: RouteDef[] = [
   { id: "legacy-contact", path: "/contact", redirectTo: "/about#contact" },
 
   // LEGACY WORDPRESS URLS (pre-2026 site; Google still has them indexed) -> current pages. Permanent, never remove.
-  { id: "wp-blog-strategic-ux", path: "/2025-10-22/strategic-ux-design-business-growth", redirectTo: "/blog/strategic-ux" },
-  { id: "wp-blog-more-than-good-design", path: "/2025-10-22/why-your-digital-product-needs-more-than-just-good-design", redirectTo: "/blog/strategic-ux" },
+  { id: "wp-blog-strategic-ux", path: "/2025/10/22/strategic-ux-design-business-growth", redirectTo: "/blog/strategic-ux" },
+  { id: "wp-blog-more-than-good-design", path: "/2025/10/22/why-your-digital-product-needs-more-than-just-good-design", redirectTo: "/blog/strategic-ux" },
   { id: "wp-service-component-library", path: "/service-component-library", redirectTo: "/services/expertise/component-libraries" },
   { id: "wp-service-local-seo", path: "/service-local-seo", redirectTo: "/services/expertise/local-seo" },
   { id: "wp-service-webflow-shopify", path: "/service-webflow-shopify", redirectTo: "/services/expertise/shopify" },
