@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import {
   AnimatePresence,
   animate,
@@ -6,104 +6,77 @@ import {
   useMotionValue,
   useReducedMotion,
   useTransform,
-  type MotionValue,
   type PanInfo,
 } from "framer-motion";
+import { ChevronDown, Play, RefreshCw, X } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { ShineBorder } from "@/components/ui/shine-border";
+import { Switch } from "@/components/ui/switch";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { cn } from "@/lib/utils";
+import { projects, type Project } from "@/data/projects";
 
-/* ─── Shared chrome ─── */
-const pill =
-  "inline-flex min-h-9 items-center justify-center rounded-full px-4 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
-const pillPrimary = `${pill} bg-primary text-primary-foreground hover:bg-primary/85`;
-const pillGhost = `${pill} border border-border text-muted-foreground hover:text-foreground`;
-const springSnappy = { type: "spring", stiffness: 300, damping: 24 } as const;
+/*
+ * Interactive demos for "8 Principles for Crafting Fluid Interfaces".
+ * Each one animates a real piece of this site (the blog audio bar, the shadcn accordion, the
+ * /work and /blog cards) and keeps its controls in the footer strip beside the caption, built
+ * from the site's own Button, Switch and ToggleGroup. Demo chrome uses div/span rather than
+ * p/h3/ul because the post's .blog-content rules restyle those elements.
+ * src/data/blogPosts.tsx imports this file, so the post list below is a small local copy.
+ */
 
-const DemoContainer = ({
-  children,
-  caption,
-  readout,
-}: {
-  children: React.ReactNode;
-  caption: string;
-  readout?: React.ReactNode;
-}) => (
+/* ─── Shared ─── */
+const SHINE = ["#A07CFE", "#FE8FB5", "#FFBE7B"];
+const spring = { type: "spring", stiffness: 320, damping: 28 } as const;
+const bouncy = { type: "spring", stiffness: 260, damping: 18 } as const;
+
+type Post = { id: string; title: string; date: string; readTime: string; image: string; excerpt?: string };
+const POSTS: Post[] = [
+  {
+    id: "8-principles-fluid-interfaces",
+    title: "8 Principles for Crafting Fluid Interfaces",
+    date: "March 20, 2026",
+    readTime: "13 min read",
+    image: "/images/blog/fluid-interfaces.jpg",
+    excerpt:
+      "There's a quality that separates the interfaces we tolerate from the ones we love. It's not colour palettes or type scales. The quality is fluidity — the feeling that an interface has physical weight.",
+  },
+  { id: "2026-new-norm-designers", title: "2026: The New Norm For Designers", date: "March 3, 2026", readTime: "12 min read", image: "/images/blog/2026-new-norm-designers.webp" },
+  { id: "navigating-design-2025", title: "Navigating Design in 2025: Challenges and Opportunities in a Transformed Industry", date: "October 22, 2025", readTime: "5 min read", image: "/images/blog/navigating-design-2025.webp" },
+  { id: "strategic-ux", title: 'Why Strategic UX Design Matters More Than Making Things "Look Good"', date: "October 22, 2025", readTime: "7 min read", image: "/images/blog/strategic-ux.webp" },
+  { id: "design-trends-2025", title: "Design Trends to Watch in 2025: Shaping the Future of Digital Aesthetics", date: "November 21, 2024", readTime: "8 min read", image: "/images/blog/design-trends-2025.webp" },
+  { id: "partner-for-agencies", title: "Why Lacuna Digital is the Perfect Partner for Agencies", date: "November 21, 2024", readTime: "6 min read", image: "/images/blog/partner-for-agencies.webp" },
+  { id: "benefits-digital-agency", title: "The Benefits of Using A Digital Agency", date: "November 19, 2024", readTime: "6 min read", image: "/images/blog/benefits-digital-agency.webp" },
+];
+
+const WORK = ["spark", "marsh-internal-tooling", "marsh-design-system", "digital-tipping"]
+  .map((id) => projects.find((p) => p.id === id))
+  .filter((p): p is Project => Boolean(p));
+
+const Demo = ({ children, caption, controls, stage }: { children: ReactNode; caption: string; controls?: ReactNode; stage?: string }) => (
   <div className="my-12 overflow-hidden rounded-2xl border border-border bg-card/60 backdrop-blur-sm">
-    <div className="flex min-h-[260px] items-center justify-center p-5 sm:p-8">{children}</div>
-    <div className="border-t border-border bg-muted/30 px-6 py-3">
-      {/* divs rather than paragraphs: the post's .blog-content paragraph rule would restyle these */}
-      <div className="text-center font-mono text-xs text-muted-foreground">{caption}</div>
-      {readout ? (
-        <div className="mt-1 text-center font-mono text-[11px] text-primary">
-          {readout}
-        </div>
-      ) : null}
+    <div className={cn("flex min-h-[240px] items-center justify-center p-5 sm:p-8", stage)}>{children}</div>
+    <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-border bg-muted/30 px-5 py-4 sm:px-6">
+      <div className="min-w-[14rem] flex-1 text-sm leading-relaxed text-muted-foreground">{caption}</div>
+      {controls ? <div className="flex flex-wrap items-center gap-3">{controls}</div> : null}
     </div>
   </div>
 );
 
-function Segmented<T extends string>({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: T;
-  options: { value: T; label: string }[];
-  onChange: (value: T) => void;
-}) {
+const SwitchField = ({ label, checked, onCheckedChange }: { label: string; checked: boolean; onCheckedChange: (checked: boolean) => void }) => {
+  const id = useId();
   return (
-    <div role="group" aria-label={label} className="inline-flex max-w-full flex-wrap justify-center gap-0.5 rounded-full border border-border p-0.5">
-      {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          aria-pressed={value === o.value}
-          onClick={() => onChange(o.value)}
-          className={`min-h-8 rounded-full px-3 font-mono text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-            value === o.value ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          {o.label}
-        </button>
-      ))}
+    <div className="flex items-center gap-2">
+      <Switch id={id} checked={checked} onCheckedChange={onCheckedChange} />
+      <label htmlFor={id} className="cursor-pointer select-none text-sm font-medium text-foreground">
+        {label}
+      </label>
     </div>
   );
-}
+};
 
-const Slider = ({
-  label,
-  value,
-  min,
-  max,
-  step = 1,
-  onChange,
-  format = String,
-  disabled = false,
-}: {
-  label: string;
-  value: number;
-  min: number;
-  max: number;
-  step?: number;
-  onChange: (value: number) => void;
-  format?: (value: number) => string;
-  disabled?: boolean;
-}) => (
-  <label className={`flex w-full items-center gap-3 font-mono text-[11px] text-muted-foreground ${disabled ? "opacity-40" : ""}`}>
-    <span className="w-16 shrink-0 text-right">{label}</span>
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      disabled={disabled}
-      onChange={(e) => onChange(Number(e.target.value))}
-      className="h-6 w-full cursor-pointer accent-primary disabled:cursor-not-allowed"
-    />
-    <span className="w-12 shrink-0 tabular-nums text-foreground">{format(value)}</span>
-  </label>
-);
+const Label = ({ children }: { children: ReactNode }) => <div className="font-mono-label mb-2 text-muted-foreground">{children}</div>;
 
 /** Width of a measured element, kept current with ResizeObserver when available. */
 const useWidth = () => {
@@ -122,553 +95,448 @@ const useWidth = () => {
   return [ref, width] as const;
 };
 
-/* ─── 1. Spring vs CSS easing: two distances, live physics ─── */
-const BLOCK = 40;
-const PAD = 4;
-
-type SpringConfig = { type: "spring"; stiffness: number; damping: number; mass: number };
-
-const CssTrack = ({ on, travel, trackRef }: { on: boolean; travel: number; trackRef?: React.Ref<HTMLDivElement> }) => (
-  <div ref={trackRef} className="relative h-12 w-full rounded-lg bg-muted/40">
-    <div
-      className="absolute top-1 h-10 w-10 rounded-md bg-muted-foreground/40"
-      style={{ left: PAD, transform: `translateX(${on ? travel : 0}px)`, transition: "transform 400ms ease-in-out" }}
-    />
-  </div>
-);
-
-const SpringTrack = ({ x }: { x: MotionValue<number> }) => (
-  <div className="relative h-12 w-full rounded-lg bg-muted/40">
-    <motion.div className="absolute top-1 h-10 w-10 rounded-md bg-primary" style={{ left: PAD, x }} />
-  </div>
-);
-
-/** Starts a spring on a motion value and reports when it is visibly at rest (within half a pixel). */
-const runSpring = (mv: MotionValue<number>, target: number, spring: SpringConfig, onSettled: (ms: number) => void) => {
-  const start = performance.now();
-  let lastMove = start;
-  const unsubscribe = mv.on("change", (v) => {
-    if (Math.abs(v - target) > 0.5) lastMove = performance.now();
-  });
-  animate(mv, target, spring).then(() => {
-    unsubscribe();
-    onSettled(Math.round(lastMove - start));
-  });
+/** True once the element has been scrolled into view (immediately where IntersectionObserver is missing). */
+const useInViewOnce = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || seen) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setSeen(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setSeen(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [seen]);
+  return [ref, seen] as const;
 };
 
-const TrackLabel = ({ children, muted = false }: { children: React.ReactNode; muted?: boolean }) => (
-  <span className={`text-right font-mono text-[11px] ${muted ? "text-muted-foreground" : "text-primary"}`}>{children}</span>
+/* ─── Real site pieces, as they render on /work and /blog ─── */
+const WorkCard = ({ project, compact = false }: { project: Project; compact?: boolean }) => (
+  <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card">
+    <ShineBorder shineColor={SHINE} />
+    <div className={cn("overflow-hidden rounded-t-lg bg-card", compact ? "aspect-video" : "aspect-[4/3]")}>
+      <img src={project.pillImage} alt="" draggable={false} className="no-lightbox h-full w-full object-cover scale-[1.06]" loading="lazy" decoding="async" />
+    </div>
+    <div className={cn("flex flex-1 flex-col", compact ? "p-3" : "p-5")}>
+      <div className={cn("font-bold leading-[1.1] tracking-[-0.03em] text-foreground", compact ? "text-sm" : "text-lg")}>{project.title}</div>
+      {compact ? null : <div className="mt-1 line-clamp-2 text-sm text-muted-foreground">{project.workDescription || project.subtitle}</div>}
+      <div className={cn("flex flex-wrap gap-2", compact ? "mt-2" : "mt-4")}>
+        {project.tags.slice(0, compact ? 1 : 2).map((tag) => (
+          <span key={tag} className="font-mono-label text-xs text-muted-foreground">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+const BlogCard = ({ post }: { post: Post }) => (
+  <div className="group relative flex flex-col overflow-hidden rounded-xl bg-card">
+    <ShineBorder shineColor={SHINE} />
+    <div className="overflow-hidden">
+      <img src={post.image} alt="" draggable={false} className="no-lightbox aspect-video w-full object-cover" loading="lazy" decoding="async" />
+    </div>
+    <div className="flex flex-1 flex-col p-6">
+      <span className="font-mono-label mb-2 text-muted-foreground">
+        {post.date} · {post.readTime}
+      </span>
+      <div className="mb-2 text-lg font-bold leading-[1.1] tracking-[-0.03em] text-foreground">{post.title}</div>
+      <div className="line-clamp-2 text-sm text-muted-foreground">{post.excerpt}</div>
+    </div>
+  </div>
+);
+
+const PostRow = ({ post, onRemove }: { post: Post; onRemove?: () => void }) => (
+  <div role="listitem" className="flex items-center gap-3 rounded-xl border border-border bg-card p-2">
+    <img src={post.image} alt="" draggable={false} className="no-lightbox h-10 w-16 shrink-0 rounded-md object-cover" loading="lazy" decoding="async" />
+    <div className="min-w-0 flex-1">
+      <div className="truncate text-sm font-semibold text-foreground">{post.title}</div>
+      <div className="font-mono-label truncate text-muted-foreground">
+        {post.date} · {post.readTime}
+      </div>
+    </div>
+    {onRemove ? (
+      <button
+        type="button"
+        aria-label={`Remove ${post.title}`}
+        onClick={onRemove}
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <X className="h-4 w-4" aria-hidden="true" />
+      </button>
+    ) : null}
+  </div>
+);
+
+/* ─── 1. Physics vs time: the blog's sticky audio bar entering ─── */
+const BAR = "absolute inset-x-0 bottom-0 border-t border-border/50 bg-background/80 shadow-lg backdrop-blur-md";
+
+const AudioBarInner = () => (
+  <div className="flex items-center gap-3 px-4 py-2">
+    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+      <Play className="ml-0.5 h-4 w-4" aria-hidden="true" />
+    </span>
+    <div className="min-w-0 flex-1">
+      <div className="truncate text-sm font-semibold text-foreground">8 Principles for Crafting Fluid Interfaces</div>
+      <div className="truncate font-mono text-xs text-muted-foreground">AI narration · 13 min</div>
+    </div>
+    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted-foreground">
+      <X className="h-5 w-5" aria-hidden="true" />
+    </span>
+  </div>
+);
+
+const Viewport = ({ label, children }: { label: string; children: ReactNode }) => (
+  <div className="relative h-44 overflow-hidden rounded-xl border border-border bg-background">
+    <div className="space-y-3 p-4">
+      <Label>{label}</Label>
+      <div className="h-2 w-3/4 rounded-full bg-muted" />
+      <div className="h-2 w-1/2 rounded-full bg-muted" />
+      <div className="h-2 w-2/3 rounded-full bg-muted" />
+    </div>
+    {children}
+  </div>
 );
 
 export const SpringVsEasing = () => {
-  const [on, setOn] = useState(false);
-  const [stiffness, setStiffness] = useState(300);
-  const [damping, setDamping] = useState(24);
-  const [mass, setMass] = useState(1);
-  const [trackRef, trackWidth] = useWidth();
-  const xShort = useMotionValue(0);
-  const xLong = useMotionValue(0);
-  const [settled, setSettled] = useState<{ short?: number; long?: number }>({});
-
-  const longTravel = Math.max(0, Math.round(trackWidth - BLOCK - PAD * 2));
-  const shortTravel = Math.min(64, longTravel);
-  const spring: SpringConfig = { type: "spring", stiffness, damping, mass };
-
-  const toggle = () => {
-    const next = !on;
-    setOn(next);
-    setSettled({});
-    runSpring(xShort, next ? shortTravel : 0, spring, (ms) => setSettled((s) => ({ ...s, short: ms })));
-    runSpring(xLong, next ? longTravel : 0, spring, (ms) => setSettled((s) => ({ ...s, long: ms })));
-  };
-
-  const readout =
-    settled.long !== undefined
-      ? `CSS finished at 400 ms because we said so · the spring settled in ${settled.long} ms (long) and ${settled.short ?? "…"} ms (short) — change the physics and the timing follows`
-      : "CSS runs for exactly 400 ms whatever the distance · a spring's timing falls out of stiffness, damping and mass";
-
+  const [visible, setVisible] = useState(false);
+  const reduced = useReducedMotion();
   return (
-    <DemoContainer caption="Toggle, then play with the physics — same code, two distances" readout={readout}>
-      <div className="flex w-full max-w-md flex-col gap-5">
-        <button type="button" onClick={toggle} className={`${pillPrimary} self-center px-5`}>
-          Toggle
-        </button>
-        <div className="grid grid-cols-[5.5rem_1fr] items-center gap-x-3 gap-y-2 sm:grid-cols-[7rem_1fr]">
-          <TrackLabel muted>CSS · short</TrackLabel>
-          <CssTrack on={on} travel={shortTravel} trackRef={trackRef} />
-          <TrackLabel muted>CSS · long</TrackLabel>
-          <CssTrack on={on} travel={longTravel} />
-          <TrackLabel>Spring · short</TrackLabel>
-          <SpringTrack x={xShort} />
-          <TrackLabel>Spring · long</TrackLabel>
-          <SpringTrack x={xLong} />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Slider label="stiffness" value={stiffness} min={50} max={600} step={10} onChange={setStiffness} />
-          <Slider label="damping" value={damping} min={4} max={60} onChange={setDamping} />
-          <Slider label="mass" value={mass} min={0.5} max={3} step={0.1} onChange={setMass} format={(v) => v.toFixed(1)} />
-        </div>
+    <Demo
+      caption="The page's own audio bar entering: once on the 300 ms CSS ease it ships with, once on a spring. The spring version arrives with weight and settles; the eased one just stops."
+      controls={
+        <Button size="sm" onClick={() => setVisible((v) => !v)}>
+          {visible ? "Hide bar" : "Show bar"}
+        </Button>
+      }
+    >
+      <div className="grid w-full gap-4 sm:grid-cols-2">
+        <Viewport label="CSS · 300 ms ease">
+          <div aria-hidden="true" className={cn(BAR, "transition-transform duration-300", visible ? "translate-y-0" : "translate-y-full")}>
+            <AudioBarInner />
+          </div>
+        </Viewport>
+        <Viewport label="Spring">
+          <motion.div aria-hidden="true" className={BAR} initial={false} animate={{ y: visible ? "0%" : "100%" }} transition={reduced ? { duration: 0.2 } : bouncy}>
+            <AudioBarInner />
+          </motion.div>
+        </Viewport>
       </div>
-    </DemoContainer>
+    </Demo>
   );
 };
 
-/* ─── 2. Interruptible: a locked CSS panel beside a spring that always listens ─── */
-const LOCK_MS = 600;
+/* ─── 2. Interruptible: the shipped accordion vs a spring one ─── */
+const QUESTION = "What makes an interface feel fluid?";
+const ANSWER = "Motion that answers input instantly, can be interrupted at any moment, and settles with weight instead of running out a fixed timer.";
+const TRIGGER = "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline";
 
 export const InterruptibleDemo = () => {
-  const [lockedOpen, setLockedOpen] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const [ignored, setIgnored] = useState(0);
+  const [shippedOpen, setShippedOpen] = useState(false);
   const [springOpen, setSpringOpen] = useState(false);
-  const [reversals, setReversals] = useState(0);
-  const lastToggle = useRef(0);
-  const timer = useRef<number | undefined>(undefined);
-
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-
-  const clickLocked = () => {
-    if (busy) {
-      setIgnored((n) => n + 1);
-      return;
-    }
-    setBusy(true);
-    setLockedOpen((v) => !v);
-    timer.current = window.setTimeout(() => setBusy(false), LOCK_MS);
-  };
-  const clickSpring = () => {
-    const now = performance.now();
-    if (now - lastToggle.current < 600) setReversals((n) => n + 1);
-    lastToggle.current = now;
+  const toggleBoth = () => {
+    setShippedOpen((v) => !v);
     setSpringOpen((v) => !v);
   };
-
-  const panel =
-    "flex items-start justify-center overflow-hidden rounded-2xl px-4 py-4 text-sm font-semibold select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
-
   return (
-    <DemoContainer
-      caption="Click both panels rapidly — the locked one must finish before it listens again"
-      readout={`Locked panel ignored ${ignored} click${ignored === 1 ? "" : "s"} · spring reversed mid-flight ${reversals} time${reversals === 1 ? "" : "s"}`}
+    <Demo
+      caption="Press Toggle both twice, quickly. The shipped accordion plays a fixed 200 ms keyframe that cannot turn around, so it jumps to the end and starts over. The spring version reverses from wherever it is."
+      controls={
+        <Button size="sm" onClick={toggleBoth}>
+          Toggle both
+        </Button>
+      }
+      stage="items-start"
     >
-      <div className="grid w-full max-w-md grid-cols-1 gap-6 sm:grid-cols-2">
-        <div className="flex flex-col items-center gap-2">
-          <span className="font-mono text-[11px] text-muted-foreground">Locked · CSS 600 ms</span>
-          <div className="flex h-40 w-full items-start justify-center">
-            <button
-              type="button"
-              onClick={clickLocked}
-              aria-busy={busy}
-              className={`${panel} bg-muted-foreground/40 text-foreground ${busy ? "cursor-wait" : "cursor-pointer"}`}
-              style={{
-                width: lockedOpen ? "100%" : "55%",
-                height: lockedOpen ? 160 : 56,
-                borderRadius: lockedOpen ? 24 : 16,
-                transition: `width ${LOCK_MS}ms ease-in-out, height ${LOCK_MS}ms ease-in-out, border-radius ${LOCK_MS}ms ease-in-out`,
-              }}
-            >
-              {busy ? "Busy…" : lockedOpen ? "Close" : "Expand"}
-            </button>
-          </div>
+      <div className="grid w-full gap-6 text-left sm:grid-cols-2">
+        {/* The accordion header is an h3; the !important overrides stop .blog-content h3 restyling it */}
+        <div className="[&_h3]:!m-0 [&_h3]:!text-sm">
+          <Label>Shipped accordion · CSS keyframe</Label>
+          <Accordion type="single" collapsible value={shippedOpen ? "q" : ""} onValueChange={(v) => setShippedOpen(v === "q")}>
+            <AccordionItem value="q">
+              <AccordionTrigger className="text-left text-sm">{QUESTION}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">{ANSWER}</AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <span className="font-mono text-[11px] text-primary">Interruptible · spring</span>
-          <div className="flex h-40 w-full items-start justify-center">
-            <motion.button
-              type="button"
-              onClick={clickSpring}
-              className={`${panel} cursor-pointer bg-primary/90 text-primary-foreground`}
-              initial={{ width: "55%", height: 56, borderRadius: 16 }}
-              animate={{ width: springOpen ? "100%" : "55%", height: springOpen ? 160 : 56, borderRadius: springOpen ? 24 : 16 }}
-              transition={{ type: "spring", stiffness: 260, damping: 22 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              {springOpen ? "Close" : "Expand"}
-            </motion.button>
+        <div>
+          <Label>Spring · interruptible</Label>
+          <div className="border-b">
+            <div className="flex">
+              <button type="button" aria-expanded={springOpen} onClick={() => setSpringOpen((v) => !v)} className={cn(TRIGGER, "text-left text-sm")}>
+                {QUESTION}
+                <motion.span className="flex shrink-0" animate={{ rotate: springOpen ? 180 : 0 }} transition={spring}>
+                  <ChevronDown className="h-4 w-4" aria-hidden="true" />
+                </motion.span>
+              </button>
+            </div>
+            <motion.div initial={false} animate={{ height: springOpen ? "auto" : 0, opacity: springOpen ? 1 : 0 }} transition={spring} className="overflow-hidden text-sm">
+              <div className="pb-4 text-muted-foreground">{ANSWER}</div>
+            </motion.div>
           </div>
         </div>
       </div>
-    </DemoContainer>
+    </Demo>
   );
 };
 
-/* ─── 3. Direct manipulation: 1:1 tracking, velocity decides the release ─── */
+/* ─── 3. Direct manipulation: a /work card you can throw ─── */
 export const DraggableCard = () => {
+  const project = WORK.find((p) => p.id === "digital-tipping") ?? WORK[0] ?? projects[0];
+  const [stageRef, stageWidth] = useWidth();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-120, 120], [8, -8]);
-  const rotateY = useTransform(x, [-120, 120], [-8, 8]);
-  const [live, setLive] = useState({ dx: 0, dy: 0, v: 0 });
-  const [dragging, setDragging] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
-  const [result, setResult] = useState("Drag the card — it tracks your pointer 1:1");
-
-  const onDrag = (_: unknown, info: PanInfo) =>
-    setLive({ dx: Math.round(info.offset.x), dy: Math.round(info.offset.y), v: Math.round(Math.hypot(info.velocity.x, info.velocity.y)) });
+  const rotate = useTransform(x, [-240, 240], [-10, 10]);
+  const [gone, setGone] = useState(false);
 
   const onDragEnd = (_: unknown, info: PanInfo) => {
-    setDragging(false);
-    const speed = Math.hypot(info.velocity.x, info.velocity.y);
-    const distance = Math.hypot(info.offset.x, info.offset.y);
-    if (speed > 600 || distance > 180) {
-      const angle = Math.atan2(info.velocity.y || info.offset.y, info.velocity.x || info.offset.x);
-      setDismissed(true);
-      setResult(`Released at ${Math.round(speed)} px/s → dismissed, carrying the gesture's velocity`);
-      animate(x, Math.cos(angle) * 900, { type: "spring", stiffness: 120, damping: 30, velocity: info.velocity.x });
-      animate(y, Math.sin(angle) * 900, { type: "spring", stiffness: 120, damping: 30, velocity: info.velocity.y });
-    } else {
-      setResult(`Released at ${Math.round(speed)} px/s, ${Math.round(distance)} px out → snapped back`);
-      animate(x, 0, { type: "spring", stiffness: 400, damping: 28, velocity: info.velocity.x });
-      animate(y, 0, { type: "spring", stiffness: 400, damping: 28, velocity: info.velocity.y });
+    const limit = Math.max(120, stageWidth * 0.3);
+    const flick = Math.abs(info.velocity.x) > 500 || Math.abs(info.offset.x) > limit;
+    if (!flick) {
+      animate(x, 0, spring);
+      animate(y, 0, spring);
+      return;
     }
+    const dir = Math.sign(info.velocity.x || info.offset.x) || 1;
+    setGone(true);
+    animate(x, dir * (stageWidth / 2 + 320), { type: "spring", stiffness: 180, damping: 30, velocity: info.velocity.x });
+    animate(y, 0, spring);
   };
 
+  // Starting a new animation on x also cancels a flick that is still in flight.
   const bringBack = () => {
-    setDismissed(false);
-    setResult("Back in place — try a slow drag, then a flick");
-    animate(x, 0, springSnappy);
-    animate(y, 0, springSnappy);
+    setGone(false);
+    animate(x, 0, bouncy);
+    animate(y, 0, spring);
   };
 
   return (
-    <DemoContainer caption="Drag freely — a fast flick dismisses, a slow release snaps back" readout={result}>
-      <div className="flex w-full flex-col items-center gap-4">
-        <div className="relative flex h-44 w-full items-center justify-center" style={{ perspective: 800 }}>
-          <div
-            aria-hidden
-            className={`absolute flex h-36 w-52 items-center justify-center rounded-2xl border border-dashed border-border font-mono text-[11px] text-muted-foreground transition-opacity duration-300 ${
-              dismissed ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            dismissed
-          </div>
-          <motion.div
-            className={`flex h-36 w-52 flex-col items-center justify-center gap-1 rounded-2xl bg-gradient-to-br from-primary/80 to-accent/60 shadow-xl ${
-              dragging ? "cursor-grabbing" : "cursor-grab"
-            }`}
-            drag
-            dragMomentum={false}
-            dragElastic={1}
-            style={{ x, y, rotateX, rotateY, touchAction: "none" }}
-            whileDrag={{ scale: 1.04 }}
-            onDragStart={() => {
-              setDragging(true);
-              setDismissed(false);
-            }}
-            onDrag={onDrag}
-            onDragEnd={onDragEnd}
-            aria-hidden={dismissed}
-          >
-            <span className="text-sm font-semibold text-primary-foreground">Drag me</span>
-            <span className="font-mono text-[11px] text-primary-foreground/80">
-              {dragging ? `${live.dx}, ${live.dy} px · ${live.v} px/s` : "1:1 tracking"}
-            </span>
-          </motion.div>
-        </div>
-        <button type="button" onClick={bringBack} className={pillGhost} style={{ visibility: dismissed ? "visible" : "hidden" }}>
+    <Demo
+      caption="Drag the card: it tracks your finger one to one. Flick it and it leaves at your speed; let go gently and it springs home."
+      controls={
+        <Button size="sm" variant="outline" disabled={!gone} onClick={bringBack}>
           Bring it back
-        </button>
+        </Button>
+      }
+    >
+      <div ref={stageRef} className="flex w-full justify-center">
+        <motion.div
+          drag
+          dragMomentum={false}
+          onDragEnd={onDragEnd}
+          whileDrag={{ scale: 1.03 }}
+          style={{ x, y, rotate }}
+          aria-hidden={gone}
+          className={cn("w-56 cursor-grab touch-none select-none active:cursor-grabbing sm:w-64", gone && "pointer-events-none")}
+        >
+          <WorkCard project={project} />
+        </motion.div>
       </div>
-    </DemoContainer>
+    </Demo>
   );
 };
 
-/* ─── 4. Layout animation vs teleport ─── */
-const DEFAULT_ITEMS = ["Design", "Prototype", "Build", "Ship"];
-const EXTRA_WORDS = ["Measure", "Learn", "Iterate", "Refine", "Launch", "Review"];
+/* ─── 4. Layout changes: the blog list reflowing ─── */
+const INITIAL_ROWS = POSTS.slice(0, 4).map((p) => p.id);
 
 export const LayoutAnimationDemo = () => {
+  const [animated, setAnimated] = useState(true);
+  const [shown, setShown] = useState<string[]>(INITIAL_ROWS);
   const reduced = useReducedMotion();
-  const [mode, setMode] = useState<"animate" | "teleport">("animate");
-  const [items, setItems] = useState(DEFAULT_ITEMS);
-  const [pool, setPool] = useState(EXTRA_WORDS);
-  const anim = mode === "animate" && !reduced;
+  const live = animated && !reduced;
+  const removed = POSTS.filter((p) => !shown.includes(p.id));
+  const rows = shown.map((id) => POSTS.find((p) => p.id === id)).filter((p): p is Post => Boolean(p));
+  const transition = live ? spring : { duration: 0 };
 
-  const insert = () => {
-    const [next, ...rest] = pool;
+  const add = () => {
+    const next = removed[0];
     if (!next) return;
-    const at = Math.floor(Math.random() * (items.length + 1));
-    setItems([...items.slice(0, at), next, ...items.slice(at)]);
-    setPool(rest);
+    setShown((s) => (s.length ? [s[0], next.id, ...s.slice(1)] : [next.id]));
   };
-  const remove = (word: string) => {
-    setItems(items.filter((i) => i !== word));
-    if (EXTRA_WORDS.includes(word)) setPool([word, ...pool]);
-  };
-  const shuffle = () => setItems([...items].sort(() => Math.random() - 0.5));
-  const reset = () => {
-    setItems(DEFAULT_ITEMS);
-    setPool(EXTRA_WORDS);
-  };
-
-  const readout = anim
-    ? "Siblings slide into place (FLIP under the hood)"
-    : reduced
-      ? "Reduced motion is on, so changes are instant by design"
-      : "Siblings jump to their new positions in a single frame";
 
   return (
-    <DemoContainer caption="Insert, remove or shuffle — then switch off layout animation and watch the siblings teleport" readout={readout}>
-      <div className="flex w-full max-w-xs flex-col items-center gap-4">
-        <Segmented
-          label="Layout animation"
-          value={mode}
-          onChange={(v) => setMode(v)}
-          options={[
-            { value: "animate", label: "Animate layout" },
-            { value: "teleport", label: "Teleport" },
-          ]}
-        />
-        <div className="flex flex-wrap justify-center gap-2">
-          <button type="button" onClick={insert} disabled={pool.length === 0} className={`${pillPrimary} disabled:opacity-40`}>
-            + Insert
-          </button>
-          <button type="button" onClick={shuffle} className={pillGhost}>
-            Shuffle
-          </button>
-          <button type="button" onClick={reset} className={pillGhost}>
+    <Demo
+      caption="Remove a post and the rest slide to close the gap. Turn Animate layout off and they teleport, which is what layout changes do by default."
+      controls={
+        <>
+          <SwitchField label="Animate layout" checked={animated} onCheckedChange={setAnimated} />
+          <Button size="sm" variant="outline" disabled={!removed.length} onClick={add}>
+            Add
+          </Button>
+          <Button size="sm" variant="outline" onClick={() => setShown(INITIAL_ROWS)}>
             Reset
-          </button>
-        </div>
-        <div className="flex w-full flex-col gap-2">
-          <AnimatePresence mode="popLayout" initial={false}>
-            {items.map((item) => (
-              <motion.div
-                key={item}
-                layout={anim}
-                initial={anim ? { opacity: 0, scale: 0.9 } : false}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={anim ? { opacity: 0, scale: 0.9, transition: { duration: 0.15 } } : { opacity: 0, transition: { duration: 0 } }}
-                transition={anim ? springSnappy : { duration: 0 }}
-                className="flex items-center justify-between rounded-xl bg-muted/40 px-4 py-3"
-              >
-                <span className="text-sm font-medium text-foreground">{item}</span>
-                <button
-                  type="button"
-                  onClick={() => remove(item)}
-                  className="min-h-8 rounded-full px-2 text-xs text-muted-foreground transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  Remove
-                </button>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+          </Button>
+        </>
+      }
+      stage="items-start"
+    >
+      <div role="list" aria-label="Blog posts" className="flex w-full max-w-md flex-col gap-2">
+        <AnimatePresence mode="popLayout" initial={false}>
+          {rows.map((post) => (
+            <motion.div key={post.id} layout={live} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.96 }} transition={transition}>
+              <PostRow post={post} onRemove={() => setShown((s) => s.filter((id) => id !== post.id))} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
-    </DemoContainer>
+    </Demo>
   );
 };
 
-/* ─── 5. Progressive resistance: hard stop vs linear vs rubber band ─── */
-type Boundary = "hard" | "linear" | "rubber";
+/* ─── 5. Progressive resistance: pull-to-refresh on the blog list ─── */
+type Boundary = "hard" | "rubber";
 const MAX_PULL = 120;
 const HARD_LIMIT = 48;
 const THRESHOLD = 44;
 const HOLD = 52;
-
-/** iOS-style rubber band: the further you pull, the less each pixel moves the content. */
 const rubberBand = (d: number, c = MAX_PULL, k = 0.55) => c * (1 - 1 / ((d * k) / c + 1));
-const applyBoundary = (mode: Boundary, d: number) => (mode === "hard" ? Math.min(d, HARD_LIMIT) : mode === "linear" ? d * 0.35 : rubberBand(d));
 
 export const ProgressiveResistance = () => {
   const [mode, setMode] = useState<Boundary>("rubber");
-  const [pointer, setPointer] = useState(0);
-  const [rendered, setRendered] = useState(0);
-  const [phase, setPhase] = useState<"idle" | "pulling" | "loading">("idle");
+  const [phase, setPhase] = useState<"idle" | "armed" | "loading">("idle");
   const y = useMotionValue(0);
   const hintOpacity = useTransform(y, [0, THRESHOLD], [0, 1]);
-  const timer = useRef<number | undefined>(undefined);
+  const hintRotate = useTransform(y, [0, THRESHOLD], [0, 180]);
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(timer.current), []);
 
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-
-  const onPanStart = () => {
-    if (phase !== "loading") setPhase("pulling");
-  };
   const onPan = (_: unknown, info: PanInfo) => {
     if (phase === "loading") return;
     const d = Math.max(0, info.offset.y);
-    const r = applyBoundary(mode, d);
-    y.set(r);
-    setPointer(Math.round(d));
-    setRendered(Math.round(r));
+    const pulled = mode === "hard" ? Math.min(d, HARD_LIMIT) : rubberBand(d);
+    y.set(pulled);
+    setPhase(pulled >= THRESHOLD ? "armed" : "idle");
   };
   const onPanEnd = () => {
     if (phase === "loading") return;
     if (y.get() >= THRESHOLD) {
       setPhase("loading");
-      animate(y, HOLD, springSnappy);
-      timer.current = window.setTimeout(() => {
-        animate(y, 0, springSnappy);
+      animate(y, HOLD, spring);
+      timer.current = setTimeout(() => {
         setPhase("idle");
-        setPointer(0);
-        setRendered(0);
-      }, 1400);
-    } else {
-      setPhase("idle");
-      animate(y, 0, { type: "spring", stiffness: 400, damping: 30 });
-      setPointer(0);
-      setRendered(0);
+        animate(y, 0, spring);
+      }, 1000);
+      return;
     }
+    setPhase("idle");
+    animate(y, 0, spring);
   };
-
-  const hint = phase === "loading" ? "Refreshing…" : rendered >= THRESHOLD ? "Release to refresh" : "Pull to refresh";
-  const readout =
-    phase === "pulling"
-      ? `finger ${pointer} px → card ${rendered} px`
-      : mode === "rubber"
-        ? "Rubber band: every extra pixel of pull moves the card a little less"
-        : mode === "linear"
-          ? "Linear: a flat 35% whatever you do — feels numb"
-          : "Hard stop: 1:1, then a wall at 48 px — feels like hitting glass";
+  const hint = phase === "loading" ? "Refreshing…" : phase === "armed" ? "Release to refresh" : "Pull to refresh";
 
   return (
-    <DemoContainer caption="Pull the card down and let go — compare how each boundary feels" readout={readout}>
-      <div className="flex w-full max-w-xs flex-col items-center gap-5">
-        <Segmented
-          label="Boundary behaviour"
-          value={mode}
-          onChange={(v) => setMode(v)}
-          options={[
-            { value: "hard", label: "Hard stop" },
-            { value: "linear", label: "Linear" },
-            { value: "rubber", label: "Rubber band" },
-          ]}
-        />
-        <div className="relative flex w-full select-none flex-col items-center pb-16 pt-7">
-          <motion.div style={{ opacity: hintOpacity }} className="absolute top-0 font-mono text-[11px] text-primary" aria-hidden>
-            {hint}
-          </motion.div>
-          <motion.div
-            className={`flex h-28 w-full select-none items-center justify-center rounded-2xl border border-border bg-card shadow-lg ${
-              phase === "pulling" ? "cursor-grabbing" : "cursor-grab"
-            }`}
-            style={{ y, touchAction: "pan-x" }}
-            onPanStart={onPanStart}
-            onPan={onPan}
-            onPanEnd={onPanEnd}
-          >
-            <span className="font-mono text-xs text-muted-foreground">{phase === "loading" ? "Holding while loading…" : "Drag down ↓"}</span>
-          </motion.div>
-        </div>
-      </div>
-    </DemoContainer>
-  );
-};
-
-/* ─── 6. Staggered cascade vs all at once ─── */
-const CARD_COUNT = 9;
-
-export const StaggeredGrid = () => {
-  const reduced = useReducedMotion();
-  const [mode, setMode] = useState<"stagger" | "once">("stagger");
-  const [gap, setGap] = useState(60);
-  const [run, setRun] = useState(0);
-  const staggered = mode === "stagger";
-
-  const readout = staggered
-    ? `${CARD_COUNT} cards × ${gap} ms → the last one starts after ${(CARD_COUNT - 1) * gap} ms`
-    : `${CARD_COUNT} cards start on the same frame — a wall, not a sequence`;
-
-  return (
-    <DemoContainer caption="Replay the cascade, then compare it with everything arriving at once" readout={readout}>
-      <div className="flex w-full flex-col items-center gap-5">
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <button type="button" onClick={() => setRun((k) => k + 1)} className={pillPrimary}>
-            Replay
-          </button>
-          <Segmented
-            label="Timing"
-            value={mode}
-            onChange={(v) => setMode(v)}
-            options={[
-              { value: "stagger", label: "Staggered" },
-              { value: "once", label: "All at once" },
-            ]}
-          />
-        </div>
+    <Demo
+      caption="Pull the list down. A hard stop ends dead at the edge; a rubber band gives less for every extra pixel, so you feel the limit before you reach it."
+      controls={
+        <ToggleGroup type="single" size="sm" variant="outline" aria-label="Boundary behaviour" value={mode} onValueChange={(v) => v && setMode(v as Boundary)}>
+          <ToggleGroupItem value="hard">Hard stop</ToggleGroupItem>
+          <ToggleGroupItem value="rubber">Rubber band</ToggleGroupItem>
+        </ToggleGroup>
+      }
+    >
+      <div className="relative w-full max-w-md overflow-hidden rounded-xl border border-border bg-background">
+        <motion.div style={{ opacity: hintOpacity }} className="absolute inset-x-0 top-0 flex h-12 items-center justify-center gap-2 font-mono text-xs text-muted-foreground">
+          {phase === "loading" ? (
+            <RefreshCw className="h-4 w-4 animate-spin" aria-hidden="true" />
+          ) : (
+            <motion.span style={{ rotate: hintRotate }} className="flex">
+              <RefreshCw className="h-4 w-4" aria-hidden="true" />
+            </motion.span>
+          )}
+          {hint}
+        </motion.div>
         <motion.div
-          key={run}
-          className="grid grid-cols-3 gap-3"
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: staggered ? gap / 1000 : 0 } } }}
+          role="list"
+          aria-label="Blog posts"
+          style={{ y }}
+          onPan={onPan}
+          onPanEnd={onPanEnd}
+          className="relative flex cursor-grab touch-none select-none flex-col gap-2 bg-background p-2 active:cursor-grabbing"
         >
-          {Array.from({ length: CARD_COUNT }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="flex h-16 w-16 items-center justify-center rounded-xl bg-primary/20 font-mono text-sm font-bold text-primary md:h-20 md:w-20"
-              variants={{
-                hidden: reduced ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.85 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  transition: reduced ? { duration: 0.15 } : { type: "spring", stiffness: 340, damping: 22 },
-                },
-              }}
-            >
-              {i + 1}
-            </motion.div>
+          {POSTS.slice(0, 3).map((post) => (
+            <PostRow key={post.id} post={post} />
           ))}
         </motion.div>
-        <div className="w-full max-w-xs">
-          <Slider label="stagger" value={gap} min={0} max={150} step={10} onChange={setGap} disabled={!staggered} format={(v) => `${v} ms`} />
-        </div>
       </div>
-    </DemoContainer>
+    </Demo>
   );
 };
 
-/* ─── 7. Reduced motion: the same state change, two treatments ─── */
+/* ─── 6. Choreography: /work cards arriving in order ─── */
+export const StaggeredGrid = () => {
+  const [stagger, setStagger] = useState(true);
+  const [run, setRun] = useState(0);
+  const reduced = useReducedMotion();
+  const [gridRef, seen] = useInViewOnce();
+  return (
+    <Demo
+      caption="Four work cards entering together. With Stagger on, each follows the last by 80 ms, so the eye reads an order instead of a flash."
+      controls={
+        <>
+          <SwitchField label="Stagger" checked={stagger} onCheckedChange={setStagger} />
+          <Button size="sm" onClick={() => setRun((r) => r + 1)}>
+            Replay
+          </Button>
+        </>
+      }
+    >
+      <div key={run} ref={gridRef} className="grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
+        {WORK.map((project, i) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: reduced ? 0 : 20 }}
+            animate={seen ? { opacity: 1, y: 0 } : { opacity: 0, y: reduced ? 0 : 20 }}
+            transition={{ ...spring, delay: stagger ? i * 0.08 : 0 }}
+          >
+            <WorkCard project={project} compact />
+          </motion.div>
+        ))}
+      </div>
+    </Demo>
+  );
+};
+
+/* ─── 7. Motion preferences: a /blog card entering, slide vs fade ─── */
 export const ReducedMotionDemo = () => {
   const system = useReducedMotion();
-  const [mode, setMode] = useState<"full" | "reduced">(system ? "reduced" : "full");
+  const [reduced, setReduced] = useState(Boolean(system));
   const [run, setRun] = useState(0);
-  const reduced = mode === "reduced";
-
-  useEffect(() => {
-    setMode(system ? "reduced" : "full");
-  }, [system]);
-
+  useEffect(() => setReduced(Boolean(system)), [system]);
+  const [cardRef, seen] = useInViewOnce();
+  const hidden = reduced ? { opacity: 0 } : { opacity: 0, y: 48, scale: 0.96 };
   return (
-    <DemoContainer
-      caption="One state change, two treatments — reduced motion swaps movement for a fade"
-      readout={`Your system: prefers-reduced-motion ${system ? "reduce" : "no-preference"} · showing ${reduced ? "reduced" : "full"} motion`}
-    >
-      <div className="flex w-full max-w-sm flex-col items-center gap-5">
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <button type="button" onClick={() => setRun((k) => k + 1)} className={pillPrimary}>
+    <Demo
+      caption="The card's entrance. With Reduced motion on, the slide and scale become a plain fade: the content still arrives, without the travel. The switch starts on your system setting."
+      controls={
+        <>
+          <SwitchField label="Reduced motion" checked={reduced} onCheckedChange={setReduced} />
+          <Button size="sm" onClick={() => setRun((r) => r + 1)}>
             Replay
-          </button>
-          <Segmented
-            label="Motion treatment"
-            value={mode}
-            onChange={(v) => setMode(v)}
-            options={[
-              { value: "full", label: "Full motion" },
-              { value: "reduced", label: "Reduced" },
-            ]}
-          />
-        </div>
-        <div className="flex h-24 w-full items-center justify-center overflow-hidden">
-          <motion.div
-            key={`${run}-${mode}`}
-            role="status"
-            initial={reduced ? { opacity: 0 } : { opacity: 0, x: 96, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={reduced ? { duration: 0.18 } : { type: "spring", stiffness: 300, damping: 26 }}
-            className="flex w-full items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-lg"
-          >
-            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden />
-            <div className="min-w-0">
-              <div className="text-sm font-semibold text-foreground">Changes saved</div>
-              <div className="truncate font-mono text-[11px] text-muted-foreground">
-                {reduced ? "Fades in place — same meaning, no travel" : "Slides in from the right with a spring"}
-              </div>
-            </div>
-          </motion.div>
-        </div>
+          </Button>
+        </>
+      }
+    >
+      <div ref={cardRef} className="w-full max-w-xs">
+        <motion.div
+          key={`${run}-${reduced}`}
+          initial={hidden}
+          animate={seen ? { opacity: 1, y: 0, scale: 1 } : hidden}
+          transition={reduced ? { duration: 0.3, ease: "easeOut" } : bouncy}
+        >
+          <BlogCard post={POSTS[0]} />
+        </motion.div>
       </div>
-    </DemoContainer>
+    </Demo>
   );
 };
