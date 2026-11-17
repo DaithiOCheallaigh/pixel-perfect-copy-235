@@ -30,7 +30,7 @@ describe("Fluid-interfaces demos", () => {
     expect(screen.getByRole("button", { name: "Show bar" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Toggle both" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Bring it back" })).toBeTruthy();
-    expect(screen.getByRole("radiogroup", { name: "Boundary behaviour" })).toBeTruthy();
+    expect(screen.getByLabelText("Boundary behaviour")).toBeTruthy();
     expect(screen.getAllByRole("button", { name: "Replay" })).toHaveLength(2);
     expect(screen.getByRole("switch", { name: "Stagger" })).toBeTruthy();
     expect(screen.getByRole("switch", { name: "Reduced motion" })).toBeTruthy();
@@ -71,7 +71,7 @@ describe("Fluid-interfaces demos", () => {
 
   it("switches the boundary behaviour", () => {
     render(<ProgressiveResistance />);
-    const group = screen.getByRole("radiogroup", { name: "Boundary behaviour" });
+    const group = screen.getByLabelText("Boundary behaviour");
     expect(within(group).getByRole("radio", { name: "Rubber band" }).getAttribute("aria-checked")).toBe("true");
     fireEvent.click(within(group).getByRole("radio", { name: "Hard stop" }));
     expect(within(group).getByRole("radio", { name: "Hard stop" }).getAttribute("aria-checked")).toBe("true");
