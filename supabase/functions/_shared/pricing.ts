@@ -5,7 +5,7 @@ export const VAT_REGISTERED = true; // flip to false if not VAT-registered
 export const YEARS_EXPERIENCE = "over 10";
 export const CALENDLY_URL = "https://calendly.com/lacunaconsulting-info/30min";
 export const CONTACT_EMAIL = "info@lacunaconsulting.com";
-export const availability = { headline: "Now booking new projects", nextStart: "November 2026", productStudioFrom: "November 2026" };
+export const availability = { headline: "Now booking new projects", nextStart: "December 2026", productStudioFrom: "December 2026" };
 export type Pkg = { id: string; name: string; price?: number; priceFrom?: number; live: string; selfServe?: boolean; monthly?: number; incVatHeadline?: number; popular?: boolean; addOn?: boolean; scope?: string[] };
 export const entry = {
   introCall: { name: "Free intro call + fixed written quote", price: 0, quoteWithin: "48 hours" },

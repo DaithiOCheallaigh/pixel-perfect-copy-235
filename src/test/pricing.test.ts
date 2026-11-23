@@ -118,9 +118,9 @@ describe("pricing catalogue", () => {
     expect(terms.oneDiscountPerOrder).toBe(true);
     expect(terms.referral).toBe(100);
   });
-  it("starts new projects and product studio in November 2026", () => {
-    expect(availability.nextStart).toBe("November 2026");
-    expect(availability.productStudioFrom).toBe("November 2026");
+  it("starts new projects and product studio in December 2026", () => {
+    expect(availability.nextStart).toBe("December 2026");
+    expect(availability.productStudioFrom).toBe("December 2026");
   });
 });
 import { priceLabel as refreshPriceLabel, refresh } from "@/data/pricing";
