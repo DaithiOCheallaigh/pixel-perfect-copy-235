@@ -26,7 +26,7 @@ const Sitemap = () => {
 
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
-      <SEO title="Sitemap" description="Every page on Dave Kelly's product design portfolio in one place: the home page, work, about, skills, AI design process, case studies." />
+      <SEO title="Sitemap" description="Every page on Dave Kelly's product design portfolio in one place: the home page, work, about, skills, AI design process and case studies." />
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Sitemap</h1>
         <p className="text-muted-foreground mb-12 text-sm">All pages on lacunadigital.io</p>
