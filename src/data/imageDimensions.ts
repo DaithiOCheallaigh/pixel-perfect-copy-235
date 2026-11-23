@@ -17,6 +17,7 @@ export const imageDimensions: Record<string, [number, number]> = {
   "/images/ai-design-process-poster.webp": [1600, 831],
   "/images/arch-tip-direct.webp": [1600, 1017],
   "/images/blog/2026-new-norm-designers.webp": [1600, 939],
+  "/images/blog/2027-ai-will-not-eliminate-designers.webp": [1600, 900],
   "/images/blog/benefits-digital-agency.webp": [1600, 1057],
   "/images/blog/design-trends-2025.webp": [799, 474],
   "/images/blog/fluid-interfaces.jpg": [1600, 1122],

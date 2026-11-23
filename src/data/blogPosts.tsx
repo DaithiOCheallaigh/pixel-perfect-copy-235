@@ -33,6 +33,80 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "2027-ai-will-not-eliminate-designers",
+    title: "2027: AI Will Not Eliminate Designers. It Will Redefine What Makes a Great One",
+    date: "November 23, 2026",
+    dateISO: "2026-11-23",
+    readTime: "6 min read",
+    image: "/images/blog/2027-ai-will-not-eliminate-designers.webp",
+    excerpt: "AI is changing the economics of screen production and moving the value of design further upstream. Why the designers who thrive in 2027 will be strategic, AI-fluent problem solvers rather than the fastest screen-makers.",
+    audio: { src: "/audio/blog/2027-ai-will-not-eliminate-designers.mp3", durationSeconds: 424, wordTimings: "/audio/blog/2027-ai-will-not-eliminate-designers.words.json" },
+    content: (
+      <>
+        <p>I think we're approaching a significant turning point in the design industry.</p>
+        <p>For years, much of the value of a UI/UX designer has been associated with their ability to turn ideas into tangible interfaces: wireframes, user journeys, prototypes, polished screens, component libraries and design systems.</p>
+        <p>But AI is rapidly changing the economics of that work.</p>
+        <p>What once took days can increasingly be accomplished in hours. Prototypes can be generated from prompts. Interfaces can be translated into functional code. Design systems can be explored, extended and implemented with AI assistance. Research can be synthesised, content generated and multiple design directions explored at a speed that would have been difficult to imagine just a few years ago.</p>
+        <p>This doesn't mean design is becoming less important. Quite the opposite.</p>
+        <p>It means the value of design is moving further upstream.</p>
+
+        <h2>A divide within the profession</h2>
+        <p>I believe 2027 will accelerate a divide within the profession.</p>
+        <p>On one side, we'll see designers who remain primarily focused on screen production. People whose value is largely measured by how quickly they can produce layouts, assemble components, recreate interfaces and deliver polished UI.</p>
+        <p>On the other, we'll see a new generation of strategic, AI-fluent problem solvers.</p>
+        <p>Designers who understand the problem before reaching for the solution. Who can challenge assumptions, understand business objectives, identify user needs, navigate complexity and translate all of that into a coherent product experience.</p>
+        <p>These designers won't simply use AI to produce more screens. They'll use it to rethink how products are conceived, designed, tested and built.</p>
+        <p>They'll move comfortably between product strategy, UX research, information architecture, interaction design, prototyping and increasingly, implementation.</p>
+        <p>And importantly, they'll know when not to use AI.</p>
+        <p>Because having access to powerful tools doesn't automatically mean having good judgement. AI can generate hundreds of possible solutions, but it still takes human understanding to determine which problem is worth solving, which solution makes sense and whether the resulting experience is actually any good.</p>
+
+        <h2>The shift is already happening</h2>
+        <p>There is evidence to support this direction.</p>
+        <p>The World Economic Forum's Future of Jobs Report 2025 identifies analytical thinking as the most important core skill for employers, with creative thinking, technological literacy, curiosity and systems thinking also featuring prominently. AI and big data are among the fastest-growing skills expected through to 2030.</p>
+        <p>Adobe's 2026 research into creative work also points towards a redistribution of creative responsibilities rather than straightforward replacement. Its research highlights how AI is changing workflows, accelerating production and shifting the emphasis towards directing, evaluating and taking ownership of creative output.</p>
+        <p>And McKinsey's 2025 State of AI research highlights an important distinction: while AI adoption is widespread, most organisations are still struggling to scale it and translate experimentation into meaningful enterprise-wide value.</p>
+        <p>In other words, having AI tools isn't the competitive advantage. Knowing how to integrate them into meaningful work is.</p>
+
+        <h2>So what does this mean for designers?</h2>
+        <p>I think the most valuable designers over the next few years will develop a broader skill set:</p>
+        <ul>
+          <li><strong>Product thinking:</strong> Understanding the business, the customer, the opportunity and the problem we're actually trying to solve.</li>
+          <li><strong>Strategic UX:</strong> Moving beyond individual screens to understand journeys, behaviours, workflows, systems and the wider product ecosystem.</li>
+          <li><strong>AI fluency:</strong> Knowing how to use AI tools, agents and workflows to accelerate thinking, exploration, prototyping and implementation.</li>
+          <li><strong>Technical understanding:</strong> Becoming more comfortable with code, architecture, APIs, constraints and the realities of getting products into production.</li>
+          <li><strong>Creative direction:</strong> Knowing how to evaluate, challenge and refine AI-generated output rather than accepting the first plausible result.</li>
+          <li><strong>Systems thinking:</strong> Understanding how individual interactions, components, data, states and experiences connect to form a coherent product.</li>
+        </ul>
+        <p>None of this means visual craft, interaction design or attention to detail become irrelevant. They remain essential. But they become part of a much broader capability rather than the entirety of the role.</p>
+
+        <h2>The uncomfortable reality</h2>
+        <p>The industry may not need the same volume of people performing the same production tasks as it once did.</p>
+        <p>The barrier to creating something that looks like a finished product is getting lower. More people can generate convincing interfaces, prototypes and concepts without having spent years mastering traditional design tools.</p>
+        <p>That creates an interesting challenge for designers.</p>
+        <p>If your primary differentiator is knowing how to use Figma, produce polished screens or assemble a component library, what happens when those activities become increasingly automated?</p>
+        <p>The answer isn't to resist the technology or try to compete with it on production speed.</p>
+        <p>It's to develop the capabilities that make the output meaningful in the first place.</p>
+        <p>To become better at understanding people, asking better questions, framing problems, making decisions and connecting design to measurable outcomes.</p>
+
+        <h2>My prediction for 2027</h2>
+        <p>I don't think the future belongs to designers who can generate the most interfaces, produce the most prototypes or master the latest AI tool.</p>
+        <p>It belongs to those who can combine human judgement, design thinking, product understanding and AI to solve problems that matter.</p>
+        <p>The best designers will increasingly look less like traditional screen-makers and more like product thinkers, creative technologists and strategic problem solvers.</p>
+        <p>AI won't remove the need for design. It will expose the difference between producing design and actually knowing how to design.</p>
+        <p>And I suspect that distinction will become one of the defining characteristics of our industry in 2027.</p>
+
+        <h2>Research and sources</h2>
+        <p>These are the reports underpinning the argument.</p>
+        <ul>
+          <li><a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Future of Jobs Report 2025</a> (World Economic Forum). Analytical thinking is considered essential by 69% of employers, creative thinking by 57%, and AI and big data are among the fastest-growing skills.</li>
+          <li><a href="https://www.adobe.com/ai/research/202606/ai-is-redistributing-creative-work.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">How AI is Redistributing Creative Work</a> (Adobe, 2026). Research into how AI is changing creative workflows, hiring expectations and the balance between production and creative direction.</li>
+          <li><a href="https://www.adobe.com/ai/research/202606/how-creatives-are-thinking-about-ai.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">How Creatives Are Thinking About AI</a> (Adobe, 2026). A survey of nearly 2,000 creative professionals across the US, UK and Japan, exploring AI adoption and the future of creative work.</li>
+          <li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">The State of AI in 2025</a> (McKinsey). Explores the gap between AI experimentation and organisations successfully integrating AI into their operations.</li>
+        </ul>
+      </>
+    ),
+  },
+  {
     id: "8-principles-fluid-interfaces",
     title: "8 Principles for Crafting Fluid Interfaces",
     date: "March 20, 2026",
