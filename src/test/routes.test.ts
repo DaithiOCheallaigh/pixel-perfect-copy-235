@@ -85,3 +85,15 @@ describe("route table", () => {
     expect(leaf(url).id).toBe(id);
   });
 });
+
+describe("blog layout", () => {
+  it.each(["/blog", "/blog/8-principles-fluid-interfaces"])("%s renders under blog-layout", (url) => {
+    const m = matchRoutes(routes, url) ?? [];
+    expect(m.length).toBe(2);
+    expect((m[0].route as unknown as RouteDef).id).toBe("blog-layout");
+  });
+  it("no portfolio-layout child is a blog path", () => {
+    const p = routeTable.find((r) => r.id === "portfolio-layout")!;
+    for (const c of p.children ?? []) expect(c.path?.startsWith("/blog") ?? false).toBe(false);
+  });
+});

@@ -12,6 +12,7 @@ Websites for Irish small businesses, designed and built by a senior product desi
 - [Salons & Barbers](https://www.lacunadigital.io/services/salons-barbers)
 - [Tours & Experiences](https://www.lacunadigital.io/services/tours-experiences)
 - [Web Design](https://www.lacunadigital.io/services/web-design)
+- [Blog](https://www.lacunadigital.io/blog)
 - [Refer](https://www.lacunadigital.io/services/refer)
 - [Terms](https://www.lacunadigital.io/services/terms)
 - [Get Started](https://www.lacunadigital.io/services/get-started)

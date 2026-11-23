@@ -14,7 +14,6 @@ const Navigation = ({ visible }: { visible: boolean }) => {
     { label: "Skills", to: "/skills" },
     { label: "AI Process", to: "/ai-design-process" },
     { label: "About", to: "/about" },
-    { label: "Blog", to: "/blog" },
   ];
 
   const isActive = (path: string) => location.pathname === path;

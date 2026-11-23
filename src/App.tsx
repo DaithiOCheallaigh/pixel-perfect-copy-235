@@ -138,6 +138,7 @@ const elements: Record<string, ReactNode> = {
   "bio-page": <BioPage />,
   "bio-unknown": <BioPage />,
   "services-layout": <ServicesLayout />,
+  "blog-layout": <ServicesLayout />,
   "services-home": <Services />,
   "product-studio": <ProductStudio />,
   "web-design": <WebDesignServices />,

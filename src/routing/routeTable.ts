@@ -39,6 +39,12 @@ export const routeTable: RouteDef[] = [
     { id: "services-not-found", path: "*" },
   ]},
 
+  // BLOG: Lacuna Digital writing, served with the services chrome at its original URLs
+  { id: "blog-layout", children: [
+    { id: "blog", path: "/blog" },
+    { id: "blog-post", path: "/blog/:id" },
+  ]},
+
   // LEGACY -> SERVICES (permanent). Each points straight at its final URL.
   { id: "legacy-product-studio", path: "/product-studio", redirectTo: "/services/product-studio" },
   { id: "legacy-ai-integration", path: "/ai-integration", redirectTo: "/services/product-studio" },
@@ -81,8 +87,6 @@ export const routeTable: RouteDef[] = [
     { id: "marsh-design-system", path: "/work/marsh-design-system" },
     { id: "about", path: "/about" },
     { id: "skills", path: "/skills" },
-    { id: "blog", path: "/blog" },
-    { id: "blog-post", path: "/blog/:id" },
     { id: "ai-design-process", path: "/ai-design-process" },
     { id: "sitemap", path: "/sitemap" },
     { id: "not-found", path: "*" },

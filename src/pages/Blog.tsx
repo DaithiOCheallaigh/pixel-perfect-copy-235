@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { imgDims } from "@/data/imageDimensions";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import HiringCTA from "../components/HiringCTA";
+import AvailabilityCTA from "../components/AvailabilityCTA";
 import { ShineBorder } from "../components/ui/shine-border";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
@@ -48,7 +48,7 @@ const Blog = () => (
     </section>
 
     <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-    <HiringCTA />
+    <AvailabilityCTA />
   </main>
 );
 

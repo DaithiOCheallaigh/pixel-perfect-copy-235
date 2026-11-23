@@ -23,7 +23,6 @@ export function buildPortfolioLlms() {
 - [About](${BASE_URL}/about)
 - [Skills](${BASE_URL}/skills)
 - [AI Design Process](${BASE_URL}/ai-design-process)
-- [Blog](${BASE_URL}/blog)
 - [CV (PDF)](${BASE_URL}${CV_URL})
 
 ## Case studies
@@ -50,6 +49,7 @@ Websites for Irish small businesses, designed and built by a senior product desi
 - [Services](${BASE_URL}/services)
 ${Object.values(segments).map(s => `- [${s.title}](${BASE_URL}/services/${s.slug})`).join("\n")}
 - [Web Design](${BASE_URL}/services/web-design)
+- [Blog](${BASE_URL}/blog)
 - [Refer](${BASE_URL}/services/refer)
 - [Terms](${BASE_URL}/services/terms)
 - [Get Started](${BASE_URL}/services/get-started)

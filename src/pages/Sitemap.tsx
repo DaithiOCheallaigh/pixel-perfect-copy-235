@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { SEO } from "@/components/SEO";
-import { blogPosts } from "@/data/blogPosts";
 import { projects } from "@/data/projects";
 
 const sectionClass = "mb-10";
@@ -12,7 +11,6 @@ const corePages = [
   { path: "/work", label: "Work" },
   { path: "/about", label: "About" },
   { path: "/skills", label: "Skills" },
-  { path: "/blog", label: "Blog" },
   { path: "/ai-design-process", label: "AI Design Process" },
   { path: "/sitemap", label: "Sitemap" },
 ];
@@ -28,7 +26,7 @@ const Sitemap = () => {
 
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
-      <SEO title="Sitemap" description="Every page on Dave Kelly's product design portfolio in one place: the home page, work, about, skills, AI design process, case studies and all blog posts." />
+      <SEO title="Sitemap" description="Every page on Dave Kelly's product design portfolio in one place: the home page, work, about, skills, AI design process, case studies." />
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Sitemap</h1>
         <p className="text-muted-foreground mb-12 text-sm">All pages on lacunadigital.io</p>
@@ -51,16 +49,6 @@ const Sitemap = () => {
                 <li key={p.id}><Link to={path} className={linkClass}>{p.title}</Link></li>
               );
             })}
-          </ul>
-        </div>
-
-
-        <div className={sectionClass}>
-          <h2 className={headingClass}>Blog</h2>
-          <ul className="space-y-2">
-            {blogPosts.map((post) => (
-              <li key={post.id}><Link to={`/blog/${post.id}`} className={linkClass}>{post.title}</Link></li>
-            ))}
           </ul>
         </div>
       </div>

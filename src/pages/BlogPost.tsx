@@ -8,7 +8,7 @@ import { ReadAlongContent, ReadAlongText, parseActiveWord } from "@/components/b
 import { motion } from "framer-motion";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionLabel from "../components/SectionLabel";
-import HiringCTA from "../components/HiringCTA";
+import AvailabilityCTA from "../components/AvailabilityCTA";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
 import { fitDescription } from "@/lib/seoDescription";
@@ -232,7 +232,7 @@ const BlogPost = () => {
       </nav>
 
       <hr className="swiss-hr mx-6 md:mx-12 lg:mx-24" />
-      <HiringCTA />
+      <AvailabilityCTA />
       {post.audio && (
         <>
           {player.audioElement}

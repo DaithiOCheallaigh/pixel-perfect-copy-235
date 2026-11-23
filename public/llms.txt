@@ -9,7 +9,6 @@
 - [About](https://www.lacunadigital.io/about)
 - [Skills](https://www.lacunadigital.io/skills)
 - [AI Design Process](https://www.lacunadigital.io/ai-design-process)
-- [Blog](https://www.lacunadigital.io/blog)
 - [CV (PDF)](https://www.lacunadigital.io/docs/DavidKelly_CV_2026.pdf)
 
 ## Case studies

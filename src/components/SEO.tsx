@@ -32,7 +32,7 @@ export function SEO({
       .querySelectorAll('meta[name="description"]:not([data-rh]), meta[name="robots"]:not([data-rh]), meta[property^="og:"]:not([data-rh]), meta[name^="twitter:"]:not([data-rh]), link[rel="canonical"][data-shell], script[type="application/ld+json"][data-shell]')
       .forEach(tag => tag.remove());
   }, []);
-  const isServices = pathname === '/services' || pathname.startsWith('/services/');
+  const isServices = pathname === '/services' || pathname.startsWith('/services/') || pathname === '/blog' || pathname.startsWith('/blog/');
   const fullTitle = isServices ? `${title} | Lacuna Digital` : title === 'Home' ? 'Dave Kelly — Senior Product Designer' : `${title} | Dave Kelly`;
   const siteName = isServices ? 'Lacuna Digital' : 'Dave Kelly';
   const shareImage = image ?? `${BASE_URL}/${isServices ? 'og-default.png' : 'og-portfolio.png'}`;
