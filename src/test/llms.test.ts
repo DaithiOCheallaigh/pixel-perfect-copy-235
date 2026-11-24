@@ -31,5 +31,7 @@ describe("split AI discovery documents", () => {
     const out = buildServicesLlms();
     expect(out).not.toContain("MATESRATES");
     expect(out).not.toContain("Mates rates");
+    expect(out).not.toContain("LACUNA10");
+    expect(out).not.toContain("Welcome offer");
   });
 });

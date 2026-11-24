@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { discountAmount, selectionTotalsWithDiscount, selectionSummary, selectionTotals, selectionPrice, selectionItems } from "@/data/serviceEstimates";
+import { discountAmount, discountBreakdown, selectionTotalsWithDiscount, selectionSummary, selectionTotals, selectionPrice, selectionItems } from "@/data/serviceEstimates";
 import { BUDGET_OPTIONS, INDUSTRIES } from "@/data/projectIntake";
 import { CONTENT_PAUSE_WORKING_DAYS, REVISION_WINDOW_WORKING_DAYS } from "@/data/workingTerms";
 import { addOns, aftercare, terms } from "@/data/pricing";
@@ -73,5 +73,30 @@ describe("website refresh selection", () => {
     expect(s).toContain("- Discount code MATESRATES (Mates rates 15% + Growth bonus 10% = 25% off website packages): −€625");
     expect(s).toContain("One-off setup: €1,875 + VAT (was €2,500 + VAT)");
     expect(s).toContain("Monthly: €200/mo + VAT");
+  });
+});
+
+describe("welcome offer code (LACUNA10)", () => {
+  it("takes 10% off website one-off prices and care-plan monthly fees, with no care-plan bonus", () => {
+    expect(discountAmount([{ id: "business" }, { id: "growth" }], "lacuna10")).toBe(250);
+    expect(discountBreakdown([{ id: "business" }, { id: "growth" }], "LACUNA10")).toMatchObject({ appliesTo: "all", percent: 10, bonusPercent: 0, amount: 250, careMonthly: 200, monthlyAmount: 20 });
+    expect(discountBreakdown([{ id: "business" }, { id: "growth" }], "LACUNA10").bonusPlan).toBeUndefined();
+    expect(selectionTotalsWithDiscount([{ id: "business" }, { id: "growth" }], " Lacuna10 ")).toEqual({ oneOff: 2250, monthly: 180, discount: 250, monthlyDiscount: 20, discountPercent: 10, discountLabel: "Welcome offer", bonusPercent: 0 });
+  });
+  it("discounts a care plan on its own, rounded to the euro", () => {
+    expect(selectionTotalsWithDiscount([{ id: "care" }], "LACUNA10")).toEqual({ oneOff: 0, monthly: 58, discount: 0, monthlyDiscount: 7, discountPercent: 10, discountLabel: "Welcome offer", bonusPercent: 0 });
+  });
+  it("still leaves care plans alone for MATESRATES", () => {
+    const t = selectionTotalsWithDiscount([{ id: "business" }, { id: "growth" }], "MATESRATES");
+    expect(t.monthly).toBe(200);
+    expect(t).not.toHaveProperty("monthlyDiscount");
+  });
+  it("writes both savings and both was-prices into the brief summary", () => {
+    const s = selectionSummary([{ id: "business" }, { id: "growth" }], "LACUNA10");
+    expect(s).toContain("- Discount code LACUNA10 (Welcome offer, 10% off website packages and care plans for the length of your contract): −€250 setup, −€20/mo");
+    expect(s).toContain("One-off setup: €2,250 + VAT (was €2,500 + VAT)");
+    expect(s).toContain("Monthly: €180/mo + VAT (was €200/mo + VAT)");
+    expect(selectionSummary([{ id: "launch" }, { id: "self-managed" }], "LACUNA10")).toContain("for the length of your contract): −€75\nOne-off setup: €675 + VAT (was €750 + VAT)");
+    expect(selectionSummary([{ id: "growth" }], "LACUNA10")).toContain("): −€20/mo\nOne-off setup: €0 + VAT\nMonthly: €180/mo + VAT (was €200/mo + VAT)");
   });
 });

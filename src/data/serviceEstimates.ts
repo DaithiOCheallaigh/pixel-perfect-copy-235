@@ -1,4 +1,4 @@
-import { aftercare, aftercareBonusPercent, businessOptions, carePlans, eur, findDiscountCode, type DiscountCode, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
+import { aftercare, aftercareBonusPercent, businessOptions, carePlans, eur, findDiscountCode, type DiscountCode, type DiscountScope, priceLabel, refresh, tiers, VAT_REGISTERED } from "./pricing";
 
 /** Setup and recurring fees are separate; optional website instalments are not added to setup. */
 export type Fee = { oneOff: number; monthly: number };
@@ -35,28 +35,54 @@ export function selectionPrice(selections: readonly { id: string }[]) {
   return `from ${eur(totals.oneOff)}${totals.monthly ? ` + ${eur(totals.monthly)}/mo` : ""}${VAT_REGISTERED ? " + VAT" : ""}`;
 }
 
-/** Enquiry-page discount: code % plus care-plan bonus % (additive), off website (tier) one-off prices only, rounded to the euro. */
-export function discountBreakdown(selections: readonly { id: string }[], code?: string | null): { code?: DiscountCode; basePercent: number; bonusPercent: number; bonusPlan?: string; percent: number; websiteOneOff: number; amount: number } {
+export type DiscountBreakdown = {
+  code?: DiscountCode;
+  /** Scope of the applied code ("website" when no code is applied). */
+  appliesTo: DiscountScope;
+  basePercent: number;
+  bonusPercent: number;
+  bonusPlan?: string;
+  percent: number;
+  websiteOneOff: number;
+  /** One-off (setup) discount in euro. */
+  amount: number;
+  careMonthly: number;
+  /** Monthly care-plan discount in euro; only "all" codes discount care plans. */
+  monthlyAmount: number;
+};
+
+/**
+ * Enquiry-page discount, rounded to the euro.
+ * Website-only codes: code % plus care-plan bonus % (additive) off website (tier) one-off prices only.
+ * "all" codes (the welcome offer): code % off website one-off prices AND care-plan monthly fees, with no care-plan bonus.
+ */
+export function discountBreakdown(selections: readonly { id: string }[], code?: string | null): DiscountBreakdown {
   const d = findDiscountCode(code);
   const items = selectionItems(selections);
   const websiteOneOff = items.filter((s) => s.kind === "tier").reduce((t, s) => t + s.oneOff, 0);
-  const plan = d ? carePlans.find((c) => items.some((s) => s.id === c.id) && aftercareBonusPercent[c.id]) : undefined;
+  const careMonthly = items.filter((s) => s.kind === "care").reduce((t, s) => t + s.monthly, 0);
+  const appliesTo: DiscountScope = d?.appliesTo ?? "website";
+  const plan = d && appliesTo === "website" ? carePlans.find((c) => items.some((s) => s.id === c.id) && aftercareBonusPercent[c.id]) : undefined;
   const basePercent = d?.percent ?? 0;
   const bonusPercent = plan ? aftercareBonusPercent[plan.id] : 0;
   const percent = basePercent + bonusPercent;
   const amount = d && websiteOneOff ? Math.round((websiteOneOff * percent) / 100) : 0;
-  return { ...(d ? { code: d } : {}), basePercent, bonusPercent, ...(plan ? { bonusPlan: plan.name } : {}), percent, websiteOneOff, amount };
+  const monthlyAmount = d && appliesTo === "all" && careMonthly ? Math.round((careMonthly * percent) / 100) : 0;
+  return { ...(d ? { code: d } : {}), appliesTo, basePercent, bonusPercent, ...(plan ? { bonusPlan: plan.name } : {}), percent, websiteOneOff, amount, careMonthly, monthlyAmount };
 }
 
 export const discountAmount = (selections: readonly { id: string }[], code?: string | null): number => discountBreakdown(selections, code).amount;
+/** Monthly care-plan discount; 0 for website-only codes. */
+export const monthlyDiscountAmount = (selections: readonly { id: string }[], code?: string | null): number => discountBreakdown(selections, code).monthlyAmount;
 
 export function selectionTotalsWithDiscount(selections: readonly { id: string }[], code?: string | null) {
   const totals = selectionTotals(selections);
   const b = discountBreakdown(selections, code);
-  const amount = b.amount;
+  const applied = Boolean(b.code) && (b.amount > 0 || b.monthlyAmount > 0);
   return {
-    oneOff: totals.oneOff - amount, monthly: totals.monthly, discount: amount,
-    ...(amount > 0 && b.code ? { discountPercent: b.percent, discountLabel: b.code.label, bonusPercent: b.bonusPercent, ...(b.bonusPlan ? { bonusPlan: b.bonusPlan } : {}) } : {}),
+    oneOff: totals.oneOff - b.amount, monthly: totals.monthly - b.monthlyAmount, discount: b.amount,
+    ...(b.monthlyAmount > 0 ? { monthlyDiscount: b.monthlyAmount } : {}),
+    ...(applied ? { discountPercent: b.percent, discountLabel: b.code?.label ?? "", bonusPercent: b.bonusPercent, ...(b.bonusPlan ? { bonusPlan: b.bonusPlan } : {}) } : {}),
   };
 }
 
@@ -68,13 +94,21 @@ export function selectionSummary(selections: readonly { id: string }[], code?: s
   const v = VAT_REGISTERED ? " + VAT" : "";
   const from = selectionIsFrom(items) ? "from " : "";
   const b = discountBreakdown(items, code);
-  const discount = b.amount;
-  const d = discount > 0 ? b.code : undefined;
+  const d = b.amount > 0 || b.monthlyAmount > 0 ? b.code : undefined;
+  const scope = b.appliesTo === "all"
+    ? `${d?.label}, ${b.percent}% off website packages and care plans for the length of your contract`
+    : b.bonusPlan
+      ? `${d?.label} ${b.basePercent}% + ${b.bonusPlan} bonus ${b.bonusPercent}% = ${b.percent}% off website packages`
+      : `${d?.label}, ${b.percent}% off website packages`;
+  const saved = [
+    ...(b.amount > 0 ? [`−${eur(b.amount)}${b.monthlyAmount > 0 ? " setup" : ""}`] : []),
+    ...(b.monthlyAmount > 0 ? [`−${eur(b.monthlyAmount)}/mo`] : []),
+  ].join(", ");
   return [
     "Selected package:",
     ...items.map((s) => `- ${s.title}: ${s.price}`),
-    ...(d ? [`- Discount code ${d.code} (${b.bonusPlan ? `${d.label} ${b.basePercent}% + ${b.bonusPlan} bonus ${b.bonusPercent}% = ${b.percent}%` : `${d.label}, ${b.percent}%`} off website packages): −${eur(discount)}`] : []),
-    d ? `One-off setup: ${from}${eur(totals.oneOff - discount)}${v} (was ${eur(totals.oneOff)}${v})` : `One-off setup: ${from}${eur(totals.oneOff)}${v}`,
-    ...(totals.monthly ? [`Monthly: ${eur(totals.monthly)}/mo${v}`] : []),
+    ...(d ? [`- Discount code ${d.code} (${scope}): ${saved}`] : []),
+    d && b.amount > 0 ? `One-off setup: ${from}${eur(totals.oneOff - b.amount)}${v} (was ${eur(totals.oneOff)}${v})` : `One-off setup: ${from}${eur(totals.oneOff)}${v}`,
+    ...(totals.monthly ? [d && b.monthlyAmount > 0 ? `Monthly: ${eur(totals.monthly - b.monthlyAmount)}/mo${v} (was ${eur(totals.monthly)}/mo${v})` : `Monthly: ${eur(totals.monthly)}/mo${v}`] : []),
   ].join("\n");
 }

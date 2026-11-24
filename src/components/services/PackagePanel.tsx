@@ -45,6 +45,9 @@ export const Group = ({ id, label, required, children, error }: { id: string; la
 export interface PackageOption { id: string; label: string }
 export interface WebsiteOption extends PackageOption { match: (id: string) => boolean }
 
+/** Welcome-offer arrival: "typing" while the code is being typed in (status hidden), "sweep" while the one-loop gradient ring plays. */
+export type DiscountReveal = "typing" | "sweep";
+
 export interface PackagePanelProps {
   selectedIds: string[];
   selection: ReturnType<typeof selectionItems>;
@@ -61,15 +64,32 @@ export interface PackagePanelProps {
   breakdown: ReturnType<typeof discountBreakdown>;
   totals: ReturnType<typeof selectionTotalsWithDiscount>;
   hasWebsite: boolean;
+  discountReveal?: DiscountReveal;
   className?: string;
 }
+
+const discountStatus = (discount: DiscountCode, breakdown: ReturnType<typeof discountBreakdown>) =>
+  discount.appliesTo === "all"
+    ? `${discount.label} applied: ${discount.percent}% off your website and care plan for the duration of your contract.`
+    : `${discount.label} applied: ${discount.percent}% off website packages.${breakdown.bonusPlan ? ` Your ${breakdown.bonusPlan} plan adds a further ${breakdown.bonusPercent}%: ${breakdown.percent}% off in total.` : " Select a care plan for a further discount."}`;
+
+const savingsLine = (totals: ReturnType<typeof selectionTotalsWithDiscount>, discount?: DiscountCode) => {
+  if (discount?.appliesTo === "all") {
+    const parts = [...(totals.discount > 0 ? [`${eur(totals.discount)} on setup`] : []), ...(totals.monthlyDiscount ? [`${eur(totals.monthlyDiscount)}/mo`] : [])];
+    return `You save ${parts.join(" and ")} (${totals.discountPercent}% off)`;
+  }
+  return `You save ${eur(totals.discount)} (${totals.discountPercent}% off the website)`;
+};
 
 /** The "Your package" editor, shared by the inline desktop panel and the bottom-bar drawer. */
 export const PackagePanel = ({
   selectedIds, selection, websiteId, websiteOptions, chooseWebsite, businessPages, changeBusinessPages,
-  aftercareOptions, chooseAftercare, discountInput, setDiscountInput, discount, breakdown, totals, hasWebsite,
+  aftercareOptions, chooseAftercare, discountInput, setDiscountInput, discount, breakdown, totals, hasWebsite, discountReveal,
   className = "rounded-lg border border-primary/40 bg-primary/5 p-5",
-}: PackagePanelProps) => (
+}: PackagePanelProps) => {
+  const showStatus = Boolean(discountInput.trim()) && discountReveal !== "typing";
+  const saves = totals.discount > 0 || Boolean(totals.monthlyDiscount);
+  return (
   <section aria-label="Your selected package" className={className}>
     <h2 className="text-xl font-bold tracking-tight text-foreground">Your package</h2>
     <div className="mt-4">
@@ -96,15 +116,14 @@ export const PackagePanel = ({
     <div className="mt-5">
       <Field id="sp-discount" label="Discount code (optional)">
         <div className="relative">
-          <input id="sp-discount" className={inputClass + " uppercase" + (discount ? " pr-10 border-primary/60" : "")} maxLength={32} autoComplete="off" spellCheck={false} value={discountInput} onChange={(e) => setDiscountInput(e.target.value)} aria-describedby={discountInput.trim() ? "sp-discount-status" : undefined} />
+          <input id="sp-discount" className={inputClass + " uppercase" + (discount ? " pr-10 border-primary/60" : "")} maxLength={32} autoComplete="off" spellCheck={false} value={discountInput} onChange={(e) => setDiscountInput(e.target.value)} aria-describedby={showStatus ? "sp-discount-status" : undefined} />
           {discount && <Check className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" aria-hidden="true" />}
+          {discountReveal === "sweep" && <span className="discount-sweep" data-testid="discount-sweep" aria-hidden="true" />}
         </div>
       </Field>
-      {discountInput.trim() && (
+      {showStatus && (
         <p id="sp-discount-status" aria-live="polite" className={`mt-2 text-xs ${discount ? "text-primary" : "text-muted-foreground"}`}>
-          {discount
-            ? `${discount.label} applied: ${discount.percent}% off website packages.${breakdown.bonusPlan ? ` Your ${breakdown.bonusPlan} plan adds a further ${breakdown.bonusPercent}%: ${breakdown.percent}% off in total.` : " Select a care plan for a further discount."}`
-            : "Code not recognised."}
+          {discount ? discountStatus(discount, breakdown) : "Code not recognised."}
           {discount && <span className="sr-only"> Code accepted.</span>}
         </p>
       )}
@@ -124,11 +143,17 @@ export const PackagePanel = ({
                 {totals.discount > 0 && <> <s className="font-normal text-muted-foreground">{eur(totals.oneOff + totals.discount)}</s></>}
               </p>
             )}
-            {totals.monthly > 0 && <p className="text-xs text-muted-foreground">{`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}</p>}
-            {totals.discount > 0 && <p className="text-xs text-primary">{`You save ${eur(totals.discount)} (${totals.discountPercent}% off the website)`}</p>}
+            {totals.monthly > 0 && (
+              <p className="text-xs text-muted-foreground">
+                {`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}
+                {totals.monthlyDiscount ? <> <s>{`${eur(totals.monthly + totals.monthlyDiscount)}/mo`}</s></> : null}
+              </p>
+            )}
+            {saves && <p className="text-xs text-primary">{savingsLine(totals, discount)}</p>}
           </>
         )}
       </div>
     </div>
   </section>
-);
+  );
+};

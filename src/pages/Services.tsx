@@ -51,6 +51,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import SectionLabel from "@/components/SectionLabel";
 import SocialProof from "@/components/SocialProof";
 import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
+import { DiscountPopup } from "@/components/services/DiscountPopup";
 
 /* ------------------------------------------------------------------ */
 /*  Differentiators                                                    */
@@ -471,6 +472,7 @@ const Services = () => {
         </div>
       </section>
 
+      <DiscountPopup />
           </div>
   );
 };

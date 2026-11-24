@@ -7,33 +7,19 @@ import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/SEO";
 import { aftercare, businessOption, BUSINESS_BASE_PAGES, carePlans, entry, tiers } from "@/data/pricing";
-import { Field, inputClass, PackagePanel, type PackagePanelProps } from "@/components/services/PackagePanel";
+import { Field, inputClass, PackagePanel, type DiscountReveal, type PackagePanelProps } from "@/components/services/PackagePanel";
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useVisualViewport } from "@/hooks/use-visual-viewport";
 import { discountBreakdown, DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionIsFrom, selectionItems, selectionSummary, selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 import { findDiscountCode } from "@/data/pricing";
 import { eur, VAT_REGISTERED } from "@/data/pricing";
+import { invokeFunction } from "@/lib/supabaseFunctions";
+import { clearReveal, peekReveal, readUnlockedCode } from "@/lib/welcomeOffer";
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://lgdjivhyveowybzhbqum.supabase.co";
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZGppdmh5dmVvd3liemhicXVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMjMyNDMsImV4cCI6MjA4Nzg5OTI0M30.ThNz5RF9Pco9Up0nIn_gaMIUSV_yc2WINGBXpuvF-A0";
-
-const invokeFunction = async (fnName: string, body: Record<string, unknown>) => {
-  const res = await fetch(`${SUPABASE_URL}/functions/v1/${fnName}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "apikey": SUPABASE_ANON_KEY,
-      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-    },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || `Function ${fnName} returned ${res.status}`);
-  }
-  return res.json();
-};
+/** Welcome-offer arrival: pause, type the code one character at a time, then run the one-loop gradient ring. */
+export const WELCOME_REVEAL_TIMING = { startMs: 450, perCharMs: 70, sweepMs: 2400 } as const;
+const MOBILE_BREAKPOINT = 768;
 
 // ─── Types ────────────────────────────────────────────────────
 interface FormData {
@@ -83,8 +69,12 @@ const StartProject = () => {
     sessionStorage.setItem(SELECTION_STORAGE_KEY, JSON.stringify(selectedIds));
   }, [selectedIds]);
   const selection = selectionItems(selectedIds.map((id) => ({ id })));
+  // A code queued by the welcome-offer popup is typed in on arrival instead of being pre-filled.
+  const pendingReveal = useRef<string | undefined>(peekReveal());
+  const [discountReveal, setDiscountReveal] = useState<DiscountReveal | undefined>(undefined);
   const [discountInput, setDiscountInput] = useState<string>(() => {
-    try { return sessionStorage.getItem(DISCOUNT_STORAGE_KEY) ?? ""; } catch { return ""; }
+    if (pendingReveal.current) return "";
+    try { return sessionStorage.getItem(DISCOUNT_STORAGE_KEY) || readUnlockedCode() || ""; } catch { return ""; }
   });
   useEffect(() => {
     if (discountInput) sessionStorage.setItem(DISCOUNT_STORAGE_KEY, discountInput);
@@ -147,6 +137,35 @@ const StartProject = () => {
     ro.observe(dock);
     return () => ro.disconnect();
   }, [isMobile]);
+  // Welcome-offer arrival: open the phone drawer, scroll to the field, type the code, then sweep once.
+  useEffect(() => {
+    const code = pendingReveal.current;
+    if (!code) return;
+    pendingReveal.current = undefined;
+    clearReveal();
+    const timers: number[] = [];
+    const after = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
+    const phone = window.innerWidth < MOBILE_BREAKPOINT;
+    if (phone) setDrawerOpen(true);
+    after(phone ? 400 : 0, () => {
+      const el = document.getElementById("sp-discount");
+      try { el?.scrollIntoView({ block: "center", behavior: reducedMotion ? "auto" : "smooth" }); } catch { /* jsdom */ }
+    });
+    const { startMs, perCharMs, sweepMs } = WELCOME_REVEAL_TIMING;
+    if (reducedMotion) {
+      setDiscountInput(code);
+      setDiscountReveal("sweep");
+      after(sweepMs, () => setDiscountReveal(undefined));
+      return () => timers.forEach((t) => window.clearTimeout(t));
+    }
+    setDiscountReveal("typing");
+    code.split("").forEach((_, i) => after(startMs + i * perCharMs, () => setDiscountInput(code.slice(0, i + 1))));
+    const typed = startMs + code.length * perCharMs;
+    after(typed, () => setDiscountReveal("sweep"));
+    after(typed + sweepMs, () => setDiscountReveal(undefined));
+    return () => timers.forEach((t) => window.clearTimeout(t));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // Phones: keep a focused field clear of the dock / keyboard.
   const onFieldFocus = (e: React.FocusEvent<HTMLDivElement>) => {
     if (!isMobile) return;
@@ -256,7 +275,7 @@ const StartProject = () => {
 
   const panelProps: PackagePanelProps = {
     selectedIds, selection, websiteId, websiteOptions, chooseWebsite, businessPages, changeBusinessPages,
-    aftercareOptions, chooseAftercare, discountInput, setDiscountInput, discount, breakdown, totals, hasWebsite,
+    aftercareOptions, chooseAftercare, discountInput, setDiscountInput, discount, breakdown, totals, hasWebsite, discountReveal,
   };
   const showInlinePanel = !isMobile;
   const websiteTier = tiers.find((t) => websiteId && (t.id === websiteId || (t.id === "business" && /^business(-\d+)?$/.test(websiteId))));
@@ -274,7 +293,12 @@ const StartProject = () => {
             {totals.discount > 0 && <span className="ml-1 text-xs font-normal text-primary">{`−${eur(totals.discount)}`}</span>}
           </p>
         )}
-        {totals.monthly > 0 && <p className="text-xs text-muted-foreground">{`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}</p>}
+        {totals.monthly > 0 && (
+          <p className="text-xs text-muted-foreground">
+            {`Monthly ${eur(totals.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`}
+            {totals.monthlyDiscount ? <span className="ml-1 text-primary">{`−${eur(totals.monthlyDiscount)}/mo`}</span> : null}
+          </p>
+        )}
       </div>
     </>
   );

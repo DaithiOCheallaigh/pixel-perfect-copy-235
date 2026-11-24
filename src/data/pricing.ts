@@ -124,9 +124,15 @@ export const aftercare = {
 };
 export const refreshNotes = () => `${eur(addOns.extraPage)} per page beyond 5; new copy ${eur(addOns.copyPerPage)} a page. Sites over 10 pages or on an unsupported platform are quoted individually.`;
 
-export type DiscountCode = { id: string; code: string; label: string; percent: number; appliesTo: "website" };
-export const discountCodes: DiscountCode[] = [{ id: "matesrates", code: "MATESRATES", label: "Mates rates", percent: 15, appliesTo: "website" }];
-/** Further % off the website package when a valid code is applied and this care plan is chosen (self-managed: none). */
+/** "website": % off website one-off prices only (care plans add a bonus %). "all": the same % off website one-off prices AND care-plan monthly fees, no bonus. */
+export type DiscountScope = "website" | "all";
+export type DiscountCode = { id: string; code: string; label: string; percent: number; appliesTo: DiscountScope };
+export const discountCodes: DiscountCode[] = [
+  { id: "matesrates", code: "MATESRATES", label: "Mates rates", percent: 15, appliesTo: "website" },
+  // Welcome offer unlocked by the /services email popup (src/lib/welcomeOffer.ts): 10% off everything for the length of the contract.
+  { id: "welcome10", code: "LACUNA10", label: "Welcome offer", percent: 10, appliesTo: "all" },
+];
+/** Further % off the website package when a valid website-only code is applied and this care plan is chosen (self-managed: none). */
 export const aftercareBonusPercent: Record<string, number> = { care: 5, growth: 10, "growth-ai": 10 };
 export const normaliseDiscountCode = (input: string) => input.trim().toUpperCase();
 export const findDiscountCode = (input: string | null | undefined) => { const key = normaliseDiscountCode(input ?? ""); return key ? discountCodes.find((d) => d.code === key) : undefined; };

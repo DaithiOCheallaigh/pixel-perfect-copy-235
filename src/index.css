@@ -406,3 +406,44 @@ html, body {
 main img:not(.no-lightbox):not(.inline) {
   cursor: zoom-in;
 }
+
+/* Welcome-offer arrival on /services/start-project: one gradient loop around the discount field, then it fades. */
+@keyframes discount-sweep-spin {
+  from { transform: translate(-50%, -50%) rotate(0turn); }
+  to { transform: translate(-50%, -50%) rotate(1turn); }
+}
+
+@keyframes discount-sweep-fade {
+  0%, 75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.discount-sweep {
+  position: absolute;
+  inset: -3px;
+  padding: 3px;
+  border-radius: calc(var(--radius-xs) + 3px);
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: discount-sweep-fade 2.2s ease-out 1 forwards;
+}
+
+.discount-sweep::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 320%;
+  aspect-ratio: 1;
+  background: conic-gradient(from 0deg, transparent 0 58%, hsl(var(--primary) / 0.25) 74%, hsl(var(--primary)) 92%, transparent 100%);
+  animation: discount-sweep-spin 1.7s cubic-bezier(0.65, 0, 0.35, 1) 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discount-sweep { animation: none; opacity: 0; }
+  .discount-sweep::before { animation: none; }
+}

@@ -2,8 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
-import StartProject from "@/pages/StartProject";
+import StartProject, { WELCOME_REVEAL_TIMING } from "@/pages/StartProject";
 import { DISCOUNT_STORAGE_KEY, SELECTION_STORAGE_KEY, selectionItems, selectionTotals } from "@/data/serviceEstimates";
+import { queueReveal, storeUnlock, WELCOME_REVEAL_KEY } from "@/lib/welcomeOffer";
 
 vi.mock("@/components/SEO", () => ({ SEO: () => null }));
 vi.mock("@/components/services/BusinessPagesSelect", () => ({
@@ -191,5 +192,50 @@ describe("enquiry submit", () => {
     expect(container.textContent).not.toMatch(/Step \d of/);
     expect(container.textContent).not.toContain("Budget");
     expect(container.textContent).not.toContain("Industry");
+  });
+});
+
+describe("welcome offer on the enquiry page", () => {
+  const input = () => container.querySelector<HTMLInputElement>("#sp-discount")!;
+  const sweep = () => container.querySelector('[data-testid="discount-sweep"]');
+  beforeEach(() => { localStorage.clear(); sessionStorage.clear(); });
+  afterEach(() => vi.useRealTimers());
+
+  it("pre-fills a code unlocked on an earlier visit and explains the all-in discount", () => {
+    storeUnlock("LACUNA10");
+    open(["business", "growth"]);
+    expect(input().value).toBe("LACUNA10");
+    expect(container.textContent).toContain("Welcome offer applied: 10% off your website and care plan for the duration of your contract.");
+    expect(container.textContent).not.toContain("adds a further");
+    expect(container.textContent).toContain("Setup €2,250 + VAT");
+    expect(container.textContent).toContain("Monthly €180/mo + VAT €200/mo");
+    expect(container.textContent).toContain("You save €250 on setup and €20/mo (10% off)");
+  });
+  it("prefers a code already typed this session over the unlocked one", () => {
+    storeUnlock("LACUNA10");
+    sessionStorage.setItem(DISCOUNT_STORAGE_KEY, "matesrates");
+    open(["business"]);
+    expect(input().value).toBe("matesrates");
+    expect(container.textContent).toContain("You save €375 (15% off the website)");
+  });
+  it("types a queued code in, hides the status while typing, then sweeps once", () => {
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+    const { startMs, perCharMs, sweepMs } = WELCOME_REVEAL_TIMING;
+    queueReveal("LACUNA10");
+    open(["business", "growth"]);
+    expect(sessionStorage.getItem(WELCOME_REVEAL_KEY)).toBeNull();
+    expect(input().value).toBe("");
+    act(() => { vi.advanceTimersByTime(startMs + perCharMs * 3); });
+    expect(input().value).toBe("LACU");
+    expect(container.textContent).not.toContain("Code not recognised.");
+    expect(sweep()).toBeNull();
+    act(() => { vi.advanceTimersByTime(perCharMs * 5); });
+    expect(input().value).toBe("LACUNA10");
+    expect(sweep()).not.toBeNull();
+    expect(container.textContent).toContain("Welcome offer applied");
+    act(() => { vi.advanceTimersByTime(sweepMs); });
+    expect(sweep()).toBeNull();
+    expect(input().value).toBe("LACUNA10");
+    expect(sessionStorage.getItem(DISCOUNT_STORAGE_KEY)).toBe("LACUNA10");
   });
 });
