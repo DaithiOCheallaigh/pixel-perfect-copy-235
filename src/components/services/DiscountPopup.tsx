@@ -1,18 +1,53 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Loader2, X } from "lucide-react";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { lazy, Suspense, useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Dialog, DialogOverlay, DialogPortal } from "@/components/ui/dialog";
-import { inputClass } from "@/components/services/PackagePanel";
 import { CONTACT_EMAIL } from "@/data/pricing";
 import { invokeFunction } from "@/lib/supabaseFunctions";
+import { canRunWebGLHero } from "@/lib/webgl-capability";
 import { markShown, queueReveal, shouldOfferWelcome, storeDismiss, storeUnlock, welcomeOffer } from "@/lib/welcomeOffer";
+
+const Mosaic = lazy(() => import("@/components/react-bits/mosaic"));
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 /** The popup opens after this long on /services, or once the visitor has scrolled WELCOME_POPUP_SCROLL of the page, whichever comes first. */
 export const WELCOME_POPUP_DELAY_MS = 7000;
 export const WELCOME_POPUP_SCROLL = 0.35;
 export const ENQUIRY_PATH = "/services/start-project";
+
+/** Brand pinks for the Mosaic waves (the hero VoxelArc uses the same magenta). */
+const MOSAIC_COLORS = { color1: "#CE3BB6", color2: "#7A2E9E", color3: "#FFB3E6" } as const;
+
+/** Dark input for the mosaic card (the panel's inputClass is themed, this card is always dark). */
+const darkInputClass =
+  "w-full min-h-12 rounded-md border border-white/20 bg-white/10 px-4 py-3 text-base text-white backdrop-blur-sm transition-colors placeholder:text-white/40 focus:border-white/60 focus:outline-none focus:ring-1 focus:ring-white/50 md:min-h-0 md:text-sm";
+
+/**
+ * Card backdrop: the React Bits Mosaic shader when WebGL is usable and motion is allowed, a static pink
+ * glow otherwise, and a dark gradient over both so the copy stays legible in either theme.
+ */
+const WelcomeBackdrop = () => {
+  const [shader, setShader] = useState(false);
+  useEffect(() => {
+    const reduce = typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce && canRunWebGLHero()) setShader(true);
+  }, []);
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden" data-testid="welcome-backdrop" data-shader={shader ? "on" : "off"}>
+      <div
+        className="absolute inset-0"
+        style={{ background: "radial-gradient(ellipse 80% 55% at 15% 0%, rgba(206,59,182,0.5), transparent 60%), radial-gradient(ellipse 70% 50% at 90% 100%, rgba(122,46,158,0.55), transparent 65%), #0a0a0a" }}
+      />
+      {shader && (
+        <Suspense fallback={null}>
+          <Mosaic className="absolute inset-0" {...MOSAIC_COLORS} pixelSize={14} borderIntensity={0.7} waveIntensity={1} waveWidth={1.4} speed={0.45} quality="medium" />
+        </Suspense>
+      )}
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,5,5,0.45) 0%, rgba(5,5,5,0.6) 40%, rgba(5,5,5,0.9) 100%)" }} />
+    </div>
+  );
+};
 
 /**
  * /services welcome offer. An email unlocks the 10%-off-everything code (emailed to Dave by the
@@ -78,54 +113,57 @@ export const DiscountPopup = ({ delayMs = WELCOME_POPUP_DELAY_MS, scrollFraction
         <DialogOverlay className="z-[210] bg-background/70 backdrop-blur-sm" />
         <DialogPrimitive.Content
           onOpenAutoFocus={(e) => { if (window.innerWidth < 768) e.preventDefault(); }}
-          className="fixed inset-x-4 bottom-4 z-[220] max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-xl border border-primary/30 bg-card text-card-foreground shadow-2xl shadow-primary/20 outline-none duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-bottom-8 data-[state=open]:slide-in-from-bottom-8 sm:inset-x-auto sm:bottom-auto sm:left-1/2 sm:top-1/2 sm:w-full sm:max-w-md sm:-translate-x-1/2 sm:-translate-y-1/2 sm:data-[state=closed]:zoom-out-95 sm:data-[state=open]:zoom-in-95 sm:data-[state=closed]:slide-out-to-left-1/2 sm:data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-left-1/2 sm:data-[state=open]:slide-in-from-top-[48%]"
+          className="fixed inset-x-4 bottom-4 z-[220] overflow-hidden rounded-xl border border-white/10 bg-neutral-950 text-white shadow-2xl shadow-black/60 outline-none duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-bottom-8 data-[state=open]:slide-in-from-bottom-8 sm:inset-x-auto sm:bottom-auto sm:left-1/2 sm:top-1/2 sm:w-full sm:max-w-md sm:-translate-x-1/2 sm:-translate-y-1/2 sm:data-[state=closed]:zoom-out-95 sm:data-[state=open]:zoom-in-95 sm:data-[state=closed]:slide-out-to-left-1/2 sm:data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-left-1/2 sm:data-[state=open]:slide-in-from-top-[48%]"
         >
-          <div className="bg-primary/10 px-6 pb-6 pt-8 sm:px-8">
-            <span className="font-mono-label text-primary">Welcome offer</span>
-            <DialogPrimitive.Title className="mt-3 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
-              {welcomeOffer.percent}% off, for the duration of your contract.
-            </DialogPrimitive.Title>
-            <DialogPrimitive.Description className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Every website package and every care plan, {welcomeOffer.percent}% off for as long as we work together. Pop in your email to unlock the code, then use it whenever you're ready.
-            </DialogPrimitive.Description>
+          <WelcomeBackdrop />
+          <div className="relative z-10 max-h-[calc(100dvh-2rem)] overflow-y-auto">
+            <div className="px-6 pb-6 pt-8 sm:px-8">
+              <span className="font-mono-label text-pink-200">Welcome offer</span>
+              <DialogPrimitive.Title className="mt-3 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                {welcomeOffer.percent}% off, for the duration of your contract.
+              </DialogPrimitive.Title>
+              <DialogPrimitive.Description className="mt-3 text-sm leading-relaxed text-white/75">
+                Every website package and every care plan, {welcomeOffer.percent}% off for as long as we work together. Pop in your email to unlock the code, then use it whenever you're ready.
+              </DialogPrimitive.Description>
+            </div>
+            <form onSubmit={submit} noValidate className="space-y-4 border-t border-white/10 px-6 py-6 sm:px-8">
+              <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+                <label htmlFor="welcome-company-website">Company website</label>
+                <input id="welcome-company-website" name="company_website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="welcome-email" className="font-mono-label text-white/60">Email</label>
+                <input
+                  id="welcome-email"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  maxLength={254}
+                  placeholder="you@yourbusiness.ie"
+                  className={darkInputClass}
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setError(undefined); }}
+                  aria-invalid={error ? true : undefined}
+                  aria-describedby={error ? "welcome-email-error" : undefined}
+                />
+                {error && <p id="welcome-email-error" role="alert" className="text-xs text-red-300">{error}</p>}
+              </div>
+              <button
+                type="submit"
+                disabled={sending}
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-white/15 bg-black px-6 text-sm font-semibold text-white transition-all hover:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 active:scale-[0.99] disabled:opacity-60"
+              >
+                {sending ? <><Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> Unlocking…</> : `Unlock my ${welcomeOffer.percent}% code →`}
+              </button>
+              <button type="button" onClick={dismiss} className="block w-full text-center text-xs text-white/60 transition-colors hover:text-white hover:underline">
+                No thanks
+              </button>
+              <p className="text-[11px] leading-relaxed text-white/50">
+                Your email goes to Dave so he can honour the code when you enquire. No newsletter, nothing passed on.
+              </p>
+            </form>
           </div>
-          <form onSubmit={submit} noValidate className="space-y-4 px-6 py-6 sm:px-8">
-            <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
-              <label htmlFor="welcome-company-website">Company website</label>
-              <input id="welcome-company-website" name="company_website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="welcome-email" className="font-mono-label text-muted-foreground">Email</label>
-              <input
-                id="welcome-email"
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                maxLength={254}
-                placeholder="you@yourbusiness.ie"
-                className={inputClass}
-                value={email}
-                onChange={(e) => { setEmail(e.target.value); setError(undefined); }}
-                aria-invalid={error ? true : undefined}
-                aria-describedby={error ? "welcome-email-error" : undefined}
-              />
-              {error && <p id="welcome-email-error" role="alert" className="text-xs text-destructive">{error}</p>}
-            </div>
-            <button
-              type="submit"
-              disabled={sending}
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99] disabled:opacity-60"
-            >
-              {sending ? <><Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> Unlocking…</> : `Unlock my ${welcomeOffer.percent}% code →`}
-            </button>
-            <button type="button" onClick={dismiss} className="block w-full text-center text-xs text-muted-foreground transition-colors hover:text-foreground hover:underline">
-              No thanks
-            </button>
-            <p className="text-[11px] leading-relaxed text-muted-foreground">
-              Your email goes to Dave so he can honour the code when you enquire. No newsletter, nothing passed on.
-            </p>
-          </form>
-          <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm text-muted-foreground opacity-80 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+          <DialogPrimitive.Close className="absolute right-4 top-4 z-20 rounded-sm text-white/70 transition-colors hover:text-white focus:outline-none focus:ring-2 focus:ring-white/60 focus:ring-offset-2 focus:ring-offset-neutral-950">
             <X className="h-4 w-4" />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>

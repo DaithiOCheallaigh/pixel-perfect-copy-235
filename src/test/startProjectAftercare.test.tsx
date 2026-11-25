@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
@@ -237,5 +237,70 @@ describe("welcome offer on the enquiry page", () => {
     expect(sweep()).toBeNull();
     expect(input().value).toBe("LACUNA10");
     expect(sessionStorage.getItem(DISCOUNT_STORAGE_KEY)).toBe("LACUNA10");
+  });
+});
+
+describe("package tier details", () => {
+  beforeAll(() => {
+    // embla-carousel observes slide sizes and visibility; jsdom has neither observer.
+    const Noop = class { observe() {} unobserve() {} disconnect() {} takeRecords() { return []; } };
+    const g = globalThis as unknown as { ResizeObserver?: unknown; IntersectionObserver?: unknown };
+    if (typeof g.ResizeObserver === "undefined") g.ResizeObserver = Noop;
+    if (typeof g.IntersectionObserver === "undefined") g.IntersectionObserver = Noop;
+  });
+  const byLabel = (label: string): HTMLButtonElement => {
+    const el = container.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
+    if (!el) throw new Error(`Missing button: ${label}`);
+    return el;
+  };
+
+  it("hides the tier details until the (i) button is pressed, then lets a slide select the website", () => {
+    open(["growth"]);
+    expect(container.textContent).not.toContain("1-page site");
+    const toggle = byLabel("Show website package details");
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    expect(toggle.getAttribute("aria-controls")).toBe("sp-website-details");
+    click(toggle);
+    expect(byLabel("Hide website package details").getAttribute("aria-expanded")).toBe("true");
+    const details = container.querySelector("#sp-website-details")!;
+    expect(details.textContent).toContain("1-page site");
+    expect(details.textContent).toContain("Every old address redirected so you keep your Google rankings");
+    expect(details.textContent).toContain("Up to 5 pages");
+    expect(details.textContent).toContain("or €70/mo + VAT × 12");
+    expect(details.querySelectorAll('[aria-roledescription="slide"]')).toHaveLength(3);
+    click(byLabel("Select: Launch"));
+    expect(saved()).toEqual(["growth", "launch"]);
+    expect(byLabel("Selected: Launch").getAttribute("aria-pressed")).toBe("true");
+    expect(button("Launch · €750").getAttribute("aria-pressed")).toBe("true");
+    click(byLabel("Hide website package details"));
+    expect(byLabel("Show website package details").getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("shows the care plan details with the self-managed handover first and selects from a slide", () => {
+    open(["business"]);
+    click(byLabel("Show care plan details"));
+    const details = container.querySelector("#sp-aftercare-details")!;
+    const slides = Array.from(details.querySelectorAll('[aria-roledescription="slide"]'));
+    expect(slides).toHaveLength(4);
+    expect(slides[0].textContent).toContain("30-minute handover call and a short written guide");
+    expect(details.textContent).toContain("Everything in Growth");
+    expect(details.textContent).toContain("Most popular");
+    click(byLabel("Select: Growth"));
+    expect(saved()).toEqual(["business", "growth"]);
+    expect(growth().getAttribute("aria-pressed")).toBe("true");
+    click(byLabel("Selected: Growth"));
+    expect(saved()).toEqual(["business"]);
+  });
+
+  it("keeps the Business pages control in the Business slide", () => {
+    open(["business-8"]);
+    click(byLabel("Show website package details"));
+    const details = container.querySelector("#sp-website-details")!;
+    expect(details.textContent).toContain("€4,000 + VAT");
+    expect(details.textContent).toContain("Booking or CRM integration");
+    const select = details.querySelector<HTMLSelectElement>('select[aria-label="Pages"]')!;
+    act(() => { select.value = "10"; select.dispatchEvent(new Event("change", { bubbles: true })); });
+    expect(saved()).toEqual(["business-10"]);
+    expect(details.textContent).toContain("€5,000 + VAT");
   });
 });
