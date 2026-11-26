@@ -137,11 +137,11 @@ describe("enquiry package panel", () => {
     open();
     expect(Array.from(container.querySelectorAll("h2")).some((h) => h.textContent === "Your package")).toBe(true);
     const legends = Array.from(container.querySelectorAll("legend")).map((l) => l.textContent?.trim());
-    expect(legends).toContain("1. Website");
-    expect(legends).toContain("2. Care plans");
-    expect(legends).not.toContain("Once it's live, who looks after it?");
+    expect(legends.some((l) => /^1\. Website · \d of 3$/.test(l ?? ""))).toBe(true);
+    expect(legends.some((l) => /^2\. Care plans · \d of 4$/.test(l ?? ""))).toBe(true);
+    expect(legends.some((l) => l?.startsWith("Once it's live"))).toBe(false);
   });
-  it("shows every option as a card on one Mosaic surface, with no pills or (i) toggle", () => {
+  it("shows every option as a slide on one Mosaic surface, with no pills or (i) toggle", () => {
     open(["growth"]);
     const surface = container.querySelector('[data-testid="sp-options"]')!;
     // jsdom has no WebGL, so the shared backdrop renders its static fallback.
@@ -151,18 +151,21 @@ describe("enquiry package panel", () => {
     const care = container.querySelector("#sp-aftercare")!;
     expect(website.querySelectorAll("article")).toHaveLength(3);
     expect(care.querySelectorAll("article")).toHaveLength(4);
-    expect(website.textContent).toContain("Website · 1 of 3");
+    expect(website.querySelector("legend")?.textContent).toBe("1. Website · 1 of 3");
+    expect(website.querySelectorAll('[aria-roledescription="slide"]')).toHaveLength(3);
+    expect(website.querySelectorAll('button[aria-label="Previous option"]')).toHaveLength(1);
     expect(website.textContent).toContain("1-page site");
     expect(website.textContent).toContain("Every old address redirected so you keep your Google rankings");
     expect(website.textContent).toContain("or €70/mo + VAT × 12");
-    expect(care.textContent).toContain("Aftercare · 1 of 4");
+    expect(care.querySelector("legend")?.textContent).toMatch(/^2\. Care plans · \d of 4$/);
+    expect(care.querySelectorAll('[aria-roledescription="slide"]')).toHaveLength(4);
     expect(care.querySelectorAll("article")[0].textContent).toContain("30-minute handover call and a short written guide");
     expect(care.textContent).toContain("Most popular");
     expect(container.querySelector('button[aria-label^="Show "]')).toBeNull();
     expect(Array.from(container.querySelectorAll("button")).some((b) => b.textContent === "Launch · €750")).toBe(false);
-    expect(container.querySelectorAll('[aria-roledescription="slide"]')).toHaveLength(0);
+    expect(container.textContent).not.toContain("Aftercare ·");
   });
-  it("swipes one card at a time on phones", () => {
+  it("keeps the same one-card sliders inside the phone drawer", () => {
     const width = window.innerWidth;
     Object.defineProperty(window, "innerWidth", { configurable: true, writable: true, value: 390 });
     try {

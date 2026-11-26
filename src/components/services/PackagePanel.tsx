@@ -4,7 +4,6 @@ import { aftercare, businessOption, carePlans, CONTACT_EMAIL, eur, monthlyLabel,
 import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
 import { MosaicBackdrop, PANEL_GRADIENT } from "@/components/services/MosaicBackdrop";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { selectionIsFrom, type discountBreakdown, type selectionItems, type selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 
 export const inputClass =
@@ -59,8 +58,9 @@ const savingsLine = (totals: ReturnType<typeof selectionTotalsWithDiscount>, dis
   return `You save ${eur(totals.discount)} (${totals.discountPercent}% off the website)`;
 };
 
-/* ── Option cards: every website tier and care plan is on show on one dark Mosaic surface (no pills);
-      side by side on desktop, one card at a time (swipe) on phones. The card's button is the selector. ── */
+/* ── Option cards: every website tier and care plan is on show on one dark Mosaic surface (no pills),
+      one card at a time per group with a slider; the group heading carries the "n of N" counter and the
+      card's button is the selector. ── */
 
 export type OptionCardData = {
   id: string;
@@ -80,39 +80,43 @@ const cardSurface = { background: "linear-gradient(180deg, rgba(10,10,10,0.18) 0
 /** Header copy sits straight on the mosaic tiles, so it carries a soft shadow for the bright bands. */
 const headerShadow = { textShadow: "0 1px 2px rgba(0,0,0,0.6), 0 2px 18px rgba(0,0,0,0.55)" } as const;
 const navButtonClass =
-  "inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 disabled:opacity-30 disabled:hover:bg-white/10";
+  "inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 disabled:opacity-30 disabled:hover:bg-white/10";
 
-const OptionCard = ({ card: s, kicker, index, count }: { card: OptionCardData; kicker: string; index: number; count: number }) => (
+/** One option. Stacked on phones; on md+ the card is wide, so the details sit in a second column beside the price and button. */
+const OptionCard = ({ card: s }: { card: OptionCardData }) => (
   <article
-    className={`flex h-full flex-col rounded-md border p-4 transition-[border-color,box-shadow] duration-300 ${
+    className={`flex h-full flex-col rounded-md border p-4 transition-[border-color,box-shadow] duration-300 md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:grid-rows-[1fr_auto] md:gap-x-8 md:p-6 ${
       s.selected ? "border-[#FFB3E6]/70 shadow-[0_0_0_1px_rgba(255,179,230,0.35),0_18px_50px_-24px_rgba(255,179,230,0.6)]" : "border-white/10"
     }`}
     style={cardSurface}
   >
-    <span className="font-mono-label block text-pink-200" style={headerShadow}>{kicker} · {index + 1} of {count}</span>
-    <h3 className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-base font-bold text-white" style={headerShadow}>
-      {s.name}
-      {s.badge && <span className="rounded-full bg-[#FFB3E6] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-950">{s.badge}</span>}
-    </h3>
-    <p className="mt-1 text-2xl font-extrabold tracking-tight text-white" style={headerShadow}>{s.price}</p>
-    {s.sub && <p className="mt-0.5 text-xs text-pink-200/80" style={headerShadow}>{s.sub}</p>}
-    {s.extra}
-    <ul className="mt-4 space-y-2 border-t border-white/10 pt-4">
-      {s.bullets.map((item) => (
-        <li key={item} className="flex items-start gap-2 text-sm text-white/80">
-          <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FFB3E6]" aria-hidden="true" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-    {s.note && <p className="mt-3 text-xs text-white/55">{s.note}</p>}
-    <div className="flex-1" aria-hidden="true" />
+    <div className="md:col-start-1 md:row-start-1">
+      <h3 className="flex flex-wrap items-center gap-x-2 gap-y-1 text-lg font-bold text-white md:text-xl" style={headerShadow}>
+        {s.name}
+        {s.badge && <span className="rounded-full bg-[#FFB3E6] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-950">{s.badge}</span>}
+      </h3>
+      <p className="mt-1 text-2xl font-extrabold tracking-tight text-white md:text-3xl" style={headerShadow}>{s.price}</p>
+      {s.sub && <p className="mt-0.5 text-xs text-pink-200/80" style={headerShadow}>{s.sub}</p>}
+      {s.extra}
+    </div>
+    <div className="mt-4 border-t border-white/10 pt-4 md:col-start-2 md:row-span-2 md:row-start-1 md:mt-0 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+      <ul className="space-y-2">
+        {s.bullets.map((item) => (
+          <li key={item} className="flex items-start gap-2 text-sm text-white/80">
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FFB3E6]" aria-hidden="true" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      {s.note && <p className="mt-3 text-xs text-white/55">{s.note}</p>}
+    </div>
+    <div className="flex-1 md:hidden" aria-hidden="true" />
     <button
       type="button"
       onClick={s.onSelect}
       aria-pressed={s.selected}
       aria-label={`${s.selected ? "Selected" : "Select"}: ${s.name}`}
-      className={`mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-md border bg-black px-4 text-sm font-semibold transition-all hover:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 active:scale-[0.99] ${
+      className={`mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-md border bg-black px-4 text-sm font-semibold transition-all hover:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 active:scale-[0.99] md:col-start-1 md:row-start-2 md:mt-6 md:self-end ${
         s.selected ? "border-[#FFB3E6]/70 text-[#FFB3E6] hover:border-[#FFB3E6]" : "border-white/15 text-white hover:border-white/30"
       }`}
     >
@@ -121,8 +125,14 @@ const OptionCard = ({ card: s, kicker, index, count }: { card: OptionCardData; k
   </article>
 );
 
-/** Phones: one card per slide; swipe (or arrows / dots / arrow keys) to compare. Starts on the selected option. */
-const OptionCarousel = ({ label, kicker, cards, startIndex }: { label: string; kicker: string; cards: OptionCardData[]; startIndex: number }) => {
+const startAt = (cards: OptionCardData[]) => Math.max(0, cards.findIndex((c) => c.selected));
+
+/**
+ * One numbered group ("1. Website · 2 of 3", "2. Care plans · 3 of 4") on the shared surface: a one-card embla
+ * slider (swipe / drag, arrows, dots, arrow keys) that starts on the selected option; the heading counts along.
+ */
+const OptionGroup = ({ id, label, ariaLabel, cards }: { id: string; label: string; ariaLabel: string; cards: OptionCardData[] }) => {
+  const startIndex = startAt(cards);
   const [api, setApi] = useState<CarouselApi>();
   const [index, setIndex] = useState(startIndex);
   const initial = useRef(startIndex);
@@ -143,12 +153,15 @@ const OptionCarousel = ({ label, kicker, cards, startIndex }: { label: string; k
     return () => { api.off("select", onSelect); api.off("reInit", onReInit); };
   }, [api]);
   return (
-    <div className="min-w-0">
-      <Carousel setApi={setApi} opts={{ startIndex, align: "start", containScroll: "trimSnaps" }} aria-label={label}>
+    <fieldset id={id} className="min-w-0" data-testid={id}>
+      <legend className="mb-3 font-mono-label text-white/60" aria-live="polite">
+        {label} · <span className="text-pink-200">{index + 1} of {cards.length}</span>
+      </legend>
+      <Carousel setApi={setApi} opts={{ startIndex, align: "start", containScroll: "trimSnaps" }} aria-label={ariaLabel}>
         <CarouselContent className="-ml-3 items-stretch">
-          {cards.map((card, i) => (
+          {cards.map((card) => (
             <CarouselItem key={card.id} className="pl-3">
-              <OptionCard card={card} kicker={kicker} index={i} count={cards.length} />
+              <OptionCard card={card} />
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -166,25 +179,9 @@ const OptionCarousel = ({ label, kicker, cards, startIndex }: { label: string; k
           <ChevronRight className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
-    </div>
+    </fieldset>
   );
 };
-
-const startAt = (cards: OptionCardData[]) => Math.max(0, cards.findIndex((c) => c.selected));
-
-/** One numbered group ("1. Website", "2. Care plans") on the shared surface: a grid of cards on desktop, a carousel on phones. */
-const OptionGroup = ({ id, label, ariaLabel, kicker, cards, cols, mobile }: { id: string; label: string; ariaLabel: string; kicker: string; cards: OptionCardData[]; cols: string; mobile: boolean }) => (
-  <fieldset id={id} className="min-w-0" data-testid={id}>
-    <legend className="mb-3 font-mono-label text-white/60">{label}</legend>
-    {mobile ? (
-      <OptionCarousel label={ariaLabel} kicker={kicker} cards={cards} startIndex={startAt(cards)} />
-    ) : (
-      <div className={`grid gap-3 ${cols}`} role="group" aria-label={ariaLabel}>
-        {cards.map((card, i) => <OptionCard key={card.id} card={card} kicker={kicker} index={i} count={cards.length} />)}
-      </div>
-    )}
-  </fieldset>
-);
 
 /** The "Your package" editor, shared by the inline desktop panel and the bottom-bar drawer. */
 export const PackagePanel = ({
@@ -194,7 +191,6 @@ export const PackagePanel = ({
 }: PackagePanelProps) => {
   const showStatus = Boolean(discountInput.trim()) && discountReveal !== "typing";
   const saves = totals.discount > 0 || Boolean(totals.monthlyDiscount);
-  const mobile = useIsMobile();
 
   const websiteCards: OptionCardData[] = tiers.map((t) => {
     const option = websiteOptions.find((o) => o.id === t.id);
@@ -220,12 +216,12 @@ export const PackagePanel = ({
   return (
   <section aria-label="Your selected package" className={className}>
     <h2 className="text-xl font-bold tracking-tight text-foreground">Your package</h2>
-    {/* One Mosaic surface behind both groups (the same backdrop as the welcome popup). */}
+    {/* One Mosaic surface behind both groups (the same backdrop as the welcome popup); each group is a one-card slider. */}
     <div className="relative isolate mt-4 min-w-0 overflow-hidden rounded-lg border border-white/10 bg-neutral-950 p-3 text-white shadow-xl shadow-black/30 md:p-5" data-testid="sp-options">
       <MosaicBackdrop gradient={PANEL_GRADIENT} pixelSize={12} waveIntensity={1.15} testId="sp-mosaic" />
       <div className="relative z-10 space-y-7">
-        <OptionGroup id="sp-website" label="1. Website" ariaLabel="Website packages" kicker="Website" cards={websiteCards} cols="md:grid-cols-3" mobile={mobile} />
-        <OptionGroup id="sp-aftercare" label="2. Care plans" ariaLabel="Care plans" kicker="Aftercare" cards={careCards} cols="md:grid-cols-2 xl:grid-cols-4" mobile={mobile} />
+        <OptionGroup id="sp-website" label="1. Website" ariaLabel="Website packages" cards={websiteCards} />
+        <OptionGroup id="sp-aftercare" label="2. Care plans" ariaLabel="Care plans" cards={careCards} />
       </div>
     </div>
     <div className="mt-5">
