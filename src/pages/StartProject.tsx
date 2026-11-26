@@ -321,7 +321,8 @@ const StartProject = () => {
       {/* Top accent border */}
       <div className="h-[2px] w-full bg-gradient-to-r from-[#8b4513] via-[#a0522d] to-[#8b4513]" />
 
-      <div ref={pageRef} onFocus={onFieldFocus} className="mx-auto max-w-2xl px-6 pb-[calc(var(--dock-h,0px)+16px)] pt-32 md:pb-32" style={{ ["--dock-h" as string]: `${dockHeight}px` }}>
+      {/* Same column as the /services pricing section (max-w-7xl inside the page gutters), so the option cards sit side by side. */}
+      <div ref={pageRef} onFocus={onFieldFocus} className="mx-auto max-w-7xl px-6 pb-[calc(var(--dock-h,0px)+16px)] pt-32 md:px-12 md:pb-32 lg:px-24" style={{ ["--dock-h" as string]: `${dockHeight}px` }}>
         {showInlinePanel && <PackagePanel {...panelProps} className="mb-10 rounded-lg border border-primary/40 bg-primary/5 p-5" />}
               <div className="space-y-7 md:space-y-8">
                 <h1 className="scroll-mt-24 text-3xl font-extrabold tracking-tight outline-none md:text-4xl">Start your project</h1>
@@ -329,21 +330,26 @@ const StartProject = () => {
                   <label htmlFor="sp-company-website">Company website</label>
                   <input id="sp-company-website" name="company_website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
                 </div>
-                <Field id="sp-fullName" label="Full Name" required error={errors.fullName}>
-                  <input {...errProps("sp-fullName", errors.fullName)} className={inputClass} autoComplete="name" maxLength={100} placeholder="Jane Doe" value={form.fullName} onChange={(e) => set("fullName", e.target.value)} />
-                </Field>
-                <Field id="sp-email" label="Email" required error={errors.email}>
-                  <input {...errProps("sp-email", errors.email)} type="email" className={inputClass} autoComplete="email" maxLength={254} placeholder="jane@example.com" value={form.email} onChange={(e) => set("email", e.target.value)} />
-                </Field>
-                <Field id="sp-phone" label="Phone (optional)">
-                  <input id="sp-phone" type="tel" className={inputClass} autoComplete="tel" maxLength={40} placeholder="+353 …" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
-                </Field>
-                <Field id="sp-companyName" label="Company / Brand Name" required error={errors.companyName}>
-                  <input {...errProps("sp-companyName", errors.companyName)} className={inputClass} autoComplete="organization" maxLength={300} placeholder="Acme Co." value={form.companyName} onChange={(e) => set("companyName", e.target.value)} />
-                </Field>
-                <Field id="sp-websiteUrl" label="Website URL (if existing)">
-                  <input id="sp-websiteUrl" type="url" className={inputClass} autoComplete="url" maxLength={300} placeholder="https://example.com" value={form.websiteUrl} onChange={(e) => set("websiteUrl", e.target.value)} />
-                </Field>
+                {/* Two columns on desktop so the wider form keeps sensible field lengths. */}
+                <div className="grid gap-7 md:grid-cols-2 md:gap-x-6 md:gap-y-8">
+                  <Field id="sp-fullName" label="Full Name" required error={errors.fullName}>
+                    <input {...errProps("sp-fullName", errors.fullName)} className={inputClass} autoComplete="name" maxLength={100} placeholder="Jane Doe" value={form.fullName} onChange={(e) => set("fullName", e.target.value)} />
+                  </Field>
+                  <Field id="sp-email" label="Email" required error={errors.email}>
+                    <input {...errProps("sp-email", errors.email)} type="email" className={inputClass} autoComplete="email" maxLength={254} placeholder="jane@example.com" value={form.email} onChange={(e) => set("email", e.target.value)} />
+                  </Field>
+                  <Field id="sp-phone" label="Phone (optional)">
+                    <input id="sp-phone" type="tel" className={inputClass} autoComplete="tel" maxLength={40} placeholder="+353 …" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
+                  </Field>
+                  <Field id="sp-companyName" label="Company / Brand Name" required error={errors.companyName}>
+                    <input {...errProps("sp-companyName", errors.companyName)} className={inputClass} autoComplete="organization" maxLength={300} placeholder="Acme Co." value={form.companyName} onChange={(e) => set("companyName", e.target.value)} />
+                  </Field>
+                  <div className="md:col-span-2">
+                    <Field id="sp-websiteUrl" label="Website URL (if existing)">
+                      <input id="sp-websiteUrl" type="url" className={inputClass} autoComplete="url" maxLength={300} placeholder="https://example.com" value={form.websiteUrl} onChange={(e) => set("websiteUrl", e.target.value)} />
+                    </Field>
+                  </div>
+                </div>
               </div>
         {/* ── Navigation (desktop; phones use the dock) ── */}
         {!isMobile && (

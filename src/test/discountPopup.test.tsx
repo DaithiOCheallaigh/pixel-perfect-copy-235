@@ -2,21 +2,25 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
-import { DiscountPopup } from "@/components/services/DiscountPopup";
+import { DiscountPopup, WELCOME_POPUP_SECTION_BAND } from "@/components/services/DiscountPopup";
 import { dismissedRecently, readUnlockedCode, storeDismiss, storeUnlock, WELCOME_DISMISS_KEY, WELCOME_REVEAL_KEY, WELCOME_SHOWN_KEY } from "@/lib/welcomeOffer";
 import { DISCOUNT_STORAGE_KEY } from "@/data/serviceEstimates";
 
 const Where = () => <p data-testid="where">{useLocation().pathname}</p>;
+/** Where the top of the pricing section sits relative to the viewport (jsdom has no layout, so the test moves it). */
+let sectionTop = 5000;
+const rect = (top: number) => ({ top, bottom: top + 900, left: 0, right: 1024, width: 1024, height: 900, x: 0, y: top, toJSON: () => ({}) }) as DOMRect;
+const PackagesSection = () => <section id="packages" ref={(el) => { if (el) el.getBoundingClientRect = () => rect(sectionTop); }} />;
 let root: Root | undefined;
 let container: HTMLDivElement;
-const render = (delayMs: number) => {
+const render = (armDelayMs: number) => {
   container = document.createElement("div");
   document.body.appendChild(container);
   root = createRoot(container);
   act(() => root?.render(
     <MemoryRouter initialEntries={["/services"]}>
       <Routes>
-        <Route path="/services" element={<><DiscountPopup delayMs={delayMs} /><Where /></>} />
+        <Route path="/services" element={<><PackagesSection /><DiscountPopup armDelayMs={armDelayMs} /><Where /></>} />
         <Route path="/services/start-project" element={<Where />} />
       </Routes>
     </MemoryRouter>,
@@ -31,16 +35,25 @@ const setValue = (el: HTMLInputElement, value: string) => {
 };
 const emailInput = () => document.querySelector<HTMLInputElement>("#welcome-email")!;
 const findButton = (text: string) => Array.from(document.querySelectorAll("button")).find((b) => b.textContent?.startsWith(text))!;
-const show = (delayMs = 100) => { render(delayMs); act(() => { vi.advanceTimersByTime(delayMs); }); };
+/** Scroll so the section's top sits at `top` px from the top of the viewport. */
+const scrollSectionTo = (top: number) => { sectionTop = top; act(() => { window.dispatchEvent(new Event("scroll")); }); };
+const band = () => Math.round(window.innerHeight * WELCOME_POPUP_SECTION_BAND);
+const show = (armDelayMs = 100) => { render(armDelayMs); scrollSectionTo(band() - 50); act(() => { vi.advanceTimersByTime(armDelayMs); }); };
 
-beforeEach(() => { localStorage.clear(); sessionStorage.clear(); vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] }); });
+beforeEach(() => { sectionTop = 5000; localStorage.clear(); sessionStorage.clear(); vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] }); });
 afterEach(() => { cleanup(); vi.useRealTimers(); vi.unstubAllGlobals(); });
 
 describe("welcome offer popup", () => {
-  it("opens after the delay and never prints the code", () => {
-    render(1000);
+  it("opens only once the pricing section has been scrolled to, after a short pause, and never prints the code", () => {
+    render(500);
     expect(dialog()).toBeNull();
-    act(() => { vi.advanceTimersByTime(999); });
+    act(() => { vi.advanceTimersByTime(60_000); });
+    expect(dialog()).toBeNull(); // time alone never opens it
+    scrollSectionTo(band() + 40); // still below the band
+    act(() => { vi.advanceTimersByTime(60_000); });
+    expect(dialog()).toBeNull();
+    scrollSectionTo(band() - 40); // reached
+    act(() => { vi.advanceTimersByTime(499); });
     expect(dialog()).toBeNull();
     act(() => { vi.advanceTimersByTime(1); });
     expect(dialog()).not.toBeNull();
@@ -49,6 +62,22 @@ describe("welcome offer popup", () => {
     expect(dialog()!.textContent).not.toContain("LACUNA10");
     expect(sessionStorage.getItem(WELCOME_SHOWN_KEY)).toBe("1");
   });
+  it("opens when the section is already in view on arrival (anchor link, reload mid-page)", () => {
+    sectionTop = 96;
+    render(300);
+    expect(dialog()).toBeNull();
+    act(() => { vi.advanceTimersByTime(300); });
+    expect(dialog()).not.toBeNull();
+  });
+  it("stays closed when the page has no pricing section", () => {
+    container = document.createElement("div");
+    document.body.appendChild(container);
+    root = createRoot(container);
+    act(() => root?.render(<MemoryRouter initialEntries={["/services"]}><DiscountPopup armDelayMs={100} /></MemoryRouter>));
+    sectionTop = 0;
+    act(() => { window.dispatchEvent(new Event("scroll")); vi.advanceTimersByTime(5000); });
+    expect(dialog()).toBeNull();
+  });
   it.each([
     ["already unlocked", () => storeUnlock("LACUNA10")],
     ["dismissed recently", () => storeDismiss()],
@@ -56,7 +85,7 @@ describe("welcome offer popup", () => {
     ["a code is already entered", () => sessionStorage.setItem(DISCOUNT_STORAGE_KEY, "matesrates")],
   ])("stays closed when %s", (_label, setup) => {
     setup();
-    render(100);
+    show();
     act(() => { vi.advanceTimersByTime(5000); });
     expect(dialog()).toBeNull();
   });

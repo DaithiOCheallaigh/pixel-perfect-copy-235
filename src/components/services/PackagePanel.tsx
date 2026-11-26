@@ -1,29 +1,14 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Check, ChevronLeft, ChevronRight, Info, X } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { aftercare, businessOption, carePlans, CONTACT_EMAIL, eur, monthlyLabel, priceLabel, tiers, VAT_REGISTERED, type DiscountCode } from "@/data/pricing";
 import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
 import { MosaicBackdrop, PANEL_GRADIENT } from "@/components/services/MosaicBackdrop";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { selectionIsFrom, type discountBreakdown, type selectionItems, type selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 
 export const inputClass =
   "w-full min-h-12 rounded-md border border-input bg-card px-4 py-3 text-base text-foreground md:min-h-0 md:text-sm placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors";
-
-export const Pill = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    aria-pressed={selected}
-    className={`inline-flex min-h-11 items-center rounded-full border px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] ${
-      selected
-        ? "border-primary bg-primary/10 text-primary"
-        : "border-input bg-card text-muted-foreground hover:border-primary/40"
-    }`}
-  >
-    {label}
-  </button>
-);
 
 export const Field = ({ id, label, required, children, error }: { id: string; label: string; required?: boolean; children: ReactNode; error?: string }) => (
   <div className="space-y-2">
@@ -33,17 +18,6 @@ export const Field = ({ id, label, required, children, error }: { id: string; la
     {children}
     {error && <p id={`${id}-error`} role="alert" className="text-xs text-destructive">{error}</p>}
   </div>
-);
-
-export const Group = ({ id, label, required, children, error, action }: { id: string; label: string; required?: boolean; children: ReactNode; error?: string; action?: ReactNode }) => (
-  <fieldset className="relative min-w-0 space-y-2" aria-describedby={error ? `${id}-error` : undefined} aria-invalid={error ? true : undefined}>
-    <legend className="mb-2 font-mono-label text-muted-foreground">
-      {label} {required && <span className="text-primary" aria-hidden="true">*</span>}
-    </legend>
-    {action && <div className="absolute -right-1 -top-1.5 !mt-0">{action}</div>}
-    {children}
-    {error && <p id={`${id}-error`} role="alert" className="text-xs text-destructive">{error}</p>}
-  </fieldset>
 );
 
 export interface PackageOption { id: string; label: string }
@@ -85,26 +59,10 @@ const savingsLine = (totals: ReturnType<typeof selectionTotalsWithDiscount>, dis
   return `You save ${eur(totals.discount)} (${totals.discountPercent}% off the website)`;
 };
 
-/* ── Tier details: the small (i) button expands a swipeable card per option inside the panel ── */
+/* ── Option cards: every website tier and care plan is on show on one dark Mosaic surface (no pills);
+      side by side on desktop, one card at a time (swipe) on phones. The card's button is the selector. ── */
 
-/** Small round (i) button in a group header; becomes an X while the details are open. */
-const DetailsToggle = ({ open, label, controls, onClick }: { open: boolean; label: string; controls: string; onClick: () => void }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    aria-expanded={open}
-    aria-controls={controls}
-    aria-label={`${open ? "Hide" : "Show"} ${label}`}
-    title={`${open ? "Hide" : "Show"} ${label}`}
-    className={`inline-flex h-7 w-7 items-center justify-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-      open ? "border-primary bg-primary/10 text-primary" : "border-input bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
-    }`}
-  >
-    {open ? <X className="h-3.5 w-3.5" aria-hidden="true" /> : <Info className="h-3.5 w-3.5" aria-hidden="true" />}
-  </button>
-);
-
-export type DetailSlide = {
+export type OptionCardData = {
   id: string;
   name: string;
   price: string;
@@ -118,17 +76,53 @@ export type DetailSlide = {
 };
 
 /** Glass card over the shared Mosaic surface; selected cards get the pink ring. */
-const slideSurface = { background: "linear-gradient(180deg, rgba(10,10,10,0.18) 0%, rgba(10,10,10,0.55) 30%, rgba(10,10,10,0.88) 48%, rgba(10,10,10,0.94) 100%)" } as const;
+const cardSurface = { background: "linear-gradient(180deg, rgba(10,10,10,0.18) 0%, rgba(10,10,10,0.55) 30%, rgba(10,10,10,0.88) 48%, rgba(10,10,10,0.94) 100%)" } as const;
 /** Header copy sits straight on the mosaic tiles, so it carries a soft shadow for the bright bands. */
 const headerShadow = { textShadow: "0 1px 2px rgba(0,0,0,0.6), 0 2px 18px rgba(0,0,0,0.55)" } as const;
 const navButtonClass =
   "inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 disabled:opacity-30 disabled:hover:bg-white/10";
 
-/**
- * One card per option on an always-dark Mosaic surface (the same backdrop as the welcome popup);
- * swipe (or arrows / dots / arrow keys) to compare, Select picks it like the pill does.
- */
-const TierDetails = ({ id, label, kicker, slides, startIndex }: { id: string; label: string; kicker: string; slides: DetailSlide[]; startIndex: number }) => {
+const OptionCard = ({ card: s, kicker, index, count }: { card: OptionCardData; kicker: string; index: number; count: number }) => (
+  <article
+    className={`flex h-full flex-col rounded-md border p-4 transition-[border-color,box-shadow] duration-300 ${
+      s.selected ? "border-[#FFB3E6]/70 shadow-[0_0_0_1px_rgba(255,179,230,0.35),0_18px_50px_-24px_rgba(255,179,230,0.6)]" : "border-white/10"
+    }`}
+    style={cardSurface}
+  >
+    <span className="font-mono-label block text-pink-200" style={headerShadow}>{kicker} · {index + 1} of {count}</span>
+    <h3 className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-base font-bold text-white" style={headerShadow}>
+      {s.name}
+      {s.badge && <span className="rounded-full bg-[#FFB3E6] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-950">{s.badge}</span>}
+    </h3>
+    <p className="mt-1 text-2xl font-extrabold tracking-tight text-white" style={headerShadow}>{s.price}</p>
+    {s.sub && <p className="mt-0.5 text-xs text-pink-200/80" style={headerShadow}>{s.sub}</p>}
+    {s.extra}
+    <ul className="mt-4 space-y-2 border-t border-white/10 pt-4">
+      {s.bullets.map((item) => (
+        <li key={item} className="flex items-start gap-2 text-sm text-white/80">
+          <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FFB3E6]" aria-hidden="true" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+    {s.note && <p className="mt-3 text-xs text-white/55">{s.note}</p>}
+    <div className="flex-1" aria-hidden="true" />
+    <button
+      type="button"
+      onClick={s.onSelect}
+      aria-pressed={s.selected}
+      aria-label={`${s.selected ? "Selected" : "Select"}: ${s.name}`}
+      className={`mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-md border bg-black px-4 text-sm font-semibold transition-all hover:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 active:scale-[0.99] ${
+        s.selected ? "border-[#FFB3E6]/70 text-[#FFB3E6] hover:border-[#FFB3E6]" : "border-white/15 text-white hover:border-white/30"
+      }`}
+    >
+      {s.selected ? <><Check className="h-4 w-4" aria-hidden="true" /> Selected</> : "Select"}
+    </button>
+  </article>
+);
+
+/** Phones: one card per slide; swipe (or arrows / dots / arrow keys) to compare. Starts on the selected option. */
+const OptionCarousel = ({ label, kicker, cards, startIndex }: { label: string; kicker: string; cards: OptionCardData[]; startIndex: number }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [index, setIndex] = useState(startIndex);
   const initial = useRef(startIndex);
@@ -149,91 +143,60 @@ const TierDetails = ({ id, label, kicker, slides, startIndex }: { id: string; la
     return () => { api.off("select", onSelect); api.off("reInit", onReInit); };
   }, [api]);
   return (
-    <div className="relative isolate mt-3 min-w-0 overflow-hidden rounded-lg border border-white/10 bg-neutral-950 p-3 text-white shadow-xl shadow-black/30" data-testid={`${id}-details`}>
-      <MosaicBackdrop gradient={PANEL_GRADIENT} pixelSize={12} waveIntensity={1.15} testId={`${id}-backdrop`} />
-      <div className="relative z-10">
-        <Carousel setApi={setApi} opts={{ startIndex, align: "start", containScroll: "trimSnaps" }} aria-label={label}>
-          <CarouselContent className="-ml-3 items-stretch">
-            {slides.map((s, i) => (
-              <CarouselItem key={s.id} className="pl-3">
-                <article
-                  className={`flex h-full flex-col rounded-md border p-4 transition-[border-color,box-shadow] duration-300 ${
-                    s.selected ? "border-[#FFB3E6]/70 shadow-[0_0_0_1px_rgba(255,179,230,0.35),0_18px_50px_-24px_rgba(255,179,230,0.6)]" : "border-white/10"
-                  }`}
-                  style={slideSurface}
-                >
-                  <div className="flex items-start justify-between gap-3" style={headerShadow}>
-                    <span className="font-mono-label text-pink-200">{kicker} · {i + 1} of {slides.length}</span>
-                    {s.badge && <span className="shrink-0 rounded-full bg-[#FFB3E6] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-950">{s.badge}</span>}
-                  </div>
-                  <h3 className="mt-3 text-base font-bold text-white" style={headerShadow}>{s.name}</h3>
-                  <p className="mt-1 text-2xl font-extrabold tracking-tight text-white" style={headerShadow}>{s.price}</p>
-                  {s.sub && <p className="mt-0.5 text-xs text-pink-200/80" style={headerShadow}>{s.sub}</p>}
-                  {s.extra}
-                  <ul className="mt-4 space-y-2 border-t border-white/10 pt-4">
-                    {s.bullets.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm text-white/80">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FFB3E6]" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {s.note && <p className="mt-3 text-xs text-white/55">{s.note}</p>}
-                  <div className="flex-1" aria-hidden="true" />
-                  <button
-                    type="button"
-                    onClick={s.onSelect}
-                    aria-pressed={s.selected}
-                    aria-label={`${s.selected ? "Selected" : "Select"}: ${s.name}`}
-                    className={`mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-md border px-4 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 active:scale-[0.99] ${
-                      s.selected ? "border-white bg-white text-neutral-950 hover:bg-pink-100" : "border-white/15 bg-black text-white hover:border-white/30 hover:bg-neutral-900"
-                    }`}
-                  >
-                    {s.selected ? <><Check className="h-4 w-4" aria-hidden="true" /> Selected</> : "Select"}
-                  </button>
-                </article>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-        <div className="mt-3 flex items-center justify-between gap-3">
-          <button type="button" onClick={() => api?.scrollPrev()} disabled={index === 0} aria-label="Previous option" className={navButtonClass}>
-            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-          </button>
-          <div className="flex items-center gap-1.5">
-            {slides.map((s, i) => (
-              <button key={s.id} type="button" onClick={() => api?.scrollTo(i)} aria-label={`Go to ${s.name}`} aria-current={i === index ? "true" : undefined} className={`h-1.5 rounded-full transition-all ${i === index ? "w-5 bg-[#FFB3E6]" : "w-1.5 bg-white/30 hover:bg-white/60"}`} />
-            ))}
-          </div>
-          <button type="button" onClick={() => api?.scrollNext()} disabled={index >= slides.length - 1} aria-label="Next option" className={navButtonClass}>
-            <ChevronRight className="h-4 w-4" aria-hidden="true" />
-          </button>
+    <div className="min-w-0">
+      <Carousel setApi={setApi} opts={{ startIndex, align: "start", containScroll: "trimSnaps" }} aria-label={label}>
+        <CarouselContent className="-ml-3 items-stretch">
+          {cards.map((card, i) => (
+            <CarouselItem key={card.id} className="pl-3">
+              <OptionCard card={card} kicker={kicker} index={i} count={cards.length} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+      <div className="mt-3 flex items-center justify-between gap-3">
+        <button type="button" onClick={() => api?.scrollPrev()} disabled={index === 0} aria-label="Previous option" className={navButtonClass}>
+          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+        </button>
+        <div className="flex items-center gap-1.5">
+          {cards.map((card, i) => (
+            <button key={card.id} type="button" onClick={() => api?.scrollTo(i)} aria-label={`Go to ${card.name}`} aria-current={i === index ? "true" : undefined} className={`h-1.5 rounded-full transition-all ${i === index ? "w-5 bg-[#FFB3E6]" : "w-1.5 bg-white/30 hover:bg-white/60"}`} />
+          ))}
         </div>
+        <button type="button" onClick={() => api?.scrollNext()} disabled={index >= cards.length - 1} aria-label="Next option" className={navButtonClass}>
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+        </button>
       </div>
     </div>
   );
 };
 
-const detailsMotion = (reduce: boolean | null) => ({
-  initial: reduce ? { opacity: 0 } : { height: 0, opacity: 0 },
-  animate: reduce ? { opacity: 1 } : { height: "auto", opacity: 1 },
-  exit: reduce ? { opacity: 0 } : { height: 0, opacity: 0 },
-  transition: { duration: reduce ? 0 : 0.32, ease: [0.16, 1, 0.3, 1] as const },
-});
+const startAt = (cards: OptionCardData[]) => Math.max(0, cards.findIndex((c) => c.selected));
+
+/** One numbered group ("1. Website", "2. Care plans") on the shared surface: a grid of cards on desktop, a carousel on phones. */
+const OptionGroup = ({ id, label, ariaLabel, kicker, cards, cols, mobile }: { id: string; label: string; ariaLabel: string; kicker: string; cards: OptionCardData[]; cols: string; mobile: boolean }) => (
+  <fieldset id={id} className="min-w-0" data-testid={id}>
+    <legend className="mb-3 font-mono-label text-white/60">{label}</legend>
+    {mobile ? (
+      <OptionCarousel label={ariaLabel} kicker={kicker} cards={cards} startIndex={startAt(cards)} />
+    ) : (
+      <div className={`grid gap-3 ${cols}`} role="group" aria-label={ariaLabel}>
+        {cards.map((card, i) => <OptionCard key={card.id} card={card} kicker={kicker} index={i} count={cards.length} />)}
+      </div>
+    )}
+  </fieldset>
+);
 
 /** The "Your package" editor, shared by the inline desktop panel and the bottom-bar drawer. */
 export const PackagePanel = ({
   selectedIds, selection, websiteId, websiteOptions, chooseWebsite, businessPages, changeBusinessPages,
-  aftercareOptions, chooseAftercare, discountInput, setDiscountInput, discount, breakdown, totals, hasWebsite, discountReveal,
+  aftercareOptions: _aftercareOptions, chooseAftercare, discountInput, setDiscountInput, discount, breakdown, totals, hasWebsite, discountReveal,
   className = "rounded-lg border border-primary/40 bg-primary/5 p-5",
 }: PackagePanelProps) => {
   const showStatus = Boolean(discountInput.trim()) && discountReveal !== "typing";
   const saves = totals.discount > 0 || Boolean(totals.monthlyDiscount);
-  const reduce = useReducedMotion();
-  const [websiteOpen, setWebsiteOpen] = useState(false);
-  const [careOpen, setCareOpen] = useState(false);
+  const mobile = useIsMobile();
 
-  const websiteSlides: DetailSlide[] = tiers.map((t) => {
+  const websiteCards: OptionCardData[] = tiers.map((t) => {
     const option = websiteOptions.find((o) => o.id === t.id);
     const selected = Boolean(websiteId && (option ? option.match(websiteId) : websiteId === t.id));
     const onSelect = () => chooseWebsite(option?.id ?? t.id);
@@ -241,57 +204,29 @@ export const PackagePanel = ({
       const o = businessOption(businessPages);
       return {
         id: t.id, name: t.name, price: `${eur(o.price)}${VAT_REGISTERED ? " + VAT" : ""}`, note: `Live in ${o.live} from a complete intake`, bullets: o.scope, selected, onSelect,
-        extra: <div className="mt-4 max-w-xs"><BusinessPagesSelect pages={businessPages} onChange={changeBusinessPages} tone="dark" labelId="business-pages-label-details" /></div>,
+        extra: <div className="mt-4 max-w-xs"><BusinessPagesSelect pages={businessPages} onChange={changeBusinessPages} tone="dark" labelId="business-pages-label-panel" /></div>,
       };
     }
     return { id: t.id, name: t.name, price: priceLabel(t), sub: monthlyLabel(t), note: `Live in ${t.live}${t.id === "refresh" ? "" : " from a complete intake"}`, bullets: t.scope ?? [], selected, onSelect };
   });
-  const careSlides: DetailSlide[] = [
+  const careCards: OptionCardData[] = [
     { id: aftercare.selfManaged.id, name: aftercare.selfManaged.name, price: aftercare.selfManaged.priceLine, bullets: aftercare.selfManaged.includes, selected: selectedIds.includes(aftercare.selfManaged.id), onSelect: () => chooseAftercare(aftercare.selfManaged.id) },
     ...carePlans.map((plan) => ({
       id: plan.id, name: plan.name, price: `${eur(plan.monthly)}/mo${VAT_REGISTERED ? " + VAT" : ""}`, badge: plan.popular ? "Most popular" : undefined, bullets: plan.includes,
       selected: selectedIds.includes(plan.id), onSelect: () => chooseAftercare(plan.id),
     })),
   ];
-  const startAt = (slides: DetailSlide[]) => Math.max(0, slides.findIndex((s) => s.selected));
 
   return (
   <section aria-label="Your selected package" className={className}>
     <h2 className="text-xl font-bold tracking-tight text-foreground">Your package</h2>
-    <div className="mt-4">
-      <Group id="sp-website" label="1. Website" action={<DetailsToggle open={websiteOpen} label="website package details" controls="sp-website-details" onClick={() => setWebsiteOpen((v) => !v)} />}>
-        <div className="flex flex-wrap gap-2 pr-10">
-          {websiteOptions.map((option) => (
-            <Pill key={option.id} label={option.label} selected={Boolean(websiteId && option.match(websiteId))} onClick={() => chooseWebsite(option.id)} />
-          ))}
-        </div>
-        {websiteId && websiteOptions[2]?.match(websiteId) && (
-          <div className="mt-3 max-w-xs"><BusinessPagesSelect pages={businessPages} onChange={changeBusinessPages} /></div>
-        )}
-        <AnimatePresence initial={false}>
-          {websiteOpen && (
-            <motion.div key="website-details" id="sp-website-details" className="overflow-hidden" {...detailsMotion(reduce)}>
-              <TierDetails id="sp-website" label="Website package details" kicker="Website" slides={websiteSlides} startIndex={startAt(websiteSlides)} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </Group>
-    </div>
-    <div className="mt-5">
-      <Group id="sp-aftercare" label="2. Care plans" action={<DetailsToggle open={careOpen} label="care plan details" controls="sp-aftercare-details" onClick={() => setCareOpen((v) => !v)} />}>
-        <div className="flex flex-wrap gap-2 pr-10">
-          {aftercareOptions.map((option) => (
-            <Pill key={option.id} label={option.label} selected={selectedIds.includes(option.id)} onClick={() => chooseAftercare(option.id)} />
-          ))}
-        </div>
-        <AnimatePresence initial={false}>
-          {careOpen && (
-            <motion.div key="care-details" id="sp-aftercare-details" className="overflow-hidden" {...detailsMotion(reduce)}>
-              <TierDetails id="sp-aftercare" label="Care plan details" kicker="Aftercare" slides={careSlides} startIndex={startAt(careSlides)} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </Group>
+    {/* One Mosaic surface behind both groups (the same backdrop as the welcome popup). */}
+    <div className="relative isolate mt-4 min-w-0 overflow-hidden rounded-lg border border-white/10 bg-neutral-950 p-3 text-white shadow-xl shadow-black/30 md:p-5" data-testid="sp-options">
+      <MosaicBackdrop gradient={PANEL_GRADIENT} pixelSize={12} waveIntensity={1.15} testId="sp-mosaic" />
+      <div className="relative z-10 space-y-7">
+        <OptionGroup id="sp-website" label="1. Website" ariaLabel="Website packages" kicker="Website" cards={websiteCards} cols="md:grid-cols-3" mobile={mobile} />
+        <OptionGroup id="sp-aftercare" label="2. Care plans" ariaLabel="Care plans" kicker="Aftercare" cards={careCards} cols="md:grid-cols-2 xl:grid-cols-4" mobile={mobile} />
+      </div>
     </div>
     <div className="mt-5">
       <Field id="sp-discount" label="Discount code (optional)">

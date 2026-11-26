@@ -14,6 +14,14 @@ vi.mock("@/components/services/BusinessPagesSelect", () => ({
 }));
 vi.mock("@/lib/submitLead", () => ({ submitLead: vi.fn() }));
 
+beforeAll(() => {
+  // embla-carousel (the phone layout) observes slide sizes and visibility; jsdom has neither observer.
+  const Noop = class { observe() {} unobserve() {} disconnect() {} takeRecords() { return []; } };
+  const g = globalThis as unknown as { ResizeObserver?: unknown; IntersectionObserver?: unknown };
+  if (typeof g.ResizeObserver === "undefined") g.ResizeObserver = Noop;
+  if (typeof g.IntersectionObserver === "undefined") g.IntersectionObserver = Noop;
+});
+
 let root: Root | undefined;
 let container: HTMLDivElement;
 const render = () => {
@@ -28,9 +36,17 @@ const cleanup = () => {
 };
 const button = (label: string): HTMLButtonElement => {
   const found = Array.from(container.querySelectorAll("button")).find((item) => item.textContent === label);
-  if (!found) throw new Error(`Missing aftercare option: ${label}`);
+  if (!found) throw new Error(`Missing button: ${label}`);
   return found;
 };
+const byLabel = (label: string): HTMLButtonElement => {
+  const el = container.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
+  if (!el) throw new Error(`Missing button: ${label}`);
+  return el;
+};
+/** The option cards are the selectors: "Select: <name>" picks, "Selected: <name>" clears. */
+const select = (name: string) => byLabel(`Select: ${name}`);
+const selected = (name: string) => byLabel(`Selected: ${name}`);
 const click = (item: HTMLButtonElement) => act(() => item.click());
 
 const open = (ids: unknown[] = []) => {
@@ -38,7 +54,6 @@ const open = (ids: unknown[] = []) => {
   render();
 };
 const saved = (): string[] => JSON.parse(sessionStorage.getItem(SELECTION_STORAGE_KEY) ?? "[]");
-const growth = () => button("Growth · €200/mo");
 
 beforeEach(() => sessionStorage.clear());
 afterEach(cleanup);
@@ -46,32 +61,32 @@ afterEach(cleanup);
 describe("enquiry aftercare choices", () => {
   it("adds Growth to Launch and prices setup and monthly separately", () => {
     open(["launch"]);
-    click(growth());
+    click(select("Growth"));
     expect(saved()).toEqual(["launch", "growth"]);
     expect(selectionTotals(selectionItems(saved().map((id) => ({ id }))))).toEqual({ oneOff: 750, monthly: 200 });
   });
 
   it("replaces existing aftercare while keeping the website", () => {
     open(["business-8", "self-managed"]);
-    click(growth());
+    click(select("Growth"));
     expect(saved()).toEqual(["business-8", "growth"]);
-    click(button("Care · €65/mo"));
+    click(select("Care"));
     expect(saved()).toEqual(["business-8", "care"]);
   });
 
   it("clears an active option without removing the website", () => {
     open(["launch", "growth"]);
-    click(growth());
+    click(selected("Growth"));
     expect(saved()).toEqual(["launch"]);
   });
 
   it("allows aftercare without a website and restores it after remount", () => {
     open();
-    click(growth());
+    click(select("Growth"));
     expect(saved()).toEqual(["growth"]);
     cleanup();
     render();
-    expect(growth()).toHaveAttribute("aria-pressed", "true");
+    expect(selected("Growth")).toHaveAttribute("aria-pressed", "true");
     expect(selectionTotals(selectionItems(saved().map((id) => ({ id }))))).toEqual({ oneOff: 0, monthly: 200 });
   });
 
@@ -126,20 +141,63 @@ describe("enquiry package panel", () => {
     expect(legends).toContain("2. Care plans");
     expect(legends).not.toContain("Once it's live, who looks after it?");
   });
+  it("shows every option as a card on one Mosaic surface, with no pills or (i) toggle", () => {
+    open(["growth"]);
+    const surface = container.querySelector('[data-testid="sp-options"]')!;
+    // jsdom has no WebGL, so the shared backdrop renders its static fallback.
+    expect(surface.querySelectorAll('[data-testid="sp-mosaic"]')).toHaveLength(1);
+    expect(surface.querySelector('[data-testid="sp-mosaic"]')?.getAttribute("data-shader")).toBe("off");
+    const website = container.querySelector("#sp-website")!;
+    const care = container.querySelector("#sp-aftercare")!;
+    expect(website.querySelectorAll("article")).toHaveLength(3);
+    expect(care.querySelectorAll("article")).toHaveLength(4);
+    expect(website.textContent).toContain("Website · 1 of 3");
+    expect(website.textContent).toContain("1-page site");
+    expect(website.textContent).toContain("Every old address redirected so you keep your Google rankings");
+    expect(website.textContent).toContain("or €70/mo + VAT × 12");
+    expect(care.textContent).toContain("Aftercare · 1 of 4");
+    expect(care.querySelectorAll("article")[0].textContent).toContain("30-minute handover call and a short written guide");
+    expect(care.textContent).toContain("Most popular");
+    expect(container.querySelector('button[aria-label^="Show "]')).toBeNull();
+    expect(Array.from(container.querySelectorAll("button")).some((b) => b.textContent === "Launch · €750")).toBe(false);
+    expect(container.querySelectorAll('[aria-roledescription="slide"]')).toHaveLength(0);
+  });
+  it("swipes one card at a time on phones", () => {
+    const width = window.innerWidth;
+    Object.defineProperty(window, "innerWidth", { configurable: true, writable: true, value: 390 });
+    try {
+      open(["business", "growth"]);
+      click(byLabel("Adjust package: Business Site · 5 pages · Growth"));
+      const slides = document.querySelectorAll('[aria-roledescription="slide"]');
+      expect(slides).toHaveLength(7);
+      expect(document.querySelectorAll('button[aria-label="Previous option"]')).toHaveLength(2);
+      expect(document.querySelectorAll('[data-testid="sp-mosaic"]')).toHaveLength(1);
+    } finally {
+      Object.defineProperty(window, "innerWidth", { configurable: true, writable: true, value: width });
+    }
+  });
 });
 describe("enquiry website choices", () => {
   it("swaps a stored Business option for Launch, keeping aftercare", () => {
     open(["business-8", "growth"]);
-    click(button("Launch · €750"));
+    click(select("Launch"));
     expect(new Set(saved())).toEqual(new Set(["launch", "growth"]));
+    expect(selected("Launch").getAttribute("aria-pressed")).toBe("true");
   });
   it("selects Business Site then 8 pages", () => {
     open();
-    click(button("Business Site · €2,500"));
+    click(select("Business Site"));
     expect(saved()).toEqual(["business"]);
-    const select = container.querySelector<HTMLSelectElement>('select[aria-label="Pages"]')!;
-    act(() => { select.value = "8"; select.dispatchEvent(new Event("change", { bubbles: true })); });
+    const selectEl = container.querySelector<HTMLSelectElement>('select[aria-label="Pages"]')!;
+    act(() => { selectEl.value = "8"; selectEl.dispatchEvent(new Event("change", { bubbles: true })); });
     expect(saved()).toEqual(["business-8"]);
+    expect(container.querySelector("#sp-website")!.textContent).toContain("€4,000 + VAT");
+    expect(container.querySelector("#sp-website")!.textContent).toContain("Booking or CRM integration");
+  });
+  it("clears the website from its own card", () => {
+    open(["refresh", "care"]);
+    click(selected("Website Refresh"));
+    expect(saved()).toEqual(["care"]);
   });
   it("shows the contact email in the panel footer", () => {
     open();
@@ -237,74 +295,5 @@ describe("welcome offer on the enquiry page", () => {
     expect(sweep()).toBeNull();
     expect(input().value).toBe("LACUNA10");
     expect(sessionStorage.getItem(DISCOUNT_STORAGE_KEY)).toBe("LACUNA10");
-  });
-});
-
-describe("package tier details", () => {
-  beforeAll(() => {
-    // embla-carousel observes slide sizes and visibility; jsdom has neither observer.
-    const Noop = class { observe() {} unobserve() {} disconnect() {} takeRecords() { return []; } };
-    const g = globalThis as unknown as { ResizeObserver?: unknown; IntersectionObserver?: unknown };
-    if (typeof g.ResizeObserver === "undefined") g.ResizeObserver = Noop;
-    if (typeof g.IntersectionObserver === "undefined") g.IntersectionObserver = Noop;
-  });
-  const byLabel = (label: string): HTMLButtonElement => {
-    const el = container.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
-    if (!el) throw new Error(`Missing button: ${label}`);
-    return el;
-  };
-
-  it("hides the tier details until the (i) button is pressed, then lets a slide select the website", () => {
-    open(["growth"]);
-    expect(container.textContent).not.toContain("1-page site");
-    const toggle = byLabel("Show website package details");
-    expect(toggle.getAttribute("aria-expanded")).toBe("false");
-    expect(toggle.getAttribute("aria-controls")).toBe("sp-website-details");
-    click(toggle);
-    expect(byLabel("Hide website package details").getAttribute("aria-expanded")).toBe("true");
-    const details = container.querySelector("#sp-website-details")!;
-    // Same always-dark Mosaic surface as the welcome popup; jsdom has no WebGL so the static fallback renders.
-    expect(details.querySelector('[data-testid="sp-website-backdrop"]')?.getAttribute("data-shader")).toBe("off");
-    expect(details.textContent).toContain("Website · 1 of 3");
-    expect(details.textContent).toContain("1-page site");
-    expect(details.textContent).toContain("Every old address redirected so you keep your Google rankings");
-    expect(details.textContent).toContain("Up to 5 pages");
-    expect(details.textContent).toContain("or €70/mo + VAT × 12");
-    expect(details.querySelectorAll('[aria-roledescription="slide"]')).toHaveLength(3);
-    click(byLabel("Select: Launch"));
-    expect(saved()).toEqual(["growth", "launch"]);
-    expect(byLabel("Selected: Launch").getAttribute("aria-pressed")).toBe("true");
-    expect(button("Launch · €750").getAttribute("aria-pressed")).toBe("true");
-    click(byLabel("Hide website package details"));
-    expect(byLabel("Show website package details").getAttribute("aria-expanded")).toBe("false");
-  });
-
-  it("shows the care plan details with the self-managed handover first and selects from a slide", () => {
-    open(["business"]);
-    click(byLabel("Show care plan details"));
-    const details = container.querySelector("#sp-aftercare-details")!;
-    const slides = Array.from(details.querySelectorAll('[aria-roledescription="slide"]'));
-    expect(slides).toHaveLength(4);
-    expect(slides[0].textContent).toContain("Aftercare · 1 of 4");
-    expect(slides[0].textContent).toContain("30-minute handover call and a short written guide");
-    expect(details.textContent).toContain("Everything in Growth");
-    expect(details.textContent).toContain("Most popular");
-    click(byLabel("Select: Growth"));
-    expect(saved()).toEqual(["business", "growth"]);
-    expect(growth().getAttribute("aria-pressed")).toBe("true");
-    click(byLabel("Selected: Growth"));
-    expect(saved()).toEqual(["business"]);
-  });
-
-  it("keeps the Business pages control in the Business slide", () => {
-    open(["business-8"]);
-    click(byLabel("Show website package details"));
-    const details = container.querySelector("#sp-website-details")!;
-    expect(details.textContent).toContain("€4,000 + VAT");
-    expect(details.textContent).toContain("Booking or CRM integration");
-    const select = details.querySelector<HTMLSelectElement>('select[aria-label="Pages"]')!;
-    act(() => { select.value = "10"; select.dispatchEvent(new Event("change", { bubbles: true })); });
-    expect(saved()).toEqual(["business-10"]);
-    expect(details.textContent).toContain("€5,000 + VAT");
   });
 });

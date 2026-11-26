@@ -9,9 +9,12 @@ import { invokeFunction } from "@/lib/supabaseFunctions";
 import { markShown, queueReveal, shouldOfferWelcome, storeDismiss, storeUnlock, welcomeOffer } from "@/lib/welcomeOffer";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-/** The popup opens after this long on /services, or once the visitor has scrolled WELCOME_POPUP_SCROLL of the page, whichever comes first. */
-export const WELCOME_POPUP_DELAY_MS = 7000;
-export const WELCOME_POPUP_SCROLL = 0.35;
+/** The popup opens only once the visitor has scrolled to the "Choose your package" section on /services (this element id). */
+export const WELCOME_POPUP_SECTION_ID = "packages";
+/** The section counts as reached when its top has risen into the top WELCOME_POPUP_SECTION_BAND of the viewport. */
+export const WELCOME_POPUP_SECTION_BAND = 0.6;
+/** Short pause after reaching the section, so the card does not pop mid-scroll. */
+export const WELCOME_POPUP_ARM_DELAY_MS = 600;
 export const ENQUIRY_PATH = "/services/start-project";
 
 /** Dark input for the mosaic card (the panel's inputClass is themed, this card is always dark). */
@@ -19,11 +22,12 @@ const darkInputClass =
   "w-full min-h-12 rounded-md border border-white/20 bg-white/10 px-4 py-3 text-base text-white backdrop-blur-sm transition-colors placeholder:text-white/40 focus:border-white/60 focus:outline-none focus:ring-1 focus:ring-white/50 md:min-h-0 md:text-sm";
 
 /**
- * /services welcome offer. An email unlocks the 10%-off-everything code (emailed to Dave by the
- * send-discount-unlock edge function), then the visitor lands on the enquiry page, which types the
- * code into the discount field and runs one gradient loop around it (see StartProject).
+ * /services welcome offer. Opens once the pricing section has been scrolled to; an email unlocks the
+ * 10%-off-everything code (emailed to Dave by the send-discount-unlock edge function), then the visitor
+ * lands on the enquiry page, which types the code into the discount field and runs one gradient loop
+ * around it (see StartProject).
  */
-export const DiscountPopup = ({ delayMs = WELCOME_POPUP_DELAY_MS, scrollFraction = WELCOME_POPUP_SCROLL }: { delayMs?: number; scrollFraction?: number }) => {
+export const DiscountPopup = ({ sectionId = WELCOME_POPUP_SECTION_ID, armDelayMs = WELCOME_POPUP_ARM_DELAY_MS }: { sectionId?: string; armDelayMs?: number }) => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [honeypot, setHoneypot] = useState("");
@@ -35,20 +39,23 @@ export const DiscountPopup = ({ delayMs = WELCOME_POPUP_DELAY_MS, scrollFraction
 
   useEffect(() => {
     if (!shouldOfferWelcome()) return;
+    const target = document.getElementById(sectionId);
+    if (!target) return;
     let timer: number | undefined;
-    const stop = () => {
-      if (timer !== undefined) window.clearTimeout(timer);
-      window.removeEventListener("scroll", onScroll);
-    };
+    const unwatch = () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+    const stop = () => { if (timer !== undefined) window.clearTimeout(timer); unwatch(); };
     const show = () => { stop(); markShown(); setOpen(true); };
     const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max > 0 && window.scrollY / max >= scrollFraction) show();
+      if (timer !== undefined) return;
+      if (target.getBoundingClientRect().top > window.innerHeight * WELCOME_POPUP_SECTION_BAND) return;
+      unwatch();
+      timer = window.setTimeout(show, armDelayMs);
     };
-    timer = window.setTimeout(show, delayMs);
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    onScroll(); // already there (anchor link, reload mid-page)
     return stop;
-  }, [delayMs, scrollFraction]);
+  }, [sectionId, armDelayMs]);
 
   const dismiss = () => { storeDismiss(); setOpen(false); };
   const onOpenChange = (next: boolean) => { if (!next && !sendingRef.current) dismiss(); };
