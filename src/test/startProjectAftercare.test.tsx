@@ -263,6 +263,9 @@ describe("package tier details", () => {
     click(toggle);
     expect(byLabel("Hide website package details").getAttribute("aria-expanded")).toBe("true");
     const details = container.querySelector("#sp-website-details")!;
+    // Same always-dark Mosaic surface as the welcome popup; jsdom has no WebGL so the static fallback renders.
+    expect(details.querySelector('[data-testid="sp-website-backdrop"]')?.getAttribute("data-shader")).toBe("off");
+    expect(details.textContent).toContain("Website · 1 of 3");
     expect(details.textContent).toContain("1-page site");
     expect(details.textContent).toContain("Every old address redirected so you keep your Google rankings");
     expect(details.textContent).toContain("Up to 5 pages");
@@ -282,6 +285,7 @@ describe("package tier details", () => {
     const details = container.querySelector("#sp-aftercare-details")!;
     const slides = Array.from(details.querySelectorAll('[aria-roledescription="slide"]'));
     expect(slides).toHaveLength(4);
+    expect(slides[0].textContent).toContain("Aftercare · 1 of 4");
     expect(slides[0].textContent).toContain("30-minute handover call and a short written guide");
     expect(details.textContent).toContain("Everything in Growth");
     expect(details.textContent).toContain("Most popular");

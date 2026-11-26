@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Check, ChevronLeft, ChevronRight, Info, X } from "lucide-react";
 import { aftercare, businessOption, carePlans, CONTACT_EMAIL, eur, monthlyLabel, priceLabel, tiers, VAT_REGISTERED, type DiscountCode } from "@/data/pricing";
 import { BusinessPagesSelect } from "@/components/services/BusinessPagesSelect";
+import { MosaicBackdrop, PANEL_GRADIENT } from "@/components/services/MosaicBackdrop";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { selectionIsFrom, type discountBreakdown, type selectionItems, type selectionTotalsWithDiscount } from "@/data/serviceEstimates";
 
@@ -116,8 +117,18 @@ export type DetailSlide = {
   extra?: ReactNode;
 };
 
-/** One card per option; swipe (or arrows / dots / arrow keys) to compare, Select picks it like the pill does. */
-const TierDetails = ({ id, label, slides, startIndex }: { id: string; label: string; slides: DetailSlide[]; startIndex: number }) => {
+/** Glass card over the shared Mosaic surface; selected cards get the pink ring. */
+const slideSurface = { background: "linear-gradient(180deg, rgba(10,10,10,0.18) 0%, rgba(10,10,10,0.55) 30%, rgba(10,10,10,0.88) 48%, rgba(10,10,10,0.94) 100%)" } as const;
+/** Header copy sits straight on the mosaic tiles, so it carries a soft shadow for the bright bands. */
+const headerShadow = { textShadow: "0 1px 2px rgba(0,0,0,0.6), 0 2px 18px rgba(0,0,0,0.55)" } as const;
+const navButtonClass =
+  "inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 disabled:opacity-30 disabled:hover:bg-white/10";
+
+/**
+ * One card per option on an always-dark Mosaic surface (the same backdrop as the welcome popup);
+ * swipe (or arrows / dots / arrow keys) to compare, Select picks it like the pill does.
+ */
+const TierDetails = ({ id, label, kicker, slides, startIndex }: { id: string; label: string; kicker: string; slides: DetailSlide[]; startIndex: number }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [index, setIndex] = useState(startIndex);
   const initial = useRef(startIndex);
@@ -138,58 +149,66 @@ const TierDetails = ({ id, label, slides, startIndex }: { id: string; label: str
     return () => { api.off("select", onSelect); api.off("reInit", onReInit); };
   }, [api]);
   return (
-    <div className="mt-3 min-w-0 rounded-lg border border-border/70 bg-background/60 p-3" data-testid={`${id}-details`}>
-      <Carousel setApi={setApi} opts={{ startIndex, align: "start", containScroll: "trimSnaps" }} aria-label={label}>
-        <CarouselContent className="-ml-3 items-start">
-          {slides.map((s) => (
-            <CarouselItem key={s.id} className="pl-3">
-              <article className={`flex flex-col rounded-md border p-4 transition-colors ${s.selected ? "border-primary bg-primary/10" : "border-border bg-card"}`}>
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="text-base font-bold text-foreground">{s.name}</h3>
-                    <p className="mt-1 text-lg font-bold text-foreground">{s.price}</p>
-                    {s.sub && <p className="text-xs text-primary">{s.sub}</p>}
-                  </div>
-                  {s.badge && <span className="shrink-0 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">{s.badge}</span>}
-                </div>
-                {s.extra}
-                <ul className="mt-3 space-y-2">
-                  {s.bullets.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                {s.note && <p className="mt-3 text-xs text-muted-foreground">{s.note}</p>}
-                <button
-                  type="button"
-                  onClick={s.onSelect}
-                  aria-pressed={s.selected}
-                  aria-label={`${s.selected ? "Selected" : "Select"}: ${s.name}`}
-                  className={`mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-md px-4 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99] ${
-                    s.selected ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border border-input bg-card text-foreground hover:border-primary/60 hover:text-foreground hover:shadow-[0_0_24px_-4px_hsl(var(--primary)/0.25)]"
+    <div className="relative isolate mt-3 min-w-0 overflow-hidden rounded-lg border border-white/10 bg-neutral-950 p-3 text-white shadow-xl shadow-black/30" data-testid={`${id}-details`}>
+      <MosaicBackdrop gradient={PANEL_GRADIENT} pixelSize={12} waveIntensity={1.15} testId={`${id}-backdrop`} />
+      <div className="relative z-10">
+        <Carousel setApi={setApi} opts={{ startIndex, align: "start", containScroll: "trimSnaps" }} aria-label={label}>
+          <CarouselContent className="-ml-3 items-stretch">
+            {slides.map((s, i) => (
+              <CarouselItem key={s.id} className="pl-3">
+                <article
+                  className={`flex h-full flex-col rounded-md border p-4 transition-[border-color,box-shadow] duration-300 ${
+                    s.selected ? "border-[#FFB3E6]/70 shadow-[0_0_0_1px_rgba(255,179,230,0.35),0_18px_50px_-24px_rgba(255,179,230,0.6)]" : "border-white/10"
                   }`}
+                  style={slideSurface}
                 >
-                  {s.selected ? <><Check className="h-4 w-4" aria-hidden="true" /> Selected</> : "Select"}
-                </button>
-              </article>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
-      <div className="mt-3 flex items-center justify-between gap-3">
-        <button type="button" onClick={() => api?.scrollPrev()} disabled={index === 0} aria-label="Previous option" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-input bg-card text-foreground transition-colors hover:border-primary/60 disabled:opacity-30 disabled:hover:border-input">
-          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-        </button>
-        <div className="flex items-center gap-1.5">
-          {slides.map((s, i) => (
-            <button key={s.id} type="button" onClick={() => api?.scrollTo(i)} aria-label={`Go to ${s.name}`} aria-current={i === index ? "true" : undefined} className={`h-1.5 rounded-full transition-all ${i === index ? "w-5 bg-primary" : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/60"}`} />
-          ))}
+                  <div className="flex items-start justify-between gap-3" style={headerShadow}>
+                    <span className="font-mono-label text-pink-200">{kicker} · {i + 1} of {slides.length}</span>
+                    {s.badge && <span className="shrink-0 rounded-full bg-[#FFB3E6] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-950">{s.badge}</span>}
+                  </div>
+                  <h3 className="mt-3 text-base font-bold text-white" style={headerShadow}>{s.name}</h3>
+                  <p className="mt-1 text-2xl font-extrabold tracking-tight text-white" style={headerShadow}>{s.price}</p>
+                  {s.sub && <p className="mt-0.5 text-xs text-pink-200/80" style={headerShadow}>{s.sub}</p>}
+                  {s.extra}
+                  <ul className="mt-4 space-y-2 border-t border-white/10 pt-4">
+                    {s.bullets.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-white/80">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FFB3E6]" aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {s.note && <p className="mt-3 text-xs text-white/55">{s.note}</p>}
+                  <div className="flex-1" aria-hidden="true" />
+                  <button
+                    type="button"
+                    onClick={s.onSelect}
+                    aria-pressed={s.selected}
+                    aria-label={`${s.selected ? "Selected" : "Select"}: ${s.name}`}
+                    className={`mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-md border px-4 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 active:scale-[0.99] ${
+                      s.selected ? "border-white bg-white text-neutral-950 hover:bg-pink-100" : "border-white/15 bg-black text-white hover:border-white/30 hover:bg-neutral-900"
+                    }`}
+                  >
+                    {s.selected ? <><Check className="h-4 w-4" aria-hidden="true" /> Selected</> : "Select"}
+                  </button>
+                </article>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+        <div className="mt-3 flex items-center justify-between gap-3">
+          <button type="button" onClick={() => api?.scrollPrev()} disabled={index === 0} aria-label="Previous option" className={navButtonClass}>
+            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <div className="flex items-center gap-1.5">
+            {slides.map((s, i) => (
+              <button key={s.id} type="button" onClick={() => api?.scrollTo(i)} aria-label={`Go to ${s.name}`} aria-current={i === index ? "true" : undefined} className={`h-1.5 rounded-full transition-all ${i === index ? "w-5 bg-[#FFB3E6]" : "w-1.5 bg-white/30 hover:bg-white/60"}`} />
+            ))}
+          </div>
+          <button type="button" onClick={() => api?.scrollNext()} disabled={index >= slides.length - 1} aria-label="Next option" className={navButtonClass}>
+            <ChevronRight className="h-4 w-4" aria-hidden="true" />
+          </button>
         </div>
-        <button type="button" onClick={() => api?.scrollNext()} disabled={index >= slides.length - 1} aria-label="Next option" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-input bg-card text-foreground transition-colors hover:border-primary/60 disabled:opacity-30 disabled:hover:border-input">
-          <ChevronRight className="h-4 w-4" aria-hidden="true" />
-        </button>
       </div>
     </div>
   );
@@ -222,7 +241,7 @@ export const PackagePanel = ({
       const o = businessOption(businessPages);
       return {
         id: t.id, name: t.name, price: `${eur(o.price)}${VAT_REGISTERED ? " + VAT" : ""}`, note: `Live in ${o.live} from a complete intake`, bullets: o.scope, selected, onSelect,
-        extra: <div className="mt-3 max-w-xs"><BusinessPagesSelect pages={businessPages} onChange={changeBusinessPages} /></div>,
+        extra: <div className="mt-4 max-w-xs"><BusinessPagesSelect pages={businessPages} onChange={changeBusinessPages} tone="dark" labelId="business-pages-label-details" /></div>,
       };
     }
     return { id: t.id, name: t.name, price: priceLabel(t), sub: monthlyLabel(t), note: `Live in ${t.live}${t.id === "refresh" ? "" : " from a complete intake"}`, bullets: t.scope ?? [], selected, onSelect };
@@ -252,7 +271,7 @@ export const PackagePanel = ({
         <AnimatePresence initial={false}>
           {websiteOpen && (
             <motion.div key="website-details" id="sp-website-details" className="overflow-hidden" {...detailsMotion(reduce)}>
-              <TierDetails id="sp-website" label="Website package details" slides={websiteSlides} startIndex={startAt(websiteSlides)} />
+              <TierDetails id="sp-website" label="Website package details" kicker="Website" slides={websiteSlides} startIndex={startAt(websiteSlides)} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -268,7 +287,7 @@ export const PackagePanel = ({
         <AnimatePresence initial={false}>
           {careOpen && (
             <motion.div key="care-details" id="sp-aftercare-details" className="overflow-hidden" {...detailsMotion(reduce)}>
-              <TierDetails id="sp-aftercare" label="Care plan details" slides={careSlides} startIndex={startAt(careSlides)} />
+              <TierDetails id="sp-aftercare" label="Care plan details" kicker="Aftercare" slides={careSlides} startIndex={startAt(careSlides)} />
             </motion.div>
           )}
         </AnimatePresence>
